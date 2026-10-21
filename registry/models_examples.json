@@ -55,5 +55,29 @@
  ],
  "model.topaz-image-enhance-wonder3-5": [
   "examples/models/topaz-image-enhance-wonder3-5.png"
+ ],
+ "model.kling-o3-t2v": [
+  "examples/models/kling-o3-t2v.mp4"
+ ],
+ "model.kling-v3-video": [
+  "examples/models/kling-v3-video.mp4"
+ ],
+ "model.minimax-h3-max-i2v": [
+  "examples/models/minimax-h3-max-i2v.mp4"
+ ],
+ "model.minimax-h3-max-turbo-i2v": [
+  "examples/models/minimax-h3-max-turbo-i2v.mp4"
+ ],
+ "model.seedance2-0-r2v": [
+  "examples/models/seedance2-0-r2v.mp4"
+ ],
+ "model.seedance2-5-i2v-1080p": [
+  "examples/models/seedance2-5-i2v-1080p.mp4"
+ ],
+ "model.seedance2-5-t2v-1080p": [
+  "examples/models/seedance2-5-t2v-1080p.mp4"
+ ],
+ "model.wan2-6-i2v": [
+  "examples/models/wan2-6-i2v.mp4"
  ]
 }

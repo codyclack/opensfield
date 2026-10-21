@@ -11,7 +11,7 @@
   "partner": [
     "api_seedance2_5_t2v_1080p"
   ],
-  "status": "built",
+  "status": "tested",
   "group": "Text to video",
   "workflow": {
     "template": "api_seedance2_5_t2v_1080p",
@@ -94,6 +94,10 @@
       "api_seedance2_5_t2v_1080p"
     ],
     "output_kind": "video",
-    "verified": false
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/seedance2-5-t2v-1080p.mp4"
+    ]
   }
 }

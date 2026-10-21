@@ -24,7 +24,7 @@
         "kind": "text",
         "node": "1",
         "field": "text",
-        "required": false
+        "required": true
       },
       {
         "name": "temperature",

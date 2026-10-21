@@ -41,7 +41,7 @@ def write_manifests():
                                   "output_kind": wiring["output_kind"], "models": [], "verified": bool(wiring.get("verified_via"))}
             if wiring.get("verified_via"):
                 merged["workflow"].update(verified_via=wiring["verified_via"], examples=wiring.get("examples", []))
-            merged["status"] = max(merged["status"], "tested" if wiring.get("verified_via") else "built", key=ORDER.get)
+            merged["status"] = "tested" if wiring.get("verified_via") else "built"  # evidence decides, so a re-wired tool is demoted until re-run
             mf.write_text(json.dumps(merged, indent=2) + "\n", encoding="utf-8")
             continue
         src = wiring.get("files_from") if wiring else None  # preset modules reuse another module's workflow files
@@ -59,7 +59,7 @@ def write_manifests():
             if wiring.get("verified_via"):
                 merged["workflow"]["verified_via"] = wiring["verified_via"]
                 merged["workflow"]["examples"] = wiring.get("examples", [])
-            merged["status"] = max(merged["status"], "tested" if wiring.get("verified_via") else "built", key=ORDER.get)
+            merged["status"] = "tested" if wiring.get("verified_via") else "built"  # evidence decides, so a re-wired tool is demoted until re-run
         mf.write_text(json.dumps(merged, indent=2) + "\n", encoding="utf-8")
 
 

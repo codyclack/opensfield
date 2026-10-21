@@ -11,7 +11,7 @@
   "partner": [
     "api_kling_o3_t2v"
   ],
-  "status": "built",
+  "status": "tested",
   "group": "Text to video",
   "workflow": {
     "template": "api_kling_o3_t2v",
@@ -91,6 +91,10 @@
       "api_kling_o3_t2v"
     ],
     "output_kind": "video",
-    "verified": false
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/kling-o3-t2v.mp4"
+    ]
   }
 }

@@ -40,7 +40,8 @@
         "kind": "text",
         "node": "4",
         "field": "system_prompt",
-        "required": false
+        "required": false,
+        "clear_blank": true
       },
       {
         "name": "response_modalities",

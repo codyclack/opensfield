@@ -24,7 +24,7 @@
         "kind": "text",
         "node": "208",
         "field": "text",
-        "required": false
+        "required": true
       },
       {
         "name": "apply_text_normalization",

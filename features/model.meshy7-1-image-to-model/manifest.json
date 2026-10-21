@@ -32,7 +32,8 @@
         "kind": "text",
         "node": "13",
         "field": "should_texture.texture_prompt",
-        "required": false
+        "required": false,
+        "clear_blank": true
       },
       {
         "name": "model",

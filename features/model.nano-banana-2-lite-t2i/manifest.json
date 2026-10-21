@@ -32,7 +32,7 @@
         "kind": "text",
         "node": "3",
         "field": "system_prompt",
-        "required": false
+        "required": true
       },
       {
         "name": "response_modalities",

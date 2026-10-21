@@ -97,7 +97,9 @@ def run_comfy(feature: dict, job: dict, update: Update) -> list[dict]:
         value = values.get(spec["name"])
         if spec["kind"] == "seed" and not value:
             value = random.randint(1, 2**31 - 1)  # some nodes (Chatterbox, Seedance) cap seeds at 31-32 bits
-        if value in ("", None) or "node" not in spec:
+        if value in ("", None) and spec.get("clear_blank") and "node" in spec:
+            value = ""  # an optional prompt left empty must not fall back to the template's demo text
+        elif value in ("", None) or "node" not in spec:
             continue  # blank = keep the template default
         if spec["kind"] in ("image", "video", "audio"):
             value = client.assets.from_file(str(UPLOADS / value))  # value is the stored upload filename

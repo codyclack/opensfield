@@ -1055,6 +1055,22 @@
    ],
    "status": "planned",
    "group": "Video background remover"
+  },
+  "model.minimax-h3-max-t2v": {
+   "id": "model.minimax-h3-max-t2v",
+   "studio": "Video models",
+   "name": "MiniMax H3 Max \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_minimax_h3_max_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
   }
  },
  "wiring": {
@@ -1076,7 +1092,7 @@
      "kind": "text",
      "node": "24",
      "field": "system_prompt",
-     "required": false
+     "required": true
     },
     {
      "name": "response_modalities",
@@ -2152,6 +2168,10 @@
    ],
    "models": [
     "api_kling_o3_t2v"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/kling-o3-t2v.mp4"
    ]
   },
   "model.grok-imagine-video-1-5-lite-t2v": {
@@ -2509,6 +2529,10 @@
    ],
    "models": [
     "api_seedance2_5_i2v_1080p"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/seedance2-5-i2v-1080p.mp4"
    ]
   },
   "model.bytedance-seedance1-5-image-to-video": {
@@ -2614,20 +2638,18 @@
      "required": true
     },
     {
-     "name": "storyboard_1_prompt",
-     "label": "Storyboard 1 prompt",
+     "name": "prompt",
+     "label": "Prompt",
      "kind": "text",
      "node": "3",
      "field": "multi_shot.storyboard_1_prompt",
-     "required": false
-    },
-    {
-     "name": "storyboard_2_prompt",
-     "label": "Storyboard 2 prompt",
-     "kind": "text",
-     "node": "3",
-     "field": "multi_shot.storyboard_2_prompt",
-     "required": false
+     "required": true,
+     "also": [
+      {
+       "node": "3",
+       "field": "multi_shot.storyboard_2_prompt"
+      }
+     ]
     },
     {
      "name": "resolution",
@@ -2691,6 +2713,10 @@
    ],
    "models": [
     "api_kling_v3_video"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/kling-v3-video.mp4"
    ]
   },
   "model.kling-o3-i2v": {
@@ -2853,106 +2879,11 @@
      "required": true
     },
     {
-     "name": "ratio",
-     "label": "Ratio",
-     "kind": "choice",
-     "node": "7",
-     "field": "model.ratio",
-     "options": [
-      "adaptive",
-      "16:9",
-      "4:3",
-      "1:1",
-      "3:4",
-      "9:16",
-      "21:9"
-     ],
-     "default": "adaptive"
-    },
-    {
-     "name": "resolution",
-     "label": "Resolution",
-     "kind": "choice",
-     "node": "10",
-     "field": "model.resolution",
-     "options": [
-      "2K"
-     ],
-     "default": "2K"
-    },
-    {
-     "name": "resolution_24",
-     "label": "Resolution",
-     "kind": "choice",
-     "node": "24",
-     "field": "model.resolution",
-     "options": [
-      "480P",
-      "768P"
-     ],
-     "default": "768P"
-    },
-    {
-     "name": "prompt_expansion_mode",
-     "label": "Prompt expansion mode",
-     "kind": "choice",
-     "node": "24",
-     "field": "model.prompt_expansion_mode",
-     "options": [
-      "balanced",
-      "quality"
-     ],
-     "default": "balanced"
-    },
-    {
-     "name": "duration",
-     "label": "Duration",
-     "kind": "number",
-     "node": "7",
-     "field": "model.duration",
-     "default": 5,
-     "min": 4,
-     "max": 15,
-     "step": 1
-    },
-    {
-     "name": "duration_24",
-     "label": "Duration",
-     "kind": "number",
-     "node": "24",
-     "field": "model.duration",
-     "default": 5,
-     "min": 5,
-     "max": 15,
-     "step": 1
-    },
-    {
-     "name": "seed",
-     "label": "Seed (0 = random)",
-     "kind": "seed",
-     "node": "24",
-     "field": "seed",
-     "default": 0
-    }
-   ],
-   "outputs": [
-    "2",
-    "11"
-   ],
-   "models": [
-    "api_minimax_h3_max_i2v"
-   ]
-  },
-  "model.minimax-h3-max-turbo-i2v": {
-   "template": "api_minimax_h3_max_turbo_i2v",
-   "output_kind": "video",
-   "inputs": [
-    {
-     "name": "image_1",
-     "label": "First frame",
-     "kind": "image",
-     "node": "25",
-     "field": "image",
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "14",
+     "field": "value",
      "required": true
     },
     {
@@ -2981,19 +2912,13 @@
      "options": [
       "2K"
      ],
-     "default": "2K"
-    },
-    {
-     "name": "resolution_24",
-     "label": "Resolution",
-     "kind": "choice",
-     "node": "24",
-     "field": "model.resolution",
-     "options": [
-      "480P",
-      "768P"
-     ],
-     "default": "768P"
+     "default": "2K",
+     "also": [
+      {
+       "node": "24",
+       "field": "model.resolution"
+      }
+     ]
     },
     {
      "name": "prompt_expansion_mode",
@@ -3016,18 +2941,117 @@
      "default": 5,
      "min": 4,
      "max": 15,
-     "step": 1
+     "step": 1,
+     "also": [
+      {
+       "node": "24",
+       "field": "model.duration"
+      }
+     ]
     },
     {
-     "name": "duration_24",
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "24",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2",
+    "11"
+   ],
+   "models": [
+    "api_minimax_h3_max_i2v"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/minimax-h3-max-i2v.mp4"
+   ]
+  },
+  "model.minimax-h3-max-turbo-i2v": {
+   "template": "api_minimax_h3_max_turbo_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "First frame",
+     "kind": "image",
+     "node": "25",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "14",
+     "field": "value",
+     "required": true
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "7",
+     "field": "model.ratio",
+     "options": [
+      "adaptive",
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "10",
+     "field": "model.resolution",
+     "options": [
+      "2K"
+     ],
+     "default": "2K",
+     "also": [
+      {
+       "node": "24",
+       "field": "model.resolution"
+      }
+     ]
+    },
+    {
+     "name": "prompt_expansion_mode",
+     "label": "Prompt expansion mode",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.prompt_expansion_mode",
+     "options": [
+      "balanced",
+      "quality"
+     ],
+     "default": "balanced"
+    },
+    {
+     "name": "duration",
      "label": "Duration",
      "kind": "number",
-     "node": "24",
+     "node": "7",
      "field": "model.duration",
      "default": 5,
-     "min": 5,
+     "min": 4,
      "max": 15,
-     "step": 1
+     "step": 1,
+     "also": [
+      {
+       "node": "24",
+       "field": "model.duration"
+      }
+     ]
     },
     {
      "name": "seed",
@@ -3044,6 +3068,10 @@
    ],
    "models": [
     "api_minimax_h3_max_turbo_i2v"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/minimax-h3-max-turbo-i2v.mp4"
    ]
   },
   "model.wan3-0-i2v": {
@@ -3233,6 +3261,10 @@
    ],
    "models": [
     "api_wan2_6_i2v"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/wan2-6-i2v.mp4"
    ]
   },
   "model.grok-imagine-video-1-5": {
@@ -3839,6 +3871,10 @@
    ],
    "models": [
     "api_seedance2_0_r2v"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/seedance2-0-r2v.mp4"
    ]
   },
   "model.seedance2-5-r2v": {
@@ -4430,7 +4466,7 @@
      "kind": "text",
      "node": "208",
      "field": "text",
-     "required": false
+     "required": true
     },
     {
      "name": "apply_text_normalization",
@@ -4509,7 +4545,7 @@
      "kind": "text",
      "node": "1",
      "field": "text",
-     "required": false
+     "required": true
     },
     {
      "name": "temperature",
@@ -4585,7 +4621,7 @@
      "kind": "text",
      "node": "1",
      "field": "text",
-     "required": false
+     "required": true
     },
     {
      "name": "voice",
@@ -4709,7 +4745,7 @@
      "kind": "text",
      "node": "1",
      "field": "system_prompt",
-     "required": false
+     "required": true
     },
     {
      "name": "response_modalities",
@@ -4834,7 +4870,7 @@
      "kind": "text",
      "node": "3",
      "field": "system_prompt",
-     "required": false
+     "required": true
     },
     {
      "name": "response_modalities",
@@ -5318,7 +5354,8 @@
      "kind": "text",
      "node": "4",
      "field": "system_prompt",
-     "required": false
+     "required": false,
+     "clear_blank": true
     },
     {
      "name": "response_modalities",
@@ -5876,7 +5913,8 @@
      "kind": "text",
      "node": "13",
      "field": "should_texture.texture_prompt",
-     "required": false
+     "required": false,
+     "clear_blank": true
     },
     {
      "name": "model",
@@ -6514,6 +6552,10 @@
    ],
    "models": [
     "api_seedance2_5_t2v_1080p"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/seedance2-5-t2v-1080p.mp4"
    ]
   },
   "model.wan3-0-t2v": {
@@ -6867,6 +6909,104 @@
    ],
    "models": [
     "api_bria_remove_video_background_transparent"
+   ]
+  },
+  "model.minimax-h3-max-t2v": {
+   "template": "api_minimax_h3_max_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "14",
+     "field": "value",
+     "required": true
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "7",
+     "field": "model.ratio",
+     "options": [
+      "adaptive",
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9"
+     ],
+     "default": "adaptive",
+     "also": [
+      {
+       "node": "31",
+       "field": "model.ratio"
+      }
+     ]
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "10",
+     "field": "model.resolution",
+     "options": [
+      "2K"
+     ],
+     "default": "2K",
+     "also": [
+      {
+       "node": "31",
+       "field": "model.resolution"
+      }
+     ]
+    },
+    {
+     "name": "prompt_expansion_mode",
+     "label": "Prompt expansion mode",
+     "kind": "choice",
+     "node": "31",
+     "field": "model.prompt_expansion_mode",
+     "options": [
+      "balanced",
+      "quality"
+     ],
+     "default": "balanced"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "7",
+     "field": "model.duration",
+     "default": 5,
+     "min": 4,
+     "max": 15,
+     "step": 1,
+     "also": [
+      {
+       "node": "31",
+       "field": "model.duration"
+      }
+     ]
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "31",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2",
+    "11"
+   ],
+   "models": [
+    "api_minimax_h3_max_t2v"
    ]
   }
  }

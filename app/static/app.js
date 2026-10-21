@@ -94,9 +94,9 @@ function hero() {
   return h("section", { class: "hero" },
     art && h("video", { class: "bg", src: "/" + art, muted: true, loop: true, autoplay: !reduceMotion, playsinline: true, "aria-hidden": "true" }),
     h("div", { class: "htext" },
-      h("span", { class: "eyebrow" }, "OPEN WEIGHTS · COMFYUI"),
-      h("h2", {}, "Every Higgsfield tool, open source."),
-      h("p", {}, `${ready} tools you can run today, ${state.feats.length} mapped. Built on the Comfy Developer Platform.`),
+      h("span", { class: "eyebrow" }, "COMFYUI · OPEN WEIGHTS + PARTNER MODELS"),
+      h("h2", {}, "Every Higgsfield tool, on ComfyUI."),
+      h("p", {}, `${ready} tools verified end to end, ${state.feats.length} in the catalog. Open-weight workflows plus Seedance, Kling, GPT Image, Nano Banana and more. Built on the Comfy Developer Platform.`),
       h("div", { class: "hbtns" },
         h("button", { class: "go", type: "button", onclick: () => { const f = state.feats.find((x) => x.id === "cinema.camera-rig"); if (f) openFeature(f); } }, "Start creating"),
         h("a", { class: "ghost", href: "https://github.com/codyclack/opensfield", target: "_blank", rel: "noopener" }, "View source"))));
@@ -454,9 +454,11 @@ async function init() {
   const mode = $("#mode");
   mode.textContent = state.cfg.mode === "mock" ? "Mock mode: no ComfyUI calls" : "ComfyUI connected";
   mode.className = `chip ${state.cfg.mode === "mock" ? "mock" : "live"}`;
-  const link = location.hash.match(/^#([sf])=(.+)$/);  // deep links: #s=<Studio name>, #f=<feature id>
+  const link = location.hash.match(/^#([sfp])=(.+)$/);  // deep links: #s=<Studio name>, #f=<feature id>, #p=assets
   if (link) {
-    const v = decodeURIComponent(link[2]), f = link[1] === "f" && state.feats.find((x) => x.id === v);
+    const v = decodeURIComponent(link[2]);
+    if (link[1] === "p" && v === "assets") state.page = "assets";
+    const f = link[1] === "f" && state.feats.find((x) => x.id === v);
     if (f) { state.feature = f; state.studio = f.studio; } else if (studios().some(([s]) => s === v)) state.studio = v;
   }
   $("#search").addEventListener("input", (e) => { state.query = e.target.value.trim(); state.feature = null; state.page = null; render(); });

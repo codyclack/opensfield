@@ -11,7 +11,7 @@
   "partner": [
     "api_minimax_h3_max_i2v"
   ],
-  "status": "built",
+  "status": "tested",
   "group": "Image to video",
   "workflow": {
     "template": "api_minimax_h3_max_i2v",
@@ -24,6 +24,14 @@
         "kind": "image",
         "node": "25",
         "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "14",
+        "field": "value",
         "required": true
       },
       {
@@ -52,19 +60,13 @@
         "options": [
           "2K"
         ],
-        "default": "2K"
-      },
-      {
-        "name": "resolution_24",
-        "label": "Resolution",
-        "kind": "choice",
-        "node": "24",
-        "field": "model.resolution",
-        "options": [
-          "480P",
-          "768P"
-        ],
-        "default": "768P"
+        "default": "2K",
+        "also": [
+          {
+            "node": "24",
+            "field": "model.resolution"
+          }
+        ]
       },
       {
         "name": "prompt_expansion_mode",
@@ -87,18 +89,13 @@
         "default": 5,
         "min": 4,
         "max": 15,
-        "step": 1
-      },
-      {
-        "name": "duration_24",
-        "label": "Duration",
-        "kind": "number",
-        "node": "24",
-        "field": "model.duration",
-        "default": 5,
-        "min": 5,
-        "max": 15,
-        "step": 1
+        "step": 1,
+        "also": [
+          {
+            "node": "24",
+            "field": "model.duration"
+          }
+        ]
       },
       {
         "name": "seed",
@@ -117,6 +114,10 @@
       "api_minimax_h3_max_i2v"
     ],
     "output_kind": "video",
-    "verified": false
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/minimax-h3-max-i2v.mp4"
+    ]
   }
 }

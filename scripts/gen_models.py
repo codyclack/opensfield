@@ -165,12 +165,37 @@ def wire(api: dict, info: dict) -> dict:
                 lo, hi = cfg.get("min", 0), cfg.get("max", max(val * 4, 1))
                 step = cfg.get("step", 1 if typ == "INT" else 0.1)
                 inputs.append(dict(name=short, label=pretty(short), kind="number", node=nid, field=key, default=val, min=lo, max=hi, step=step))
-    # dedupe names, keep prompt first among texts, cap the form size
-    seen, uniq = set(), []
+    # a prompt that lives in a primitive string node (switch-based templates) is still the prompt
+    if not any(i["kind"] == "text" for i in inputs):
+        for nid, n in api.items():
+            v = n["inputs"].get("value")
+            if n["class_type"] in ("PrimitiveStringMultiline", "PrimitiveString") and isinstance(v, str) and len(v) > 30:
+                inputs.append(dict(name="prompt", label="Prompt", kind="text", node=nid, field="value", required=True))
+                break
+    # multi-shot storyboards: shot 1's text is THE prompt and the other shots receive the same text, so no demo text leaks in
+    shots = [i for i in inputs if i["kind"] == "text" and ("storyboard" in i["name"] or "shot" in i["name"])]
+    if shots:
+        main = shots[0]
+        main.update(name="prompt", label="Prompt", required=True)
+        main["also"] = [dict(node=t["node"], field=t["field"]) for t in shots[1:]]
+        inputs = [i for i in inputs if i not in shots[1:]]
+    has_media = any(i["kind"] in ("image", "video", "audio") for i in inputs)
     for i in inputs:
-        if i["name"] in seen:
+        if i["kind"] == "text":
+            if i["name"] == "prompt" or not has_media:
+                i["required"] = True
+            else:
+                i["clear_blank"] = True
+    # the same option on several nodes (switch branches): one control, applied to all of them
+    uniq, by_name = [], {}
+    for i in inputs:
+        first = by_name.get(i["name"])
+        if first and i["kind"] in ("choice", "number") and first["kind"] == i["kind"]:
+            first.setdefault("also", []).append(dict(node=i["node"], field=i["field"]))
+            continue
+        if first:
             i["name"] = f"{i['name']}_{i['node'].replace(':', '_')}"
-        seen.add(i["name"])
+        by_name[i["name"]] = i
         uniq.append(i)
     order = {"image": 0, "video": 0, "audio": 0, "text": 1, "choice": 2, "number": 3, "seed": 4}
     uniq.sort(key=lambda i: order[i["kind"]])

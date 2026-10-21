@@ -11,7 +11,7 @@
   "partner": [
     "api_kling_v3_video"
   ],
-  "status": "built",
+  "status": "tested",
   "group": "Image to video",
   "workflow": {
     "template": "api_kling_v3_video",
@@ -27,20 +27,18 @@
         "required": true
       },
       {
-        "name": "storyboard_1_prompt",
-        "label": "Storyboard 1 prompt",
+        "name": "prompt",
+        "label": "Prompt",
         "kind": "text",
         "node": "3",
         "field": "multi_shot.storyboard_1_prompt",
-        "required": false
-      },
-      {
-        "name": "storyboard_2_prompt",
-        "label": "Storyboard 2 prompt",
-        "kind": "text",
-        "node": "3",
-        "field": "multi_shot.storyboard_2_prompt",
-        "required": false
+        "required": true,
+        "also": [
+          {
+            "node": "3",
+            "field": "multi_shot.storyboard_2_prompt"
+          }
+        ]
       },
       {
         "name": "resolution",
@@ -106,6 +104,10 @@
       "api_kling_v3_video"
     ],
     "output_kind": "video",
-    "verified": false
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/kling-v3-video.mp4"
+    ]
   }
 }

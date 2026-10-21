@@ -11,7 +11,7 @@
   "partner": [
     "api_seedance2_0_r2v"
   ],
-  "status": "built",
+  "status": "tested",
   "group": "Reference to video",
   "workflow": {
     "template": "api_seedance2_0_r2v",
@@ -92,6 +92,10 @@
       "api_seedance2_0_r2v"
     ],
     "output_kind": "video",
-    "verified": false
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/seedance2-0-r2v.mp4"
+    ]
   }
 }

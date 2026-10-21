@@ -108,6 +108,14 @@ def still(path, w=None, h=None):
     return im
 
 
+def cover(img, w, h):
+    """Scale to fill w x h and center-crop (no distortion)."""
+    s = max(w / img.shape[1], h / img.shape[0])
+    im = cv2.resize(img[..., :3], (round(img.shape[1] * s), round(img.shape[0] * s)), interpolation=cv2.INTER_AREA)
+    y, x = (im.shape[0] - h) // 2, (im.shape[1] - w) // 2
+    return np.ascontiguousarray(im[y:y + h, x:x + w])
+
+
 def paste(frame, img, x, y, border=True):
     h, w = img.shape[:2]
     x0, y0 = max(x, 0), max(y, 0)
@@ -146,7 +154,7 @@ def scene(dur):
 # 1. title
 L1a = Layer(lambda d: marker(d, (120, 300), "OPENSFIELD", 190, 28))
 L1b = label("Open-source Higgsfield, rebuilt on ComfyUI", 124, 590, 60, WHITE)
-L1c = label("Open weights only  ·  MIT  ·  #OpenSourceHiggsfield", 124, 690, 40, LIME)
+L1c = label("Open weights + partner models  ·  MIT  ·  #OpenSourceHiggsfield", 124, 690, 40, LIME)
 
 
 @scene(6)
@@ -165,10 +173,10 @@ steps = [("1  Feature map", ["72 Higgsfield modules", "tiers, open stand-ins"], 
 L2t = title("EVERY FEATURE = A MANIFEST + A WORKFLOW")
 L2boxes = [Layer(lambda d, i=i, s=s: box(d, 80 + i * 360, 330, 320, 190, s[0], s[1], s[2])) for i, s in enumerate(steps)]
 L2arrows = [Layer(lambda d, i=i: d.text((410 + i * 360 - 8, 395), "→", font=font(BOLD, 56), fill=MUTED)) for i in range(4)]
-L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it and rendered 48 modules for real. Everything runs on open-weight models.")
+L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it. 75 tools are verified end to end: open-weight workflows plus partner models.")
 
 
-@scene(14)
+@scene(12)
 def s2(t):
     f = BGIMG.copy()
     L2t.on(f)
@@ -180,35 +188,62 @@ def s2(t):
     return f
 
 
-# 3. app tour
-IMG_HOME1, IMG_HOME2 = still(SH / "home_genjutsu.png"), still(SH / "home_image.png")
-L3a = caption("A Higgsfield-style studio: tiles show the real renders", "Genjutsu: motion transfer, character replacement, styles")
-L3b = caption("Image tools: background removal, upscaling, edit", "Tier A/B/C badges say what is tested, generated or only mapped")
+# 3. app tour (new UI)
+IMG_HOME, IMG_T2I, IMG_ASSETS = still(SH / "new_home.png"), still(SH / "new_t2i.png"), still(SH / "new_assets.png")
+L3a = caption("A Higgsfield-style studio: rows of tools, hover to play", "Image, video, audio, 3D and marketing tools in one place")
+L3b = caption("Pick the model from a dropdown, tweak the options, Generate", "Open-weight and partner models side by side, with real example renders")
+L3c = caption("Assets: save characters, props and locations once, reuse everywhere", "“From assets” on every image input, “Save to assets” on every result")
 
 
-@scene(14)
+@scene(16)
 def s3(t):
-    if t < 7:
-        f = kenburns(IMG_HOME1, t, 14, 1.0, 1.06); L3a.on(f, min(1, t / 0.5))
+    if t < 5:
+        f = kenburns(IMG_HOME, t, 5, 1.0, 1.05); L3a.on(f, min(1, t / 0.5))
+    elif t < 10.5:
+        f = kenburns(IMG_T2I, t - 5, 5.5, 1.0, 1.05); L3b.on(f, min(1, (t - 5) / 0.5))
     else:
-        f = kenburns(IMG_HOME2, t - 7, 14, 1.0, 1.06); L3b.on(f, min(1, (t - 7) / 0.5))
+        f = kenburns(IMG_ASSETS, t - 10.5, 5.5, 1.0, 1.05); L3c.on(f, min(1, (t - 10.5) / 0.5))
     return f
 
 
-# 4. node graph
-IMG_GRAPH = still(SH / "graph_motion.png")
-L4c = caption("Each feature is a real ComfyUI node graph", "Inputs → feature node → preview, wired with typed sockets")
+# 4. same prompt, eight models
+MODELS8 = [("FLUX 3", "bfl-flux3-t2i"), ("NANO BANANA 2.1", "nano-banana-2-1-t2i"), ("GPT IMAGE 2", "openai-gpt-image-2-t2i"), ("RECRAFT 4.1", "recraft-v4-1-t2i"),
+           ("KLING 3.0", "kling-v3-t2i"), ("IDEOGRAM 4.5", "ideogram-v4-5-t2i"), ("KREA 3", "krea3-t2i"), ("QWEN IMAGE 3", "qwen3-t2i")]
+M8 = [cover(still(EX / "models" / f"{f}.png"), 420, 250) for _, f in MODELS8]
+L4t = title("ONE PROMPT, EIGHT MODELS", 60, 56)
+L4l = [label(n, 60 + (i % 4) * 450 + 210, 195 + (i // 4) * 330, 24, LIME, "ma") for i, (n, _) in enumerate(MODELS8)]
+L4c = caption("Same prompt, switch the model: FLUX 3, Nano Banana, GPT Image, Recraft and more", "Prompt: “a pair of white sneakers on a wet city street at dusk” · each run through the app")
 
 
 @scene(12)
 def s4(t):
-    gh = IMG_GRAPH.shape[0]
-    if gh > H:  # taller than the frame: pan down
-        y = int((gh - H) * min(1, t / 9))
-        f = IMG_GRAPH[y:y + H, :1920, :3].copy()
-    else:
-        f = kenburns(IMG_GRAPH[..., :3], t, 12, 1.0, 1.08)
+    f = BGIMG.copy(); L4t.on(f)
+    for i, m in enumerate(M8):
+        k = min(1, max(0, t - 0.3 - i * 0.35) / 0.4)
+        if k > 0:
+            paste(f, m, 60 + (i % 4) * 450, 230 + (i // 4) * 330)
+            L4l[i].on(f, k)
     L4c.on(f, min(1, t / 0.5))
+    return f
+
+
+# 4b. partner video wall
+VIDS = [("GROK IMAGINE 1.5 LITE", "grok-imagine-video-1-5-lite-t2v"), ("KLING O3", "kling-o3-t2v"), ("SEEDANCE 2.5", "seedance2-5-t2v-1080p"), ("KLING 3.0", "kling-v3-video")]
+CV = [Clip(EX / "models" / f"{f}.mp4", w=800) for _, f in VIDS]
+L4bt = title("PARTNER VIDEO MODELS", 60, 56)
+L4bl = [label(n, 60 + (i % 2) * 920 + 400, 168 + (i // 2) * 360, 24, LIME, "ma") for i, (n, _) in enumerate(VIDS)]
+L4bc = caption("Grok, Kling, MiniMax, Seedance, Wan, Luma and more through Comfy API nodes", "Each tool is generated from Comfy's official template, so the form always matches the model")
+
+
+@scene(12)
+def s4b(t):
+    f = BGIMG.copy(); L4bt.on(f)
+    for i, c in enumerate(CV):
+        fr = c.at(t)
+        fr = cover(fr, 640, 330)
+        paste(f, fr, 140 + (i % 2) * 920 - 0, 200 + (i // 2) * 360)
+        L4bl[i].on(f)
+    L4bc.on(f, min(1, t / 0.5))
     return f
 
 
@@ -220,7 +255,7 @@ L5r = label("DRIVING CLIP (AI-GENERATED)", 160 + 1150, 150, 26, LIME, "ma")
 L5c = caption("Wan Animate 2 · character image + driving video → same moves", "Rendered on Comfy Cloud with open weights · all people are fictional")
 
 
-@scene(16)
+@scene(12)
 def s5(t):
     f = BGIMG.copy(); L5t.on(f); L5l.on(f); L5r.on(f)
     paste(f, C5.at(t), 160, 190); L5c.on(f)
@@ -237,7 +272,7 @@ L6a = Layer(lambda d: [d.text((1020, 280), "LTX-2.5 first / last frame", font=fo
 L6c = caption("Spin, flash of light, new outfit and person", "First frame and last frame are both generated stills")
 
 
-@scene(10)
+@scene(8)
 def s6(t):
     f = BGIMG.copy(); L6t.on(f); paste(f, C6.at(t), 300, 150); L6a.on(f, min(1, t / 0.6)); L6c.on(f)
     return f
@@ -250,7 +285,7 @@ L7l, L7r = label("SOURCE VIDEO", 60 + 440, 170, 26, LIME, "ma"), label("SAME SHO
 L7c = caption("SCAIL-2 · swap who is in the footage, keep the motion", "Source: an AI-generated clip · replacement: a generated character image")
 
 
-@scene(12)
+@scene(10)
 def s7(t):
     f = BGIMG.copy(); L7t.on(f); L7l.on(f); L7r.on(f)
     paste(f, C7a.at(t), 60, 220); paste(f, C7b.at(t), 980, 220 + (C7a.h - C7b.h) // 2); L7c.on(f)
@@ -272,7 +307,7 @@ L8l = [label("IMAGE EDIT (QWEN)", 40 + 536 // 2 + 40, 600, 26, LIME, "ma"), labe
 L8c = caption("Edit · cut-out · text-to-video, plus inpaint, video edit, effects, music and 3D", "Prompt: \"change the black hoodie to yellow\" · every output is in examples/")
 
 
-@scene(14)
+@scene(10)
 def s8(t):
     f = BGIMG.copy(); L8t.on(f)
     paste(f, A, 80, 190); paste(f, B, 80 + A.shape[1] + 30, 190)
@@ -285,15 +320,15 @@ def s8(t):
 
 
 # 9. end
-L9 = Layer(lambda d: [marker(d, (120, 170), "37 MODULES RENDERED FOR REAL", 78),
-                      d.text((124, 330), "35 more mapped in COVERAGE.md, tiers and status are honest", font=font(BOLD, 44), fill=WHITE),
-                      d.text((124, 410), "Open weights only  ·  MIT  ·  built on comfy-sdk", font=font(REG, 40), fill=MUTED),
+L9 = Layer(lambda d: [marker(d, (120, 170), "75 TOOLS RUN FOR REAL", 78),
+                      d.text((124, 330), "62 more mapped in COVERAGE.md, with honest status", font=font(BOLD, 44), fill=WHITE),
+                      d.text((124, 410), "Open weights + partner models  ·  MIT  ·  built on comfy-sdk", font=font(REG, 40), fill=MUTED),
                       d.text((124, 560), "github.com/codyclack/opensfield", font=font(BOLD, 72), fill=LIME),
                       d.text((124, 680), "#OpenSourceHiggsfield", font=font(BOLD, 56), fill=WHITE),
-                      d.text((124, 820), "Examples were rendered on Comfy Cloud. The app runs in mock mode without a ComfyUI server.", font=font(REG, 30), fill=MUTED)])
+                      d.text((124, 820), "Examples were rendered through the app on Comfy Cloud. Partner models use Comfy credits.", font=font(REG, 30), fill=MUTED)])
 
 
-@scene(12)
+@scene(8)
 def s9(t):
     f = BGIMG.copy(); L9.on(f, min(1, t / 0.7))
     return f

@@ -11,7 +11,7 @@
   "partner": [
     "api_wan2_6_i2v"
   ],
-  "status": "built",
+  "status": "tested",
   "group": "Image to video",
   "workflow": {
     "template": "api_wan2_6_i2v",
@@ -98,6 +98,10 @@
       "api_wan2_6_i2v"
     ],
     "output_kind": "video",
-    "verified": false
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/wan2-6-i2v.mp4"
+    ]
   }
 }
