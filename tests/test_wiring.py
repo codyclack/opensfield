@@ -68,13 +68,21 @@ class FakeWF:
         self.json[node]["inputs"][field] = value
 
 
+class FakeOutput:
+    def __init__(self, name):
+        self.name = name
+
+    def to_file(self, path):  # like the real SDK: fails if the parent folder is missing
+        Path(path).write_bytes(b"x")
+
+
 class FakeResult:
     def __init__(self, asked):
         self.asked = asked
 
     def get_outputs(self, node):
         self.asked.append(node)
-        return []
+        return [FakeOutput("video/LTX-2.5_i2v_00001_.mp4")] if node == "75" else []
 
 
 def run_with_stub(monkeypatch, fid, inputs):
@@ -91,7 +99,7 @@ def run_with_stub(monkeypatch, fid, inputs):
     monkeypatch.setitem(sys.modules, "comfy_sdk", types.SimpleNamespace(Comfy=FakeComfy))
     monkeypatch.setenv("COMFY_API_KEY", "test")
     feature = next(f for f in load_features() if f["id"] == fid)
-    runner.run_comfy(feature, {"id": "t1", "inputs": inputs}, lambda **kw: None)
+    seen["outputs"] = runner.run_comfy(feature, {"id": "t1", "inputs": inputs}, lambda **kw: None)
     return seen
 
 
@@ -103,6 +111,14 @@ def test_motion_control_sets_the_right_nodes(monkeypatch):
     assert g["605"]["inputs"]["value"] == "a robot" and g["604"]["inputs"]["value"] == "dancing"
     assert g["261:19"]["inputs"]["noise_seed"] > 0  # seed 0 means random
     assert seen["asked"] == ["246", "292"]
+
+
+def test_outputs_with_a_subfolder_in_their_name_are_saved(monkeypatch):
+    """Regression: a real run failed with [Errno 2] because 'video/LTX..mp4' needed a 'video' folder that did not exist."""
+    seen = run_with_stub(monkeypatch, "cinema.camera-rig", {"start_image": "s.png", "prompt": "orbit"})
+    (out,) = seen["outputs"]
+    assert out["kind"] == "video" and "/" not in out["name"] and out["name"].endswith("LTX-2.5_i2v_00001_.mp4")
+    assert (runner.OUTPUTS / "t1" / out["name"]).read_bytes() == b"x"
 
 
 def test_camera_rig_sets_both_seeds_and_casts_numbers(monkeypatch):

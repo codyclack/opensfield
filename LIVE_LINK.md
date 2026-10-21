@@ -41,3 +41,13 @@ It prints `https://<random>.trycloudflare.com`. Your live link is that address p
 New Web Service from `github.com/codyclack/opensfield`. Build command: `pip install uv && uv sync --extra comfy`.
 Start command: `uv run uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Set the four environment variables from step 2 in the
 host's secret settings. Free tiers sleep when idle, so open it once before submitting. This needs your hosting account.
+
+## Smoke test every module before sharing (recommended)
+In a second PowerShell window (the app can keep running):
+```powershell
+cd opensfield
+$env:COMFY_API_KEY = Read-Host "Paste your Comfy API key" -MaskInput
+uv run --extra comfy scripts/smoke_cloud.py --skip-slow    # fast modules first; drop --skip-slow for the video-heavy ones
+```
+It runs each module once through the app's real path and prints PASS/FAIL per module (about a minute of GPU or less each).
+Send the summary lines back to be fixed. It spends a small amount of credits.
