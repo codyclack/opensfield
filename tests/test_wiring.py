@@ -95,7 +95,7 @@ def run_with_stub(monkeypatch, fid, inputs):
             self.workflows = types.SimpleNamespace(from_file=lambda p: seen.setdefault("wf", FakeWF(json.loads(Path(p).read_text(encoding="utf-8")))))
             self.assets = types.SimpleNamespace(from_file=lambda p: ("ASSET", Path(p).name))
 
-        def run(self, wf):
+        def run(self, wf, api_key=None):
             return FakeResult(seen["asked"])
 
     monkeypatch.setitem(sys.modules, "comfy_sdk", types.SimpleNamespace(Comfy=FakeComfy))

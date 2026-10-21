@@ -1,0 +1,71 @@
+{
+ "1": {
+  "inputs": {
+   "keep_pose": true,
+   "seed": 982174420,
+   "person_image": [
+    "2",
+    0
+   ],
+   "garment_image": [
+    "3",
+    0
+   ]
+  },
+  "class_type": "KlingTryOnNode",
+  "_meta": {
+   "title": "Kling Virtual Try-On"
+  }
+ },
+ "2": {
+  "inputs": {
+   "image": "model_colorful_outfit.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "3": {
+  "inputs": {
+   "image": "green_floral_dress.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "4": {
+  "inputs": {
+   "filename_prefix": "Kling_VTO",
+   "format": "png",
+   "images": [
+    "1",
+    0
+   ],
+   "format.bit_depth": "8-bit",
+   "format.input_color_space": "sRGB"
+  },
+  "class_type": "SaveImageAdvanced",
+  "_meta": {
+   "title": "Save Image (Advanced)"
+  }
+ },
+ "5": {
+  "inputs": {
+   "compare_view": null,
+   "image_a": [
+    "2",
+    0
+   ],
+   "image_b": [
+    "4",
+    0
+   ]
+  },
+  "class_type": "ImageCompare",
+  "_meta": {
+   "title": "Compare Images"
+  }
+ }
+}

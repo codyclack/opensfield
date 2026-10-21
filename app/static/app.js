@@ -1,7 +1,7 @@
 "use strict";
 const $ = (s) => document.querySelector(s);
 const NS = "http://www.w3.org/2000/svg";
-const state = { cfg: null, feats: [], studio: null, filter: "all", view: "studio", query: "", feature: null, jobs: [], timer: null, links: [], obs: null };
+const state = { cfg: null, feats: [], page: null, studio: null, filter: "all", view: "studio", query: "", feature: null, jobs: [], timer: null, links: [], obs: null };
 
 // node-title colours per studio (ComfyUI node-colour feel)
 const STUDIO_COLOR = {
@@ -48,15 +48,16 @@ function studios() {
   return [...known, ...[...seen.keys()].filter((s) => !known.includes(s))].map((s) => [s, seen.get(s)]);
 }
 
-function goHome() { state.studio = null; state.query = ""; $("#search").value = ""; state.feature = null; render(); }
+function goHome() { state.page = null; state.studio = null; state.query = ""; $("#search").value = ""; state.feature = null; render(); }
 
 function renderRail() {
-  const home = !state.query && !state.feature && !state.studio;
+  const home = !state.query && !state.feature && !state.studio && !state.page;
   const item = (label, icon, color, current, onclick) => h("button", { type: "button", "aria-current": String(current), style: `--c:${color}`, title: label, onclick },
     h("span", { class: "ico" }, icon), h("span", { class: "nm" }, label));
   $("#rail").replaceChildren(item("Explore", "★", "#d1fe17", home, goHome),
-    ...studios().map(([s]) => item(s, STUDIO_ICON[s] || s.slice(0, 2).toUpperCase(), studioColor(s), !state.query && !state.feature && state.studio === s,
-      () => { state.studio = s; state.query = ""; $("#search").value = ""; state.feature = null; render(); })));
+    item("Assets", "▣", "#ff9cf9", state.page === "assets" && !state.feature, () => { state.page = "assets"; state.feature = null; state.query = ""; $("#search").value = ""; render(); }),
+    ...studios().map(([s]) => item(s, STUDIO_ICON[s] || s.slice(0, 2).toUpperCase(), studioColor(s), !state.query && !state.feature && !state.page && state.studio === s,
+      () => { state.page = null; state.studio = s; state.query = ""; $("#search").value = ""; state.feature = null; render(); })));
 }
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -76,7 +77,7 @@ function card(f) {
   const el = h("button", { class: `card${cover ? "" : " plain"}`, type: "button", style: `--h:${hash(f.id) % 360}`, onclick: () => openFeature(f) },
     cover && exampleEl(cover, "bg"),
     h("span", { class: "pill" }, statusLabel(f)),
-    h("span", { class: "ckind" }, f.output_kind.toUpperCase()),
+    h("span", { class: "ckind" }, f.output_kind.toUpperCase() + (f.track === "partner" ? " · API" : "")),
     h("span", { class: "ctext" }, h("b", {}, f.name), h("small", {}, f.engine || f.higgsfield)));
   const v = el.querySelector("video");
   if (v && !reduceMotion) { v.autoplay = false; v.removeAttribute("autoplay"); el.addEventListener("mouseenter", () => v.play().catch(() => {})); el.addEventListener("mouseleave", () => v.pause()); }
@@ -241,7 +242,8 @@ function uploadTile(spec, vals) {
   zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("over"); });
   zone.addEventListener("dragleave", () => zone.classList.remove("over"));
   zone.addEventListener("drop", (e) => { e.preventDefault(); zone.classList.remove("over"); if (e.dataTransfer.files[0]) upload(e.dataTransfer.files[0], spec, vals, ui); });
-  return h("div", { class: "ufield" }, zone, h("div", { class: "flabel" }, spec.label, spec.required && h("b", {}, " *")));
+  return h("div", { class: "ufield" }, zone, h("div", { class: "flabel" }, spec.label, spec.required && h("b", {}, " *")),
+    h("button", { class: "libbtn", type: "button", onclick: () => pickAsset(spec, vals, ui) }, "From assets"));
 }
 
 function control(spec, vals) {
@@ -271,9 +273,11 @@ function buildComposer(f, vals) {
   const presetOpts = opts.filter((s) => s.presets), plainOpts = opts.filter((s) => !s.presets);
   if (seed) vals[seed.name] = 0;
   return h("div", { class: "composer" },
+    modelSwitch(f),
     media.length > 0 && h("div", { class: "uploads" }, media.map((s) => uploadTile(s, vals))),
     ...presetOpts.map((s) => control(s, vals)),
-    ...texts.map((s) => field(s, h("textarea", { id: `f-${s.name}`, "aria-label": s.label, rows: 4, placeholder: s.required ? "Describe what you want..." : "Optional", oninput: (e) => (vals[s.name] = e.target.value) }))),
+    ...texts.map((s) => field(s, h("textarea", { id: `f-${s.name}`, "aria-label": s.label, rows: 4, placeholder: s.required ? "Describe what you want..." : "Optional", oninput: (e) => (vals[s.name] = e.target.value) },
+      s.name === "prompt" && state.carry ? (vals[s.name] = state.carry, state.carry = null, vals[s.name]) : ""))),
     ...plainOpts.map((s) => control(s, vals)),
     seed && h("details", { class: "adv" }, h("summary", {}, "Advanced"),
       field(seed, h("input", { type: "number", min: 0, value: 0, "aria-label": seed.label, oninput: (e) => (vals[seed.name] = Number(e.target.value)) }), "0 picks a random seed each run.")));
@@ -308,14 +312,14 @@ function renderFeature(f) {
     $("#main").replaceChildren(head, marker(f.name), sub,
       h("div", { class: "create" },
         h("aside", { class: "panel" }, h("p", { class: "hf" }, f.higgsfield), f.note && h("p", { class: "note" }, f.note), buildComposer(f, vals),
-          h("div", { class: "gen" }, err, go, h("div", { class: "fine" }, !f.runnable && state.cfg.mode === "comfy" ? "No workflow built yet for this tool." : f.local ? "Runs on this computer's CPU." : "Open weights on Comfy. Ctrl+Enter to run."))),
+          h("div", { class: "gen" }, err, go, h("div", { class: "fine" }, !f.runnable && state.cfg.mode === "comfy" ? "No workflow built yet for this tool." : f.local ? "Runs on this computer's CPU." : f.track === "partner" ? "Partner model through Comfy Cloud. Uses your Comfy credits. Ctrl+Enter to run." : "Open weights on Comfy. Ctrl+Enter to run."))),
         h("section", { class: "results", "aria-label": "Results" }, h("div", { id: "preview", class: "gallery" }))));
   }
   updatePreview();
 }
 
 function openFeature(f) { state.feature = f; render(); window.scrollTo(0, 0); }
-function render() { renderRail(); state.feature ? renderFeature(state.feature) : renderGrid(); }
+function render() { renderRail(); state.feature ? renderFeature(state.feature) : state.page === "assets" ? renderAssets() : renderGrid(); }
 
 /* ---------------- queue + preview ---------------- */
 
@@ -326,6 +330,7 @@ function jobMedia(j) {
     j.error && h("div", { class: "st error" }, j.error),
     ...j.outputs.map((o) => o.kind === "video" ? h("video", { class: "thumb", src: o.url, controls: true })
       : o.kind === "audio" ? h("audio", { src: o.url, controls: true }) : h("img", { class: "thumb", src: o.url, alt: `${j.feature_name} output` })),
+    ...j.outputs.filter((o) => o.kind !== "3d" && !o.mock).map((o) => h("button", { class: "savebtn", type: "button", onclick: (e) => saveToAssets(o, e.currentTarget) }, "Save to assets")),
     ...j.outputs.filter((o) => o.kind === "3d").map((o) => h("a", { class: "st", href: o.url, download: "" }, `Download ${o.name}`)),
     j.outputs.some((o) => o.mock) && h("div", { class: "st" }, "mock placeholder, no ComfyUI call"),
   ].filter(Boolean);
@@ -360,6 +365,90 @@ async function poll() {
   if (state.jobs.some((j) => j.status === "queued" || j.status === "running")) state.timer = setTimeout(poll, 700);
 }
 
+/* ---------------- model switcher, asset library, asset picker ---------------- */
+function modelSwitch(f) {
+  const sibs = f.group ? state.feats.filter((x) => x.group === f.group) : [];
+  if (sibs.length < 2) return null;
+  const opt = (x) => h("option", { value: x.id, selected: x.id === f.id }, `${x.name}${x.status === "tested" ? "" : "  (untested)"}`);
+  const open = sibs.filter((x) => x.track !== "partner"), part = sibs.filter((x) => x.track === "partner");
+  const sel = h("select", { "aria-label": "Model", onchange: (e) => {
+    const next = state.feats.find((x) => x.id === e.target.value);
+    const t = $("#f-prompt");
+    state.carry = t && t.value ? t.value : null;
+    if (next) openFeature(next);
+  } }, open.length && h("optgroup", { label: "Open weights" }, open.map(opt)), part.length && h("optgroup", { label: "Partner models (Comfy credits)" }, part.map(opt)));
+  return h("div", { class: "field modelsel" }, h("div", { class: "flabel" }, `Model · ${f.group}`), sel);
+}
+
+async function saveToAssets(o, btn) {
+  btn.disabled = true; btn.textContent = "Saving...";
+  try {
+    await api("/api/assets/save", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ url: o.url, name: o.name.replace(/\.[a-z0-9]+$/i, "").slice(0, 40) }) });
+    btn.textContent = "Saved. Organise it in Assets";
+  } catch (e) { btn.disabled = false; btn.textContent = `Could not save: ${e.message}`; }
+}
+
+function assetThumb(a) {
+  if (a.kind === "video") return h("video", { src: a.url + "#t=0.5", muted: true, preload: "metadata", playsinline: true });
+  if (a.kind === "audio") return h("div", { class: "aud" }, "♪", h("audio", { src: a.url, controls: true, preload: "none" }));
+  return h("img", { src: a.url, alt: a.name, loading: "lazy" });
+}
+
+async function renderAssets() {
+  const main = $("#main");
+  main.replaceChildren(marker("Assets"), h("p", { class: "sub" }, "Characters, props, locations and styles you reuse across tools. Pick them as inputs with “From assets”."));
+  let data;
+  try { data = await api("/api/assets"); } catch (e) { main.append(h("p", { class: "err" }, e.message)); return; }
+  let filter = state.assetFilter || "All";
+  const grid = h("div", { class: "cards assets" });
+  const pillsEl = h("div", { class: "filters" });
+  const typeSel = h("select", { "aria-label": "Type for new uploads" }, data.types.map((t) => h("option", { value: t }, t)));
+  const file = h("input", { type: "file", multiple: true, accept: "image/*,video/*,audio/*", class: "sr", id: "asset-up",
+    onchange: async (e) => {
+      for (const fl of e.target.files) {
+        const fd = new FormData(); fd.append("file", fl); fd.append("type", typeSel.value); fd.append("name", fl.name.replace(/\.[a-z0-9]+$/i, ""));
+        try { await api("/api/assets", { method: "POST", body: fd }); } catch (err) { alert(`${fl.name}: ${err.message}`); }
+      }
+      renderAssets();
+    } });
+  const draw = () => {
+    pillsEl.replaceChildren(...["All", ...data.types].map((t) => h("button", { type: "button", class: "fpill", "aria-pressed": String(filter === t), onclick: () => { filter = t; state.assetFilter = t; draw(); } }, t)));
+    const items = data.items.filter((a) => filter === "All" || a.type === filter);
+    grid.replaceChildren(...(items.length ? items.map((a) => h("div", { class: "acard" },
+      h("div", { class: "athumb" }, assetThumb(a)),
+      h("div", { class: "ameta" },
+        h("input", { class: "aname", value: a.name, "aria-label": "Name", onchange: (e) => api(`/api/assets/${a.id}`, { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ name: e.target.value }) }) }),
+        h("select", { "aria-label": "Type", onchange: (e) => api(`/api/assets/${a.id}`, { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ type: e.target.value }) }) },
+          data.types.map((t) => h("option", { value: t, selected: t === a.type }, t))),
+        h("button", { class: "adel", type: "button", title: "Delete", "aria-label": `Delete ${a.name}`, onclick: async () => { await api(`/api/assets/${a.id}`, { method: "DELETE" }).catch(() => {}); renderAssets(); } }, "✕")))
+    ) : [h("p", { class: "empty" }, data.items.length ? "Nothing of this type yet." : "No assets yet. Upload some, or use “Save to assets” on any result.")]));
+  };
+  main.append(h("div", { class: "uprow" }, h("label", { class: "go", for: "asset-up" }, "+ Upload"), typeSel, file), pillsEl, grid);
+  draw();
+}
+
+async function pickAsset(spec, vals, ui) {
+  let data;
+  try { data = await api("/api/assets"); } catch (e) { alert(e.message); return; }
+  const items = data.items.filter((a) => a.kind === spec.kind);
+  const close = () => { overlay.remove(); document.removeEventListener("keydown", onKey); };
+  const onKey = (e) => { if (e.key === "Escape") close(); };
+  const overlay = h("div", { class: "modal", role: "dialog", "aria-modal": "true", "aria-label": "Choose an asset", onclick: (e) => e.target === overlay && close() },
+    h("div", { class: "mbox" },
+      h("div", { class: "mhead" }, h("b", {}, `Choose ${spec.kind === "image" ? "an image" : spec.kind === "video" ? "a video" : "an audio clip"}`), h("button", { type: "button", class: "adel", "aria-label": "Close", onclick: close }, "✕")),
+      items.length ? h("div", { class: "cards assets" }, items.map((a) => h("button", { type: "button", class: "acard pick", onclick: async () => {
+        try {
+          const up = await api(`/api/assets/${a.id}/use`, { method: "POST" });
+          vals[spec.name] = up.id; ui.label.textContent = a.name;
+          if (spec.kind === "image") { ui.img.src = a.url; ui.img.hidden = false; }
+          close();
+        } catch (e) { alert(e.message); }
+      } }, h("div", { class: "athumb" }, assetThumb(a)), h("div", { class: "ameta" }, h("span", { class: "aname" }, a.name), h("small", {}, a.type)))))
+        : h("p", { class: "empty" }, `No ${spec.kind} assets yet. Add some in Assets, or use “Save to assets” on a result.`)));
+  document.body.append(overlay);
+  document.addEventListener("keydown", onKey);
+}
+
 async function init() {
   [state.cfg, state.feats] = await Promise.all([api("/api/config"), api("/api/features")]);
   const mode = $("#mode");
@@ -370,7 +459,7 @@ async function init() {
     const v = decodeURIComponent(link[2]), f = link[1] === "f" && state.feats.find((x) => x.id === v);
     if (f) { state.feature = f; state.studio = f.studio; } else if (studios().some(([s]) => s === v)) state.studio = v;
   }
-  $("#search").addEventListener("input", (e) => { state.query = e.target.value.trim(); state.feature = null; render(); });
+  $("#search").addEventListener("input", (e) => { state.query = e.target.value.trim(); state.feature = null; state.page = null; render(); });
   $("#qtoggle").addEventListener("click", () => { const o = document.body.classList.toggle("q-open"); $("#qtoggle").setAttribute("aria-expanded", String(o)); });
   document.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey) && state.feature && state.run) { e.preventDefault(); state.run(); } });
   window.addEventListener("resize", () => requestAnimationFrame(drawLinks));

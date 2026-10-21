@@ -1,0 +1,104 @@
+{
+  "id": "model.kling-o3-i2v",
+  "studio": "Video models",
+  "name": "Kling O3 \u00b7 Reference to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_kling_o3_i2v"
+  ],
+  "status": "built",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_kling_o3_i2v",
+    "api": "features/model.kling-o3-i2v/workflow_api.json",
+    "ui": "features/model.kling-o3-i2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Reference images",
+        "kind": "image",
+        "node": "17",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "21",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model_name",
+        "label": "Model name",
+        "kind": "choice",
+        "node": "21",
+        "field": "model_name",
+        "options": [
+          "kling-v3-omni",
+          "kling-video-o1"
+        ],
+        "default": "kling-v3-omni"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "21",
+        "field": "aspect_ratio",
+        "options": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "default": "16:9"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "21",
+        "field": "resolution",
+        "options": [
+          "4k",
+          "1080p",
+          "720p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "21",
+        "field": "duration",
+        "default": 5,
+        "min": 3,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "21",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "20"
+    ],
+    "models": [
+      "api_kling_o3_i2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

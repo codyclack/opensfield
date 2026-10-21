@@ -1,0 +1,32 @@
+{
+ "27": {
+  "inputs": {
+   "prompt": "A man in a beige suit, white shirt, and yellow tie stands against a clear blue sky, with a large, fluffy white cloud replacing his head, and a brown hat visible within the cloud.\n",
+   "negative_prompt": "",
+   "image_type": "subject",
+   "image_fidelity": 0.5,
+   "human_fidelity": 0.45,
+   "model_name": "kling-v3",
+   "aspect_ratio": "16:9",
+   "n": 1,
+   "seed": 0
+  },
+  "class_type": "KlingImageGenerationNode",
+  "_meta": {
+   "title": "Kling 3.0 Image"
+  }
+ },
+ "29": {
+  "inputs": {
+   "filename_prefix": "ComfyUI",
+   "images": [
+    "27",
+    0
+   ]
+  },
+  "class_type": "SaveImage",
+  "_meta": {
+   "title": "Save Image"
+  }
+ }
+}

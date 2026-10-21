@@ -1,0 +1,87 @@
+{
+  "id": "model.kling-o3-video-edit",
+  "studio": "Video tools",
+  "name": "Kling O3 \u00b7 Video Edit",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Video edit",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_kling_o3_video_edit"
+  ],
+  "status": "built",
+  "group": "Video edit",
+  "workflow": {
+    "template": "api_kling_o3_video_edit",
+    "api": "features/model.kling-o3-video-edit/workflow_api.json",
+    "ui": "features/model.kling-o3-video-edit/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Reference images",
+        "kind": "image",
+        "node": "17",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "video_1",
+        "label": "Video",
+        "kind": "video",
+        "node": "25",
+        "field": "file",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "23",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model_name",
+        "label": "Model name",
+        "kind": "choice",
+        "node": "23",
+        "field": "model_name",
+        "options": [
+          "kling-v3-omni",
+          "kling-video-o1"
+        ],
+        "default": "kling-v3-omni"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "23",
+        "field": "resolution",
+        "options": [
+          "1080p",
+          "720p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "23",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "14"
+    ],
+    "models": [
+      "api_kling_o3_video_edit"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

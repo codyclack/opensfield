@@ -1,0 +1,43 @@
+{
+ "3": {
+  "inputs": {
+   "prompt": "Cinematic tracking shot of a fierce young woman in battle-worn chrome armor riding a massive white tiger with glowing blue neural stripes, galloping across a scorched futuristic battlefield, shattered mechs and burning wreckage behind them, dust and embers in the air, heroic and defiant, epic sci-fi fantasy, golden hour light, 4K, shallow depth of field",
+   "aspect_ratio": "1:1",
+   "resolution": "720p",
+   "duration": "5s",
+   "loop": false,
+   "seed": 953364548931126
+  },
+  "class_type": "LumaRay32TextToVideoNode",
+  "_meta": {
+   "title": "Luma Ray 3.2 Text to Video"
+  }
+ },
+ "6": {
+  "inputs": {
+   "filename_prefix": "video/Luma_Ray_3.2_T2V",
+   "format": "auto",
+   "video": [
+    "3",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "8": {
+  "inputs": {
+   "source": [
+    "3",
+    1
+   ]
+  },
+  "class_type": "PreviewAny",
+  "_meta": {
+   "title": "Preview as Text (generation_id)"
+  }
+ }
+}

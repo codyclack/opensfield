@@ -1,0 +1,89 @@
+{
+  "id": "model.happyhorse1-1-t2v",
+  "studio": "Video models",
+  "name": "HappyHorse 1.1 \u00b7 Text to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_happyhorse1_1_t2v"
+  ],
+  "status": "built",
+  "group": "Text to video",
+  "workflow": {
+    "template": "api_happyhorse1_1_t2v",
+    "api": "features/model.happyhorse1-1-t2v/workflow_api.json",
+    "ui": "features/model.happyhorse1-1-t2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "17",
+        "field": "model.prompt",
+        "required": true
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "17",
+        "field": "model.resolution",
+        "options": [
+          "720P",
+          "1080P"
+        ],
+        "default": "720P"
+      },
+      {
+        "name": "ratio",
+        "label": "Ratio",
+        "kind": "choice",
+        "node": "17",
+        "field": "model.ratio",
+        "options": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4",
+          "21:9",
+          "9:21",
+          "5:4",
+          "4:5"
+        ],
+        "default": "16:9"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "17",
+        "field": "model.duration",
+        "default": 5,
+        "min": 3,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "17",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "16"
+    ],
+    "models": [
+      "api_happyhorse1_1_t2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

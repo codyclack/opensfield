@@ -2,13 +2,13 @@
 
 Deadline: **Oct 30, 2026, 9am PT.** Target: everything done by the evening of **Oct 29**.
 Entry form: https://form.typeform.com/to/V1dSQrkS (sign-up form: https://form.typeform.com/to/Ayn9Cwfj).
-One main category + one provider bonus per entry. Declared entry: **Open Weights Only + LTX VFX bonus**.
+One main category + one provider bonus per entry. The app now ships partner models (Seedance, Kling, GPT Image, Nano Banana, etc. via Comfy Cloud API nodes) alongside open-weight tools, so it no longer fits **Open Weights Only**. Choose **Most Innovative** (or Grand / Most Viral) as the main category; the **LTX VFX bonus** still applies because LTX-2.5/2.3 tools are included. Set `OPENSFIELD_PARTNER=0` to hide the partner models.
 
 Publishing, hosting and posting are public actions: do each one deliberately.
 
 ## Before the four links
 - [ ] Signed up on the sign-up form (first 200 get credits)
-- [ ] Open Weights eligibility question asked: does an optional `partner/` pack in the repo matter? If unclear, keep it out of the public repo
+- [x] Category decided: partner models are included, so not Open Weights Only (see above)
 - [ ] No unlicensed IP or likenesses in example outputs or driving clips; everything SFW
 - [ ] Example outputs are real renders (not mock placeholders) and sit in the repo or README
 

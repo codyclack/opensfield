@@ -1,0 +1,188 @@
+{
+ "2": {
+  "inputs": {
+   "filename_prefix": "video/video/MiniMax_H3_Max_turbo_i2v_768P",
+   "format": "auto",
+   "codec": "auto",
+   "video": [
+    "24",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "7": {
+  "inputs": {
+   "model": "MiniMax H3",
+   "first_frame": [
+    "25",
+    0
+   ],
+   "model.duration": 5,
+   "model.ratio": "adaptive",
+   "model.prompt": [
+    "14",
+    0
+   ]
+  },
+  "class_type": "MinimaxHailuo03ContextIRNode",
+  "_meta": {
+   "title": "MiniMax H3 Context IR (Prompt Enhancer)"
+  }
+ },
+ "8": {
+  "inputs": {
+   "filename_prefix": "H3_prompt",
+   "format": "txt",
+   "text": [
+    "12",
+    0
+   ]
+  },
+  "class_type": "SaveText",
+  "_meta": {
+   "title": "Save Text"
+  }
+ },
+ "10": {
+  "inputs": {
+   "model": "MiniMax H3",
+   "watermark": false,
+   "video": [
+    "2",
+    0
+   ],
+   "first_frame": [
+    "25",
+    0
+   ],
+   "model.resolution": "2K",
+   "model.prompt": [
+    "8",
+    0
+   ]
+  },
+  "class_type": "MinimaxHailuo03RegenerateNode",
+  "_meta": {
+   "title": "MiniMax H3 Regenerate to 2K"
+  }
+ },
+ "11": {
+  "inputs": {
+   "filename_prefix": "video/Minimax_h3_max",
+   "format": "auto",
+   "codec": "auto",
+   "video": [
+    "13",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "12": {
+  "inputs": {
+   "switch": [
+    "18",
+    0
+   ],
+   "on_false": [
+    "14",
+    0
+   ],
+   "on_true": [
+    "7",
+    0
+   ]
+  },
+  "class_type": "ComfySwitchNode",
+  "_meta": {
+   "title": "If/Else Switch"
+  }
+ },
+ "13": {
+  "inputs": {
+   "switch": [
+    "19",
+    0
+   ],
+   "on_false": [
+    "24",
+    0
+   ],
+   "on_true": [
+    "10",
+    0
+   ]
+  },
+  "class_type": "ComfySwitchNode",
+  "_meta": {
+   "title": "If/Else Switch"
+  }
+ },
+ "14": {
+  "inputs": {
+   "value": "At 0.00 seconds, cinematic live-action arc shot with slow push-in, centered on a futuristic metallic teal aerodynamic sports car parked on a spacious light grey tiled concrete platform. The background features a calm deep blue ocean, clear cloudless sky, and sharp angular dark grey concrete architectural structures. The car adopts sharp angular body lines, slim white LED headlights, geometric front air intakes with delicate copper aerodynamic fins, and fully raised gull-wing doors. It is equipped with black and silver turbine-style alloy wheels, paired with white leather bucket seats with dark grey inserts and a minimalist futuristic interior.\n\nThe camera slowly circles to the right and pushes closer to the vehicle. The sports car performs a smooth and precise mechanical decomposition in mid-air. The metallic teal body panels, gull-wing doors and four turbine wheels float outward steadily. Interior leather seats and central console hover slightly upward, exposing intricate carbon fiber frameworks, metal brake discs, calipers and suspension structures. All disassembled components suspend in orderly spaced mid-air arrangement with stable posture. Ultra-fine surface textures are clearly presented: delicate metallic flakes inside teal paint, fine leather stitching and grain, and high-precision brushed metal finishes, creating a clean, high-tech and realistic mechanical explosion visual effect."
+  },
+  "class_type": "PrimitiveStringMultiline",
+  "_meta": {
+   "title": "Text (Prompt)"
+  }
+ },
+ "18": {
+  "inputs": {
+   "value": false
+  },
+  "class_type": "PrimitiveBoolean",
+  "_meta": {
+   "title": "Boolean (Prompt Enhance)"
+  }
+ },
+ "19": {
+  "inputs": {
+   "value": false
+  },
+  "class_type": "PrimitiveBoolean",
+  "_meta": {
+   "title": "Boolean (Upscale to 2K)"
+  }
+ },
+ "24": {
+  "inputs": {
+   "model": "MiniMax H3 Max Turbo",
+   "seed": 2188635952,
+   "watermark": false,
+   "first_frame": [
+    "25",
+    0
+   ],
+   "model.resolution": "768P",
+   "model.duration": 5,
+   "model.prompt_expansion_mode": "balanced",
+   "model.prompt": [
+    "12",
+    0
+   ]
+  },
+  "class_type": "MinimaxHailuo03FirstLastFrameNode",
+  "_meta": {
+   "title": "MiniMax H3 First-Last-Frame to Video"
+  }
+ },
+ "25": {
+  "inputs": {
+   "image": "teal_hypercar_seaside.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ }
+}

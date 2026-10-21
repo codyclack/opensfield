@@ -1,0 +1,97 @@
+{
+  "id": "model.pixverse6-i2v",
+  "studio": "Video models",
+  "name": "PixVerse 6.0 \u00b7 Image to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_pixverse6_i2v"
+  ],
+  "status": "built",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_pixverse6_i2v",
+    "api": "features/model.pixverse6-i2v/workflow_api.json",
+    "ui": "features/model.pixverse6-i2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image",
+        "kind": "image",
+        "node": "19",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "17",
+        "field": "model.prompt",
+        "required": true
+      },
+      {
+        "name": "quality",
+        "label": "Quality",
+        "kind": "choice",
+        "node": "17",
+        "field": "model.quality",
+        "options": [
+          "360p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "style",
+        "label": "Style",
+        "kind": "choice",
+        "node": "17",
+        "field": "model.style",
+        "options": [
+          "none",
+          "anime",
+          "3d_animation",
+          "clay",
+          "comic",
+          "cyberpunk",
+          "realistic"
+        ],
+        "default": "none"
+      },
+      {
+        "name": "duration_seconds",
+        "label": "Duration seconds",
+        "kind": "number",
+        "node": "17",
+        "field": "model.duration_seconds",
+        "default": 5,
+        "min": 1,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "17",
+        "field": "model.seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "14"
+    ],
+    "models": [
+      "api_pixverse6_i2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

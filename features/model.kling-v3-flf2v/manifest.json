@@ -1,0 +1,87 @@
+{
+  "id": "model.kling-v3-flf2v",
+  "studio": "Video models",
+  "name": "Kling 3.0 \u00b7 First Last Frame to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "First / last frame",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_kling_v3_flf2v"
+  ],
+  "status": "built",
+  "group": "First / last frame",
+  "workflow": {
+    "template": "api_kling_v3_flf2v",
+    "api": "features/model.kling-v3-flf2v/workflow_api.json",
+    "ui": "features/model.kling-v3-flf2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "First frame",
+        "kind": "image",
+        "node": "1",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "image_2",
+        "label": "End frame",
+        "kind": "image",
+        "node": "13",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "12",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "12",
+        "field": "model.resolution",
+        "options": [
+          "4k",
+          "1080p",
+          "720p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "12",
+        "field": "duration",
+        "default": 5,
+        "min": 3,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "12",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "2"
+    ],
+    "models": [
+      "api_kling_v3_flf2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

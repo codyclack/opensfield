@@ -96,5 +96,6 @@
       "examples/cinema_camera_rig_dance.mp4",
       "examples/driving_dance.mp4"
     ]
-  }
+  },
+  "group": "Image to video"
 }

@@ -1,0 +1,103 @@
+{
+  "id": "model.bfl-flux3-t2i",
+  "studio": "Image models",
+  "name": "FLUX 3 Image \u00b7 Text to Image",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to image",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_bfl_flux3_t2i"
+  ],
+  "status": "tested",
+  "group": "Text to image",
+  "workflow": {
+    "template": "api_bfl_flux3_t2i",
+    "api": "features/model.bfl-flux3-t2i/workflow_api.json",
+    "ui": "features/model.bfl-flux3-t2i/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "1",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "1",
+        "field": "aspect_ratio",
+        "options": [
+          "auto",
+          "21:9",
+          "2:1",
+          "16:9",
+          "3:2",
+          "7:5",
+          "4:3",
+          "5:4",
+          "1:1",
+          "4:5",
+          "3:4",
+          "5:7",
+          "2:3",
+          "9:16",
+          "1:2",
+          "9:21"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "1",
+        "field": "resolution",
+        "options": [
+          "0.75K",
+          "1K",
+          "1.5K",
+          "2K",
+          "4K"
+        ],
+        "default": "1K"
+      },
+      {
+        "name": "safety_tolerance",
+        "label": "Safety tolerance",
+        "kind": "number",
+        "node": "1",
+        "field": "safety_tolerance",
+        "default": 4,
+        "min": 0,
+        "max": 4,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "1",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "2"
+    ],
+    "models": [
+      "api_bfl_flux3_t2i"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/bfl-flux3-t2i.png"
+    ]
+  }
+}

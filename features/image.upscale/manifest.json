@@ -58,5 +58,6 @@
     "examples": [
       "examples/upscale_2x.png"
     ]
-  }
+  },
+  "group": "Image upscale"
 }

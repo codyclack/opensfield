@@ -1,0 +1,103 @@
+{
+  "id": "model.wan2-6-i2v",
+  "studio": "Video models",
+  "name": "Wan2.6 \u00b7 Image to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_wan2_6_i2v"
+  ],
+  "status": "built",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_wan2_6_i2v",
+    "api": "features/model.wan2-6-i2v/workflow_api.json",
+    "ui": "features/model.wan2-6-i2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image",
+        "kind": "image",
+        "node": "42",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "41",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model",
+        "label": "Model",
+        "kind": "choice",
+        "node": "41",
+        "field": "model",
+        "options": [
+          "wan2.5-i2v-preview",
+          "wan2.6-i2v"
+        ],
+        "default": "wan2.6-i2v"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "41",
+        "field": "resolution",
+        "options": [
+          "480P",
+          "720P",
+          "1080P"
+        ],
+        "default": "720P"
+      },
+      {
+        "name": "shot_type",
+        "label": "Shot type",
+        "kind": "choice",
+        "node": "41",
+        "field": "shot_type",
+        "options": [
+          "single",
+          "multi"
+        ],
+        "default": "single"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "41",
+        "field": "duration",
+        "default": 5,
+        "min": 5,
+        "max": 15,
+        "step": 5
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "41",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "43"
+    ],
+    "models": [
+      "api_wan2_6_i2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

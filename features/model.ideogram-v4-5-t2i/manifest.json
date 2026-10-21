@@ -1,0 +1,124 @@
+{
+  "id": "model.ideogram-v4-5-t2i",
+  "studio": "Image models",
+  "name": "Ideogram 4.5 \u00b7 Text to Image",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to image",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_ideogram_v4_5_t2i"
+  ],
+  "status": "tested",
+  "group": "Text to image",
+  "workflow": {
+    "template": "api_ideogram_v4_5_t2i",
+    "api": "features/model.ideogram-v4-5-t2i/workflow_api.json",
+    "ui": "features/model.ideogram-v4-5-t2i/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "1",
+        "field": "model.prompt",
+        "required": true
+      },
+      {
+        "name": "size",
+        "label": "Size",
+        "kind": "choice",
+        "node": "1",
+        "field": "model.size",
+        "options": [
+          "auto",
+          "(2K) 2048x2048 (1:1)",
+          "(2K) 1440x2880 (1:2)",
+          "(2K) 2880x1440 (2:1)",
+          "(2K) 1664x2496 (2:3)",
+          "(2K) 2496x1664 (3:2)",
+          "(2K) 1792x2240 (4:5)",
+          "(2K) 2240x1792 (5:4)",
+          "(2K) 1440x2560 (9:16)",
+          "(2K) 2560x1440 (16:9)",
+          "(2K) 1600x2560 (5:8)",
+          "(2K) 2560x1600 (8:5)",
+          "(2K) 1728x2304 (3:4)",
+          "(2K) 2304x1728 (4:3)",
+          "(2K) 1296x3168 (9:22)",
+          "(2K) 3168x1296 (22:9)",
+          "(2K) 1152x2944 (9:23)",
+          "(2K) 2944x1152 (23:9)",
+          "(2K) 1248x3328 (3:8)",
+          "(2K) 3328x1248 (8:3)",
+          "(2K) 1280x3072 (5:12)",
+          "(2K) 3072x1280 (12:5)",
+          "(2K) 1024x3072 (1:3)",
+          "(2K) 3072x1024 (3:1)",
+          "(1K) 1024x1024 (1:1)",
+          "(1K) 896x1120 (4:5)",
+          "(1K) 1120x896 (5:4)",
+          "(1K) 864x1152 (3:4)",
+          "(1K) 1152x864 (4:3)",
+          "(1K) 832x1248 (2:3)",
+          "(1K) 1248x832 (3:2)",
+          "(1K) 800x1280 (5:8)",
+          "(1K) 1280x800 (8:5)",
+          "(1K) 720x1280 (9:16)",
+          "(1K) 1280x720 (16:9)",
+          "(1K) 720x1440 (1:2)",
+          "(1K) 1440x720 (2:1)"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "quality",
+        "label": "Quality",
+        "kind": "choice",
+        "node": "1",
+        "field": "model.quality",
+        "options": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default": "medium"
+      },
+      {
+        "name": "magic_prompt",
+        "label": "Magic prompt",
+        "kind": "choice",
+        "node": "1",
+        "field": "model.magic_prompt",
+        "options": [
+          "auto",
+          "on",
+          "off"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "1",
+        "field": "model.seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "5"
+    ],
+    "models": [
+      "api_ideogram_v4_5_t2i"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/ideogram-v4-5-t2i.png"
+    ]
+  }
+}

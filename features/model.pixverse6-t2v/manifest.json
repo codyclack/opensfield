@@ -1,0 +1,107 @@
+{
+  "id": "model.pixverse6-t2v",
+  "studio": "Video models",
+  "name": "PixVerse 6.0 \u00b7 Text to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_pixverse6_t2v"
+  ],
+  "status": "built",
+  "group": "Text to video",
+  "workflow": {
+    "template": "api_pixverse6_t2v",
+    "api": "features/model.pixverse6-t2v/workflow_api.json",
+    "ui": "features/model.pixverse6-t2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "13",
+        "field": "model.prompt",
+        "required": true
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "13",
+        "field": "model.aspect_ratio",
+        "options": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "2:3",
+          "3:2",
+          "21:9"
+        ],
+        "default": "16:9"
+      },
+      {
+        "name": "quality",
+        "label": "Quality",
+        "kind": "choice",
+        "node": "13",
+        "field": "model.quality",
+        "options": [
+          "360p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "style",
+        "label": "Style",
+        "kind": "choice",
+        "node": "13",
+        "field": "model.style",
+        "options": [
+          "none",
+          "anime",
+          "3d_animation",
+          "clay",
+          "comic",
+          "cyberpunk",
+          "realistic"
+        ],
+        "default": "none"
+      },
+      {
+        "name": "duration_seconds",
+        "label": "Duration seconds",
+        "kind": "number",
+        "node": "13",
+        "field": "model.duration_seconds",
+        "default": 5,
+        "min": 1,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "13",
+        "field": "model.seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "14"
+    ],
+    "models": [
+      "api_pixverse6_t2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

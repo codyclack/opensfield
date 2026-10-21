@@ -1,0 +1,137 @@
+{
+  "id": "model.openai-gpt-image-2-image-edit",
+  "studio": "Image models",
+  "name": "GPT Image 2 \u00b7 Image Edit",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image edit",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_openai_gpt_image_2_image_edit"
+  ],
+  "status": "tested",
+  "group": "Image edit",
+  "workflow": {
+    "template": "api_openai_gpt_image_2_image_edit",
+    "api": "features/model.openai-gpt-image-2-image-edit/workflow_api.json",
+    "ui": "features/model.openai-gpt-image-2-image-edit/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image 1",
+        "kind": "image",
+        "node": "271",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "276",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "size",
+        "label": "Size",
+        "kind": "choice",
+        "node": "276",
+        "field": "model.size",
+        "options": [
+          "auto",
+          "1024x1024",
+          "1024x1536",
+          "1536x1024",
+          "2048x2048",
+          "2048x1152",
+          "1152x2048",
+          "3840x2160",
+          "2160x3840",
+          "Custom"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "background",
+        "label": "Background",
+        "kind": "choice",
+        "node": "276",
+        "field": "model.background",
+        "options": [
+          "auto",
+          "opaque"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "quality",
+        "label": "Quality",
+        "kind": "choice",
+        "node": "276",
+        "field": "model.quality",
+        "options": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default": "low"
+      },
+      {
+        "name": "n",
+        "label": "N",
+        "kind": "number",
+        "node": "276",
+        "field": "n",
+        "default": 1,
+        "min": 1,
+        "max": 8,
+        "step": 1
+      },
+      {
+        "name": "custom_width",
+        "label": "Custom width",
+        "kind": "number",
+        "node": "276",
+        "field": "model.custom_width",
+        "default": 1024,
+        "min": 480,
+        "max": 3840,
+        "step": 16
+      },
+      {
+        "name": "custom_height",
+        "label": "Custom height",
+        "kind": "number",
+        "node": "276",
+        "field": "model.custom_height",
+        "default": 1024,
+        "min": 480,
+        "max": 3840,
+        "step": 16
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "276",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "269"
+    ],
+    "models": [
+      "api_openai_gpt_image_2_image_edit"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/openai-gpt-image-2-image-edit.png"
+    ]
+  }
+}

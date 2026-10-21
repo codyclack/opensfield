@@ -1,0 +1,125 @@
+{
+  "id": "model.kling-v3-t2i",
+  "studio": "Image models",
+  "name": "Kling 3.0 \u00b7 Text to Image",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to image",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_kling_v3_t2i"
+  ],
+  "status": "tested",
+  "group": "Text to image",
+  "workflow": {
+    "template": "api_kling_v3_t2i",
+    "api": "features/model.kling-v3-t2i/workflow_api.json",
+    "ui": "features/model.kling-v3-t2i/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "27",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "image_type",
+        "label": "Image type",
+        "kind": "choice",
+        "node": "27",
+        "field": "image_type",
+        "options": [
+          "subject",
+          "face"
+        ],
+        "default": "subject"
+      },
+      {
+        "name": "model_name",
+        "label": "Model name",
+        "kind": "choice",
+        "node": "27",
+        "field": "model_name",
+        "options": [
+          "kling-v3"
+        ],
+        "default": "kling-v3"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "27",
+        "field": "aspect_ratio",
+        "options": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4",
+          "3:2",
+          "2:3",
+          "21:9"
+        ],
+        "default": "16:9"
+      },
+      {
+        "name": "image_fidelity",
+        "label": "Image fidelity",
+        "kind": "number",
+        "node": "27",
+        "field": "image_fidelity",
+        "default": 0.5,
+        "min": 0.0,
+        "max": 1.0,
+        "step": 0.01
+      },
+      {
+        "name": "human_fidelity",
+        "label": "Human fidelity",
+        "kind": "number",
+        "node": "27",
+        "field": "human_fidelity",
+        "default": 0.45,
+        "min": 0.0,
+        "max": 1.0,
+        "step": 0.01
+      },
+      {
+        "name": "n",
+        "label": "N",
+        "kind": "number",
+        "node": "27",
+        "field": "n",
+        "default": 1,
+        "min": 1,
+        "max": 9,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "27",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "29"
+    ],
+    "models": [
+      "api_kling_v3_t2i"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/kling-v3-t2i.png"
+    ]
+  }
+}

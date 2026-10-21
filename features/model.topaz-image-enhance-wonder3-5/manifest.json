@@ -1,0 +1,124 @@
+{
+  "id": "model.topaz-image-enhance-wonder3-5",
+  "studio": "Image tools",
+  "name": "Image Upscale \u00b7 Topaz Wonder 3.5",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image upscale",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_topaz_image_enhance_wonder3_5"
+  ],
+  "status": "tested",
+  "group": "Image upscale",
+  "workflow": {
+    "template": "api_topaz_image_enhance_wonder3_5",
+    "api": "features/model.topaz-image-enhance-wonder3-5/workflow_api.json",
+    "ui": "features/model.topaz-image-enhance-wonder3-5/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image a",
+        "kind": "image",
+        "node": "3",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "enhancement_strength",
+        "label": "Enhancement strength",
+        "kind": "choice",
+        "node": "8",
+        "field": "model.enhancement_strength",
+        "options": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default": "high"
+      },
+      {
+        "name": "grain_model",
+        "label": "Grain model",
+        "kind": "choice",
+        "node": "8",
+        "field": "model.grain_model",
+        "options": [
+          "silver",
+          "gaussian",
+          "grey"
+        ],
+        "default": "silver"
+      },
+      {
+        "name": "output_width",
+        "label": "Output width",
+        "kind": "number",
+        "node": "8",
+        "field": "output_width",
+        "default": 0,
+        "min": 0,
+        "max": 32000,
+        "step": 1
+      },
+      {
+        "name": "output_height",
+        "label": "Output height",
+        "kind": "number",
+        "node": "8",
+        "field": "output_height",
+        "default": 0,
+        "min": 0,
+        "max": 32000,
+        "step": 1
+      },
+      {
+        "name": "grain_strength",
+        "label": "Grain strength",
+        "kind": "number",
+        "node": "8",
+        "field": "model.grain_strength",
+        "default": 0.5,
+        "min": 0.0,
+        "max": 1.0,
+        "step": 0.01
+      },
+      {
+        "name": "grain_size",
+        "label": "Grain size",
+        "kind": "number",
+        "node": "8",
+        "field": "model.grain_size",
+        "default": 1,
+        "min": 1.0,
+        "max": 5.0,
+        "step": 0.1
+      },
+      {
+        "name": "grain_density",
+        "label": "Grain density",
+        "kind": "number",
+        "node": "8",
+        "field": "model.grain_density",
+        "default": 0.5,
+        "min": 0.0,
+        "max": 1.0,
+        "step": 0.01
+      }
+    ],
+    "outputs": [
+      "4"
+    ],
+    "models": [
+      "api_topaz_image_enhance_wonder3_5"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/topaz-image-enhance-wonder3-5.png"
+    ]
+  }
+}

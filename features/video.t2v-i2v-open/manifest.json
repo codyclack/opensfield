@@ -89,5 +89,6 @@
     "examples": [
       "examples/text_to_video_alley.mp4"
     ]
-  }
+  },
+  "group": "Text to video"
 }

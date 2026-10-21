@@ -1,0 +1,110 @@
+{
+  "id": "model.tripo-p2-image-to-model",
+  "studio": "Image models",
+  "name": "Tripo P2 \u00b7 Image to Model",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to 3D",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_tripo_p2_image_to_model"
+  ],
+  "status": "built",
+  "group": "Image to 3D",
+  "workflow": {
+    "template": "api_tripo_p2_image_to_model",
+    "api": "features/model.tripo-p2-image-to-model/workflow_api.json",
+    "ui": "features/model.tripo-p2-image-to-model/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image",
+        "kind": "image",
+        "node": "16",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "texture",
+        "label": "Texture",
+        "kind": "choice",
+        "node": "15",
+        "field": "model.texture",
+        "options": [
+          "standard",
+          "detailed",
+          "extreme",
+          "none"
+        ],
+        "default": "standard"
+      },
+      {
+        "name": "texture_alignment",
+        "label": "Texture alignment",
+        "kind": "choice",
+        "node": "15",
+        "field": "model.texture_alignment",
+        "options": [
+          "original_image",
+          "geometry"
+        ],
+        "default": "original_image"
+      },
+      {
+        "name": "orientation",
+        "label": "Orientation",
+        "kind": "choice",
+        "node": "15",
+        "field": "model.orientation",
+        "options": [
+          "default",
+          "align_image"
+        ],
+        "default": "default"
+      },
+      {
+        "name": "face_limit",
+        "label": "Face limit",
+        "kind": "number",
+        "node": "15",
+        "field": "model.face_limit",
+        "default": -1,
+        "min": -1,
+        "max": 50000,
+        "step": 1
+      },
+      {
+        "name": "model_seed",
+        "label": "Model seed",
+        "kind": "number",
+        "node": "15",
+        "field": "model.model_seed",
+        "default": 81426036,
+        "min": 0,
+        "max": 2147483647,
+        "step": 1
+      },
+      {
+        "name": "texture_seed",
+        "label": "Texture seed",
+        "kind": "number",
+        "node": "15",
+        "field": "model.texture_seed",
+        "default": 42,
+        "min": 0,
+        "max": 2147483647,
+        "step": 1
+      }
+    ],
+    "outputs": [
+      "14"
+    ],
+    "models": [
+      "api_tripo_p2_image_to_model"
+    ],
+    "output_kind": "3d",
+    "verified": false
+  }
+}

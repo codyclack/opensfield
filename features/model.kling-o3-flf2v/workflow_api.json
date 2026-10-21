@@ -1,0 +1,58 @@
+{
+ "14": {
+  "inputs": {
+   "filename_prefix": "video/kling_o3_flf2v",
+   "format": "auto",
+   "video": [
+    "32",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "34": {
+  "inputs": {
+   "image": "ivory_rider.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "End Frame"
+  }
+ },
+ "32": {
+  "inputs": {
+   "model_name": "kling-v3-omni",
+   "prompt": "A graceful pale-haired girl in an ivory lace outfit and orange-tinted sunglasses rides a majestic white horse. The scene transitions from a calm, intimate close-up (first frame) to a dynamic, sweeping gallop across a sun-drenched desert (end frame). The horse\u2019s mane flows with motion, and the desert landscape shifts from a soft, ethereal close-up to a vast, open expanse. The transition is smooth, maintaining the character\u2019s and horse\u2019s consistent appearance and style, with cinematic lighting and a dreamlike, otherworldly atmosphere.\n",
+   "duration": 5,
+   "resolution": "1080p",
+   "storyboards": "disabled",
+   "generate_audio": false,
+   "seed": 0,
+   "first_frame": [
+    "17",
+    0
+   ],
+   "end_frame": [
+    "34",
+    0
+   ]
+  },
+  "class_type": "KlingOmniProFirstLastFrameNode",
+  "_meta": {
+   "title": "Kling 3.0 Omni First-Last-Frame to Video"
+  }
+ },
+ "17": {
+  "inputs": {
+   "image": "ivory_rider_right_front_view.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "First Frame"
+  }
+ }
+}

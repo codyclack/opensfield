@@ -67,5 +67,6 @@
     "examples": [
       "examples/video_edit_street.mp4"
     ]
-  }
+  },
+  "group": "Video edit"
 }

@@ -23,14 +23,16 @@ def wait(job_id, timeout=10):
 
 def test_config_is_mock():
     c = client.get("/api/config").json()
-    assert c["mode"] == "mock" and c["partner_enabled"] is False
+    assert c["mode"] == "mock" and c["partner_enabled"] is True
 
 
-def test_partner_hidden_and_blocked():
-    ids = {f["id"] for f in client.get("/api/features").json()}
-    assert "image.partner-roster" not in ids and "soul.t2i" in ids
-    r = client.post("/api/jobs", json={"feature_id": "image.partner-roster", "inputs": {}})
-    assert r.status_code == 403
+def test_partner_model_tools_listed_and_run_in_mock():
+    feats = {f["id"]: f for f in client.get("/api/features").json()}
+    models = [f for f in feats.values() if f["track"] == "partner"]
+    assert len(models) >= 40 and "soul.t2i" in feats
+    assert all(f["runnable"] and f.get("group") for f in models)
+    r = client.post("/api/jobs", json={"feature_id": "model.bfl-flux3-t2i", "inputs": {"prompt": "a red fox"}})
+    assert r.status_code == 202 and wait(r.json()["id"])["status"] == "done"
 
 
 def test_every_feature_has_a_form():

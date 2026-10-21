@@ -1,0 +1,111 @@
+{
+  "id": "model.kling-v3-video",
+  "studio": "Video models",
+  "name": "Kling 3.0 \u00b7 Video Generation",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_kling_v3_video"
+  ],
+  "status": "built",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_kling_v3_video",
+    "api": "features/model.kling-v3-video/workflow_api.json",
+    "ui": "features/model.kling-v3-video/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Start frame",
+        "kind": "image",
+        "node": "1",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "storyboard_1_prompt",
+        "label": "Storyboard 1 prompt",
+        "kind": "text",
+        "node": "3",
+        "field": "multi_shot.storyboard_1_prompt",
+        "required": false
+      },
+      {
+        "name": "storyboard_2_prompt",
+        "label": "Storyboard 2 prompt",
+        "kind": "text",
+        "node": "3",
+        "field": "multi_shot.storyboard_2_prompt",
+        "required": false
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "3",
+        "field": "model.resolution",
+        "options": [
+          "4k",
+          "1080p",
+          "720p"
+        ],
+        "default": "1080p"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "3",
+        "field": "model.aspect_ratio",
+        "options": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "default": "16:9"
+      },
+      {
+        "name": "storyboard_1_duration",
+        "label": "Storyboard 1 duration",
+        "kind": "number",
+        "node": "3",
+        "field": "multi_shot.storyboard_1_duration",
+        "default": 2,
+        "min": 1,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "storyboard_2_duration",
+        "label": "Storyboard 2 duration",
+        "kind": "number",
+        "node": "3",
+        "field": "multi_shot.storyboard_2_duration",
+        "default": 3,
+        "min": 1,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "3",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "2"
+    ],
+    "models": [
+      "api_kling_v3_video"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

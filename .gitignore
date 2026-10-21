@@ -9,3 +9,4 @@ demo/*.mp4
 demo/frames/
 .opensfield_key.enc
 .opensfield_access
+library/

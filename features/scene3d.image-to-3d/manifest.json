@@ -46,5 +46,6 @@
     "examples": [
       "examples/image_to_3d.glb"
     ]
-  }
+  },
+  "group": "Image to 3D"
 }

@@ -1,0 +1,125 @@
+{
+  "id": "model.bfl-flux3-i2v",
+  "studio": "Video models",
+  "name": "FLUX 3 Video \u00b7 Image to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_bfl_flux3_i2v"
+  ],
+  "status": "built",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_bfl_flux3_i2v",
+    "api": "features/model.bfl-flux3-i2v/workflow_api.json",
+    "ui": "features/model.bfl-flux3-i2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image 0",
+        "kind": "image",
+        "node": "423",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "424",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "424",
+        "field": "aspect_ratio",
+        "options": [
+          "auto",
+          "21:9",
+          "2:1",
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "choice",
+        "node": "424",
+        "field": "duration",
+        "options": [
+          "auto",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20"
+        ],
+        "default": "5"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "424",
+        "field": "resolution",
+        "options": [
+          "720p",
+          "1080p",
+          "1440p",
+          "2160p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "safety_tolerance",
+        "label": "Safety tolerance",
+        "kind": "number",
+        "node": "424",
+        "field": "safety_tolerance",
+        "default": 2,
+        "min": 0,
+        "max": 4,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "424",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "422"
+    ],
+    "models": [
+      "api_bfl_flux3_i2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

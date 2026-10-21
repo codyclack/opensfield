@@ -18,11 +18,11 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from . import fx, runner
+from . import assets, fx, runner
 from .registry import MEDIA, ROOT, STUDIO_ORDER, load_features
 
 MODE = os.environ.get("OPENSFIELD_MODE", "mock")  # mock | comfy
-PARTNER = os.environ.get("OPENSFIELD_PARTNER") == "1"  # optional partner/ pack switch
+PARTNER = os.environ.get("OPENSFIELD_PARTNER") != "0"  # partner-model tools (Comfy Cloud API nodes) are on by default; set OPENSFIELD_PARTNER=0 to hide
 STATIC = Path(__file__).parent / "static"
 
 if MODE not in ("mock", "comfy"):
@@ -115,7 +115,7 @@ def create_job(req: JobRequest):
     if not f:
         raise HTTPException(404, "unknown feature")
     if f["track"] == "partner" and not PARTNER:
-        raise HTTPException(403, "partner pack is disabled (set OPENSFIELD_PARTNER=1)")
+        raise HTTPException(403, "partner pack is disabled (set OPENSFIELD_PARTNER=1 (default on; 0 hides))")
     cap = int(os.environ.get("OPENSFIELD_MAX_JOBS", "0"))  # 0 = unlimited; protects credits on a public link
     if cap and len(JOBS) >= cap:
         raise HTTPException(429, f"this demo allows {cap} runs per server start; it has reached the limit")
@@ -149,6 +149,9 @@ def job(job_id: str):
     return j
 
 
+assets.LIB.mkdir(exist_ok=True)
+app.include_router(assets.router)
+app.mount("/library", StaticFiles(directory=assets.LIB), name="library")
 runner.OUTPUTS.mkdir(parents=True, exist_ok=True)
 app.mount("/outputs", StaticFiles(directory=runner.OUTPUTS), name="outputs")
 app.mount("/examples", StaticFiles(directory=ROOT / "examples"), name="examples")

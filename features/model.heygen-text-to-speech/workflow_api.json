@@ -1,0 +1,31 @@
+{
+ "1": {
+  "inputs": {
+   "text": "Input text here and choose a voice to speech it out.",
+   "voice": "Chill Brian (English, male)",
+   "custom_voice_id": "",
+   "speed": 1,
+   "ssml": false,
+   "seed": 89403054
+  },
+  "class_type": "HeyGenTextToSpeechNode",
+  "_meta": {
+   "title": "HeyGen Text to Speech"
+  }
+ },
+ "3": {
+  "inputs": {
+   "filename_prefix": "audio/ComfyUI",
+   "format": "mp3",
+   "audio": [
+    "1",
+    0
+   ],
+   "format.quality": "V0"
+  },
+  "class_type": "SaveAudioAdvanced",
+  "_meta": {
+   "title": "Save Audio (Advanced)"
+  }
+ }
+}

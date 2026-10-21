@@ -1,0 +1,66 @@
+{
+ "4": {
+  "inputs": {
+   "prompt": "Change the background to dark, and relight this portrait with dramatic blue light from the front and a warm amber rim light from behind. Keep the person, objects, pose, background, and framing unchanged.",
+   "model": "Gemini Nano Banana 2.1",
+   "seed": 721648284798375,
+   "response_modalities": "IMAGE",
+   "system_prompt": "You are an expert image-generation engine. You must ALWAYS produce an image.\nInterpret all user input\u2014regardless of format, intent, or abstraction\u2014as literal visual directives for image composition.\nIf a prompt is conversational or lacks specific visual details, you must creatively invent a concrete visual scenario that depicts the concept.\nPrioritize generating the visual representation above any text, formatting, or conversational requests.",
+   "temperature": 1,
+   "top_p": 0.95,
+   "model.aspect_ratio": "auto",
+   "model.resolution": "1K",
+   "model.thinking_level": "MEDIUM",
+   "model.images.image_1": [
+    "6",
+    0
+   ]
+  },
+  "class_type": "GeminiNanoBanana2V2",
+  "_meta": {
+   "title": "Nano Banana 2.1"
+  }
+ },
+ "6": {
+  "inputs": {
+   "image": "silver_frame_profile.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "9": {
+  "inputs": {
+   "filename_prefix": "Nano_Banana_2.1",
+   "format": "png",
+   "images": [
+    "4",
+    0
+   ],
+   "format.bit_depth": "8-bit",
+   "format.input_color_space": "sRGB"
+  },
+  "class_type": "SaveImageAdvanced",
+  "_meta": {
+   "title": "Save Image (Advanced)"
+  }
+ },
+ "11": {
+  "inputs": {
+   "compare_view": null,
+   "image_a": [
+    "6",
+    0
+   ],
+   "image_b": [
+    "9",
+    0
+   ]
+  },
+  "class_type": "ImageCompare",
+  "_meta": {
+   "title": "Compare Images"
+  }
+ }
+}

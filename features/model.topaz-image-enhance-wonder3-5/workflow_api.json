@@ -1,0 +1,65 @@
+{
+ "3": {
+  "inputs": {
+   "image": "wild_run.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "4": {
+  "inputs": {
+   "filename_prefix": "Upscaled_topaz_bloom2",
+   "format": "png",
+   "images": [
+    "8",
+    0
+   ],
+   "format.bit_depth": "8-bit",
+   "format.input_color_space": "sRGB"
+  },
+  "class_type": "SaveImageAdvanced",
+  "_meta": {
+   "title": "Save Image (Advanced)"
+  }
+ },
+ "5": {
+  "inputs": {
+   "compare_view": null,
+   "image_a": [
+    "3",
+    0
+   ],
+   "image_b": [
+    "4",
+    0
+   ]
+  },
+  "class_type": "ImageCompare",
+  "_meta": {
+   "title": "Compare Images"
+  }
+ },
+ "8": {
+  "inputs": {
+   "model": "Wonder 3.5",
+   "output_width": 0,
+   "output_height": 0,
+   "image": [
+    "3",
+    0
+   ],
+   "model.enhancement_strength": "high",
+   "model.grain": false,
+   "model.grain_model": "silver",
+   "model.grain_strength": 0.5,
+   "model.grain_size": 1,
+   "model.grain_density": 0.5
+  },
+  "class_type": "TopazImageEnhanceV2",
+  "_meta": {
+   "title": "Topaz Image Enhance"
+  }
+ }
+}

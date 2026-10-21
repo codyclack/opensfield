@@ -1,0 +1,143 @@
+{
+  "id": "model.meshy7-1-image-to-model",
+  "studio": "Image models",
+  "name": "Meshy 7.1 \u00b7 Image to 3D",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to 3D",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_meshy7_1_image_to_model"
+  ],
+  "status": "built",
+  "group": "Image to 3D",
+  "workflow": {
+    "template": "api_meshy7_1_image_to_model",
+    "api": "features/model.meshy7-1-image-to-model/workflow_api.json",
+    "ui": "features/model.meshy7-1-image-to-model/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image",
+        "kind": "image",
+        "node": "8",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "texture_prompt",
+        "label": "Texture prompt",
+        "kind": "text",
+        "node": "13",
+        "field": "should_texture.texture_prompt",
+        "required": false
+      },
+      {
+        "name": "model",
+        "label": "Model",
+        "kind": "choice",
+        "node": "13",
+        "field": "model",
+        "options": [
+          "meshy-7.1",
+          "meshy-7",
+          "meshy-6",
+          "latest"
+        ],
+        "default": "meshy-7.1"
+      },
+      {
+        "name": "symmetry_mode",
+        "label": "Symmetry mode",
+        "kind": "choice",
+        "node": "13",
+        "field": "symmetry_mode",
+        "options": [
+          "auto",
+          "on",
+          "off"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "pose_mode",
+        "label": "Pose mode",
+        "kind": "choice",
+        "node": "13",
+        "field": "pose_mode",
+        "options": [
+          "",
+          "A-pose",
+          "T-pose"
+        ],
+        "default": ""
+      },
+      {
+        "name": "ultra_resolution",
+        "label": "Ultra resolution",
+        "kind": "choice",
+        "node": "13",
+        "field": "ultra_resolution",
+        "options": [
+          "2k",
+          "4k"
+        ],
+        "default": "2k"
+      },
+      {
+        "name": "topology",
+        "label": "Topology",
+        "kind": "choice",
+        "node": "13",
+        "field": "should_remesh.topology",
+        "options": [
+          "triangle",
+          "quad"
+        ],
+        "default": "triangle"
+      },
+      {
+        "name": "texture_resolution",
+        "label": "Texture resolution",
+        "kind": "choice",
+        "node": "13",
+        "field": "should_texture.texture_resolution",
+        "options": [
+          "2k",
+          "4k",
+          "8k"
+        ],
+        "default": "2k"
+      },
+      {
+        "name": "target_polycount",
+        "label": "Target polycount",
+        "kind": "number",
+        "node": "13",
+        "field": "should_remesh.target_polycount",
+        "default": 300000,
+        "min": 100,
+        "max": 300000,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "13",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "17"
+    ],
+    "models": [
+      "api_meshy7_1_image_to_model"
+    ],
+    "output_kind": "3d",
+    "verified": false
+  }
+}

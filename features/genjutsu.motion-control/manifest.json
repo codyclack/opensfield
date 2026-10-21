@@ -76,5 +76,6 @@
       "examples/motion_transfer.mp4",
       "examples/motion_transfer_compare.mp4"
     ]
-  }
+  },
+  "group": "Motion control"
 }

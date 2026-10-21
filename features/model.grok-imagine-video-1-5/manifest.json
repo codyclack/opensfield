@@ -1,0 +1,114 @@
+{
+  "id": "model.grok-imagine-video-1-5",
+  "studio": "Video models",
+  "name": "Grok Imagine Video 1.5 \u00b7 Image to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_grok_imagine_video_1_5"
+  ],
+  "status": "tested",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_grok_imagine_video_1_5",
+    "api": "features/model.grok-imagine-video-1-5/workflow_api.json",
+    "ui": "features/model.grok-imagine-video-1-5/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image",
+        "kind": "image",
+        "node": "6",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "10",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model",
+        "label": "Model",
+        "kind": "choice",
+        "node": "10",
+        "field": "model",
+        "options": [
+          "grok-imagine-video",
+          "grok-imagine-video-1.5",
+          "grok-imagine-video-1.5-lite"
+        ],
+        "default": "grok-imagine-video-1.5"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "10",
+        "field": "resolution",
+        "options": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "10",
+        "field": "aspect_ratio",
+        "options": [
+          "auto",
+          "16:9",
+          "4:3",
+          "3:2",
+          "1:1",
+          "2:3",
+          "3:4",
+          "9:16"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "10",
+        "field": "duration",
+        "default": 5,
+        "min": 1,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "10",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "11"
+    ],
+    "models": [
+      "api_grok_imagine_video_1_5"
+    ],
+    "output_kind": "video",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/grok-imagine-video-1-5.mp4"
+    ]
+  }
+}

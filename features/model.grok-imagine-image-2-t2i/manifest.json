@@ -1,0 +1,119 @@
+{
+  "id": "model.grok-imagine-image-2-t2i",
+  "studio": "Image models",
+  "name": "Grok Imagine Image 2.0 \u00b7 Text to Image",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to image",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_grok_imagine_image_2_t2i"
+  ],
+  "status": "built",
+  "group": "Text to image",
+  "workflow": {
+    "template": "api_grok_imagine_image_2_t2i",
+    "api": "features/model.grok-imagine-image-2-t2i/workflow_api.json",
+    "ui": "features/model.grok-imagine-image-2-t2i/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "1",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model",
+        "label": "Model",
+        "kind": "choice",
+        "node": "1",
+        "field": "model",
+        "options": [
+          "grok-imagine-image-2.0",
+          "grok-imagine-image-quality",
+          "grok-imagine-image-pro",
+          "grok-imagine-image"
+        ],
+        "default": "grok-imagine-image-2.0"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "1",
+        "field": "aspect_ratio",
+        "options": [
+          "1:1",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:3",
+          "9:16",
+          "16:9",
+          "9:19.5",
+          "19.5:9",
+          "9:20",
+          "20:9",
+          "1:2",
+          "2:1"
+        ],
+        "default": "1:1"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "1",
+        "field": "resolution",
+        "options": [
+          "1K",
+          "2K"
+        ],
+        "default": "1K"
+      },
+      {
+        "name": "quality",
+        "label": "Quality",
+        "kind": "choice",
+        "node": "1",
+        "field": "quality",
+        "options": [
+          "medium",
+          "low"
+        ],
+        "default": "medium"
+      },
+      {
+        "name": "number_of_images",
+        "label": "Number of images",
+        "kind": "number",
+        "node": "1",
+        "field": "number_of_images",
+        "default": 1,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "1",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "2"
+    ],
+    "models": [
+      "api_grok_imagine_image_2_t2i"
+    ],
+    "output_kind": "image",
+    "verified": false
+  }
+}

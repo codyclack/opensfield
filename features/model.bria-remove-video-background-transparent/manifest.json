@@ -1,0 +1,47 @@
+{
+  "id": "model.bria-remove-video-background-transparent",
+  "studio": "Video tools",
+  "name": "Remove Background \u00b7 Bria Transparent",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Video background remover",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_bria_remove_video_background_transparent"
+  ],
+  "status": "built",
+  "group": "Video background remover",
+  "workflow": {
+    "template": "api_bria_remove_video_background_transparent",
+    "api": "features/model.bria-remove-video-background-transparent/workflow_api.json",
+    "ui": "features/model.bria-remove-video-background-transparent/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "video_1",
+        "label": "Video",
+        "kind": "video",
+        "node": "5",
+        "field": "file",
+        "required": true
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "4",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "7"
+    ],
+    "models": [
+      "api_bria_remove_video_background_transparent"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

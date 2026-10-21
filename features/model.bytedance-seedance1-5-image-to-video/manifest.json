@@ -1,0 +1,109 @@
+{
+  "id": "model.bytedance-seedance1-5-image-to-video",
+  "studio": "Video models",
+  "name": "Seedance 1.5 Pro \u00b7 Image to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_bytedance_seedance1_5_image_to_video"
+  ],
+  "status": "built",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_bytedance_seedance1_5_image_to_video",
+    "api": "features/model.bytedance-seedance1-5-image-to-video/workflow_api.json",
+    "ui": "features/model.bytedance-seedance1-5-image-to-video/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image",
+        "kind": "image",
+        "node": "4",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "8",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model",
+        "label": "Model",
+        "kind": "choice",
+        "node": "8",
+        "field": "model",
+        "options": [
+          "seedance-1-5-pro-251215",
+          "seedance-1-0-pro-250528",
+          "seedance-1-0-pro-fast-251015"
+        ],
+        "default": "seedance-1-5-pro-251215"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "8",
+        "field": "resolution",
+        "options": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "default": "480p"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "8",
+        "field": "aspect_ratio",
+        "options": [
+          "adaptive",
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "21:9"
+        ],
+        "default": "adaptive"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "8",
+        "field": "duration",
+        "default": 5,
+        "min": 3,
+        "max": 12,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "8",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "9"
+    ],
+    "models": [
+      "api_bytedance_seedance1_5_image_to_video"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

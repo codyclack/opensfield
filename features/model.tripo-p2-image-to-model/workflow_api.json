@@ -1,0 +1,52 @@
+{
+ "14": {
+  "inputs": {
+   "filename_prefix": "3d/Tripo_p2",
+   "viewport_state": "",
+   "width": 1024,
+   "height": 1024,
+   "model_3d": [
+    "15",
+    1
+   ]
+  },
+  "class_type": "Save3DAdvanced",
+  "_meta": {
+   "title": "Save 3D (Advanced)"
+  }
+ },
+ "15": {
+  "inputs": {
+   "model": "P2",
+   "model.quad": false,
+   "model.face_limit": -1,
+   "model.texture": "standard",
+   "model.pbr": true,
+   "model.model_seed": 81426036,
+   "model.texture_alignment": "original_image",
+   "model.orientation": "default",
+   "model.enable_image_autofix": false,
+   "model.texture_seed": 42,
+   "model.auto_size": false,
+   "model.export_uv": true,
+   "model.compress_geometry": false,
+   "model.image": [
+    "16",
+    0
+   ]
+  },
+  "class_type": "TripoPSeriesImageToModelNode",
+  "_meta": {
+   "title": "Tripo P2: Image to Model"
+  }
+ },
+ "16": {
+  "inputs": {
+   "image": "designer_toy_3d.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ }
+}

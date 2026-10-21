@@ -1,0 +1,96 @@
+{
+  "id": "model.kling-o3-t2v",
+  "studio": "Video models",
+  "name": "Kling O3 \u00b7 Text to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_kling_o3_t2v"
+  ],
+  "status": "built",
+  "group": "Text to video",
+  "workflow": {
+    "template": "api_kling_o3_t2v",
+    "api": "features/model.kling-o3-t2v/workflow_api.json",
+    "ui": "features/model.kling-o3-t2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "15",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model_name",
+        "label": "Model name",
+        "kind": "choice",
+        "node": "15",
+        "field": "model_name",
+        "options": [
+          "kling-v3-omni",
+          "kling-video-o1"
+        ],
+        "default": "kling-v3-omni"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "15",
+        "field": "aspect_ratio",
+        "options": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "default": "16:9"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "15",
+        "field": "resolution",
+        "options": [
+          "4k",
+          "1080p",
+          "720p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "15",
+        "field": "duration",
+        "default": 5,
+        "min": 3,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "15",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "14"
+    ],
+    "models": [
+      "api_kling_o3_t2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

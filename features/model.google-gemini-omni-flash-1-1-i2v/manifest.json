@@ -1,0 +1,97 @@
+{
+  "id": "model.google-gemini-omni-flash-1-1-i2v",
+  "studio": "Video models",
+  "name": "Gemini Omni 1.1 Flash \u00b7 Image to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_google_gemini_omni_flash_1_1_i2v"
+  ],
+  "status": "built",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_google_gemini_omni_flash_1_1_i2v",
+    "api": "features/model.google-gemini-omni-flash-1-1-i2v/workflow_api.json",
+    "ui": "features/model.google-gemini-omni-flash-1-1-i2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image 1",
+        "kind": "image",
+        "node": "11",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "7",
+        "field": "model.prompt",
+        "required": true
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "7",
+        "field": "model.resolution",
+        "options": [
+          "360p",
+          "720p",
+          "1080p",
+          "4k"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "7",
+        "field": "model.aspect_ratio",
+        "options": [
+          "16:9",
+          "9:16"
+        ],
+        "default": "16:9"
+      },
+      {
+        "name": "task_type",
+        "label": "Task type",
+        "kind": "choice",
+        "node": "7",
+        "field": "model.task_type",
+        "options": [
+          "auto",
+          "text_to_video",
+          "image_to_video",
+          "reference_to_video",
+          "edit",
+          "extend"
+        ],
+        "default": "image_to_video"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "7",
+        "field": "model.seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "8"
+    ],
+    "models": [
+      "api_google_gemini_omni_flash_1_1_i2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

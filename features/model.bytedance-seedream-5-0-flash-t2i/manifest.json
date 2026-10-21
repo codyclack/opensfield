@@ -1,0 +1,104 @@
+{
+  "id": "model.bytedance-seedream-5-0-flash-t2i",
+  "studio": "Image models",
+  "name": "Seedream 5.0 Flash \u00b7 Text to Image",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to image",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_bytedance_seedream_5_0_flash_t2i"
+  ],
+  "status": "built",
+  "group": "Text to image",
+  "workflow": {
+    "template": "api_bytedance_seedream_5_0_flash_t2i",
+    "api": "features/model.bytedance-seedream-5-0-flash-t2i/workflow_api.json",
+    "ui": "features/model.bytedance-seedream-5-0-flash-t2i/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "35",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "size_preset",
+        "label": "Size preset",
+        "kind": "choice",
+        "node": "35",
+        "field": "model.size_preset",
+        "options": [
+          "(1K) 1024x1024 (1:1)",
+          "(1K) 864x1152 (3:4)",
+          "(1K) 1152x864 (4:3)",
+          "(1K) 1424x800 (16:9)",
+          "(1K) 800x1424 (9:16)",
+          "(1K) 832x1248 (2:3)",
+          "(1K) 1248x832 (3:2)",
+          "(1K) 1568x672 (21:9)",
+          "(1.5K) 1536x1536 (1:1)",
+          "(1.5K) 1344x1792 (3:4)",
+          "(1.5K) 1792x1344 (4:3)",
+          "(1.5K) 2048x1152 (16:9)",
+          "(1.5K) 1152x2048 (9:16)",
+          "(1.5K) 1248x1872 (2:3)",
+          "(1.5K) 1872x1248 (3:2)",
+          "(1.5K) 2352x1008 (21:9)",
+          "(2K) 2048x2048 (1:1)",
+          "(2K) 1776x2368 (3:4)",
+          "(2K) 2368x1776 (4:3)",
+          "(2K) 2816x1584 (16:9)",
+          "(2K) 1584x2816 (9:16)",
+          "(2K) 1664x2496 (2:3)",
+          "(2K) 2496x1664 (3:2)",
+          "(2K) 3136x1344 (21:9)",
+          "Custom"
+        ],
+        "default": "(1K) 1024x1024 (1:1)"
+      },
+      {
+        "name": "width",
+        "label": "Width",
+        "kind": "number",
+        "node": "35",
+        "field": "model.width",
+        "default": 2048,
+        "min": 1024,
+        "max": 4514,
+        "step": 2
+      },
+      {
+        "name": "height",
+        "label": "Height",
+        "kind": "number",
+        "node": "35",
+        "field": "model.height",
+        "default": 2048,
+        "min": 1024,
+        "max": 4514,
+        "step": 2
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "35",
+        "field": "model.seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "37"
+    ],
+    "models": [
+      "api_bytedance_seedream_5_0_flash_t2i"
+    ],
+    "output_kind": "image",
+    "verified": false
+  }
+}

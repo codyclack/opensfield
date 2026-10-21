@@ -1,0 +1,125 @@
+{
+  "id": "model.kling-o3-image",
+  "studio": "Image models",
+  "name": "Kling O3 \u00b7 Image Generation",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to image",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_kling_o3_image"
+  ],
+  "status": "built",
+  "group": "Text to image",
+  "workflow": {
+    "template": "api_kling_o3_image",
+    "api": "features/model.kling-o3-image/workflow_api.json",
+    "ui": "features/model.kling-o3-image/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image0",
+        "kind": "image",
+        "node": "31",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "image_2",
+        "label": "Image1",
+        "kind": "image",
+        "node": "32",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "30",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model_name",
+        "label": "Model name",
+        "kind": "choice",
+        "node": "30",
+        "field": "model_name",
+        "options": [
+          "kling-v3-omni",
+          "kling-image-o1"
+        ],
+        "default": "kling-v3-omni"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "30",
+        "field": "resolution",
+        "options": [
+          "1K",
+          "2K",
+          "4K"
+        ],
+        "default": "1K"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "30",
+        "field": "aspect_ratio",
+        "options": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4",
+          "3:2",
+          "2:3",
+          "21:9"
+        ],
+        "default": "16:9"
+      },
+      {
+        "name": "series_amount",
+        "label": "Series amount",
+        "kind": "choice",
+        "node": "30",
+        "field": "series_amount",
+        "options": [
+          "disabled",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "default": "disabled"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "30",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "29"
+    ],
+    "models": [
+      "api_kling_o3_image"
+    ],
+    "output_kind": "image",
+    "verified": false
+  }
+}

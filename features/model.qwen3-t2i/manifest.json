@@ -1,0 +1,62 @@
+{
+  "id": "model.qwen3-t2i",
+  "studio": "Image models",
+  "name": "Qwen Image 3.0 Pro \u00b7 Text to Image",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to image",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_qwen3_t2i"
+  ],
+  "status": "tested",
+  "group": "Text to image",
+  "workflow": {
+    "template": "api_qwen3_t2i",
+    "api": "features/model.qwen3-t2i/workflow_api.json",
+    "ui": "features/model.qwen3-t2i/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "14",
+        "field": "model.prompt",
+        "required": true
+      },
+      {
+        "name": "n",
+        "label": "N",
+        "kind": "number",
+        "node": "14",
+        "field": "n",
+        "default": 1,
+        "min": 1,
+        "max": 6,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "14",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "2"
+    ],
+    "models": [
+      "api_qwen3_t2i"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/qwen3-t2i.png"
+    ]
+  }
+}

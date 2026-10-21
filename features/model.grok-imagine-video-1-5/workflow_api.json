@@ -1,0 +1,44 @@
+{
+ "6": {
+  "inputs": {
+   "image": "robot_nun_pray.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "10": {
+  "inputs": {
+   "model": "grok-imagine-video-1.5",
+   "prompt": "Cinematic 4K slow video, almost static camera with extremely slow dolly out. The cybernetic nun is in close profile view, hands clasped in prayer, face lit by sparkling light particles, white habit and glowing halo. She sits in a minimalist, all-white room with a large, simple window directly behind her. The camera barely moves, slowly pulling back just enough to reveal the window frame and the soft futuristic cityscape beyond: sleek glowing buildings, subtle light streams, and a calm, hazy sky. No fast movement, serene and intimate mood, soft volumetric lighting, photorealistic sci-fi",
+   "resolution": "720p",
+   "aspect_ratio": "auto",
+   "duration": 5,
+   "seed": 813665681,
+   "image": [
+    "6",
+    0
+   ]
+  },
+  "class_type": "GrokVideoNode",
+  "_meta": {
+   "title": "Grok Video"
+  }
+ },
+ "11": {
+  "inputs": {
+   "filename_prefix": "video/Grok_video_1.5",
+   "format": "auto",
+   "video": [
+    "10",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ }
+}

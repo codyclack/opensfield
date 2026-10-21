@@ -63,5 +63,6 @@
     "examples": [
       "examples/tts_chatterbox.flac"
     ]
-  }
+  },
+  "group": "Text to speech"
 }

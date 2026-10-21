@@ -220,3 +220,27 @@ body.q-open #queue { transform: none; box-shadow: -20px 0 50px rgba(0, 0, 0, .5)
 .gcard .thumb { width: 100%; max-height: 420px; object-fit: contain; border-radius: 10px; background: #000; display: block; }
 .gcard audio { width: 100%; }
 @container (max-width: 900px) { .create { grid-template-columns: 1fr; } .panel { position: static; max-height: none; } }
+
+/* ---------- assets library, picker, model switcher ---------- */
+.modelsel select { width: 100%; padding: 10px 12px; background: var(--field); border: 1px solid var(--line); border-radius: 12px; font-weight: 600; }
+.libbtn, .savebtn { justify-self: start; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: #1d2023; color: var(--muted); cursor: pointer; font: 600 11px var(--display); letter-spacing: .04em; }
+.libbtn:hover, .savebtn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.savebtn:disabled { opacity: .7; cursor: default; }
+.uprow { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+.uprow .go { cursor: pointer; }
+.uprow select, .ameta select { padding: 8px 10px; background: var(--field); border: 1px solid var(--line); border-radius: 10px; }
+.cards.assets { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+.acard { display: grid; gap: 0; overflow: hidden; padding: 0; text-align: left; border: 1px solid var(--line); border-radius: 16px; background: var(--node); color: var(--text); }
+button.acard { cursor: pointer; } button.acard:hover { border-color: var(--accent); }
+.athumb { aspect-ratio: 1; background: #000; display: grid; place-items: center; overflow: hidden; }
+.athumb img, .athumb video { width: 100%; height: 100%; object-fit: cover; }
+.athumb .aud { display: grid; gap: 6px; padding: 10px; font-size: 28px; text-align: center; } .athumb audio { width: 100%; }
+.ameta { display: grid; grid-template-columns: 1fr auto; gap: 6px; padding: 8px; align-items: center; }
+.ameta select { grid-column: 1 / -1; }
+.aname { min-width: 0; padding: 6px 8px; background: transparent; border: 1px solid transparent; border-radius: 8px; font-weight: 600; color: var(--text); }
+input.aname:hover, input.aname:focus { border-color: var(--line); background: var(--field); outline: 0; }
+.adel { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: none; color: var(--muted); cursor: pointer; }
+.adel:hover { color: var(--bad); border-color: var(--bad); }
+.modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; background: rgba(0, 0, 0, .65); backdrop-filter: blur(4px); }
+.mbox { width: min(820px, 100%); max-height: 80vh; overflow-y: auto; padding: 18px; border-radius: 22px; background: var(--chrome); border: 1px solid var(--line); }
+.mhead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font: 700 14px var(--display); letter-spacing: .08em; text-transform: uppercase; }

@@ -68,5 +68,6 @@
     "examples": [
       "examples/cinematic_krea.png"
     ]
-  }
+  },
+  "group": "Text to image"
 }

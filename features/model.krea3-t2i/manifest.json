@@ -1,0 +1,96 @@
+{
+  "id": "model.krea3-t2i",
+  "studio": "Image models",
+  "name": "Krea 3 \u00b7 Text to Image",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to image",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_krea3_t2i"
+  ],
+  "status": "tested",
+  "group": "Text to image",
+  "workflow": {
+    "template": "api_krea3_t2i",
+    "api": "features/model.krea3-t2i/workflow_api.json",
+    "ui": "features/model.krea3-t2i/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "1",
+        "field": "model.prompt",
+        "required": true
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "1",
+        "field": "model.aspect_ratio",
+        "options": [
+          "auto",
+          "1:1",
+          "4:5",
+          "3:4",
+          "2:3",
+          "9:16",
+          "5:4",
+          "4:3",
+          "3:2",
+          "16:9",
+          "21:9"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "1",
+        "field": "model.resolution",
+        "options": [
+          "1K",
+          "2K"
+        ],
+        "default": "1K"
+      },
+      {
+        "name": "thinking_mode",
+        "label": "Thinking mode",
+        "kind": "choice",
+        "node": "1",
+        "field": "model.thinking_mode",
+        "options": [
+          "fast",
+          "high"
+        ],
+        "default": "fast"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "1",
+        "field": "model.seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "7"
+    ],
+    "models": [
+      "api_krea3_t2i"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/krea3-t2i.png"
+    ]
+  }
+}

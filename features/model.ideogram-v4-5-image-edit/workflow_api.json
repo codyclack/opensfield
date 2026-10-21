@@ -1,0 +1,132 @@
+{
+ "1": {
+  "inputs": {
+   "model": "ideogram-4.5",
+   "model.size": "source",
+   "model.width": 2048,
+   "model.height": 2048,
+   "model.quality": "medium",
+   "model.seed": 1491935687,
+   "model.images.image_1": [
+    "2",
+    0
+   ],
+   "model.prompt": [
+    "5",
+    0
+   ]
+  },
+  "class_type": "IdeogramEditApi",
+  "_meta": {
+   "title": "Ideogram 4.5 Edit"
+  }
+ },
+ "2": {
+  "inputs": {
+   "image": "interior_orange_sofa.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "3": {
+  "inputs": {
+   "high_level_description": "",
+   "background": "",
+   "style": "none",
+   "aesthetics": "",
+   "lighting": "",
+   "medium": "",
+   "color_palette": {
+    "__value__": []
+   },
+   "element": [
+    "4",
+    2
+   ]
+  },
+  "class_type": "BuildJsonPromptIdeogram",
+  "_meta": {
+   "title": "Build JSON Prompt (Ideogram)"
+  }
+ },
+ "4": {
+  "inputs": {
+   "width": 896,
+   "height": 1152,
+   "editor_state": {
+    "__value__": []
+   },
+   "last_incoming": {
+    "__value__": [
+     {
+      "x": 96,
+      "y": 768,
+      "width": 672,
+      "height": 352,
+      "metadata": {
+       "type": "obj",
+       "text": "",
+       "desc": "Change the color to blue",
+       "palette": []
+      }
+     }
+    ]
+   },
+   "background": [
+    "2",
+    0
+   ]
+  },
+  "class_type": "CreateBoundingBoxes",
+  "_meta": {
+   "title": "Create Bounding Boxes"
+  }
+ },
+ "5": {
+  "inputs": {
+   "source": [
+    "3",
+    0
+   ]
+  },
+  "class_type": "PreviewAny",
+  "_meta": {
+   "title": "Preview as Text"
+  }
+ },
+ "7": {
+  "inputs": {
+   "filename_prefix": "ideogram4.5_image_edit",
+   "format": "png",
+   "images": [
+    "1",
+    0
+   ],
+   "format.bit_depth": "8-bit",
+   "format.input_color_space": "sRGB"
+  },
+  "class_type": "SaveImageAdvanced",
+  "_meta": {
+   "title": "Save Image (Advanced)"
+  }
+ },
+ "8": {
+  "inputs": {
+   "compare_view": null,
+   "image_a": [
+    "2",
+    0
+   ],
+   "image_b": [
+    "7",
+    0
+   ]
+  },
+  "class_type": "ImageCompare",
+  "_meta": {
+   "title": "Compare Images"
+  }
+ }
+}

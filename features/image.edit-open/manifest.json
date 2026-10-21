@@ -59,5 +59,6 @@
     "examples": [
       "examples/image_edit_yellow_hoodie.png"
     ]
-  }
+  },
+  "group": "Image edit"
 }

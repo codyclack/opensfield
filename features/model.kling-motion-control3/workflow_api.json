@@ -1,0 +1,56 @@
+{
+ "2": {
+  "inputs": {
+   "image": "future_robot.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "3": {
+  "inputs": {
+   "file": "boxing_man.mp4"
+  },
+  "class_type": "LoadVideo",
+  "_meta": {
+   "title": "Load Video"
+  }
+ },
+ "1": {
+  "inputs": {
+   "prompt": "metallic person shadow boxing, while the train we see in the background travels pass, the subject stays in place",
+   "keep_original_sound": true,
+   "character_orientation": "video",
+   "mode": "pro",
+   "model": "kling-v3",
+   "reference_image": [
+    "2",
+    0
+   ],
+   "reference_video": [
+    "3",
+    0
+   ]
+  },
+  "class_type": "KlingMotionControl",
+  "_meta": {
+   "title": "Kling Motion Control"
+  }
+ },
+ "4": {
+  "inputs": {
+   "filename_prefix": "video/kling_motion_control3.0",
+   "format": "auto",
+   "video": [
+    "1",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ }
+}

@@ -1,0 +1,69 @@
+{
+  "id": "model.luma-ray3-3-i2v",
+  "studio": "Video models",
+  "name": "Luma Ray 3.2 \u00b7 Image to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_luma_ray3_3_i2v"
+  ],
+  "status": "built",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_luma_ray3_3_i2v",
+    "api": "features/model.luma-ray3-3-i2v/workflow_api.json",
+    "ui": "features/model.luma-ray3-3-i2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Start frame",
+        "kind": "image",
+        "node": "11",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "13",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "13",
+        "field": "resolution",
+        "options": [
+          "360p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "13",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "12"
+    ],
+    "models": [
+      "api_luma_ray3_3_i2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

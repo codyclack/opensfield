@@ -1,0 +1,33 @@
+{
+ "14": {
+  "inputs": {
+   "filename_prefix": "video/kling_o3_t2v",
+   "format": "auto",
+   "video": [
+    "15",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "15": {
+  "inputs": {
+   "model_name": "kling-v3-omni",
+   "prompt": "Dynamic follow shot. A woman in a red coat walks through a crowded Tokyo street. The camera moves forward with her, side-following view. The background is full of rushing crowds and neon lights, creating a strong sense of contrast. Cold color tone, cinematic composition, sharp focus on the character, realistic street texture.\n",
+   "aspect_ratio": "16:9",
+   "duration": 5,
+   "resolution": "720p",
+   "storyboards": "disabled",
+   "generate_audio": true,
+   "seed": 0
+  },
+  "class_type": "KlingOmniProTextToVideoNode",
+  "_meta": {
+   "title": "Kling 3.0 Omni Text to Video"
+  }
+ }
+}

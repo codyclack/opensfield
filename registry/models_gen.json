@@ -1,0 +1,6873 @@
+{
+ "features": {
+  "model.google-nano-banana2-text-to-image": {
+   "id": "model.google-nano-banana2-text-to-image",
+   "studio": "Image models",
+   "name": "Nano Banana 2 \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_google_nano_banana2_text_to_image"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.openai-gpt-image-2-t2i": {
+   "id": "model.openai-gpt-image-2-t2i",
+   "studio": "Image models",
+   "name": "GPT Image 2 \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_openai_gpt_image_2_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.openai-gpt-image-25-flare-t2i": {
+   "id": "model.openai-gpt-image-25-flare-t2i",
+   "studio": "Image models",
+   "name": "GPT Image 2.5 Flare \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_openai_gpt_image_25_flare_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.openai-gpt-image-25-sunburst-t2i": {
+   "id": "model.openai-gpt-image-25-sunburst-t2i",
+   "studio": "Image models",
+   "name": "GPT Image 2.5 Sunburst \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_openai_gpt_image_25_sunburst_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.recraft-v4-1-t2i": {
+   "id": "model.recraft-v4-1-t2i",
+   "studio": "Image models",
+   "name": "Recraft 4.1 \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_recraft_v4_1_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.kling-v3-t2i": {
+   "id": "model.kling-v3-t2i",
+   "studio": "Image models",
+   "name": "Kling 3.0 \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling_v3_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.kling-o3-image": {
+   "id": "model.kling-o3-image",
+   "studio": "Image models",
+   "name": "Kling O3 \u00b7 Image Generation",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling_o3_image"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.openai-gpt-image-2-image-edit": {
+   "id": "model.openai-gpt-image-2-image-edit",
+   "studio": "Image models",
+   "name": "GPT Image 2 \u00b7 Image Edit",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image edit",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_openai_gpt_image_2_image_edit"
+   ],
+   "status": "planned",
+   "group": "Image edit"
+  },
+  "model.grok-imagine-image-2-image-edit": {
+   "id": "model.grok-imagine-image-2-image-edit",
+   "studio": "Image models",
+   "name": "Grok Imagine Image 2.0 \u00b7 Image Edit",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image edit",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_grok_imagine_image_2_image_edit"
+   ],
+   "status": "planned",
+   "group": "Image edit"
+  },
+  "model.qwen3-image-edit": {
+   "id": "model.qwen3-image-edit",
+   "studio": "Image models",
+   "name": "Qwen Image 3.0 Pro \u00b7 Image Edit",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image edit",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_qwen3_image_edit"
+   ],
+   "status": "planned",
+   "group": "Image edit"
+  },
+  "model.kling-o3-t2v": {
+   "id": "model.kling-o3-t2v",
+   "studio": "Video models",
+   "name": "Kling O3 \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling_o3_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.grok-imagine-video-1-5-lite-t2v": {
+   "id": "model.grok-imagine-video-1-5-lite-t2v",
+   "studio": "Video models",
+   "name": "Grok Imagine Video 1.5 Lite \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_grok_imagine_video_1_5_lite_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.bfl-flux3-t2v": {
+   "id": "model.bfl-flux3-t2v",
+   "studio": "Video models",
+   "name": "FLUX 3 Video \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_bfl_flux3_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.luma-ray3-3-t2v": {
+   "id": "model.luma-ray3-3-t2v",
+   "studio": "Video models",
+   "name": "Luma Ray 3.2 \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_luma_ray3_3_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.seedance2-5-i2v-1080p": {
+   "id": "model.seedance2-5-i2v-1080p",
+   "studio": "Video models",
+   "name": "Seedance2.5 1080P \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_seedance2_5_i2v_1080p"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.bytedance-seedance1-5-image-to-video": {
+   "id": "model.bytedance-seedance1-5-image-to-video",
+   "studio": "Video models",
+   "name": "Seedance 1.5 Pro \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_bytedance_seedance1_5_image_to_video"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.kling-v3-video": {
+   "id": "model.kling-v3-video",
+   "studio": "Video models",
+   "name": "Kling 3.0 \u00b7 Video Generation",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling_v3_video"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.kling-o3-i2v": {
+   "id": "model.kling-o3-i2v",
+   "studio": "Video models",
+   "name": "Kling O3 \u00b7 Reference to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling_o3_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.kling2-6-i2v": {
+   "id": "model.kling2-6-i2v",
+   "studio": "Video models",
+   "name": "Kling2.6 \u00b7 Animate Images with Audio",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling2_6_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.minimax-h3-max-i2v": {
+   "id": "model.minimax-h3-max-i2v",
+   "studio": "Video models",
+   "name": "MiniMax H3 Max \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_minimax_h3_max_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.minimax-h3-max-turbo-i2v": {
+   "id": "model.minimax-h3-max-turbo-i2v",
+   "studio": "Video models",
+   "name": "MiniMax H3 Max Turbo \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_minimax_h3_max_turbo_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.wan3-0-i2v": {
+   "id": "model.wan3-0-i2v",
+   "studio": "Video models",
+   "name": "Wan3.0 \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_wan3_0_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.wan2-6-i2v": {
+   "id": "model.wan2-6-i2v",
+   "studio": "Video models",
+   "name": "Wan2.6 \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_wan2_6_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.grok-imagine-video-1-5": {
+   "id": "model.grok-imagine-video-1-5",
+   "studio": "Video models",
+   "name": "Grok Imagine Video 1.5 \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_grok_imagine_video_1_5"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.happyhorse1-1-i2v": {
+   "id": "model.happyhorse1-1-i2v",
+   "studio": "Video models",
+   "name": "HappyHorse 1.1 \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_happyhorse1_1_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.bfl-flux3-i2v": {
+   "id": "model.bfl-flux3-i2v",
+   "studio": "Video models",
+   "name": "FLUX 3 Video \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_bfl_flux3_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.google-gemini-omni-flash-1-1-i2v": {
+   "id": "model.google-gemini-omni-flash-1-1-i2v",
+   "studio": "Video models",
+   "name": "Gemini Omni 1.1 Flash \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_google_gemini_omni_flash_1_1_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.luma-ray3-3-i2v": {
+   "id": "model.luma-ray3-3-i2v",
+   "studio": "Video models",
+   "name": "Luma Ray 3.2 \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_luma_ray3_3_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.pixverse6-i2v": {
+   "id": "model.pixverse6-i2v",
+   "studio": "Video models",
+   "name": "PixVerse 6.0 \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_pixverse6_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.vidu-q4-preview-i2v": {
+   "id": "model.vidu-q4-preview-i2v",
+   "studio": "Video models",
+   "name": "Vidu Q4 Preview \u00b7 Image to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_vidu_q4_preview_i2v"
+   ],
+   "status": "planned",
+   "group": "Image to video"
+  },
+  "model.seedance2-0-r2v": {
+   "id": "model.seedance2-0-r2v",
+   "studio": "Video models",
+   "name": "Seedance 2.0 \u00b7 Reference to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Reference to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_seedance2_0_r2v"
+   ],
+   "status": "planned",
+   "group": "Reference to video"
+  },
+  "model.seedance2-5-r2v": {
+   "id": "model.seedance2-5-r2v",
+   "studio": "Video models",
+   "name": "Seedance 2.5 \u00b7 Reference to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Reference to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_seedance2_5_r2v"
+   ],
+   "status": "planned",
+   "group": "Reference to video"
+  },
+  "model.minimax-h3-r2v": {
+   "id": "model.minimax-h3-r2v",
+   "studio": "Video models",
+   "name": "MiniMax H3 \u00b7 Reference to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Reference to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_minimax_h3_r2v"
+   ],
+   "status": "planned",
+   "group": "Reference to video"
+  },
+  "model.wan3-0-r2v": {
+   "id": "model.wan3-0-r2v",
+   "studio": "Video models",
+   "name": "Wan3.0 \u00b7 Reference to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Reference to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_wan3_0_r2v"
+   ],
+   "status": "planned",
+   "group": "Reference to video"
+  },
+  "model.kling-v3-flf2v": {
+   "id": "model.kling-v3-flf2v",
+   "studio": "Video models",
+   "name": "Kling 3.0 \u00b7 First Last Frame to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "First / last frame",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling_v3_flf2v"
+   ],
+   "status": "planned",
+   "group": "First / last frame"
+  },
+  "model.kling-o3-flf2v": {
+   "id": "model.kling-o3-flf2v",
+   "studio": "Video models",
+   "name": "Kling O3 \u00b7 FLF2V",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "First / last frame",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling_o3_flf2v"
+   ],
+   "status": "planned",
+   "group": "First / last frame"
+  },
+  "model.kling-motion-control3": {
+   "id": "model.kling-motion-control3",
+   "studio": "Genjutsu",
+   "name": "Kling 3.0 \u00b7 Motion Control",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Motion control",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling_motion_control3"
+   ],
+   "status": "planned",
+   "group": "Motion control"
+  },
+  "model.kling-o3-video-edit": {
+   "id": "model.kling-o3-video-edit",
+   "studio": "Video tools",
+   "name": "Kling O3 \u00b7 Video Edit",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Video edit",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling_o3_video_edit"
+   ],
+   "status": "planned",
+   "group": "Video edit"
+  },
+  "model.elevenlabs-v4-text-to-speech": {
+   "id": "model.elevenlabs-v4-text-to-speech",
+   "studio": "Audio",
+   "name": "Eleven v4 \u00b7 Text to Speech",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to speech",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_elevenlabs_v4_text_to_speech"
+   ],
+   "status": "planned",
+   "group": "Text to speech"
+  },
+  "model.fishaudio-text-to-speech": {
+   "id": "model.fishaudio-text-to-speech",
+   "studio": "Audio",
+   "name": "Fish Audio \u00b7 Text to Speech",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to speech",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_fishaudio_text_to_speech"
+   ],
+   "status": "planned",
+   "group": "Text to speech"
+  },
+  "model.heygen-text-to-speech": {
+   "id": "model.heygen-text-to-speech",
+   "studio": "Audio",
+   "name": "HeyGen \u00b7 Text to Speech",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to speech",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_heygen_text_to_speech"
+   ],
+   "status": "planned",
+   "group": "Text to speech"
+  },
+  "model.nano-banana-2-1-t2i": {
+   "id": "model.nano-banana-2-1-t2i",
+   "studio": "Image models",
+   "name": "Nano Banana 2.1 \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_nano_banana_2_1_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.nano-banana-2-lite-t2i": {
+   "id": "model.nano-banana-2-lite-t2i",
+   "studio": "Image models",
+   "name": "Nano Banana 2 Lite \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_nano_banana_2_lite_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.bytedance-seedream-5-0-pro-t2i": {
+   "id": "model.bytedance-seedream-5-0-pro-t2i",
+   "studio": "Image models",
+   "name": "Seedream 5.0 Pro \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_bytedance_seedream_5_0_pro_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.bytedance-seedream-5-0-flash-t2i": {
+   "id": "model.bytedance-seedream-5-0-flash-t2i",
+   "studio": "Image models",
+   "name": "Seedream 5.0 Flash \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_bytedance_seedream_5_0_flash_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.bfl-flux3-t2i": {
+   "id": "model.bfl-flux3-t2i",
+   "studio": "Image models",
+   "name": "FLUX 3 Image \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_bfl_flux3_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.grok-imagine-image-2-t2i": {
+   "id": "model.grok-imagine-image-2-t2i",
+   "studio": "Image models",
+   "name": "Grok Imagine Image 2.0 \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_grok_imagine_image_2_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.nano-banana-2-1-image-edit": {
+   "id": "model.nano-banana-2-1-image-edit",
+   "studio": "Image models",
+   "name": "Nano Banana 2.1 \u00b7 Image Edit",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image edit",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_nano_banana_2_1_image_edit"
+   ],
+   "status": "planned",
+   "group": "Image edit"
+  },
+  "model.bytedance-seedream-5-0-flash-image-edit": {
+   "id": "model.bytedance-seedream-5-0-flash-image-edit",
+   "studio": "Image models",
+   "name": "Seedream 5.0 Flash \u00b7 Image Edit",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image edit",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_bytedance_seedream_5_0_flash_image_edit"
+   ],
+   "status": "planned",
+   "group": "Image edit"
+  },
+  "model.bfl-flux3-image-edit": {
+   "id": "model.bfl-flux3-image-edit",
+   "studio": "Image models",
+   "name": "FLUX 3 Image \u00b7 Image Edit",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image edit",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_bfl_flux3_image_edit"
+   ],
+   "status": "planned",
+   "group": "Image edit"
+  },
+  "model.ideogram-v4-5-image-edit": {
+   "id": "model.ideogram-v4-5-image-edit",
+   "studio": "Image models",
+   "name": "Ideogram 4.5 \u00b7 Image Edit",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image edit",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_ideogram_v4_5_image_edit"
+   ],
+   "status": "planned",
+   "group": "Image edit"
+  },
+  "model.topaz-image-enhance-wonder3-5": {
+   "id": "model.topaz-image-enhance-wonder3-5",
+   "studio": "Image tools",
+   "name": "Image Upscale \u00b7 Topaz Wonder 3.5",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image upscale",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_topaz_image_enhance_wonder3_5"
+   ],
+   "status": "planned",
+   "group": "Image upscale"
+  },
+  "model.kling-vto": {
+   "id": "model.kling-vto",
+   "studio": "Marketing",
+   "name": "Kling \u00b7 Virtual Try On",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Virtual try-on",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_kling_vto"
+   ],
+   "status": "planned",
+   "group": "Virtual try-on"
+  },
+  "model.meshy7-1-image-to-model": {
+   "id": "model.meshy7-1-image-to-model",
+   "studio": "Image models",
+   "name": "Meshy 7.1 \u00b7 Image to 3D",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to 3D",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_meshy7_1_image_to_model"
+   ],
+   "status": "planned",
+   "group": "Image to 3D"
+  },
+  "model.tripo-p2-image-to-model": {
+   "id": "model.tripo-p2-image-to-model",
+   "studio": "Image models",
+   "name": "Tripo P2 \u00b7 Image to Model",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Image to 3D",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_tripo_p2_image_to_model"
+   ],
+   "status": "planned",
+   "group": "Image to 3D"
+  },
+  "model.ideogram-v4-5-t2i": {
+   "id": "model.ideogram-v4-5-t2i",
+   "studio": "Image models",
+   "name": "Ideogram 4.5 \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_ideogram_v4_5_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.krea3-t2i": {
+   "id": "model.krea3-t2i",
+   "studio": "Image models",
+   "name": "Krea 3 \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_krea3_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.qwen3-t2i": {
+   "id": "model.qwen3-t2i",
+   "studio": "Image models",
+   "name": "Qwen Image 3.0 Pro \u00b7 Text to Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to image",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_qwen3_t2i"
+   ],
+   "status": "planned",
+   "group": "Text to image"
+  },
+  "model.seedance2-0-t2v": {
+   "id": "model.seedance2-0-t2v",
+   "studio": "Video models",
+   "name": "Seedance 2.0 \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_seedance2_0_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.seedance2-0-mini-t2v": {
+   "id": "model.seedance2-0-mini-t2v",
+   "studio": "Video models",
+   "name": "Seedance 2.0 Mini \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_seedance2_0_mini_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.seedance2-5-t2v-1080p": {
+   "id": "model.seedance2-5-t2v-1080p",
+   "studio": "Video models",
+   "name": "Seedance2.5 1080P \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_seedance2_5_t2v_1080p"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.wan3-0-t2v": {
+   "id": "model.wan3-0-t2v",
+   "studio": "Video models",
+   "name": "Wan3.0 \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_wan3_0_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.happyhorse1-1-t2v": {
+   "id": "model.happyhorse1-1-t2v",
+   "studio": "Video models",
+   "name": "HappyHorse 1.1 \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_happyhorse1_1_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.google-gemini-omni-flash-1-1-t2v": {
+   "id": "model.google-gemini-omni-flash-1-1-t2v",
+   "studio": "Video models",
+   "name": "Gemini Omni 1.1 Flash \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_google_gemini_omni_flash_1_1_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.pixverse6-t2v": {
+   "id": "model.pixverse6-t2v",
+   "studio": "Video models",
+   "name": "PixVerse 6.0 \u00b7 Text to Video",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Text to video",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_pixverse6_t2v"
+   ],
+   "status": "planned",
+   "group": "Text to video"
+  },
+  "model.bria-remove-video-background-transparent": {
+   "id": "model.bria-remove-video-background-transparent",
+   "studio": "Video tools",
+   "name": "Remove Background \u00b7 Bria Transparent",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Video background remover",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_bria_remove_video_background_transparent"
+   ],
+   "status": "planned",
+   "group": "Video background remover"
+  }
+ },
+ "wiring": {
+  "model.google-nano-banana2-text-to-image": {
+   "template": "api_google_nano_banana2_text_to_image",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "24",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "system_prompt",
+     "label": "System prompt",
+     "kind": "text",
+     "node": "24",
+     "field": "system_prompt",
+     "required": false
+    },
+    {
+     "name": "response_modalities",
+     "label": "Response modalities",
+     "kind": "choice",
+     "node": "24",
+     "field": "response_modalities",
+     "options": [
+      "IMAGE",
+      "IMAGE+TEXT"
+     ],
+     "default": "IMAGE"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.aspect_ratio",
+     "options": [
+      "auto",
+      "1:1",
+      "2:3",
+      "3:2",
+      "3:4",
+      "4:3",
+      "4:5",
+      "5:4",
+      "9:16",
+      "16:9",
+      "21:9",
+      "1:4",
+      "4:1",
+      "8:1",
+      "1:8"
+     ],
+     "default": "1:1"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.resolution",
+     "options": [
+      "1K",
+      "2K",
+      "4K"
+     ],
+     "default": "1K"
+    },
+    {
+     "name": "thinking_level",
+     "label": "Thinking level",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.thinking_level",
+     "options": [
+      "MINIMAL",
+      "HIGH"
+     ],
+     "default": "MINIMAL"
+    },
+    {
+     "name": "temperature",
+     "label": "Temperature",
+     "kind": "number",
+     "node": "24",
+     "field": "temperature",
+     "default": 1,
+     "min": 0.0,
+     "max": 2.0,
+     "step": 0.01
+    },
+    {
+     "name": "top_p",
+     "label": "Top p",
+     "kind": "number",
+     "node": "24",
+     "field": "top_p",
+     "default": 0.95,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "24",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "9"
+   ],
+   "models": [
+    "api_google_nano_banana2_text_to_image"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/google-nano-banana2-text-to-image.png"
+   ]
+  },
+  "model.openai-gpt-image-2-t2i": {
+   "template": "api_openai_gpt_image_2_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "271",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "size",
+     "label": "Size",
+     "kind": "choice",
+     "node": "271",
+     "field": "model.size",
+     "options": [
+      "auto",
+      "1024x1024",
+      "1024x1536",
+      "1536x1024",
+      "2048x2048",
+      "2048x1152",
+      "1152x2048",
+      "3840x2160",
+      "2160x3840",
+      "Custom"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "background",
+     "label": "Background",
+     "kind": "choice",
+     "node": "271",
+     "field": "model.background",
+     "options": [
+      "auto",
+      "opaque"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "271",
+     "field": "model.quality",
+     "options": [
+      "low",
+      "medium",
+      "high"
+     ],
+     "default": "low"
+    },
+    {
+     "name": "n",
+     "label": "N",
+     "kind": "number",
+     "node": "271",
+     "field": "n",
+     "default": 1,
+     "min": 1,
+     "max": 8,
+     "step": 1
+    },
+    {
+     "name": "custom_width",
+     "label": "Custom width",
+     "kind": "number",
+     "node": "271",
+     "field": "model.custom_width",
+     "default": 1024,
+     "min": 480,
+     "max": 3840,
+     "step": 16
+    },
+    {
+     "name": "custom_height",
+     "label": "Custom height",
+     "kind": "number",
+     "node": "271",
+     "field": "model.custom_height",
+     "default": 1024,
+     "min": 480,
+     "max": 3840,
+     "step": 16
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "271",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "269"
+   ],
+   "models": [
+    "api_openai_gpt_image_2_t2i"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/openai-gpt-image-2-t2i.png"
+   ]
+  },
+  "model.openai-gpt-image-25-flare-t2i": {
+   "template": "api_openai_gpt_image_25_flare_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "271",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "size",
+     "label": "Size",
+     "kind": "choice",
+     "node": "271",
+     "field": "model.size",
+     "options": [
+      "auto",
+      "1024x1024",
+      "1024x1536",
+      "1536x1024",
+      "2048x2048",
+      "2048x1152",
+      "1152x2048",
+      "3840x2160",
+      "2160x3840",
+      "Custom"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "background",
+     "label": "Background",
+     "kind": "choice",
+     "node": "271",
+     "field": "model.background",
+     "options": [
+      "auto",
+      "opaque",
+      "transparent"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "271",
+     "field": "model.quality",
+     "options": [
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max"
+     ],
+     "default": "low"
+    },
+    {
+     "name": "n",
+     "label": "N",
+     "kind": "number",
+     "node": "271",
+     "field": "n",
+     "default": 1,
+     "min": 1,
+     "max": 8,
+     "step": 1
+    },
+    {
+     "name": "custom_width",
+     "label": "Custom width",
+     "kind": "number",
+     "node": "271",
+     "field": "model.custom_width",
+     "default": 1024,
+     "min": 480,
+     "max": 3840,
+     "step": 16
+    },
+    {
+     "name": "custom_height",
+     "label": "Custom height",
+     "kind": "number",
+     "node": "271",
+     "field": "model.custom_height",
+     "default": 1024,
+     "min": 480,
+     "max": 3840,
+     "step": 16
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "271",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "269"
+   ],
+   "models": [
+    "api_openai_gpt_image_25_flare_t2i"
+   ]
+  },
+  "model.openai-gpt-image-25-sunburst-t2i": {
+   "template": "api_openai_gpt_image_25_sunburst_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "271",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "size",
+     "label": "Size",
+     "kind": "choice",
+     "node": "271",
+     "field": "model.size",
+     "options": [
+      "auto",
+      "1024x1024",
+      "1024x1536",
+      "1536x1024",
+      "2048x2048",
+      "2048x1152",
+      "1152x2048",
+      "3840x2160",
+      "2160x3840",
+      "Custom"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "background",
+     "label": "Background",
+     "kind": "choice",
+     "node": "271",
+     "field": "model.background",
+     "options": [
+      "auto",
+      "opaque",
+      "transparent"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "271",
+     "field": "model.quality",
+     "options": [
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max"
+     ],
+     "default": "low"
+    },
+    {
+     "name": "n",
+     "label": "N",
+     "kind": "number",
+     "node": "271",
+     "field": "n",
+     "default": 1,
+     "min": 1,
+     "max": 8,
+     "step": 1
+    },
+    {
+     "name": "custom_width",
+     "label": "Custom width",
+     "kind": "number",
+     "node": "271",
+     "field": "model.custom_width",
+     "default": 1024,
+     "min": 480,
+     "max": 3840,
+     "step": 16
+    },
+    {
+     "name": "custom_height",
+     "label": "Custom height",
+     "kind": "number",
+     "node": "271",
+     "field": "model.custom_height",
+     "default": 1024,
+     "min": 480,
+     "max": 3840,
+     "step": 16
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "271",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "269"
+   ],
+   "models": [
+    "api_openai_gpt_image_25_sunburst_t2i"
+   ]
+  },
+  "model.recraft-v4-1-t2i": {
+   "template": "api_recraft_v4_1_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "12",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "style_match",
+     "label": "Style match",
+     "kind": "choice",
+     "node": "12",
+     "field": "style_match",
+     "options": [
+      "precise",
+      "flexible"
+     ],
+     "default": "precise"
+    },
+    {
+     "name": "size",
+     "label": "Size",
+     "kind": "choice",
+     "node": "12",
+     "field": "model.size",
+     "options": [
+      "1024x1024",
+      "1536x768",
+      "768x1536",
+      "1280x832",
+      "832x1280",
+      "1216x896",
+      "896x1216",
+      "1152x896",
+      "896x1152",
+      "832x1344",
+      "1280x896",
+      "896x1280",
+      "1344x768",
+      "768x1344"
+     ],
+     "default": "1024x1024"
+    },
+    {
+     "name": "n",
+     "label": "N",
+     "kind": "number",
+     "node": "12",
+     "field": "n",
+     "default": 1,
+     "min": 1,
+     "max": 6,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "12",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "5"
+   ],
+   "models": [
+    "api_recraft_v4_1_t2i"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/recraft-v4-1-t2i.png"
+   ]
+  },
+  "model.kling-v3-t2i": {
+   "template": "api_kling_v3_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "27",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "image_type",
+     "label": "Image type",
+     "kind": "choice",
+     "node": "27",
+     "field": "image_type",
+     "options": [
+      "subject",
+      "face"
+     ],
+     "default": "subject"
+    },
+    {
+     "name": "model_name",
+     "label": "Model name",
+     "kind": "choice",
+     "node": "27",
+     "field": "model_name",
+     "options": [
+      "kling-v3"
+     ],
+     "default": "kling-v3"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "27",
+     "field": "aspect_ratio",
+     "options": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4",
+      "3:2",
+      "2:3",
+      "21:9"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "image_fidelity",
+     "label": "Image fidelity",
+     "kind": "number",
+     "node": "27",
+     "field": "image_fidelity",
+     "default": 0.5,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "human_fidelity",
+     "label": "Human fidelity",
+     "kind": "number",
+     "node": "27",
+     "field": "human_fidelity",
+     "default": 0.45,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "n",
+     "label": "N",
+     "kind": "number",
+     "node": "27",
+     "field": "n",
+     "default": 1,
+     "min": 1,
+     "max": 9,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "27",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "29"
+   ],
+   "models": [
+    "api_kling_v3_t2i"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/kling-v3-t2i.png"
+   ]
+  },
+  "model.kling-o3-image": {
+   "template": "api_kling_o3_image",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image0",
+     "kind": "image",
+     "node": "31",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "image_2",
+     "label": "Image1",
+     "kind": "image",
+     "node": "32",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "30",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model_name",
+     "label": "Model name",
+     "kind": "choice",
+     "node": "30",
+     "field": "model_name",
+     "options": [
+      "kling-v3-omni",
+      "kling-image-o1"
+     ],
+     "default": "kling-v3-omni"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "30",
+     "field": "resolution",
+     "options": [
+      "1K",
+      "2K",
+      "4K"
+     ],
+     "default": "1K"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "30",
+     "field": "aspect_ratio",
+     "options": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4",
+      "3:2",
+      "2:3",
+      "21:9"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "series_amount",
+     "label": "Series amount",
+     "kind": "choice",
+     "node": "30",
+     "field": "series_amount",
+     "options": [
+      "disabled",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9"
+     ],
+     "default": "disabled"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "30",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "29"
+   ],
+   "models": [
+    "api_kling_o3_image"
+   ]
+  },
+  "model.openai-gpt-image-2-image-edit": {
+   "template": "api_openai_gpt_image_2_image_edit",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "271",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "276",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "size",
+     "label": "Size",
+     "kind": "choice",
+     "node": "276",
+     "field": "model.size",
+     "options": [
+      "auto",
+      "1024x1024",
+      "1024x1536",
+      "1536x1024",
+      "2048x2048",
+      "2048x1152",
+      "1152x2048",
+      "3840x2160",
+      "2160x3840",
+      "Custom"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "background",
+     "label": "Background",
+     "kind": "choice",
+     "node": "276",
+     "field": "model.background",
+     "options": [
+      "auto",
+      "opaque"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "276",
+     "field": "model.quality",
+     "options": [
+      "low",
+      "medium",
+      "high"
+     ],
+     "default": "low"
+    },
+    {
+     "name": "n",
+     "label": "N",
+     "kind": "number",
+     "node": "276",
+     "field": "n",
+     "default": 1,
+     "min": 1,
+     "max": 8,
+     "step": 1
+    },
+    {
+     "name": "custom_width",
+     "label": "Custom width",
+     "kind": "number",
+     "node": "276",
+     "field": "model.custom_width",
+     "default": 1024,
+     "min": 480,
+     "max": 3840,
+     "step": 16
+    },
+    {
+     "name": "custom_height",
+     "label": "Custom height",
+     "kind": "number",
+     "node": "276",
+     "field": "model.custom_height",
+     "default": 1024,
+     "min": 480,
+     "max": 3840,
+     "step": 16
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "276",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "269"
+   ],
+   "models": [
+    "api_openai_gpt_image_2_image_edit"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/openai-gpt-image-2-image-edit.png"
+   ]
+  },
+  "model.grok-imagine-image-2-image-edit": {
+   "template": "api_grok_imagine_image_2_image_edit",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "11",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "image_2",
+     "label": "Image 2",
+     "kind": "image",
+     "node": "13",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "10",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "10",
+     "field": "model.resolution",
+     "options": [
+      "1K",
+      "2K"
+     ],
+     "default": "1K"
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "10",
+     "field": "model.quality",
+     "options": [
+      "medium",
+      "low"
+     ],
+     "default": "medium"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "10",
+     "field": "model.aspect_ratio",
+     "options": [
+      "auto",
+      "1:1",
+      "2:3",
+      "3:2",
+      "3:4",
+      "4:3",
+      "9:16",
+      "16:9",
+      "9:19.5",
+      "19.5:9",
+      "9:20",
+      "20:9",
+      "1:2",
+      "2:1"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "number_of_images",
+     "label": "Number of images",
+     "kind": "number",
+     "node": "10",
+     "field": "model.number_of_images",
+     "default": 1,
+     "min": 1,
+     "max": 10,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "10",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "12"
+   ],
+   "models": [
+    "api_grok_imagine_image_2_image_edit"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/grok-imagine-image-2-image-edit.png"
+   ]
+  },
+  "model.qwen3-image-edit": {
+   "template": "api_qwen3_image_edit",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "14",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "15",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "n",
+     "label": "N",
+     "kind": "number",
+     "node": "15",
+     "field": "n",
+     "default": 1,
+     "min": 1,
+     "max": 6,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "15",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2"
+   ],
+   "models": [
+    "api_qwen3_image_edit"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/qwen3-image-edit.png"
+   ]
+  },
+  "model.kling-o3-t2v": {
+   "template": "api_kling_o3_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "15",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model_name",
+     "label": "Model name",
+     "kind": "choice",
+     "node": "15",
+     "field": "model_name",
+     "options": [
+      "kling-v3-omni",
+      "kling-video-o1"
+     ],
+     "default": "kling-v3-omni"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "15",
+     "field": "aspect_ratio",
+     "options": [
+      "16:9",
+      "9:16",
+      "1:1"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "15",
+     "field": "resolution",
+     "options": [
+      "4k",
+      "1080p",
+      "720p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "15",
+     "field": "duration",
+     "default": 5,
+     "min": 3,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "15",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "14"
+   ],
+   "models": [
+    "api_kling_o3_t2v"
+   ]
+  },
+  "model.grok-imagine-video-1-5-lite-t2v": {
+   "template": "api_grok_imagine_video_1_5_lite_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "3",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model",
+     "label": "Model",
+     "kind": "choice",
+     "node": "3",
+     "field": "model",
+     "options": [
+      "grok-imagine-video",
+      "grok-imagine-video-1.5",
+      "grok-imagine-video-1.5-lite"
+     ],
+     "default": "grok-imagine-video-1.5-lite"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "3",
+     "field": "resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p"
+     ],
+     "default": "480p"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "3",
+     "field": "aspect_ratio",
+     "options": [
+      "auto",
+      "16:9",
+      "4:3",
+      "3:2",
+      "1:1",
+      "2:3",
+      "3:4",
+      "9:16"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "3",
+     "field": "duration",
+     "default": 6,
+     "min": 1,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "3",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "6"
+   ],
+   "models": [
+    "api_grok_imagine_video_1_5_lite_t2v"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/grok-imagine-video-1-5-lite-t2v.mp4"
+   ]
+  },
+  "model.bfl-flux3-t2v": {
+   "template": "api_bfl_flux3_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "13",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "13",
+     "field": "aspect_ratio",
+     "options": [
+      "auto",
+      "21:9",
+      "2:1",
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "choice",
+     "node": "13",
+     "field": "duration",
+     "options": [
+      "auto",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "13",
+     "field": "resolution",
+     "options": [
+      "720p",
+      "1080p",
+      "1440p",
+      "2160p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "safety_tolerance",
+     "label": "Safety tolerance",
+     "kind": "number",
+     "node": "13",
+     "field": "safety_tolerance",
+     "default": 2,
+     "min": 0,
+     "max": 4,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "13",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "6"
+   ],
+   "models": [
+    "api_bfl_flux3_t2v"
+   ]
+  },
+  "model.luma-ray3-3-t2v": {
+   "template": "api_luma_ray3_3_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "3",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "3",
+     "field": "aspect_ratio",
+     "options": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4",
+      "21:9"
+     ],
+     "default": "1:1"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "3",
+     "field": "resolution",
+     "options": [
+      "360p",
+      "540p",
+      "720p",
+      "1080p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "choice",
+     "node": "3",
+     "field": "duration",
+     "options": [
+      "5s",
+      "10s"
+     ],
+     "default": "5s"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "3",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "6"
+   ],
+   "models": [
+    "api_luma_ray3_3_t2v"
+   ]
+  },
+  "model.seedance2-5-i2v-1080p": {
+   "template": "api_seedance2_5_i2v_1080p",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "2",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "9",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "9",
+     "field": "model.resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p"
+     ],
+     "default": "1080p"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "9",
+     "field": "model.ratio",
+     "options": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9",
+      "adaptive"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "task_type",
+     "label": "Task type",
+     "kind": "choice",
+     "node": "9",
+     "field": "model.task_type",
+     "options": [
+      "auto",
+      "reference",
+      "edit",
+      "extend"
+     ],
+     "default": "reference"
+    },
+    {
+     "name": "output_format",
+     "label": "Output format",
+     "kind": "choice",
+     "node": "9",
+     "field": "model.output_format",
+     "options": [
+      "mp4"
+     ],
+     "default": "mp4"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "9",
+     "field": "model.duration",
+     "default": 5,
+     "min": 4,
+     "max": 30,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "9",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "7"
+   ],
+   "models": [
+    "api_seedance2_5_i2v_1080p"
+   ]
+  },
+  "model.bytedance-seedance1-5-image-to-video": {
+   "template": "api_bytedance_seedance1_5_image_to_video",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image",
+     "kind": "image",
+     "node": "4",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "8",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model",
+     "label": "Model",
+     "kind": "choice",
+     "node": "8",
+     "field": "model",
+     "options": [
+      "seedance-1-5-pro-251215",
+      "seedance-1-0-pro-250528",
+      "seedance-1-0-pro-fast-251015"
+     ],
+     "default": "seedance-1-5-pro-251215"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "8",
+     "field": "resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p"
+     ],
+     "default": "480p"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "8",
+     "field": "aspect_ratio",
+     "options": [
+      "adaptive",
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "8",
+     "field": "duration",
+     "default": 5,
+     "min": 3,
+     "max": 12,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "8",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "9"
+   ],
+   "models": [
+    "api_bytedance_seedance1_5_image_to_video"
+   ]
+  },
+  "model.kling-v3-video": {
+   "template": "api_kling_v3_video",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Start frame",
+     "kind": "image",
+     "node": "1",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "storyboard_1_prompt",
+     "label": "Storyboard 1 prompt",
+     "kind": "text",
+     "node": "3",
+     "field": "multi_shot.storyboard_1_prompt",
+     "required": false
+    },
+    {
+     "name": "storyboard_2_prompt",
+     "label": "Storyboard 2 prompt",
+     "kind": "text",
+     "node": "3",
+     "field": "multi_shot.storyboard_2_prompt",
+     "required": false
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "3",
+     "field": "model.resolution",
+     "options": [
+      "4k",
+      "1080p",
+      "720p"
+     ],
+     "default": "1080p"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "3",
+     "field": "model.aspect_ratio",
+     "options": [
+      "16:9",
+      "9:16",
+      "1:1"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "storyboard_1_duration",
+     "label": "Storyboard 1 duration",
+     "kind": "number",
+     "node": "3",
+     "field": "multi_shot.storyboard_1_duration",
+     "default": 2,
+     "min": 1,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "storyboard_2_duration",
+     "label": "Storyboard 2 duration",
+     "kind": "number",
+     "node": "3",
+     "field": "multi_shot.storyboard_2_duration",
+     "default": 3,
+     "min": 1,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "3",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2"
+   ],
+   "models": [
+    "api_kling_v3_video"
+   ]
+  },
+  "model.kling-o3-i2v": {
+   "template": "api_kling_o3_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Reference images",
+     "kind": "image",
+     "node": "17",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "21",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model_name",
+     "label": "Model name",
+     "kind": "choice",
+     "node": "21",
+     "field": "model_name",
+     "options": [
+      "kling-v3-omni",
+      "kling-video-o1"
+     ],
+     "default": "kling-v3-omni"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "21",
+     "field": "aspect_ratio",
+     "options": [
+      "16:9",
+      "9:16",
+      "1:1"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "21",
+     "field": "resolution",
+     "options": [
+      "4k",
+      "1080p",
+      "720p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "21",
+     "field": "duration",
+     "default": 5,
+     "min": 3,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "21",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "20"
+   ],
+   "models": [
+    "api_kling_o3_i2v"
+   ]
+  },
+  "model.kling2-6-i2v": {
+   "template": "api_kling2_6_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Start frame",
+     "kind": "image",
+     "node": "14",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "12",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model_name",
+     "label": "Model name",
+     "kind": "choice",
+     "node": "12",
+     "field": "model_name",
+     "options": [
+      "kling-v2-6"
+     ],
+     "default": "kling-v2-6"
+    },
+    {
+     "name": "mode",
+     "label": "Mode",
+     "kind": "choice",
+     "node": "12",
+     "field": "mode",
+     "options": [
+      "pro"
+     ],
+     "default": "pro"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "choice",
+     "node": "12",
+     "field": "duration",
+     "options": [
+      "5",
+      "10"
+     ],
+     "default": "5"
+    }
+   ],
+   "outputs": [
+    "10"
+   ],
+   "models": [
+    "api_kling2_6_i2v"
+   ]
+  },
+  "model.minimax-h3-max-i2v": {
+   "template": "api_minimax_h3_max_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "25",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "7",
+     "field": "model.ratio",
+     "options": [
+      "adaptive",
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "10",
+     "field": "model.resolution",
+     "options": [
+      "2K"
+     ],
+     "default": "2K"
+    },
+    {
+     "name": "resolution_24",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.resolution",
+     "options": [
+      "480P",
+      "768P"
+     ],
+     "default": "768P"
+    },
+    {
+     "name": "prompt_expansion_mode",
+     "label": "Prompt expansion mode",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.prompt_expansion_mode",
+     "options": [
+      "balanced",
+      "quality"
+     ],
+     "default": "balanced"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "7",
+     "field": "model.duration",
+     "default": 5,
+     "min": 4,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "duration_24",
+     "label": "Duration",
+     "kind": "number",
+     "node": "24",
+     "field": "model.duration",
+     "default": 5,
+     "min": 5,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "24",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2",
+    "11"
+   ],
+   "models": [
+    "api_minimax_h3_max_i2v"
+   ]
+  },
+  "model.minimax-h3-max-turbo-i2v": {
+   "template": "api_minimax_h3_max_turbo_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "First frame",
+     "kind": "image",
+     "node": "25",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "7",
+     "field": "model.ratio",
+     "options": [
+      "adaptive",
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "10",
+     "field": "model.resolution",
+     "options": [
+      "2K"
+     ],
+     "default": "2K"
+    },
+    {
+     "name": "resolution_24",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.resolution",
+     "options": [
+      "480P",
+      "768P"
+     ],
+     "default": "768P"
+    },
+    {
+     "name": "prompt_expansion_mode",
+     "label": "Prompt expansion mode",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.prompt_expansion_mode",
+     "options": [
+      "balanced",
+      "quality"
+     ],
+     "default": "balanced"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "7",
+     "field": "model.duration",
+     "default": 5,
+     "min": 4,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "duration_24",
+     "label": "Duration",
+     "kind": "number",
+     "node": "24",
+     "field": "model.duration",
+     "default": 5,
+     "min": 5,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "24",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2",
+    "11"
+   ],
+   "models": [
+    "api_minimax_h3_max_turbo_i2v"
+   ]
+  },
+  "model.wan3-0-i2v": {
+   "template": "api_wan3_0_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "First frame",
+     "kind": "image",
+     "node": "6",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "5",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "5",
+     "field": "model.resolution",
+     "options": [
+      "1080P",
+      "720P",
+      "480P"
+     ],
+     "default": "720P"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "5",
+     "field": "model.ratio",
+     "options": [
+      "adaptive",
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "choice",
+     "node": "5",
+     "field": "model.duration",
+     "options": [
+      "auto",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "5",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "8"
+   ],
+   "models": [
+    "api_wan3_0_i2v"
+   ]
+  },
+  "model.wan2-6-i2v": {
+   "template": "api_wan2_6_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image",
+     "kind": "image",
+     "node": "42",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "41",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model",
+     "label": "Model",
+     "kind": "choice",
+     "node": "41",
+     "field": "model",
+     "options": [
+      "wan2.5-i2v-preview",
+      "wan2.6-i2v"
+     ],
+     "default": "wan2.6-i2v"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "41",
+     "field": "resolution",
+     "options": [
+      "480P",
+      "720P",
+      "1080P"
+     ],
+     "default": "720P"
+    },
+    {
+     "name": "shot_type",
+     "label": "Shot type",
+     "kind": "choice",
+     "node": "41",
+     "field": "shot_type",
+     "options": [
+      "single",
+      "multi"
+     ],
+     "default": "single"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "41",
+     "field": "duration",
+     "default": 5,
+     "min": 5,
+     "max": 15,
+     "step": 5
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "41",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "43"
+   ],
+   "models": [
+    "api_wan2_6_i2v"
+   ]
+  },
+  "model.grok-imagine-video-1-5": {
+   "template": "api_grok_imagine_video_1_5",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image",
+     "kind": "image",
+     "node": "6",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "10",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model",
+     "label": "Model",
+     "kind": "choice",
+     "node": "10",
+     "field": "model",
+     "options": [
+      "grok-imagine-video",
+      "grok-imagine-video-1.5",
+      "grok-imagine-video-1.5-lite"
+     ],
+     "default": "grok-imagine-video-1.5"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "10",
+     "field": "resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "10",
+     "field": "aspect_ratio",
+     "options": [
+      "auto",
+      "16:9",
+      "4:3",
+      "3:2",
+      "1:1",
+      "2:3",
+      "3:4",
+      "9:16"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "10",
+     "field": "duration",
+     "default": 5,
+     "min": 1,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "10",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "11"
+   ],
+   "models": [
+    "api_grok_imagine_video_1_5"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/grok-imagine-video-1-5.mp4"
+   ]
+  },
+  "model.happyhorse1-1-i2v": {
+   "template": "api_happyhorse1_1_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "First frame",
+     "kind": "image",
+     "node": "14",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "12",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "12",
+     "field": "model.resolution",
+     "options": [
+      "720P",
+      "1080P"
+     ],
+     "default": "720P"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "12",
+     "field": "model.duration",
+     "default": 5,
+     "min": 3,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "12",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "13"
+   ],
+   "models": [
+    "api_happyhorse1_1_i2v"
+   ]
+  },
+  "model.bfl-flux3-i2v": {
+   "template": "api_bfl_flux3_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 0",
+     "kind": "image",
+     "node": "423",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "424",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "424",
+     "field": "aspect_ratio",
+     "options": [
+      "auto",
+      "21:9",
+      "2:1",
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "choice",
+     "node": "424",
+     "field": "duration",
+     "options": [
+      "auto",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+     ],
+     "default": "5"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "424",
+     "field": "resolution",
+     "options": [
+      "720p",
+      "1080p",
+      "1440p",
+      "2160p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "safety_tolerance",
+     "label": "Safety tolerance",
+     "kind": "number",
+     "node": "424",
+     "field": "safety_tolerance",
+     "default": 2,
+     "min": 0,
+     "max": 4,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "424",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "422"
+   ],
+   "models": [
+    "api_bfl_flux3_i2v"
+   ]
+  },
+  "model.google-gemini-omni-flash-1-1-i2v": {
+   "template": "api_google_gemini_omni_flash_1_1_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "11",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "7",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "7",
+     "field": "model.resolution",
+     "options": [
+      "360p",
+      "720p",
+      "1080p",
+      "4k"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "7",
+     "field": "model.aspect_ratio",
+     "options": [
+      "16:9",
+      "9:16"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "task_type",
+     "label": "Task type",
+     "kind": "choice",
+     "node": "7",
+     "field": "model.task_type",
+     "options": [
+      "auto",
+      "text_to_video",
+      "image_to_video",
+      "reference_to_video",
+      "edit",
+      "extend"
+     ],
+     "default": "image_to_video"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "7",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "8"
+   ],
+   "models": [
+    "api_google_gemini_omni_flash_1_1_i2v"
+   ]
+  },
+  "model.luma-ray3-3-i2v": {
+   "template": "api_luma_ray3_3_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Start frame",
+     "kind": "image",
+     "node": "11",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "13",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "13",
+     "field": "resolution",
+     "options": [
+      "360p",
+      "540p",
+      "720p",
+      "1080p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "13",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "12"
+   ],
+   "models": [
+    "api_luma_ray3_3_i2v"
+   ]
+  },
+  "model.pixverse6-i2v": {
+   "template": "api_pixverse6_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image",
+     "kind": "image",
+     "node": "19",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "17",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "17",
+     "field": "model.quality",
+     "options": [
+      "360p",
+      "540p",
+      "720p",
+      "1080p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "style",
+     "label": "Style",
+     "kind": "choice",
+     "node": "17",
+     "field": "model.style",
+     "options": [
+      "none",
+      "anime",
+      "3d_animation",
+      "clay",
+      "comic",
+      "cyberpunk",
+      "realistic"
+     ],
+     "default": "none"
+    },
+    {
+     "name": "duration_seconds",
+     "label": "Duration seconds",
+     "kind": "number",
+     "node": "17",
+     "field": "model.duration_seconds",
+     "default": 5,
+     "min": 1,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "17",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "14"
+   ],
+   "models": [
+    "api_pixverse6_i2v"
+   ]
+  },
+  "model.vidu-q4-preview-i2v": {
+   "template": "api_vidu_q4_preview_i2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image",
+     "kind": "image",
+     "node": "5",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "7",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "7",
+     "field": "model.resolution",
+     "options": [
+      "540p",
+      "720p",
+      "1080p",
+      "2K",
+      "4K"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "7",
+     "field": "model.duration",
+     "default": 5,
+     "min": 3,
+     "max": 16,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "7",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "6"
+   ],
+   "models": [
+    "api_vidu_q4_preview_i2v"
+   ]
+  },
+  "model.seedance2-0-r2v": {
+   "template": "api_seedance2_0_r2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "356",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "361",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "361",
+     "field": "model.resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p",
+      "4k"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "361",
+     "field": "model.ratio",
+     "options": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9",
+      "adaptive"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "361",
+     "field": "model.duration",
+     "default": 7,
+     "min": 4,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "361",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "344"
+   ],
+   "models": [
+    "api_seedance2_0_r2v"
+   ]
+  },
+  "model.seedance2-5-r2v": {
+   "template": "api_seedance2_5_r2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "12",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "24",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.ratio",
+     "options": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9",
+      "adaptive"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "task_type",
+     "label": "Task type",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.task_type",
+     "options": [
+      "auto",
+      "reference",
+      "edit",
+      "extend"
+     ],
+     "default": "reference"
+    },
+    {
+     "name": "output_format",
+     "label": "Output format",
+     "kind": "choice",
+     "node": "24",
+     "field": "model.output_format",
+     "options": [
+      "mp4"
+     ],
+     "default": "mp4"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "24",
+     "field": "model.duration",
+     "default": 5,
+     "min": 4,
+     "max": 30,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "24",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "16"
+   ],
+   "models": [
+    "api_seedance2_5_r2v"
+   ]
+  },
+  "model.minimax-h3-r2v": {
+   "template": "api_minimax_h3_r2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "2",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "4",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "4",
+     "field": "model.resolution",
+     "options": [
+      "768P",
+      "2K"
+     ],
+     "default": "768P"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "4",
+     "field": "model.ratio",
+     "options": [
+      "adaptive",
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "4",
+     "field": "model.duration",
+     "default": 5,
+     "min": 4,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "4",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "3"
+   ],
+   "models": [
+    "api_minimax_h3_r2v"
+   ]
+  },
+  "model.wan3-0-r2v": {
+   "template": "api_wan3_0_r2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image1",
+     "kind": "image",
+     "node": "6",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "image_2",
+     "label": "Image2",
+     "kind": "image",
+     "node": "18",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "16",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "16",
+     "field": "model.resolution",
+     "options": [
+      "1080P",
+      "720P",
+      "480P"
+     ],
+     "default": "720P"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "16",
+     "field": "model.ratio",
+     "options": [
+      "adaptive",
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "choice",
+     "node": "16",
+     "field": "model.duration",
+     "options": [
+      "auto",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "16",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "17"
+   ],
+   "models": [
+    "api_wan3_0_r2v"
+   ]
+  },
+  "model.kling-v3-flf2v": {
+   "template": "api_kling_v3_flf2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "First frame",
+     "kind": "image",
+     "node": "1",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "image_2",
+     "label": "End frame",
+     "kind": "image",
+     "node": "13",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "12",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "12",
+     "field": "model.resolution",
+     "options": [
+      "4k",
+      "1080p",
+      "720p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "12",
+     "field": "duration",
+     "default": 5,
+     "min": 3,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "12",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2"
+   ],
+   "models": [
+    "api_kling_v3_flf2v"
+   ]
+  },
+  "model.kling-o3-flf2v": {
+   "template": "api_kling_o3_flf2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "End frame",
+     "kind": "image",
+     "node": "34",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "image_2",
+     "label": "First frame",
+     "kind": "image",
+     "node": "17",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "32",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model_name",
+     "label": "Model name",
+     "kind": "choice",
+     "node": "32",
+     "field": "model_name",
+     "options": [
+      "kling-v3-omni",
+      "kling-video-o1"
+     ],
+     "default": "kling-v3-omni"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "32",
+     "field": "resolution",
+     "options": [
+      "4k",
+      "1080p",
+      "720p"
+     ],
+     "default": "1080p"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "32",
+     "field": "duration",
+     "default": 5,
+     "min": 3,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "32",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "14"
+   ],
+   "models": [
+    "api_kling_o3_flf2v"
+   ]
+  },
+  "model.kling-motion-control3": {
+   "template": "api_kling_motion_control3",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Reference image",
+     "kind": "image",
+     "node": "2",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "video_1",
+     "label": "Reference video",
+     "kind": "video",
+     "node": "3",
+     "field": "file",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "1",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "character_orientation",
+     "label": "Character orientation",
+     "kind": "choice",
+     "node": "1",
+     "field": "character_orientation",
+     "options": [
+      "video",
+      "image"
+     ],
+     "default": "video"
+    },
+    {
+     "name": "mode",
+     "label": "Mode",
+     "kind": "choice",
+     "node": "1",
+     "field": "mode",
+     "options": [
+      "pro",
+      "std"
+     ],
+     "default": "pro"
+    },
+    {
+     "name": "model",
+     "label": "Model",
+     "kind": "choice",
+     "node": "1",
+     "field": "model",
+     "options": [
+      "kling-v3",
+      "kling-v2-6"
+     ],
+     "default": "kling-v3"
+    }
+   ],
+   "outputs": [
+    "4"
+   ],
+   "models": [
+    "api_kling_motion_control3"
+   ]
+  },
+  "model.kling-o3-video-edit": {
+   "template": "api_kling_o3_video_edit",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Reference images",
+     "kind": "image",
+     "node": "17",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "video_1",
+     "label": "Video",
+     "kind": "video",
+     "node": "25",
+     "field": "file",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "23",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model_name",
+     "label": "Model name",
+     "kind": "choice",
+     "node": "23",
+     "field": "model_name",
+     "options": [
+      "kling-v3-omni",
+      "kling-video-o1"
+     ],
+     "default": "kling-v3-omni"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "23",
+     "field": "resolution",
+     "options": [
+      "1080p",
+      "720p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "23",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "14"
+   ],
+   "models": [
+    "api_kling_o3_video_edit"
+   ]
+  },
+  "model.elevenlabs-v4-text-to-speech": {
+   "template": "api_elevenlabs_v4_text_to_speech",
+   "output_kind": "audio",
+   "inputs": [
+    {
+     "name": "text",
+     "label": "Text",
+     "kind": "text",
+     "node": "208",
+     "field": "text",
+     "required": false
+    },
+    {
+     "name": "apply_text_normalization",
+     "label": "Apply text normalization",
+     "kind": "choice",
+     "node": "208",
+     "field": "apply_text_normalization",
+     "options": [
+      "auto",
+      "on",
+      "off"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "output_format",
+     "label": "Output format",
+     "kind": "choice",
+     "node": "208",
+     "field": "output_format",
+     "options": [
+      "mp3_44100_192",
+      "opus_48000_192"
+     ],
+     "default": "mp3_44100_192"
+    },
+    {
+     "name": "stability",
+     "label": "Stability",
+     "kind": "number",
+     "node": "208",
+     "field": "stability",
+     "default": 0.5,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "similarity_boost",
+     "label": "Similarity boost",
+     "kind": "number",
+     "node": "208",
+     "field": "model.similarity_boost",
+     "default": 0.75,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "208",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "218"
+   ],
+   "models": [
+    "api_elevenlabs_v4_text_to_speech"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/elevenlabs-v4-text-to-speech.mp3"
+   ]
+  },
+  "model.fishaudio-text-to-speech": {
+   "template": "api_fishaudio_text_to_speech",
+   "output_kind": "audio",
+   "inputs": [
+    {
+     "name": "text",
+     "label": "Text",
+     "kind": "text",
+     "node": "1",
+     "field": "text",
+     "required": false
+    },
+    {
+     "name": "temperature",
+     "label": "Temperature",
+     "kind": "number",
+     "node": "1",
+     "field": "model.temperature",
+     "default": 0.7,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "top_p",
+     "label": "Top p",
+     "kind": "number",
+     "node": "1",
+     "field": "model.top_p",
+     "default": 0.7,
+     "min": 0.01,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "speed",
+     "label": "Speed",
+     "kind": "number",
+     "node": "1",
+     "field": "model.speed",
+     "default": 1,
+     "min": 0.5,
+     "max": 2.0,
+     "step": 0.01
+    },
+    {
+     "name": "volume",
+     "label": "Volume",
+     "kind": "number",
+     "node": "1",
+     "field": "model.volume",
+     "default": 0,
+     "min": -10.0,
+     "max": 10.0,
+     "step": 0.5
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "5"
+   ],
+   "models": [
+    "api_fishaudio_text_to_speech"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/fishaudio-text-to-speech.mp3"
+   ]
+  },
+  "model.heygen-text-to-speech": {
+   "template": "api_heygen_text_to_speech",
+   "output_kind": "audio",
+   "inputs": [
+    {
+     "name": "text",
+     "label": "Text",
+     "kind": "text",
+     "node": "1",
+     "field": "text",
+     "required": false
+    },
+    {
+     "name": "voice",
+     "label": "Voice",
+     "kind": "choice",
+     "node": "1",
+     "field": "voice",
+     "options": [
+      "Chill Brian (English, male)",
+      "Zain (English, female)",
+      "Narrator Mateo - Excited \ud83e\udd29 (Spanish, male)",
+      "Aria (English, female)",
+      "Caryns (English, female)",
+      "Klara (English, female)",
+      "Bold Kasia - Excited \ud83e\udd29 (Polish, female)",
+      "Shaun (English, male)",
+      "Senthil (English, male)",
+      "Cody (English, male)",
+      "Saffron (English, female)",
+      "Blanka - Lifelike (English, female)",
+      "Rami (English, male)",
+      "Rhodes (English, female)",
+      "Michelle - Voice 1 (English, female)",
+      "Autumn - UGC 3 (English, female)",
+      "Reassuring Rupert (English, male)",
+      "Rose - UGC -2  (English, female)",
+      "Derya - Lifelike - Broadcaster \ud83c\udf99\ufe0f (English, female)",
+      "Dynamic Derek (English, male)",
+      "Lotte (English, female)",
+      "Thanos - Broadcaster \ud83c\udf99\ufe0f (English, male)",
+      "Marcia (English, female)",
+      "Camden (English, male)",
+      "Rumi (English, female)",
+      "Pippa (English, female)",
+      "William Prescott - Broadcaster \ud83c\udf99\ufe0f (English, male)",
+      "Sammy (English, female)",
+      "Breezy Bagus (Indonesian, male)",
+      "Ben (English, male)",
+      "Smooth Dev (English, male)",
+      "Daran inside booth (English, male)",
+      "Peppy Stella (English, female)",
+      "Silas (English, male)",
+      "Aditya (English, male)",
+      "Christy (English, female)",
+      "Elio (English, male)",
+      "Luminous Laksh (Hindi, male)",
+      "Jeff (English, male)",
+      "Tahlia Brooks - Excited \ud83e\udd29 (English, female)",
+      "Riya Mehta (Hindi, female)",
+      "Ben Hart (English, male)",
+      "Skylar (English, female)",
+      "Relaxed Reece (English, male)",
+      "Daniel (English, male)",
+      "Melani (English, female)",
+      "Clover (English, female)",
+      "Pedro Lima - Serious \ud83d\ude10 (Portuguese, male)",
+      "Ana Carvalho (Portuguese, female)",
+      "Confident Connor - Excited \ud83e\udd29 (English, male)",
+      "Vibrant Victor (Spanish, male)",
+      "Young Olivier (French, male)",
+      "\u00c9mile Noir (French, male)",
+      "Steadfast Stefan (German, male)",
+      "Deep Dieter (German, male)",
+      "Serene Marco (Italian, male)",
+      "Murmuring Matteo (Italian, male)",
+      "Gail in car (Multilingual, female)",
+      "Daran outside walking (Multilingual, male)",
+      "BOB - Voice 1 (Chinese, unknown)",
+      "Hakeem Hassan (Arabic, male)",
+      "Rami Idris (Arabic, male)",
+      "Bold Kasia - Friendly \ud83d\ude0a (Polish, female)",
+      "Tranquil Tulin (Turkish, female)",
+      "Dynamic Derya (Turkish, female)",
+      "Quiet Dewa (Indonesian, male)",
+      "Cuong (Vietnamese, male)"
+     ],
+     "default": "Chill Brian (English, male)"
+    },
+    {
+     "name": "speed",
+     "label": "Speed",
+     "kind": "number",
+     "node": "1",
+     "field": "speed",
+     "default": 1,
+     "min": 0.5,
+     "max": 2.0,
+     "step": 0.05
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "3"
+   ],
+   "models": [
+    "api_heygen_text_to_speech"
+   ]
+  },
+  "model.nano-banana-2-1-t2i": {
+   "template": "api_nano_banana_2_1_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "1",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "system_prompt",
+     "label": "System prompt",
+     "kind": "text",
+     "node": "1",
+     "field": "system_prompt",
+     "required": false
+    },
+    {
+     "name": "response_modalities",
+     "label": "Response modalities",
+     "kind": "choice",
+     "node": "1",
+     "field": "response_modalities",
+     "options": [
+      "IMAGE",
+      "IMAGE+TEXT"
+     ],
+     "default": "IMAGE"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.aspect_ratio",
+     "options": [
+      "auto",
+      "1:1",
+      "2:3",
+      "3:2",
+      "3:4",
+      "4:3",
+      "4:5",
+      "5:4",
+      "9:16",
+      "16:9",
+      "21:9",
+      "1:4",
+      "4:1",
+      "8:1",
+      "1:8"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.resolution",
+     "options": [
+      "1K",
+      "2K",
+      "4K"
+     ],
+     "default": "1K"
+    },
+    {
+     "name": "thinking_level",
+     "label": "Thinking level",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.thinking_level",
+     "options": [
+      "MINIMAL",
+      "MEDIUM",
+      "HIGH"
+     ],
+     "default": "MEDIUM"
+    },
+    {
+     "name": "temperature",
+     "label": "Temperature",
+     "kind": "number",
+     "node": "1",
+     "field": "temperature",
+     "default": 1,
+     "min": 0.0,
+     "max": 2.0,
+     "step": 0.01
+    },
+    {
+     "name": "top_p",
+     "label": "Top p",
+     "kind": "number",
+     "node": "1",
+     "field": "top_p",
+     "default": 0.95,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "3"
+   ],
+   "models": [
+    "api_nano_banana_2_1_t2i"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/nano-banana-2-1-t2i.png"
+   ]
+  },
+  "model.nano-banana-2-lite-t2i": {
+   "template": "api_nano_banana_2_lite_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "3",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "system_prompt",
+     "label": "System prompt",
+     "kind": "text",
+     "node": "3",
+     "field": "system_prompt",
+     "required": false
+    },
+    {
+     "name": "response_modalities",
+     "label": "Response modalities",
+     "kind": "choice",
+     "node": "3",
+     "field": "response_modalities",
+     "options": [
+      "IMAGE",
+      "IMAGE+TEXT"
+     ],
+     "default": "IMAGE"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "3",
+     "field": "model.aspect_ratio",
+     "options": [
+      "auto",
+      "1:1",
+      "2:3",
+      "3:2",
+      "3:4",
+      "4:3",
+      "4:5",
+      "5:4",
+      "9:16",
+      "16:9",
+      "21:9",
+      "1:4",
+      "4:1",
+      "8:1",
+      "1:8"
+     ],
+     "default": "1:1"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "3",
+     "field": "model.resolution",
+     "options": [
+      "1K"
+     ],
+     "default": "1K"
+    },
+    {
+     "name": "thinking_level",
+     "label": "Thinking level",
+     "kind": "choice",
+     "node": "3",
+     "field": "model.thinking_level",
+     "options": [
+      "MINIMAL",
+      "HIGH"
+     ],
+     "default": "MINIMAL"
+    },
+    {
+     "name": "temperature",
+     "label": "Temperature",
+     "kind": "number",
+     "node": "3",
+     "field": "temperature",
+     "default": 1,
+     "min": 0.0,
+     "max": 2.0,
+     "step": 0.01
+    },
+    {
+     "name": "top_p",
+     "label": "Top p",
+     "kind": "number",
+     "node": "3",
+     "field": "top_p",
+     "default": 0.95,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "3",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "4"
+   ],
+   "models": [
+    "api_nano_banana_2_lite_t2i"
+   ]
+  },
+  "model.bytedance-seedream-5-0-pro-t2i": {
+   "template": "api_bytedance_seedream_5_0_pro_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "3",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "size_preset",
+     "label": "Size preset",
+     "kind": "choice",
+     "node": "3",
+     "field": "model.size_preset",
+     "options": [
+      "(1K) 1024x1024 (1:1)",
+      "(1K) 864x1152 (3:4)",
+      "(1K) 1152x864 (4:3)",
+      "(1K) 1312x736 (16:9)",
+      "(1K) 736x1312 (9:16)",
+      "(1K) 832x1248 (2:3)",
+      "(1K) 1248x832 (3:2)",
+      "(1K) 1568x672 (21:9)",
+      "(2K) 2048x2048 (1:1)",
+      "(2K) 1728x2304 (3:4)",
+      "(2K) 2304x1728 (4:3)",
+      "(2K) 2848x1600 (16:9)",
+      "(2K) 1600x2848 (9:16)",
+      "(2K) 1664x2496 (2:3)",
+      "(2K) 2496x1664 (3:2)",
+      "(2K) 3136x1344 (21:9)",
+      "Custom"
+     ],
+     "default": "(1K) 1024x1024 (1:1)"
+    },
+    {
+     "name": "prompt_optimization",
+     "label": "Prompt optimization",
+     "kind": "choice",
+     "node": "3",
+     "field": "model.prompt_optimization",
+     "options": [
+      "standard",
+      "fast"
+     ],
+     "default": "standard"
+    },
+    {
+     "name": "width",
+     "label": "Width",
+     "kind": "number",
+     "node": "3",
+     "field": "model.width",
+     "default": 2048,
+     "min": 1024,
+     "max": 4514,
+     "step": 2
+    },
+    {
+     "name": "height",
+     "label": "Height",
+     "kind": "number",
+     "node": "3",
+     "field": "model.height",
+     "default": 2048,
+     "min": 1024,
+     "max": 4514,
+     "step": 2
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "3",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2"
+   ],
+   "models": [
+    "api_bytedance_seedream_5_0_pro_t2i"
+   ]
+  },
+  "model.bytedance-seedream-5-0-flash-t2i": {
+   "template": "api_bytedance_seedream_5_0_flash_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "35",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "size_preset",
+     "label": "Size preset",
+     "kind": "choice",
+     "node": "35",
+     "field": "model.size_preset",
+     "options": [
+      "(1K) 1024x1024 (1:1)",
+      "(1K) 864x1152 (3:4)",
+      "(1K) 1152x864 (4:3)",
+      "(1K) 1424x800 (16:9)",
+      "(1K) 800x1424 (9:16)",
+      "(1K) 832x1248 (2:3)",
+      "(1K) 1248x832 (3:2)",
+      "(1K) 1568x672 (21:9)",
+      "(1.5K) 1536x1536 (1:1)",
+      "(1.5K) 1344x1792 (3:4)",
+      "(1.5K) 1792x1344 (4:3)",
+      "(1.5K) 2048x1152 (16:9)",
+      "(1.5K) 1152x2048 (9:16)",
+      "(1.5K) 1248x1872 (2:3)",
+      "(1.5K) 1872x1248 (3:2)",
+      "(1.5K) 2352x1008 (21:9)",
+      "(2K) 2048x2048 (1:1)",
+      "(2K) 1776x2368 (3:4)",
+      "(2K) 2368x1776 (4:3)",
+      "(2K) 2816x1584 (16:9)",
+      "(2K) 1584x2816 (9:16)",
+      "(2K) 1664x2496 (2:3)",
+      "(2K) 2496x1664 (3:2)",
+      "(2K) 3136x1344 (21:9)",
+      "Custom"
+     ],
+     "default": "(1K) 1024x1024 (1:1)"
+    },
+    {
+     "name": "width",
+     "label": "Width",
+     "kind": "number",
+     "node": "35",
+     "field": "model.width",
+     "default": 2048,
+     "min": 1024,
+     "max": 4514,
+     "step": 2
+    },
+    {
+     "name": "height",
+     "label": "Height",
+     "kind": "number",
+     "node": "35",
+     "field": "model.height",
+     "default": 2048,
+     "min": 1024,
+     "max": 4514,
+     "step": 2
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "35",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "37"
+   ],
+   "models": [
+    "api_bytedance_seedream_5_0_flash_t2i"
+   ]
+  },
+  "model.bfl-flux3-t2i": {
+   "template": "api_bfl_flux3_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "1",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "1",
+     "field": "aspect_ratio",
+     "options": [
+      "auto",
+      "21:9",
+      "2:1",
+      "16:9",
+      "3:2",
+      "7:5",
+      "4:3",
+      "5:4",
+      "1:1",
+      "4:5",
+      "3:4",
+      "5:7",
+      "2:3",
+      "9:16",
+      "1:2",
+      "9:21"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "1",
+     "field": "resolution",
+     "options": [
+      "0.75K",
+      "1K",
+      "1.5K",
+      "2K",
+      "4K"
+     ],
+     "default": "1K"
+    },
+    {
+     "name": "safety_tolerance",
+     "label": "Safety tolerance",
+     "kind": "number",
+     "node": "1",
+     "field": "safety_tolerance",
+     "default": 4,
+     "min": 0,
+     "max": 4,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2"
+   ],
+   "models": [
+    "api_bfl_flux3_t2i"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/bfl-flux3-t2i.png"
+   ]
+  },
+  "model.grok-imagine-image-2-t2i": {
+   "template": "api_grok_imagine_image_2_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "1",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model",
+     "label": "Model",
+     "kind": "choice",
+     "node": "1",
+     "field": "model",
+     "options": [
+      "grok-imagine-image-2.0",
+      "grok-imagine-image-quality",
+      "grok-imagine-image-pro",
+      "grok-imagine-image"
+     ],
+     "default": "grok-imagine-image-2.0"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "1",
+     "field": "aspect_ratio",
+     "options": [
+      "1:1",
+      "2:3",
+      "3:2",
+      "3:4",
+      "4:3",
+      "9:16",
+      "16:9",
+      "9:19.5",
+      "19.5:9",
+      "9:20",
+      "20:9",
+      "1:2",
+      "2:1"
+     ],
+     "default": "1:1"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "1",
+     "field": "resolution",
+     "options": [
+      "1K",
+      "2K"
+     ],
+     "default": "1K"
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "1",
+     "field": "quality",
+     "options": [
+      "medium",
+      "low"
+     ],
+     "default": "medium"
+    },
+    {
+     "name": "number_of_images",
+     "label": "Number of images",
+     "kind": "number",
+     "node": "1",
+     "field": "number_of_images",
+     "default": 1,
+     "min": 1,
+     "max": 10,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2"
+   ],
+   "models": [
+    "api_grok_imagine_image_2_t2i"
+   ]
+  },
+  "model.nano-banana-2-1-image-edit": {
+   "template": "api_nano_banana_2_1_image_edit",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "6",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "4",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "system_prompt",
+     "label": "System prompt",
+     "kind": "text",
+     "node": "4",
+     "field": "system_prompt",
+     "required": false
+    },
+    {
+     "name": "response_modalities",
+     "label": "Response modalities",
+     "kind": "choice",
+     "node": "4",
+     "field": "response_modalities",
+     "options": [
+      "IMAGE",
+      "IMAGE+TEXT"
+     ],
+     "default": "IMAGE"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "4",
+     "field": "model.aspect_ratio",
+     "options": [
+      "auto",
+      "1:1",
+      "2:3",
+      "3:2",
+      "3:4",
+      "4:3",
+      "4:5",
+      "5:4",
+      "9:16",
+      "16:9",
+      "21:9",
+      "1:4",
+      "4:1",
+      "8:1",
+      "1:8"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "4",
+     "field": "model.resolution",
+     "options": [
+      "1K",
+      "2K",
+      "4K"
+     ],
+     "default": "1K"
+    },
+    {
+     "name": "thinking_level",
+     "label": "Thinking level",
+     "kind": "choice",
+     "node": "4",
+     "field": "model.thinking_level",
+     "options": [
+      "MINIMAL",
+      "MEDIUM",
+      "HIGH"
+     ],
+     "default": "MEDIUM"
+    },
+    {
+     "name": "temperature",
+     "label": "Temperature",
+     "kind": "number",
+     "node": "4",
+     "field": "temperature",
+     "default": 1,
+     "min": 0.0,
+     "max": 2.0,
+     "step": 0.01
+    },
+    {
+     "name": "top_p",
+     "label": "Top p",
+     "kind": "number",
+     "node": "4",
+     "field": "top_p",
+     "default": 0.95,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "4",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "9"
+   ],
+   "models": [
+    "api_nano_banana_2_1_image_edit"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/nano-banana-2-1-image-edit.png"
+   ]
+  },
+  "model.bytedance-seedream-5-0-flash-image-edit": {
+   "template": "api_bytedance_seedream_5_0_flash_image_edit",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "16",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "14",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "size_preset",
+     "label": "Size preset",
+     "kind": "choice",
+     "node": "14",
+     "field": "model.size_preset",
+     "options": [
+      "(1K) 1024x1024 (1:1)",
+      "(1K) 864x1152 (3:4)",
+      "(1K) 1152x864 (4:3)",
+      "(1K) 1424x800 (16:9)",
+      "(1K) 800x1424 (9:16)",
+      "(1K) 832x1248 (2:3)",
+      "(1K) 1248x832 (3:2)",
+      "(1K) 1568x672 (21:9)",
+      "(1.5K) 1536x1536 (1:1)",
+      "(1.5K) 1344x1792 (3:4)",
+      "(1.5K) 1792x1344 (4:3)",
+      "(1.5K) 2048x1152 (16:9)",
+      "(1.5K) 1152x2048 (9:16)",
+      "(1.5K) 1248x1872 (2:3)",
+      "(1.5K) 1872x1248 (3:2)",
+      "(1.5K) 2352x1008 (21:9)",
+      "(2K) 2048x2048 (1:1)",
+      "(2K) 1776x2368 (3:4)",
+      "(2K) 2368x1776 (4:3)",
+      "(2K) 2816x1584 (16:9)",
+      "(2K) 1584x2816 (9:16)",
+      "(2K) 1664x2496 (2:3)",
+      "(2K) 2496x1664 (3:2)",
+      "(2K) 3136x1344 (21:9)",
+      "Custom"
+     ],
+     "default": "(1K) 1024x1024 (1:1)"
+    },
+    {
+     "name": "width",
+     "label": "Width",
+     "kind": "number",
+     "node": "14",
+     "field": "model.width",
+     "default": 2048,
+     "min": 1024,
+     "max": 4514,
+     "step": 2
+    },
+    {
+     "name": "height",
+     "label": "Height",
+     "kind": "number",
+     "node": "14",
+     "field": "model.height",
+     "default": 2048,
+     "min": 1024,
+     "max": 4514,
+     "step": 2
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "14",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "15"
+   ],
+   "models": [
+    "api_bytedance_seedream_5_0_flash_image_edit"
+   ]
+  },
+  "model.bfl-flux3-image-edit": {
+   "template": "api_bfl_flux3_image_edit",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "4",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "3",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "3",
+     "field": "aspect_ratio",
+     "options": [
+      "auto",
+      "21:9",
+      "2:1",
+      "16:9",
+      "3:2",
+      "7:5",
+      "4:3",
+      "5:4",
+      "1:1",
+      "4:5",
+      "3:4",
+      "5:7",
+      "2:3",
+      "9:16",
+      "1:2",
+      "9:21"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "3",
+     "field": "resolution",
+     "options": [
+      "0.75K",
+      "1K",
+      "1.5K",
+      "2K",
+      "4K"
+     ],
+     "default": "1K"
+    },
+    {
+     "name": "safety_tolerance",
+     "label": "Safety tolerance",
+     "kind": "number",
+     "node": "3",
+     "field": "safety_tolerance",
+     "default": 4,
+     "min": 0,
+     "max": 4,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "3",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2"
+   ],
+   "models": [
+    "api_bfl_flux3_image_edit"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/bfl-flux3-image-edit.png"
+   ]
+  },
+  "model.ideogram-v4-5-image-edit": {
+   "template": "api_ideogram_v4_5_image_edit",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image 1",
+     "kind": "image",
+     "node": "2",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "size",
+     "label": "Size",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.size",
+     "options": [
+      "auto",
+      "source",
+      "(2K) 2048x2048 (1:1)",
+      "(2K) 1440x2880 (1:2)",
+      "(2K) 2880x1440 (2:1)",
+      "(2K) 1664x2496 (2:3)",
+      "(2K) 2496x1664 (3:2)",
+      "(2K) 1792x2240 (4:5)",
+      "(2K) 2240x1792 (5:4)",
+      "(2K) 1440x2560 (9:16)",
+      "(2K) 2560x1440 (16:9)",
+      "(2K) 1600x2560 (5:8)",
+      "(2K) 2560x1600 (8:5)",
+      "(2K) 1728x2304 (3:4)",
+      "(2K) 2304x1728 (4:3)",
+      "(2K) 1152x2944 (9:23)",
+      "(2K) 2944x1152 (23:9)",
+      "(2K) 1248x3328 (3:8)",
+      "(2K) 3328x1248 (8:3)",
+      "(2K) 1280x3072 (5:12)",
+      "(2K) 3072x1280 (12:5)",
+      "(2K) 1024x3072 (1:3)",
+      "(2K) 3072x1024 (3:1)",
+      "(1K) 1024x1024 (1:1)",
+      "(1K) 896x1120 (4:5)",
+      "(1K) 1120x896 (5:4)",
+      "(1K) 864x1152 (3:4)",
+      "(1K) 1152x864 (4:3)",
+      "(1K) 832x1248 (2:3)",
+      "(1K) 1248x832 (3:2)",
+      "(1K) 800x1280 (5:8)",
+      "(1K) 1280x800 (8:5)",
+      "custom"
+     ],
+     "default": "source"
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.quality",
+     "options": [
+      "very_low",
+      "low",
+      "medium",
+      "high"
+     ],
+     "default": "medium"
+    },
+    {
+     "name": "width",
+     "label": "Width",
+     "kind": "number",
+     "node": "1",
+     "field": "model.width",
+     "default": 2048,
+     "min": 256,
+     "max": 4608,
+     "step": 32
+    },
+    {
+     "name": "height",
+     "label": "Height",
+     "kind": "number",
+     "node": "1",
+     "field": "model.height",
+     "default": 2048,
+     "min": 256,
+     "max": 4608,
+     "step": 32
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "7"
+   ],
+   "models": [
+    "api_ideogram_v4_5_image_edit"
+   ]
+  },
+  "model.topaz-image-enhance-wonder3-5": {
+   "template": "api_topaz_image_enhance_wonder3_5",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image a",
+     "kind": "image",
+     "node": "3",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "enhancement_strength",
+     "label": "Enhancement strength",
+     "kind": "choice",
+     "node": "8",
+     "field": "model.enhancement_strength",
+     "options": [
+      "low",
+      "medium",
+      "high"
+     ],
+     "default": "high"
+    },
+    {
+     "name": "grain_model",
+     "label": "Grain model",
+     "kind": "choice",
+     "node": "8",
+     "field": "model.grain_model",
+     "options": [
+      "silver",
+      "gaussian",
+      "grey"
+     ],
+     "default": "silver"
+    },
+    {
+     "name": "output_width",
+     "label": "Output width",
+     "kind": "number",
+     "node": "8",
+     "field": "output_width",
+     "default": 0,
+     "min": 0,
+     "max": 32000,
+     "step": 1
+    },
+    {
+     "name": "output_height",
+     "label": "Output height",
+     "kind": "number",
+     "node": "8",
+     "field": "output_height",
+     "default": 0,
+     "min": 0,
+     "max": 32000,
+     "step": 1
+    },
+    {
+     "name": "grain_strength",
+     "label": "Grain strength",
+     "kind": "number",
+     "node": "8",
+     "field": "model.grain_strength",
+     "default": 0.5,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "grain_size",
+     "label": "Grain size",
+     "kind": "number",
+     "node": "8",
+     "field": "model.grain_size",
+     "default": 1,
+     "min": 1.0,
+     "max": 5.0,
+     "step": 0.1
+    },
+    {
+     "name": "grain_density",
+     "label": "Grain density",
+     "kind": "number",
+     "node": "8",
+     "field": "model.grain_density",
+     "default": 0.5,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    }
+   ],
+   "outputs": [
+    "4"
+   ],
+   "models": [
+    "api_topaz_image_enhance_wonder3_5"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/topaz-image-enhance-wonder3-5.png"
+   ]
+  },
+  "model.kling-vto": {
+   "template": "api_kling_vto",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Person image",
+     "kind": "image",
+     "node": "2",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "image_2",
+     "label": "Garment image",
+     "kind": "image",
+     "node": "3",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "4"
+   ],
+   "models": [
+    "api_kling_vto"
+   ]
+  },
+  "model.meshy7-1-image-to-model": {
+   "template": "api_meshy7_1_image_to_model",
+   "output_kind": "3d",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image",
+     "kind": "image",
+     "node": "8",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "texture_prompt",
+     "label": "Texture prompt",
+     "kind": "text",
+     "node": "13",
+     "field": "should_texture.texture_prompt",
+     "required": false
+    },
+    {
+     "name": "model",
+     "label": "Model",
+     "kind": "choice",
+     "node": "13",
+     "field": "model",
+     "options": [
+      "meshy-7.1",
+      "meshy-7",
+      "meshy-6",
+      "latest"
+     ],
+     "default": "meshy-7.1"
+    },
+    {
+     "name": "symmetry_mode",
+     "label": "Symmetry mode",
+     "kind": "choice",
+     "node": "13",
+     "field": "symmetry_mode",
+     "options": [
+      "auto",
+      "on",
+      "off"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "pose_mode",
+     "label": "Pose mode",
+     "kind": "choice",
+     "node": "13",
+     "field": "pose_mode",
+     "options": [
+      "",
+      "A-pose",
+      "T-pose"
+     ],
+     "default": ""
+    },
+    {
+     "name": "ultra_resolution",
+     "label": "Ultra resolution",
+     "kind": "choice",
+     "node": "13",
+     "field": "ultra_resolution",
+     "options": [
+      "2k",
+      "4k"
+     ],
+     "default": "2k"
+    },
+    {
+     "name": "topology",
+     "label": "Topology",
+     "kind": "choice",
+     "node": "13",
+     "field": "should_remesh.topology",
+     "options": [
+      "triangle",
+      "quad"
+     ],
+     "default": "triangle"
+    },
+    {
+     "name": "texture_resolution",
+     "label": "Texture resolution",
+     "kind": "choice",
+     "node": "13",
+     "field": "should_texture.texture_resolution",
+     "options": [
+      "2k",
+      "4k",
+      "8k"
+     ],
+     "default": "2k"
+    },
+    {
+     "name": "target_polycount",
+     "label": "Target polycount",
+     "kind": "number",
+     "node": "13",
+     "field": "should_remesh.target_polycount",
+     "default": 300000,
+     "min": 100,
+     "max": 300000,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "13",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "17"
+   ],
+   "models": [
+    "api_meshy7_1_image_to_model"
+   ]
+  },
+  "model.tripo-p2-image-to-model": {
+   "template": "api_tripo_p2_image_to_model",
+   "output_kind": "3d",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image",
+     "kind": "image",
+     "node": "16",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "texture",
+     "label": "Texture",
+     "kind": "choice",
+     "node": "15",
+     "field": "model.texture",
+     "options": [
+      "standard",
+      "detailed",
+      "extreme",
+      "none"
+     ],
+     "default": "standard"
+    },
+    {
+     "name": "texture_alignment",
+     "label": "Texture alignment",
+     "kind": "choice",
+     "node": "15",
+     "field": "model.texture_alignment",
+     "options": [
+      "original_image",
+      "geometry"
+     ],
+     "default": "original_image"
+    },
+    {
+     "name": "orientation",
+     "label": "Orientation",
+     "kind": "choice",
+     "node": "15",
+     "field": "model.orientation",
+     "options": [
+      "default",
+      "align_image"
+     ],
+     "default": "default"
+    },
+    {
+     "name": "face_limit",
+     "label": "Face limit",
+     "kind": "number",
+     "node": "15",
+     "field": "model.face_limit",
+     "default": -1,
+     "min": -1,
+     "max": 50000,
+     "step": 1
+    },
+    {
+     "name": "model_seed",
+     "label": "Model seed",
+     "kind": "number",
+     "node": "15",
+     "field": "model.model_seed",
+     "default": 81426036,
+     "min": 0,
+     "max": 2147483647,
+     "step": 1
+    },
+    {
+     "name": "texture_seed",
+     "label": "Texture seed",
+     "kind": "number",
+     "node": "15",
+     "field": "model.texture_seed",
+     "default": 42,
+     "min": 0,
+     "max": 2147483647,
+     "step": 1
+    }
+   ],
+   "outputs": [
+    "14"
+   ],
+   "models": [
+    "api_tripo_p2_image_to_model"
+   ]
+  },
+  "model.ideogram-v4-5-t2i": {
+   "template": "api_ideogram_v4_5_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "1",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "size",
+     "label": "Size",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.size",
+     "options": [
+      "auto",
+      "(2K) 2048x2048 (1:1)",
+      "(2K) 1440x2880 (1:2)",
+      "(2K) 2880x1440 (2:1)",
+      "(2K) 1664x2496 (2:3)",
+      "(2K) 2496x1664 (3:2)",
+      "(2K) 1792x2240 (4:5)",
+      "(2K) 2240x1792 (5:4)",
+      "(2K) 1440x2560 (9:16)",
+      "(2K) 2560x1440 (16:9)",
+      "(2K) 1600x2560 (5:8)",
+      "(2K) 2560x1600 (8:5)",
+      "(2K) 1728x2304 (3:4)",
+      "(2K) 2304x1728 (4:3)",
+      "(2K) 1296x3168 (9:22)",
+      "(2K) 3168x1296 (22:9)",
+      "(2K) 1152x2944 (9:23)",
+      "(2K) 2944x1152 (23:9)",
+      "(2K) 1248x3328 (3:8)",
+      "(2K) 3328x1248 (8:3)",
+      "(2K) 1280x3072 (5:12)",
+      "(2K) 3072x1280 (12:5)",
+      "(2K) 1024x3072 (1:3)",
+      "(2K) 3072x1024 (3:1)",
+      "(1K) 1024x1024 (1:1)",
+      "(1K) 896x1120 (4:5)",
+      "(1K) 1120x896 (5:4)",
+      "(1K) 864x1152 (3:4)",
+      "(1K) 1152x864 (4:3)",
+      "(1K) 832x1248 (2:3)",
+      "(1K) 1248x832 (3:2)",
+      "(1K) 800x1280 (5:8)",
+      "(1K) 1280x800 (8:5)",
+      "(1K) 720x1280 (9:16)",
+      "(1K) 1280x720 (16:9)",
+      "(1K) 720x1440 (1:2)",
+      "(1K) 1440x720 (2:1)"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.quality",
+     "options": [
+      "low",
+      "medium",
+      "high"
+     ],
+     "default": "medium"
+    },
+    {
+     "name": "magic_prompt",
+     "label": "Magic prompt",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.magic_prompt",
+     "options": [
+      "auto",
+      "on",
+      "off"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "5"
+   ],
+   "models": [
+    "api_ideogram_v4_5_t2i"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/ideogram-v4-5-t2i.png"
+   ]
+  },
+  "model.krea3-t2i": {
+   "template": "api_krea3_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "1",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.aspect_ratio",
+     "options": [
+      "auto",
+      "1:1",
+      "4:5",
+      "3:4",
+      "2:3",
+      "9:16",
+      "5:4",
+      "4:3",
+      "3:2",
+      "16:9",
+      "21:9"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.resolution",
+     "options": [
+      "1K",
+      "2K"
+     ],
+     "default": "1K"
+    },
+    {
+     "name": "thinking_mode",
+     "label": "Thinking mode",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.thinking_mode",
+     "options": [
+      "fast",
+      "high"
+     ],
+     "default": "fast"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "7"
+   ],
+   "models": [
+    "api_krea3_t2i"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/krea3-t2i.png"
+   ]
+  },
+  "model.qwen3-t2i": {
+   "template": "api_qwen3_t2i",
+   "output_kind": "image",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "14",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "n",
+     "label": "N",
+     "kind": "number",
+     "node": "14",
+     "field": "n",
+     "default": 1,
+     "min": 1,
+     "max": 6,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "14",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2"
+   ],
+   "models": [
+    "api_qwen3_t2i"
+   ],
+   "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+   "examples": [
+    "examples/models/qwen3-t2i.png"
+   ]
+  },
+  "model.seedance2-0-t2v": {
+   "template": "api_seedance2_0_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "343",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "343",
+     "field": "model.resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p",
+      "4k"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "343",
+     "field": "model.ratio",
+     "options": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9",
+      "adaptive"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "343",
+     "field": "model.duration",
+     "default": 5,
+     "min": 4,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "343",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "344"
+   ],
+   "models": [
+    "api_seedance2_0_t2v"
+   ]
+  },
+  "model.seedance2-0-mini-t2v": {
+   "template": "api_seedance2_0_mini_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "1",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.resolution",
+     "options": [
+      "480p",
+      "720p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "1",
+     "field": "model.ratio",
+     "options": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9",
+      "adaptive"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "1",
+     "field": "model.duration",
+     "default": 5,
+     "min": 4,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "2"
+   ],
+   "models": [
+    "api_seedance2_0_mini_t2v"
+   ]
+  },
+  "model.seedance2-5-t2v-1080p": {
+   "template": "api_seedance2_5_t2v_1080p",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "11",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "11",
+     "field": "model.resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p"
+     ],
+     "default": "1080p"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "11",
+     "field": "model.ratio",
+     "options": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9",
+      "adaptive"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "output_format",
+     "label": "Output format",
+     "kind": "choice",
+     "node": "11",
+     "field": "model.output_format",
+     "options": [
+      "mp4"
+     ],
+     "default": "mp4"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "11",
+     "field": "model.duration",
+     "default": 5,
+     "min": 4,
+     "max": 30,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "11",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "10"
+   ],
+   "models": [
+    "api_seedance2_5_t2v_1080p"
+   ]
+  },
+  "model.wan3-0-t2v": {
+   "template": "api_wan3_0_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "3",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "3",
+     "field": "model.resolution",
+     "options": [
+      "1080P",
+      "720P",
+      "480P"
+     ],
+     "default": "720P"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "3",
+     "field": "model.ratio",
+     "options": [
+      "adaptive",
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "choice",
+     "node": "3",
+     "field": "model.duration",
+     "options": [
+      "auto",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "3",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "4"
+   ],
+   "models": [
+    "api_wan3_0_t2v"
+   ]
+  },
+  "model.happyhorse1-1-t2v": {
+   "template": "api_happyhorse1_1_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "17",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "17",
+     "field": "model.resolution",
+     "options": [
+      "720P",
+      "1080P"
+     ],
+     "default": "720P"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "17",
+     "field": "model.ratio",
+     "options": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4",
+      "21:9",
+      "9:21",
+      "5:4",
+      "4:5"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "17",
+     "field": "model.duration",
+     "default": 5,
+     "min": 3,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "17",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "16"
+   ],
+   "models": [
+    "api_happyhorse1_1_t2v"
+   ]
+  },
+  "model.google-gemini-omni-flash-1-1-t2v": {
+   "template": "api_google_gemini_omni_flash_1_1_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "26",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "26",
+     "field": "model.resolution",
+     "options": [
+      "360p",
+      "720p",
+      "1080p",
+      "4k"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "26",
+     "field": "model.aspect_ratio",
+     "options": [
+      "16:9",
+      "9:16"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "task_type",
+     "label": "Task type",
+     "kind": "choice",
+     "node": "26",
+     "field": "model.task_type",
+     "options": [
+      "auto",
+      "text_to_video",
+      "image_to_video",
+      "reference_to_video",
+      "edit",
+      "extend"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "26",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "25"
+   ],
+   "models": [
+    "api_google_gemini_omni_flash_1_1_t2v"
+   ]
+  },
+  "model.pixverse6-t2v": {
+   "template": "api_pixverse6_t2v",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "13",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "aspect_ratio",
+     "label": "Aspect ratio",
+     "kind": "choice",
+     "node": "13",
+     "field": "model.aspect_ratio",
+     "options": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "2:3",
+      "3:2",
+      "21:9"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "13",
+     "field": "model.quality",
+     "options": [
+      "360p",
+      "540p",
+      "720p",
+      "1080p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "style",
+     "label": "Style",
+     "kind": "choice",
+     "node": "13",
+     "field": "model.style",
+     "options": [
+      "none",
+      "anime",
+      "3d_animation",
+      "clay",
+      "comic",
+      "cyberpunk",
+      "realistic"
+     ],
+     "default": "none"
+    },
+    {
+     "name": "duration_seconds",
+     "label": "Duration seconds",
+     "kind": "number",
+     "node": "13",
+     "field": "model.duration_seconds",
+     "default": 5,
+     "min": 1,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "13",
+     "field": "model.seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "14"
+   ],
+   "models": [
+    "api_pixverse6_t2v"
+   ]
+  },
+  "model.bria-remove-video-background-transparent": {
+   "template": "api_bria_remove_video_background_transparent",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "video_1",
+     "label": "Video",
+     "kind": "video",
+     "node": "5",
+     "field": "file",
+     "required": true
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "4",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "7"
+   ],
+   "models": [
+    "api_bria_remove_video_background_transparent"
+   ]
+  }
+ }
+}

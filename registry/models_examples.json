@@ -1,0 +1,59 @@
+{
+ "model.bfl-flux3-image-edit": [
+  "examples/models/bfl-flux3-image-edit.png"
+ ],
+ "model.bfl-flux3-t2i": [
+  "examples/models/bfl-flux3-t2i.png"
+ ],
+ "model.elevenlabs-v4-text-to-speech": [
+  "examples/models/elevenlabs-v4-text-to-speech.mp3"
+ ],
+ "model.fishaudio-text-to-speech": [
+  "examples/models/fishaudio-text-to-speech.mp3"
+ ],
+ "model.google-nano-banana2-text-to-image": [
+  "examples/models/google-nano-banana2-text-to-image.png"
+ ],
+ "model.grok-imagine-image-2-image-edit": [
+  "examples/models/grok-imagine-image-2-image-edit.png"
+ ],
+ "model.grok-imagine-video-1-5": [
+  "examples/models/grok-imagine-video-1-5.mp4"
+ ],
+ "model.grok-imagine-video-1-5-lite-t2v": [
+  "examples/models/grok-imagine-video-1-5-lite-t2v.mp4"
+ ],
+ "model.ideogram-v4-5-t2i": [
+  "examples/models/ideogram-v4-5-t2i.png"
+ ],
+ "model.kling-v3-t2i": [
+  "examples/models/kling-v3-t2i.png"
+ ],
+ "model.krea3-t2i": [
+  "examples/models/krea3-t2i.png"
+ ],
+ "model.nano-banana-2-1-image-edit": [
+  "examples/models/nano-banana-2-1-image-edit.png"
+ ],
+ "model.nano-banana-2-1-t2i": [
+  "examples/models/nano-banana-2-1-t2i.png"
+ ],
+ "model.openai-gpt-image-2-image-edit": [
+  "examples/models/openai-gpt-image-2-image-edit.png"
+ ],
+ "model.openai-gpt-image-2-t2i": [
+  "examples/models/openai-gpt-image-2-t2i.png"
+ ],
+ "model.qwen3-image-edit": [
+  "examples/models/qwen3-image-edit.png"
+ ],
+ "model.qwen3-t2i": [
+  "examples/models/qwen3-t2i.png"
+ ],
+ "model.recraft-v4-1-t2i": [
+  "examples/models/recraft-v4-1-t2i.png"
+ ],
+ "model.topaz-image-enhance-wonder3-5": [
+  "examples/models/topaz-image-enhance-wonder3-5.png"
+ ]
+}

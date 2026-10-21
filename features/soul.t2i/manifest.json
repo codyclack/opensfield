@@ -70,5 +70,6 @@
       "examples/char_a.png",
       "examples/char_b.png"
     ]
-  }
+  },
+  "group": "Text to image"
 }

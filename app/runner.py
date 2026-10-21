@@ -96,7 +96,7 @@ def run_comfy(feature: dict, job: dict, update: Update) -> list[dict]:
     for spec in feature["inputs"]:
         value = values.get(spec["name"])
         if spec["kind"] == "seed" and not value:
-            value = random.randint(1, 2**32 - 1)  # some nodes (Chatterbox) cap seeds at 32 bits
+            value = random.randint(1, 2**31 - 1)  # some nodes (Chatterbox, Seedance) cap seeds at 31-32 bits
         if value in ("", None) or "node" not in spec:
             continue  # blank = keep the template default
         if spec["kind"] in ("image", "video", "audio"):
@@ -106,7 +106,7 @@ def run_comfy(feature: dict, job: dict, update: Update) -> list[dict]:
         for t in [{"node": spec["node"], "field": spec["field"]}, *spec.get("also", [])]:
             wf.set_input(t["node"], t["field"], value)
     update(progress=0.1)
-    result = client.run(wf)
+    result = client.run(wf, api_key=key) if key else client.run(wf)  # api_key also authorises partner (API) nodes
 
     out = OUTPUTS / job["id"]
     out.mkdir(parents=True, exist_ok=True)

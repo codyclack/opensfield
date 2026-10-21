@@ -5,7 +5,7 @@ $ErrorActionPreference = "Continue"
 Set-Location (Split-Path $PSScriptRoot -Parent)
 Set-ComfyKey
 New-Item -ItemType Directory -Force outputs | Out-Null
-$extra = if ($All) { @() } else { @("--skip-slow") }
+[string[]]$extra = if ($All) { @() } else { @("--skip-slow") }
 Write-Host "Running every module once through the app on Comfy Cloud. This takes a while; leave the window open." -ForegroundColor Cyan
 uv run --extra comfy scripts/smoke_cloud.py @extra 2>&1 | Tee-Object -FilePath outputs\smoke_summary.txt
 Write-Host ""

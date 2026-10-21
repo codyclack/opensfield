@@ -1,0 +1,62 @@
+{
+ "2": {
+  "inputs": {
+   "filename_prefix": "FLUX_3_Image",
+   "format": "png",
+   "images": [
+    "3",
+    0
+   ],
+   "format.bit_depth": "8-bit",
+   "format.input_color_space": "sRGB"
+  },
+  "class_type": "SaveImageAdvanced",
+  "_meta": {
+   "title": "Save Image (Advanced)"
+  }
+ },
+ "3": {
+  "inputs": {
+   "prompt": "remove the character's glasses",
+   "aspect_ratio": "auto",
+   "resolution": "1K",
+   "grounding": true,
+   "safety_tolerance": 4,
+   "seed": 602733134,
+   "images.image_1": [
+    "4",
+    0
+   ]
+  },
+  "class_type": "Flux3ImageNode",
+  "_meta": {
+   "title": "FLUX 3 Image"
+  }
+ },
+ "4": {
+  "inputs": {
+   "image": "fashion_model_green_pilot_coat.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "5": {
+  "inputs": {
+   "compare_view": null,
+   "image_a": [
+    "4",
+    0
+   ],
+   "image_b": [
+    "2",
+    0
+   ]
+  },
+  "class_type": "ImageCompare",
+  "_meta": {
+   "title": "Compare Images"
+  }
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "5": {
+  "inputs": {
+   "model": "wan3.0-video",
+   "seed": 1032549103,
+   "watermark": false,
+   "first_frame": [
+    "6",
+    0
+   ],
+   "model.prompt": "Generate a 5-second, 16:9 video using the input image as the first frame: a giant black beetle carrying bundled cargo and a hooded rider strides steadily across a slope carpeted in bright red moss, passing through a mist-shrouded alien fantasy landscape.\n\nMotion (keep the composition and subjects unchanged, animate only these elements):\n- The beetle's six segmented legs step alternately, pressing soft dents into the fluffy red moss, its body bobbing gently with each stride; its huge antennae sway slightly as it probes the air\n- The rider's robe drifts backward in the oncoming wind, the long staff staying pointed forward\n- The bundled cargo bobs gently with each step, ropes swaying\n- The mist ahead surges slowly and parts as the beetle pushes through, wisps flowing between its legs; fine spores and particles drift in the air above the red moss\n- The fog over the rocky peaks in the background rolls slowly\n\nCamera: keep the original side view with a slight low angle, slow lateral tracking shot following the beetle's forward motion, moving steadily from left to right across 5 seconds; no cuts, no rotation.\n\nAudio design: layered ambience: the dull thud of beetle feet on moss, soft rustle of drifting mist, distant wind through the valley, faint creak of shell joints; no dialogue, no music or a single restrained low string note.\n\nNegative constraints: do not change the subjects' shapes or the composition, no new characters, no text, no subtitles, no black frames, no camera shake, no excessive distortion.",
+   "model.resolution": "720P",
+   "model.ratio": "adaptive",
+   "model.duration": "auto",
+   "model.audio": true,
+   "model.prompt_extend": true
+  },
+  "class_type": "Wan3ImageToVideoApi",
+  "_meta": {
+   "title": "Wan 3.0 Image to Video"
+  }
+ },
+ "6": {
+  "inputs": {
+   "image": "beetle_rider.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "8": {
+  "inputs": {
+   "filename_prefix": "video/Wan3.0",
+   "format": "auto",
+   "codec": "auto",
+   "video": [
+    "5",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ }
+}

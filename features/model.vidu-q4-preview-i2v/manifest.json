@@ -1,0 +1,81 @@
+{
+  "id": "model.vidu-q4-preview-i2v",
+  "studio": "Video models",
+  "name": "Vidu Q4 Preview \u00b7 Image to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_vidu_q4_preview_i2v"
+  ],
+  "status": "built",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_vidu_q4_preview_i2v",
+    "api": "features/model.vidu-q4-preview-i2v/workflow_api.json",
+    "ui": "features/model.vidu-q4-preview-i2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image",
+        "kind": "image",
+        "node": "5",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "7",
+        "field": "model.prompt",
+        "required": true
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "7",
+        "field": "model.resolution",
+        "options": [
+          "540p",
+          "720p",
+          "1080p",
+          "2K",
+          "4K"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "7",
+        "field": "model.duration",
+        "default": 5,
+        "min": 3,
+        "max": 16,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "7",
+        "field": "model.seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "6"
+    ],
+    "models": [
+      "api_vidu_q4_preview_i2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

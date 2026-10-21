@@ -1,0 +1,143 @@
+{
+  "id": "model.google-nano-banana2-text-to-image",
+  "studio": "Image models",
+  "name": "Nano Banana 2 \u00b7 Text to Image",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to image",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_google_nano_banana2_text_to_image"
+  ],
+  "status": "tested",
+  "group": "Text to image",
+  "workflow": {
+    "template": "api_google_nano_banana2_text_to_image",
+    "api": "features/model.google-nano-banana2-text-to-image/workflow_api.json",
+    "ui": "features/model.google-nano-banana2-text-to-image/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "24",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "system_prompt",
+        "label": "System prompt",
+        "kind": "text",
+        "node": "24",
+        "field": "system_prompt",
+        "required": false
+      },
+      {
+        "name": "response_modalities",
+        "label": "Response modalities",
+        "kind": "choice",
+        "node": "24",
+        "field": "response_modalities",
+        "options": [
+          "IMAGE",
+          "IMAGE+TEXT"
+        ],
+        "default": "IMAGE"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "24",
+        "field": "model.aspect_ratio",
+        "options": [
+          "auto",
+          "1:1",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:3",
+          "4:5",
+          "5:4",
+          "9:16",
+          "16:9",
+          "21:9",
+          "1:4",
+          "4:1",
+          "8:1",
+          "1:8"
+        ],
+        "default": "1:1"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "24",
+        "field": "model.resolution",
+        "options": [
+          "1K",
+          "2K",
+          "4K"
+        ],
+        "default": "1K"
+      },
+      {
+        "name": "thinking_level",
+        "label": "Thinking level",
+        "kind": "choice",
+        "node": "24",
+        "field": "model.thinking_level",
+        "options": [
+          "MINIMAL",
+          "HIGH"
+        ],
+        "default": "MINIMAL"
+      },
+      {
+        "name": "temperature",
+        "label": "Temperature",
+        "kind": "number",
+        "node": "24",
+        "field": "temperature",
+        "default": 1,
+        "min": 0.0,
+        "max": 2.0,
+        "step": 0.01
+      },
+      {
+        "name": "top_p",
+        "label": "Top p",
+        "kind": "number",
+        "node": "24",
+        "field": "top_p",
+        "default": 0.95,
+        "min": 0.0,
+        "max": 1.0,
+        "step": 0.01
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "24",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "9"
+    ],
+    "models": [
+      "api_google_nano_banana2_text_to_image"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/google-nano-banana2-text-to-image.png"
+    ]
+  }
+}

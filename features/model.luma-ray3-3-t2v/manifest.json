@@ -1,0 +1,89 @@
+{
+  "id": "model.luma-ray3-3-t2v",
+  "studio": "Video models",
+  "name": "Luma Ray 3.2 \u00b7 Text to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_luma_ray3_3_t2v"
+  ],
+  "status": "built",
+  "group": "Text to video",
+  "workflow": {
+    "template": "api_luma_ray3_3_t2v",
+    "api": "features/model.luma-ray3-3-t2v/workflow_api.json",
+    "ui": "features/model.luma-ray3-3-t2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "3",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "3",
+        "field": "aspect_ratio",
+        "options": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4",
+          "21:9"
+        ],
+        "default": "1:1"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "3",
+        "field": "resolution",
+        "options": [
+          "360p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "choice",
+        "node": "3",
+        "field": "duration",
+        "options": [
+          "5s",
+          "10s"
+        ],
+        "default": "5s"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "3",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "6"
+    ],
+    "models": [
+      "api_luma_ray3_3_t2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

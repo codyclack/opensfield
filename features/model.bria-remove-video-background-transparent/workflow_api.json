@@ -1,0 +1,71 @@
+{
+ "4": {
+  "inputs": {
+   "seed": 1887433883,
+   "video": [
+    "5",
+    0
+   ]
+  },
+  "class_type": "BriaTransparentVideoBackground",
+  "_meta": {
+   "title": "Bria Remove Video Background (Transparent)"
+  }
+ },
+ "5": {
+  "inputs": {
+   "file": "ad_video_demo.mp4"
+  },
+  "class_type": "LoadVideo",
+  "_meta": {
+   "title": "Load Video"
+  }
+ },
+ "6": {
+  "inputs": {
+   "image": [
+    "4",
+    0
+   ],
+   "alpha": [
+    "4",
+    1
+   ]
+  },
+  "class_type": "JoinImageWithAlpha",
+  "_meta": {
+   "title": "Join Image with Alpha"
+  }
+ },
+ "7": {
+  "inputs": {
+   "filename_prefix": "ComfyUI",
+   "codec": "vp9",
+   "crf": 32,
+   "images": [
+    "6",
+    0
+   ],
+   "fps": [
+    "8",
+    2
+   ]
+  },
+  "class_type": "SaveWEBM",
+  "_meta": {
+   "title": "Save WEBM"
+  }
+ },
+ "8": {
+  "inputs": {
+   "video": [
+    "5",
+    0
+   ]
+  },
+  "class_type": "GetVideoComponents",
+  "_meta": {
+   "title": "Get Video Components"
+  }
+ }
+}

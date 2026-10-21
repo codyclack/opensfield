@@ -1,0 +1,128 @@
+{
+  "id": "model.openai-gpt-image-25-flare-t2i",
+  "studio": "Image models",
+  "name": "GPT Image 2.5 Flare \u00b7 Text to Image",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Text to image",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_openai_gpt_image_25_flare_t2i"
+  ],
+  "status": "built",
+  "group": "Text to image",
+  "workflow": {
+    "template": "api_openai_gpt_image_25_flare_t2i",
+    "api": "features/model.openai-gpt-image-25-flare-t2i/workflow_api.json",
+    "ui": "features/model.openai-gpt-image-25-flare-t2i/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "271",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "size",
+        "label": "Size",
+        "kind": "choice",
+        "node": "271",
+        "field": "model.size",
+        "options": [
+          "auto",
+          "1024x1024",
+          "1024x1536",
+          "1536x1024",
+          "2048x2048",
+          "2048x1152",
+          "1152x2048",
+          "3840x2160",
+          "2160x3840",
+          "Custom"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "background",
+        "label": "Background",
+        "kind": "choice",
+        "node": "271",
+        "field": "model.background",
+        "options": [
+          "auto",
+          "opaque",
+          "transparent"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "quality",
+        "label": "Quality",
+        "kind": "choice",
+        "node": "271",
+        "field": "model.quality",
+        "options": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default": "low"
+      },
+      {
+        "name": "n",
+        "label": "N",
+        "kind": "number",
+        "node": "271",
+        "field": "n",
+        "default": 1,
+        "min": 1,
+        "max": 8,
+        "step": 1
+      },
+      {
+        "name": "custom_width",
+        "label": "Custom width",
+        "kind": "number",
+        "node": "271",
+        "field": "model.custom_width",
+        "default": 1024,
+        "min": 480,
+        "max": 3840,
+        "step": 16
+      },
+      {
+        "name": "custom_height",
+        "label": "Custom height",
+        "kind": "number",
+        "node": "271",
+        "field": "model.custom_height",
+        "default": 1024,
+        "min": 480,
+        "max": 3840,
+        "step": 16
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "271",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "269"
+    ],
+    "models": [
+      "api_openai_gpt_image_25_flare_t2i"
+    ],
+    "output_kind": "image",
+    "verified": false
+  }
+}

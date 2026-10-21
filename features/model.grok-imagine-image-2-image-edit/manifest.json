@@ -1,0 +1,126 @@
+{
+  "id": "model.grok-imagine-image-2-image-edit",
+  "studio": "Image models",
+  "name": "Grok Imagine Image 2.0 \u00b7 Image Edit",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image edit",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_grok_imagine_image_2_image_edit"
+  ],
+  "status": "tested",
+  "group": "Image edit",
+  "workflow": {
+    "template": "api_grok_imagine_image_2_image_edit",
+    "api": "features/model.grok-imagine-image-2-image-edit/workflow_api.json",
+    "ui": "features/model.grok-imagine-image-2-image-edit/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image 1",
+        "kind": "image",
+        "node": "11",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "image_2",
+        "label": "Image 2",
+        "kind": "image",
+        "node": "13",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "10",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "10",
+        "field": "model.resolution",
+        "options": [
+          "1K",
+          "2K"
+        ],
+        "default": "1K"
+      },
+      {
+        "name": "quality",
+        "label": "Quality",
+        "kind": "choice",
+        "node": "10",
+        "field": "model.quality",
+        "options": [
+          "medium",
+          "low"
+        ],
+        "default": "medium"
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "10",
+        "field": "model.aspect_ratio",
+        "options": [
+          "auto",
+          "1:1",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:3",
+          "9:16",
+          "16:9",
+          "9:19.5",
+          "19.5:9",
+          "9:20",
+          "20:9",
+          "1:2",
+          "2:1"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "number_of_images",
+        "label": "Number of images",
+        "kind": "number",
+        "node": "10",
+        "field": "model.number_of_images",
+        "default": 1,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "10",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "12"
+    ],
+    "models": [
+      "api_grok_imagine_image_2_image_edit"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/grok-imagine-image-2-image-edit.png"
+    ]
+  }
+}

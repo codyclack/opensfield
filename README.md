@@ -1,8 +1,8 @@
 # OpenSfield
 
 Open-source rebuild of Higgsfield's creative apps on ComfyUI, for Comfy's
-**#OpenSourceHiggsfield** challenge. Open weights by default; an optional
-`partner/` pack adds Comfy Router models.
+**#OpenSourceHiggsfield** challenge. Two kinds of tools: open-weight workflows (LTX, Wan, Qwen, FLUX, ...) and one tool per Higgsfield partner model
+(Seedance, Kling, GPT Image, Nano Banana, Grok, ...) generated from Comfy's official API-node templates. Partner tools use Comfy credits.
 
 ## Status (honest summary)
 - **48 of 72 modules are built and have real example outputs** in [`examples/`](examples/README.md), using open-weight models

@@ -99,5 +99,6 @@
     "examples": [
       "examples/first_last_frame_morph.mp4"
     ]
-  }
+  },
+  "group": "First / last frame"
 }

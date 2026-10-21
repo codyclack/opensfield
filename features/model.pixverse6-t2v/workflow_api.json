@@ -1,0 +1,36 @@
+{
+ "13": {
+  "inputs": {
+   "model": "PixVerse V6",
+   "model.prompt": "single continuous shot, 8K CG animated film aesthetic, shallow depth of field, motion blur, soft-dramatic contrast lighting, anatomically correct, consistent costume details, realistic skin texture with visible pores, sweat sheen, and subtle blemishes. Quick arcing orbit camera inside ruined moonlit temple. Two martial artists in linen traditional robes, hand-to-hand close-quarters combat. Fluid blocks, palm strikes, quick evasive twists. Broken roof lets silver moonlight pour down, thin mist curls across stone floor. Stone dust kicks up with each heavy footfall. Muted cool silver-indigo palette. Robes ripple dynamically with every body shift. Detailed facial rendering with natural skin texture and micro-expressions, costume ornaments consistent through fast motion.",
+   "model.aspect_ratio": "16:9",
+   "model.quality": "720p",
+   "model.duration_seconds": 5,
+   "model.generate_audio": true,
+   "model.multi_clip": false,
+   "model.seed": 1460801615,
+   "model.negative_prompt": "",
+   "model.style": "none"
+  },
+  "class_type": "PixverseV6TextToVideoNode",
+  "_meta": {
+   "title": "PixVerse V6 Text to Video"
+  }
+ },
+ "14": {
+  "inputs": {
+   "filename_prefix": "video/PixVerse_v6_t2v",
+   "format": "auto",
+   "codec": "auto",
+   "video": [
+    "13",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ }
+}

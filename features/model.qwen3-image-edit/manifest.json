@@ -1,0 +1,70 @@
+{
+  "id": "model.qwen3-image-edit",
+  "studio": "Image models",
+  "name": "Qwen Image 3.0 Pro \u00b7 Image Edit",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image edit",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_qwen3_image_edit"
+  ],
+  "status": "tested",
+  "group": "Image edit",
+  "workflow": {
+    "template": "api_qwen3_image_edit",
+    "api": "features/model.qwen3-image-edit/workflow_api.json",
+    "ui": "features/model.qwen3-image-edit/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image 1",
+        "kind": "image",
+        "node": "14",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "15",
+        "field": "model.prompt",
+        "required": true
+      },
+      {
+        "name": "n",
+        "label": "N",
+        "kind": "number",
+        "node": "15",
+        "field": "n",
+        "default": 1,
+        "min": 1,
+        "max": 6,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "15",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "2"
+    ],
+    "models": [
+      "api_qwen3_image_edit"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/models/qwen3-image-edit.png"
+    ]
+  }
+}

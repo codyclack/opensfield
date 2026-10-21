@@ -1,0 +1,99 @@
+{
+  "id": "model.kling-o3-flf2v",
+  "studio": "Video models",
+  "name": "Kling O3 \u00b7 FLF2V",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "First / last frame",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_kling_o3_flf2v"
+  ],
+  "status": "built",
+  "group": "First / last frame",
+  "workflow": {
+    "template": "api_kling_o3_flf2v",
+    "api": "features/model.kling-o3-flf2v/workflow_api.json",
+    "ui": "features/model.kling-o3-flf2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "End frame",
+        "kind": "image",
+        "node": "34",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "image_2",
+        "label": "First frame",
+        "kind": "image",
+        "node": "17",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "32",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model_name",
+        "label": "Model name",
+        "kind": "choice",
+        "node": "32",
+        "field": "model_name",
+        "options": [
+          "kling-v3-omni",
+          "kling-video-o1"
+        ],
+        "default": "kling-v3-omni"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "32",
+        "field": "resolution",
+        "options": [
+          "4k",
+          "1080p",
+          "720p"
+        ],
+        "default": "1080p"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "32",
+        "field": "duration",
+        "default": 5,
+        "min": 3,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "32",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "14"
+    ],
+    "models": [
+      "api_kling_o3_flf2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

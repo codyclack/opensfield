@@ -1,0 +1,132 @@
+{
+  "id": "model.wan3-0-r2v",
+  "studio": "Video models",
+  "name": "Wan3.0 \u00b7 Reference to Video",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Reference to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_wan3_0_r2v"
+  ],
+  "status": "built",
+  "group": "Reference to video",
+  "workflow": {
+    "template": "api_wan3_0_r2v",
+    "api": "features/model.wan3-0-r2v/workflow_api.json",
+    "ui": "features/model.wan3-0-r2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image1",
+        "kind": "image",
+        "node": "6",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "image_2",
+        "label": "Image2",
+        "kind": "image",
+        "node": "18",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "16",
+        "field": "model.prompt",
+        "required": true
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "16",
+        "field": "model.resolution",
+        "options": [
+          "1080P",
+          "720P",
+          "480P"
+        ],
+        "default": "720P"
+      },
+      {
+        "name": "ratio",
+        "label": "Ratio",
+        "kind": "choice",
+        "node": "16",
+        "field": "model.ratio",
+        "options": [
+          "adaptive",
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "default": "adaptive"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "choice",
+        "node": "16",
+        "field": "model.duration",
+        "options": [
+          "auto",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "16",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "17"
+    ],
+    "models": [
+      "api_wan3_0_r2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "id": "model.kling2-6-i2v",
+  "studio": "Video models",
+  "name": "Kling2.6 \u00b7 Animate Images with Audio",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Image to video",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_kling2_6_i2v"
+  ],
+  "status": "built",
+  "group": "Image to video",
+  "workflow": {
+    "template": "api_kling2_6_i2v",
+    "api": "features/model.kling2-6-i2v/workflow_api.json",
+    "ui": "features/model.kling2-6-i2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Start frame",
+        "kind": "image",
+        "node": "14",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "12",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model_name",
+        "label": "Model name",
+        "kind": "choice",
+        "node": "12",
+        "field": "model_name",
+        "options": [
+          "kling-v2-6"
+        ],
+        "default": "kling-v2-6"
+      },
+      {
+        "name": "mode",
+        "label": "Mode",
+        "kind": "choice",
+        "node": "12",
+        "field": "mode",
+        "options": [
+          "pro"
+        ],
+        "default": "pro"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "choice",
+        "node": "12",
+        "field": "duration",
+        "options": [
+          "5",
+          "10"
+        ],
+        "default": "5"
+      }
+    ],
+    "outputs": [
+      "10"
+    ],
+    "models": [
+      "api_kling2_6_i2v"
+    ],
+    "output_kind": "video",
+    "verified": false
+  }
+}

@@ -1,0 +1,44 @@
+{
+ "12": {
+  "inputs": {
+   "model": "happyhorse-1.1-i2v",
+   "seed": 0,
+   "watermark": false,
+   "first_frame": [
+    "14",
+    0
+   ],
+   "model.prompt": "Gentle desert wind blowing through hair and horse mane, woman slowly closes her eyes in a calm intimate moment, horse breathes softly and blinks once, minor slow push-in, cinematic high-fashion editorial mood",
+   "model.resolution": "720P",
+   "model.duration": 5
+  },
+  "class_type": "HappyHorseImageToVideoApi",
+  "_meta": {
+   "title": "HappyHorse Image to Video"
+  }
+ },
+ "13": {
+  "inputs": {
+   "filename_prefix": "video/HappyHorse1.1",
+   "format": "auto",
+   "video": [
+    "12",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "14": {
+  "inputs": {
+   "image": "girl_lean_on_horse.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ }
+}

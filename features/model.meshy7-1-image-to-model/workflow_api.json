@@ -1,0 +1,52 @@
+{
+ "8": {
+  "inputs": {
+   "image": "clay_heart_girl.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "13": {
+  "inputs": {
+   "model": "meshy-7.1",
+   "should_remesh": "true",
+   "symmetry_mode": "auto",
+   "should_texture": "true",
+   "pose_mode": "",
+   "seed": 978222859,
+   "ultra_mode": false,
+   "ultra_resolution": "2k",
+   "image": [
+    "8",
+    0
+   ],
+   "should_remesh.topology": "triangle",
+   "should_remesh.target_polycount": 300000,
+   "should_texture.enable_pbr": false,
+   "should_texture.texture_prompt": "",
+   "should_texture.texture_resolution": "2k"
+  },
+  "class_type": "MeshyImageToModelNode",
+  "_meta": {
+   "title": "Meshy: Image to Model"
+  }
+ },
+ "17": {
+  "inputs": {
+   "filename_prefix": "3d/meshy_image2model",
+   "viewport_state": "",
+   "width": 1024,
+   "height": 1024,
+   "model_3d": [
+    "13",
+    2
+   ]
+  },
+  "class_type": "Save3DAdvanced",
+  "_meta": {
+   "title": "Save 3D (Advanced)"
+  }
+ }
+}
