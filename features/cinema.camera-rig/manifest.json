@@ -89,6 +89,7 @@
       "ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
       "ltx-av-step-1751000_vocoder_24K.safetensors"
     ],
+    "output_kind": "video",
     "verified": true,
     "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
     "examples": [

@@ -25,17 +25,17 @@ from app.registry import load_features  # noqa: E402
 
 EX = ROOT / "examples"
 FIXTURE = {"image": "char_a.png", "image_b": "char_b.png", "character": "char_b.png", "start_image": "char_a.png", "end_image": "char_b.png",
-           "video": "driving_dance.mp4", "driving_video": "driving_dance.mp4", "audio": "music_lofi.mp3"}
+           "video": "driving_dance.mp4", "driving_video": "driving_dance.mp4", "audio": "music_lofi.mp3", "voice": "voice_sample.wav"}
 PER_MODULE = {  # fixtures that need to be special for a sensible run
-    "image.inpaint-brush": {"image": "inpaint_input.png"}, "video.upscale": {"video": "motion_transfer.mp4"},
+    "image.reframe": {"image": "t2i_flux3_sneakers.png"}, "image.inpaint-brush": {"image": "inpaint_input.png"}, "video.upscale": {"video": "motion_transfer.mp4"},
     "soul.styles": {"style": "style_reference_alley.png"}, "genjutsu.styles": {"image": "style_yarn_frame.png"},
-    "video.edit": {"image": "ad_social.png"}, "marketing.studio-presets": {"start_image": "t2i_flux3_sneakers.png"},
+    "video.edit": {"image": "ad_social.png"}, "marketing.studio-presets": {"start_image": "t2i_flux3_sneakers.png"}, "marketing.ugc-video": {"start_image": "t2i_flux3_sneakers.png"}, "marketing.click-to-ad": {"start_image": "t2i_flux3_sneakers.png"}, "marketing.ad-multiplier": {"image": "ad_social.png"}, "reshoot.novel-view": {"image": "char_b.png"},
     "marketing.product-photoshoot": {"image": "t2i_flux3_sneakers.png"}, "genjutsu.replace-object": {"image": "char_b.png"},
 }
 TEXT = {"prompt": "a pair of white sneakers on a wet city street at dusk, soft light", "character_prompt": "a young man with curly hair in an orange puffer jacket",
         "motion_prompt": "an energetic street dance", "target": "woman", "tags": "lo-fi hip hop, 80 BPM, mellow piano, instrumental", "lyrics": "[Instrumental]",
         "text": "hello from OpenSfield"}
-SLOW = {"genjutsu.motion-control", "genjutsu.replace-object", "video.edit", "genjutsu.styles", "video.upscale"}
+SLOW = {"video.reframe", "genjutsu.motion-control", "genjutsu.replace-object", "video.edit", "genjutsu.styles", "video.upscale"}
 ORDER = {"image": 0, "audio": 1, "3d": 2, "video": 3}
 
 
@@ -49,7 +49,7 @@ def inputs_for(feature):
             dst = runner.UPLOADS / f"smoke_{src.name}"
             shutil.copyfile(src, dst)
             vals[name] = dst.name
-        elif kind == "text":
+        elif kind == "text" and spec.get("required"):
             vals[name] = TEXT.get(name, TEXT["prompt"])
     return vals  # choices, numbers and seeds keep their defaults
 
@@ -62,7 +62,7 @@ def main():
     if not os.environ.get("COMFY_API_KEY") and not os.environ.get("COMFY_BASE_URL"):
         sys.exit("Set COMFY_API_KEY first (see the top of this file).")
     only = {s for s in args.only.split(",") if s}
-    feats = [f for f in load_features() if f.get("runnable") and not f.get("local") and f["status"] == "tested" and (not only or f["id"] in only)]
+    feats = [f for f in load_features() if f.get("runnable") and not f.get("local") and ((f["status"] == "tested" and not only) or f["id"] in only)]
     feats = [f for f in feats if not (args.skip_slow and f["id"] in SLOW)]
     feats.sort(key=lambda f: (f["id"] in SLOW, ORDER.get(f["output_kind"], 9), f["id"]))
     report = []

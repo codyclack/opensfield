@@ -92,6 +92,22 @@ def output_kind(base: list[str]) -> str:
     return "image"
 
 
+ENGINES = [("ltx-2.5", "LTX-2.5"), ("ltx-2.3", "LTX-2.3"), ("ltx", "LTX"), ("wan_animate", "Wan Animate 2"), ("scail", "SCAIL-2"), ("wan", "Wan 2.x"),
+           ("z_image", "Z-Image Turbo"), ("flux", "FLUX"), ("krea", "Krea"), ("qwen_image_edit", "Qwen Image Edit"), ("qwen_image", "Qwen Image"),
+           ("seedvr", "SeedVR2"), ("birefnet", "BiRefNet"), ("ace_step", "ACE-Step"), ("chatterbox", "Chatterbox"), ("hunyuan3d", "Hunyuan3D")]
+
+
+def engine(wf: dict, local) -> str:
+    """Short human name of the open model behind a module, from its template / model file names."""
+    if local:
+        return "Local CPU (OpenCV + ffmpeg)"
+    hay = " ".join([wf.get("template", "")] + wf.get("models", [])).lower().replace("-", "_")
+    for key, name in ENGINES:
+        if key.replace("-", "_") in hay:
+            return name
+    return ""
+
+
 def _enrich(m: dict) -> dict:
     wf = m.get("workflow") or {}
     api = wf.get("api")
@@ -99,6 +115,7 @@ def _enrich(m: dict) -> dict:
     m["output_kind"] = wf.get("output_kind") or output_kind(m["base"])
     m["examples"] = wf.get("examples", [])  # real renders, served under /examples
     m["local"] = wf.get("local")  # e.g. {"mode_input": "palette"} for CPU effects run by app/fx.py
+    m["engine"] = engine(wf, m["local"])
     m["runnable"] = bool(api and (ROOT / api).exists()) or bool(m["local"])
     return m
 

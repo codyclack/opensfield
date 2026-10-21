@@ -23,7 +23,7 @@ VIA = "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not 
 WIRING = {
     # Wan Animate 2 (distilled, int8): motion transfer from a driving video onto a still character.
     "genjutsu.motion-control": dict(
-        template="video_wan_animate2_distilled",
+        template="video_wan_animate2_distilled", output_kind="video",
         verified_via=VIA, examples=["examples/motion_transfer.mp4", "examples/motion_transfer_compare.mp4"],
         inputs=[
             inp("character", "Character image", "image", "189", "image", required=True),
@@ -39,7 +39,7 @@ WIRING = {
     ),
     # LTX-2.5 image-to-video: Cinema Studio style single shot; camera language goes in the prompt.
     "cinema.camera-rig": dict(
-        template="video_ltx2_5_i2v",
+        template="video_ltx2_5_i2v", output_kind="video",
         verified_via=VIA, examples=["examples/cinema_camera_rig_dance.mp4", "examples/driving_dance.mp4"],
         inputs=[
             inp("start_image", "Start frame", "image", "395", "image", required=True),
@@ -56,7 +56,7 @@ WIRING = {
     ),
     # LTX-2.5 first/last frame: the transition engine behind Viral Hub style effects.
     "cinema.first-last-frame": dict(
-        template="video_ltx2_5_flf2v",
+        template="video_ltx2_5_flf2v", output_kind="video",
         verified_via=VIA, examples=["examples/first_last_frame_morph.mp4"],
         inputs=[
             inp("start_image", "First frame", "image", "31", "image", required=True),
@@ -378,3 +378,96 @@ WIRING["genjutsu.styles"] = dict(
             inp("prompt", "Describe the restyled scene", "text", "129:209", "prompt", required=True)],
     outputs=["68"], verified_via=VIA, examples=["examples/style_yarn.mp4", "examples/style_yarn_frame.png"])
 # Tried and not shipped: video.lipsync (LTX-2.3 image+audio): kept the face for one frame then invented a different scene.
+
+
+# LTX-2.3 outpainting IC-LoRA: extends a video to a new aspect ratio (the Higgsfield Reframe / Outpaint video tool).
+# Node ids come from scripts/export_api.py run against Comfy Cloud's catalog. 5151:5097/5098 are the target aspect (width, height).
+WIRING["video.reframe"] = dict(
+    template="video_ltx2_3_lora_video_outpainting", output_kind="video",
+    inputs=[inp("video", "Video to reframe", "video", "5060", "video", required=True),
+            inp("aspect_w", "Target aspect: width part", "number", "5151:5097", "value", default=9, min=1, max=32, step=1),
+            inp("aspect_h", "Target aspect: height part", "number", "5151:5098", "value", default=16, min=1, max=32, step=1),
+            inp("prompt", "What to fill in at the edges (optional)", "text", "5151:5138", "text"),
+            inp("seed", SEED["label"], "seed", "5151:5117", "noise_seed", default=0)],
+    outputs=["5152"])
+
+# Chatterbox TTS: speaks the text in the voice of a short audio sample (this is also the voice-clone path).
+WIRING["audio.tts"] = dict(
+    template="audio-chatterbox_tts", output_kind="audio",
+    inputs=[inp("text", "What to say", "text", "4", "text", required=True),
+            inp("voice", "Voice sample (a few seconds of speech)", "audio", "6", "audio", required=True),
+            inp("exaggeration", "Expressiveness", "number", "4", "exaggeration", default=0.5, min=0.25, max=2.0, step=0.05),
+            _seed("4")],
+    outputs=["8"])
+WIRING["audio.voice-clone"] = _reuse("audio.tts", "audio.tts", [
+    dict(WIRING["audio.tts"]["inputs"][1], label="Voice to clone (5-15 s of clean speech)"),
+    dict(WIRING["audio.tts"]["inputs"][0], label="Line to speak in that voice"), *WIRING["audio.tts"]["inputs"][2:]])
+
+# Rendered through the app's own path (runner.run_comfy -> comfy-sdk -> Comfy Cloud), 2026-10-21.
+APP_VIA = "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21"
+for _fid, _ex in {"video.reframe": ["examples/video_reframe_916.mp4", "examples/driving_dance.mp4"],
+                  "audio.tts": ["examples/tts_chatterbox.flac"], "audio.voice-clone": ["examples/voice_clone.flac"]}.items():
+    WIRING[_fid].update(verified_via=APP_VIA, examples=_ex)
+
+
+# Third wave: preset modules over workflows already proven above (same node maps, new prompt assembly).
+_OUT = WIRING["image.outpaint"]["inputs"]
+_EDIT = WIRING["image.edit-open"]["inputs"]
+_T2V = WIRING["video.t2v-i2v-open"]["inputs"]
+WIRING.update({
+    "image.reframe": _reuse("image.outpaint", "image.outpaint", [
+        _OUT[0], dict(_OUT[1], required=False, label="What should fill the new area (optional)", prefix="Seamlessly continue the existing scene into the new area, same lighting and style. "), *_OUT[2:]]),
+    "audio.narration": _reuse("audio.tts", "audio.tts", [
+        dict(WIRING["audio.tts"]["inputs"][0], label="Narration script"), *WIRING["audio.tts"]["inputs"][1:]]),
+    "reshoot.novel-view": _reuse("image.edit-open", "image.edit-open", [
+        dict(_EDIT[0], label="Frame to re-shoot"),
+        preset("angle", "New camera position", {
+            "Over the shoulder": "Re-shoot this exact scene from an over-the-shoulder camera position behind the main subject, same people, same place, same lighting.",
+            "High wide": "Re-shoot this exact scene from a high wide camera position looking down, same people, same place, same lighting.",
+            "Close-up": "Re-shoot this exact scene as a tight close-up on the main subject's face, same person, same place, same lighting.",
+            "Low hero": "Re-shoot this exact scene from a low hero camera angle looking up at the main subject, same people, same place, same lighting."}),
+        dict(_EDIT[1], required=False, label="Extra detail (optional)"), _EDIT[2]]),
+    "marketing.ai-influencer": _reuse("image.edit-open", "image.edit-open", [
+        dict(_EDIT[0], label="Your influencer (face reference)"),
+        preset("scene", "Content scene", {
+            "Coffee shop selfie": "Keep this person's face, hair, build and clothes exactly the same, and change the scene around them so that they are in a bright coffee shop holding a latte, casual phone-camera look.",
+            "Gym mirror": "Keep this person's face, hair, build and clothes exactly the same, and change the scene around them so that they are in a gym with mirrors and soft overhead light.",
+            "Travel golden hour": "Keep this person's face, hair, build and clothes exactly the same, and change the scene around them so that they are on a rooftop at golden hour with a city skyline behind them.",
+            "Get ready with me": "Keep this person's face, hair, build and clothes exactly the same, and change the scene around them so that they are sitting at a vanity mirror with warm bulbs."}),
+        dict(_EDIT[1], required=False, label="Extra detail (optional)"), _EDIT[2]]),
+    "marketing.ad-multiplier": _reuse("image.edit-open", "image.edit-open", [
+        dict(_EDIT[0], label="Winning ad image"),
+        preset("variant", "Variant", {
+            "New background": "Keep the product and any text exactly the same and replace only the background with a fresh, different setting that suits the product.",
+            "Seasonal": "Keep the product exactly the same and restyle the scene for a festive holiday campaign with seasonal props and warm lights.",
+            "Different color": "Keep the layout and product shape the same and change the main brand color scheme to a bold contrasting palette.",
+            "Dark mode": "Keep the product and layout exactly the same and restyle the scene as a dark, moody premium version with rim lighting."}),
+        dict(_EDIT[1], required=False, label="Extra detail (optional)"), _EDIT[2]]),
+    "marketing.ugc-video": _reuse("cinema.camera-rig", "cinema.camera-rig", [
+        dict(CAM[0], label="Product or person image"),
+        preset("format", "UGC format", {
+            "Product review": "Handheld phone-camera video of a person holding the product up to the camera and reacting with a genuine smile, casual home setting, slight camera shake.",
+            "Unboxing": "Handheld phone-camera video of hands opening a package and revealing the product on a table, excited energy, natural window light.",
+            "Try-on": "Handheld mirror-selfie style video of a person trying on the item and turning to show it from different sides, natural light.",
+            "Tutorial": "Locked-off phone video of hands demonstrating how to use the product step by step on a clean table, soft daylight."}),
+        dict(CAM[1], required=False, label="Extra detail (optional)", prefix="Use the provided start image as the first frame. "), *CAM[2:]]),
+    "marketing.click-to-ad": _reuse("cinema.camera-rig", "cinema.camera-rig", [
+        dict(CAM[0], label="Product image (from your listing)"),
+        preset("style", "Ad style", {
+            "Punchy 6s spot": "A fast, punchy product ad: dynamic push-in, quick light sweeps, product hero shot on a bold colored backdrop, premium commercial look.",
+            "Lifestyle spot": "A warm lifestyle product ad: the product in use in a sunlit home, gentle camera drift, soft focus pulls, commercial look.",
+            "Luxury reveal": "A slow luxury product reveal on a dark reflective surface with a sweeping rim light and shallow depth of field."}),
+        dict(CAM[1], required=False, label="Extra detail (optional)", prefix="Use the provided start image as the first frame. "), *CAM[2:]]),
+    "marketing.shorts-studio": _reuse("video.t2v-i2v-open", "video.t2v-i2v-open", [
+        preset("style", "Short style", {
+            "Cinematic story beat": "Vertical short film moment, cinematic lighting, expressive character acting, shallow depth of field.",
+            "Explainer visual": "Vertical explainer visual, clean bright scene, one clear subject, smooth camera move, social video look.",
+            "Hype montage": "Vertical hype montage shot, rapid camera movement, bold colors, energetic lighting."}),
+        dict(_T2V[0], label="Scene idea"), dict(_T2V[1], default="9:16 (Portrait Widescreen)"), *_T2V[2:]]),
+})
+
+for _fid, _ex in {"image.reframe": ["examples/image_reframe.png"], "reshoot.novel-view": ["examples/reshoot_over_shoulder.png"],
+                  "marketing.ai-influencer": ["examples/influencer_cafe.png"], "marketing.ad-multiplier": ["examples/ad_variant_new_bg.png"],
+                  "audio.narration": ["examples/narration.flac"], "marketing.ugc-video": ["examples/ugc_review.mp4"],
+                  "marketing.click-to-ad": ["examples/click_to_ad.mp4"], "marketing.shorts-studio": ["examples/shorts_vertical.mp4"]}.items():
+    WIRING[_fid].update(verified_via=APP_VIA, examples=_ex)

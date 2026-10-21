@@ -14,5 +14,100 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "video_ltx2_5_t2v",
+    "api": "features/video.t2v-i2v-open/workflow_api.json",
+    "ui": "features/video.t2v-i2v-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "style",
+        "label": "Short style",
+        "kind": "choice",
+        "options": [
+          "Cinematic story beat",
+          "Explainer visual",
+          "Hype montage"
+        ],
+        "default": "Cinematic story beat",
+        "presets": {
+          "Cinematic story beat": "Vertical short film moment, cinematic lighting, expressive character acting, shallow depth of field.",
+          "Explainer visual": "Vertical explainer visual, clean bright scene, one clear subject, smooth camera move, social video look.",
+          "Hype montage": "Vertical hype montage shot, rapid camera movement, bold colors, energetic lighting."
+        },
+        "apply_to": "prompt"
+      },
+      {
+        "name": "prompt",
+        "label": "Scene idea",
+        "kind": "text",
+        "node": "405:376",
+        "field": "value",
+        "required": true
+      },
+      {
+        "name": "aspect",
+        "label": "Aspect",
+        "kind": "choice",
+        "node": "409",
+        "field": "aspect_ratio",
+        "options": [
+          "1:1 (Square)",
+          "2:3 (Portrait Photo)",
+          "3:2 (Photo)",
+          "3:4 (Portrait Standard)",
+          "4:3 (Standard)",
+          "9:16 (Portrait Widescreen)",
+          "16:9 (Widescreen)",
+          "21:9 (Ultrawide)"
+        ],
+        "default": "9:16 (Portrait Widescreen)"
+      },
+      {
+        "name": "duration",
+        "label": "Duration (s)",
+        "kind": "number",
+        "node": "405:362",
+        "field": "value",
+        "default": 5,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "405:338",
+        "field": "noise_seed",
+        "default": 0,
+        "also": [
+          {
+            "node": "405:339",
+            "field": "noise_seed"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      "75"
+    ],
+    "models": [
+      "gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors",
+      "gemma4_e2b_it_int8_convrot.safetensors",
+      "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+      "ltx-2.5-audio-vae-bf16.safetensors",
+      "ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+      "ltx-2.5-video-vae-bf16.safetensors",
+      "ltx-av-step-1751000_vocoder_24K.safetensors",
+      "model.safetensors"
+    ],
+    "reuses": "video.t2v-i2v-open",
+    "output_kind": "video",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/shorts_vertical.mp4"
+    ]
+  }
 }

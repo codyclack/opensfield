@@ -47,9 +47,10 @@ def resolve_values(feature: dict, inputs: dict) -> dict:
     vals = dict(inputs)
     for spec in feature["inputs"]:
         pr, tgt = spec.get("presets"), spec.get("apply_to")
-        if pr and tgt and spec["name"] in vals:
+        if pr and tgt:
+            choice = vals.get(spec["name"]) or spec.get("default")
             user = str(vals.get(tgt) or "").strip()
-            vals[tgt] = (pr.get(vals[spec["name"]], "") + (" " + user if user else "")).strip()
+            vals[tgt] = (pr.get(choice, "") + (" " + user if user else "")).strip()
     for spec in feature["inputs"]:
         if spec.get("prefix"):
             vals[spec["name"]] = spec["prefix"] + str(vals.get(spec["name"]) or "")
@@ -95,7 +96,7 @@ def run_comfy(feature: dict, job: dict, update: Update) -> list[dict]:
     for spec in feature["inputs"]:
         value = values.get(spec["name"])
         if spec["kind"] == "seed" and not value:
-            value = random.randint(1, 2**48)
+            value = random.randint(1, 2**32 - 1)  # some nodes (Chatterbox) cap seeds at 32 bits
         if value in ("", None) or "node" not in spec:
             continue  # blank = keep the template default
         if spec["kind"] in ("image", "video", "audio"):

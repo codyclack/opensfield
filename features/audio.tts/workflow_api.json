@@ -1,0 +1,44 @@
+{
+ "4": {
+  "inputs": {
+   "text": "This is Chatterbox\u2014and it just recreated my voice from a nine-second recording.\n\nGive it a shot with your own voice and hear the results for yourself.",
+   "exaggeration": 0.5,
+   "cfg_weight": 0.5,
+   "temperature": 0.8,
+   "seed": 390519100,
+   "use_cpu": false,
+   "keep_model_loaded": false,
+   "audio_prompt": [
+    "6",
+    0
+   ]
+  },
+  "class_type": "FL_ChatterboxTTS",
+  "_meta": {
+   "title": "FL Chatterbox TTS"
+  }
+ },
+ "6": {
+  "inputs": {
+   "audio": "chatterbox_input_target_voice.mp3"
+  },
+  "class_type": "LoadAudio",
+  "_meta": {
+   "title": "Load Audio"
+  }
+ },
+ "8": {
+  "inputs": {
+   "filename_prefix": "audio/chatterbox_tts",
+   "format": "flac",
+   "audio": [
+    "4",
+    0
+   ]
+  },
+  "class_type": "SaveAudioAdvanced",
+  "_meta": {
+   "title": "Save Audio (Advanced)"
+  }
+ }
+}

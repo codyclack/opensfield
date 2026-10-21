@@ -5,16 +5,16 @@ Open-source rebuild of Higgsfield's creative apps on ComfyUI, for Comfy's
 `partner/` pack adds Comfy Router models.
 
 ## Status (honest summary)
-- **37 of 72 modules are built and have real example outputs** in [`examples/`](examples/README.md), using open-weight models
-  only: 21 are separate ComfyUI workflows (motion transfer, character replacement, text/image-to-video, first/last frame,
+- **48 of 72 modules are built and have real example outputs** in [`examples/`](examples/README.md), using open-weight models
+  only: 23 are separate ComfyUI workflows (video outpainting, Chatterbox text-to-speech/voice clone, motion transfer, character replacement, text/image-to-video, first/last frame,
   video edit, image edit, inpaint, outpaint, background removal, layer decomposition, upscale, music, image-to-3D, several
-  text-to-image models, style reference, two-reference compose), 11 are presets that reuse those workflows (camera angles, viral effects,
+  text-to-image models, style reference, two-reference compose), 20 are presets that reuse those workflows (UGC video, click-to-ad, shorts, AI influencer, ad variants, re-shoot angles, narration, image reframe, camera angles, viral effects,
   multishot, character sheet, identity, product shots, thumbnails, ads, brand assets, sprites, studio presets) and 5 are local CPU effects (`app/fx.py`: thermal palettes, retro looks, deflicker, burned captions, typewriter and word-stack text).
-- **35 modules are not built.** Reasons: partner-only models, platform features that are not generation, nodes that need your
+- **24 modules are not built.** Reasons: partner-only models, platform features that are not generation, nodes that need your
   own custom packs, or no usable open workflow found. COVERAGE.md lists each one. [COVERAGE.md](COVERAGE.md) lists every Higgsfield feature, its planned open-weight
   stand-in and its status (`planned` / `built` / `tested`).
 - **The app runs in mock mode out of the box** (placeholder outputs, no ComfyUI needed). Real runs through the app's `comfy-sdk`
-  path are implemented and unit-tested against a stub, and **verified end to end for one module**: `image.bg-remove` was run through the app against Comfy Cloud on 2026-10-21 (app -> `comfy-sdk` -> Cloud -> result in the UI). The other modules have not each been run through the app yet; their example renders used Comfy Cloud's template runner.
+  path are implemented and unit-tested against a stub, and **verified end to end for 13 modules** (app -> `comfy-sdk` -> Cloud -> result): `image.bg-remove`, the camera-rig video module, video reframe, text-to-speech, voice clone, narration, image reframe, re-shoot angles, AI influencer, ad multiplier, UGC video, click-to-ad and shorts studio. The rest were rendered with Comfy Cloud's template runner using the same node ids and prompts.
 
 ## Try the app shell (mock mode, no ComfyUI)
 ```bash
@@ -37,7 +37,7 @@ Env: `OPENSFIELD_MODE=mock|comfy`, `OPENSFIELD_PARTNER=1` (show partner-pack mod
 ## Workflows: rendered on Comfy Cloud
 Twelve modules have real workflows wired from official Comfy templates, and each has a real render in
 [`examples/`](examples/README.md) (open-weight models only; seconds to about a minute of GPU each). They were run through Comfy Cloud's
-template runner using the node ids in `registry/wiring.py`; **the app's own `comfy-sdk` submission path has been run live for `image.bg-remove` only**.
+template runner using the node ids in `registry/wiring.py`; **the app's own `comfy-sdk` submission path has been run live for 13 modules (see Status)**.
 Wiring is also checked statically by `tests/test_wiring.py`.
 
 | Module | Template | Model family |

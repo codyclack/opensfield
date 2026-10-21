@@ -12,5 +12,71 @@
   "note": "Contest-named 'Re-shoot'.",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "image_qwen_image_edit_2511_int8",
+    "api": "features/image.edit-open/workflow_api.json",
+    "ui": "features/image.edit-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Frame to re-shoot",
+        "kind": "image",
+        "node": "41",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "angle",
+        "label": "New camera position",
+        "kind": "choice",
+        "options": [
+          "Over the shoulder",
+          "High wide",
+          "Close-up",
+          "Low hero"
+        ],
+        "default": "Over the shoulder",
+        "presets": {
+          "Over the shoulder": "Re-shoot this exact scene from an over-the-shoulder camera position behind the main subject, same people, same place, same lighting.",
+          "High wide": "Re-shoot this exact scene from a high wide camera position looking down, same people, same place, same lighting.",
+          "Close-up": "Re-shoot this exact scene as a tight close-up on the main subject's face, same person, same place, same lighting.",
+          "Low hero": "Re-shoot this exact scene from a low hero camera angle looking up at the main subject, same people, same place, same lighting."
+        },
+        "apply_to": "prompt"
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "170:151",
+        "field": "prompt",
+        "required": false
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "170:169",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "195"
+    ],
+    "models": [
+      "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "qwen_image_edit_2511_int8_convrot.safetensors",
+      "qwen_image_vae.safetensors"
+    ],
+    "reuses": "image.edit-open",
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/reshoot_over_shoulder.png"
+    ]
+  }
 }

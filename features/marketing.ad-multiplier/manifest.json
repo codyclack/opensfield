@@ -13,5 +13,71 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "image_qwen_image_edit_2511_int8",
+    "api": "features/image.edit-open/workflow_api.json",
+    "ui": "features/image.edit-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Winning ad image",
+        "kind": "image",
+        "node": "41",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "label": "Variant",
+        "kind": "choice",
+        "options": [
+          "New background",
+          "Seasonal",
+          "Different color",
+          "Dark mode"
+        ],
+        "default": "New background",
+        "presets": {
+          "New background": "Keep the product and any text exactly the same and replace only the background with a fresh, different setting that suits the product.",
+          "Seasonal": "Keep the product exactly the same and restyle the scene for a festive holiday campaign with seasonal props and warm lights.",
+          "Different color": "Keep the layout and product shape the same and change the main brand color scheme to a bold contrasting palette.",
+          "Dark mode": "Keep the product and layout exactly the same and restyle the scene as a dark, moody premium version with rim lighting."
+        },
+        "apply_to": "prompt"
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "170:151",
+        "field": "prompt",
+        "required": false
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "170:169",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "195"
+    ],
+    "models": [
+      "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "qwen_image_edit_2511_int8_convrot.safetensors",
+      "qwen_image_vae.safetensors"
+    ],
+    "reuses": "image.edit-open",
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/ad_variant_new_bg.png"
+    ]
+  }
 }

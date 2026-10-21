@@ -11,5 +11,97 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "flux_fill_outpaint_example",
+    "api": "features/image.outpaint/workflow_api.json",
+    "ui": "features/image.outpaint/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Image",
+        "kind": "image",
+        "node": "17",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "What should fill the new area (optional)",
+        "kind": "text",
+        "node": "23",
+        "field": "text",
+        "required": false,
+        "prefix": "Seamlessly continue the existing scene into the new area, same lighting and style. "
+      },
+      {
+        "name": "left",
+        "label": "Extend left (px)",
+        "kind": "number",
+        "node": "44",
+        "field": "left",
+        "default": 256,
+        "min": 0,
+        "max": 1024,
+        "step": 64
+      },
+      {
+        "name": "right",
+        "label": "Extend right (px)",
+        "kind": "number",
+        "node": "44",
+        "field": "right",
+        "default": 256,
+        "min": 0,
+        "max": 1024,
+        "step": 64
+      },
+      {
+        "name": "top",
+        "label": "Extend top (px)",
+        "kind": "number",
+        "node": "44",
+        "field": "top",
+        "default": 0,
+        "min": 0,
+        "max": 1024,
+        "step": 64
+      },
+      {
+        "name": "bottom",
+        "label": "Extend bottom (px)",
+        "kind": "number",
+        "node": "44",
+        "field": "bottom",
+        "default": 0,
+        "min": 0,
+        "max": 1024,
+        "step": 64
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "3",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "9"
+    ],
+    "models": [
+      "ae.safetensors",
+      "clip_l.safetensors",
+      "flux1-fill-dev.safetensors",
+      "t5xxl_fp16.safetensors"
+    ],
+    "reuses": "image.outpaint",
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/image_reframe.png"
+    ]
+  }
 }

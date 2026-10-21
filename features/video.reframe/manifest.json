@@ -12,5 +12,73 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "video_ltx2_3_lora_video_outpainting",
+    "api": "features/video.reframe/workflow_api.json",
+    "ui": "features/video.reframe/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "video",
+        "label": "Video to reframe",
+        "kind": "video",
+        "node": "5060",
+        "field": "video",
+        "required": true
+      },
+      {
+        "name": "aspect_w",
+        "label": "Target aspect: width part",
+        "kind": "number",
+        "node": "5151:5097",
+        "field": "value",
+        "default": 9,
+        "min": 1,
+        "max": 32,
+        "step": 1
+      },
+      {
+        "name": "aspect_h",
+        "label": "Target aspect: height part",
+        "kind": "number",
+        "node": "5151:5098",
+        "field": "value",
+        "default": 16,
+        "min": 1,
+        "max": 32,
+        "step": 1
+      },
+      {
+        "name": "prompt",
+        "label": "What to fill in at the edges (optional)",
+        "kind": "text",
+        "node": "5151:5138",
+        "field": "text"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "5151:5117",
+        "field": "noise_seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "5152"
+    ],
+    "models": [
+      "gemma_3_12B_it.safetensors",
+      "ltx-2.3-22b-dev-fp8.safetensors",
+      "ltx-2.3-22b-distilled-lora-384.safetensors",
+      "ltx-2.3-22b-ic-lora-outpaint.safetensors"
+    ],
+    "output_kind": "video",
+    "verified": true,
+    "verified_via": "App path: runner.run_comfy -> comfy-sdk -> Comfy Cloud, 2026-10-21",
+    "examples": [
+      "examples/video_reframe_916.mp4",
+      "examples/driving_dance.mp4"
+    ]
+  }
 }

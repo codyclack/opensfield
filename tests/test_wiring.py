@@ -34,12 +34,14 @@ def test_every_wired_target_exists(fid):
             assert t["field"] in g[t["node"]]["inputs"], f"{fid}: {t['node']}.{t['field']} missing"
         if spec["kind"] in LOADER_FIELD:
             cls, field = LOADER_FIELD[spec["kind"]]
+            if g[spec["node"]]["class_type"] == "VHS_LoadVideo":
+                cls, field = "VHS_LoadVideo", "video"
             assert g[spec["node"]]["class_type"] == cls and spec["field"] == field
         if spec["kind"] == "seed":
             assert "seed" in spec["field"] or spec["field"] == "value"  # ACE-Step's seed is a PrimitiveInt
     for node in WIRING[fid]["outputs"]:
         cls = g[node]["class_type"]
-        assert cls.startswith("Save") or "Preview" in cls, f"{fid}: output {node} ({cls}) is not a Save/Preview node"
+        assert cls.startswith("Save") or "Preview" in cls or cls == "VHS_VideoCombine", f"{fid}: output {node} ({cls}) is not a Save/Preview node"
 
 
 @pytest.mark.parametrize("fid", sorted(WIRING))

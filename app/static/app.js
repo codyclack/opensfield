@@ -1,7 +1,7 @@
 "use strict";
 const $ = (s) => document.querySelector(s);
 const NS = "http://www.w3.org/2000/svg";
-const state = { cfg: null, feats: [], studio: null, query: "", feature: null, jobs: [], timer: null, links: [], obs: null };
+const state = { cfg: null, feats: [], studio: null, filter: "all", view: "studio", query: "", feature: null, jobs: [], timer: null, links: [], obs: null };
 
 // node-title colours per studio (ComfyUI node-colour feel)
 const STUDIO_COLOR = {
@@ -35,7 +35,12 @@ const api = async (path, opts) => {
   return body;
 };
 
-/* ---------------- studios rail + home grid ---------------- */
+
+/* ---------------- studios rail + home ---------------- */
+const STUDIO_ICON = { "Genjutsu": "GJ", "Cinema Studio": "CS", "Reshoot": "RS", "Viral Hub": "VH", "Soul": "SO", "Image models": "IM", "Image tools": "IT",
+  "Video tools": "VT", "Video models": "VM", "Audio": "AU", "Marketing": "MK", "Match Cut + Tracelab": "MC", "Platform": "PF" };
+const FILTERS = [["all", "All"], ["ready", "Ready to run"], ["image", "Image"], ["video", "Video"], ["audio", "Audio"], ["3d", "3D"]];
+
 function studios() {
   const seen = new Map();
   for (const f of state.feats) seen.set(f.studio, (seen.get(f.studio) || 0) + 1);
@@ -43,12 +48,15 @@ function studios() {
   return [...known, ...[...seen.keys()].filter((s) => !known.includes(s))].map((s) => [s, seen.get(s)]);
 }
 
+function goHome() { state.studio = null; state.query = ""; $("#search").value = ""; state.feature = null; render(); }
+
 function renderRail() {
-  $("#rail").replaceChildren(h("div", { class: "label" }, "STUDIOS"),
-    ...studios().map(([s, n]) =>
-      h("button", { type: "button", "aria-current": String(!state.query && !state.feature && state.studio === s), style: `--c:${studioColor(s)}`,
-        onclick: () => { state.studio = s; state.query = ""; $("#search").value = ""; state.feature = null; render(); } },
-        h("i", { class: "dot" }), h("span", { class: "nm" }, s), h("span", { class: "n" }, n))));
+  const home = !state.query && !state.feature && !state.studio;
+  const item = (label, icon, color, current, onclick) => h("button", { type: "button", "aria-current": String(current), style: `--c:${color}`, title: label, onclick },
+    h("span", { class: "ico" }, icon), h("span", { class: "nm" }, label));
+  $("#rail").replaceChildren(item("Explore", "★", "#d1fe17", home, goHome),
+    ...studios().map(([s]) => item(s, STUDIO_ICON[s] || s.slice(0, 2).toUpperCase(), studioColor(s), !state.query && !state.feature && state.studio === s,
+      () => { state.studio = s; state.query = ""; $("#search").value = ""; state.feature = null; render(); })));
 }
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -62,34 +70,58 @@ function exampleEl(url, cls, opts = {}) {
     controls: opts.controls, autoplay: !opts.controls && !reduceMotion, "aria-hidden": opts.controls ? null : "true" });
 }
 
-function tile(f) {
-  const kinds = [...new Set(f.inputs.map(sockKind))];
+const statusLabel = (f) => (f.status === "tested" ? "Ready" : f.status === "built" ? "Built" : "Soon");
+function card(f) {
   const cover = (f.examples || []).find((u) => isVideo(u) || isImage(u));
-  return h("button", { class: "tile", type: "button", onclick: () => openFeature(f) },
-    h("span", { class: "tbar", style: `--c:${studioColor(f.studio)}` }, h("i", { class: "dot" }), h("span", { class: "grow" }, f.studio),
-      f.track === "partner" && badge("partner", "partner")),
-    h("span", { class: `art${cover ? " has-media" : ""}`, style: `--h:${hash(f.id) % 360}` }, cover && exampleEl(cover, "bg"), h("span", { class: "big" }, f.name)),
-    h("span", { class: "tmeta" },
-      h("span", { class: "src" }, f.higgsfield),
-      h("span", { class: "io" },
-        h("span", { class: "ins" }, kinds.map((k) => sock(k, "mini")), h("span", {}, kinds.join(" / ").toUpperCase() || "NO INPUTS")),
-        h("span", { class: "out" }, f.output_kind.toUpperCase(), sock(f.output_kind, "mini"))),
-      h("span", { class: "badges" }, badge(`Tier ${f.tier}`, f.tier), badge(f.status), f.count > 1 && badge(`${f.count} presets`))));
+  const el = h("button", { class: `card${cover ? "" : " plain"}`, type: "button", style: `--h:${hash(f.id) % 360}`, onclick: () => openFeature(f) },
+    cover && exampleEl(cover, "bg"),
+    h("span", { class: "pill" }, statusLabel(f)),
+    h("span", { class: "ckind" }, f.output_kind.toUpperCase()),
+    h("span", { class: "ctext" }, h("b", {}, f.name), h("small", {}, f.engine || f.higgsfield)));
+  const v = el.querySelector("video");
+  if (v && !reduceMotion) { v.autoplay = false; v.removeAttribute("autoplay"); el.addEventListener("mouseenter", () => v.play().catch(() => {})); el.addEventListener("mouseleave", () => v.pause()); }
+  return el;
 }
 
 const marker = (text) => h("h1", { class: "marker" }, h("span", {}, text));
+const matches = (f) => state.filter === "all" || (state.filter === "ready" ? f.status === "tested" : f.output_kind === state.filter);
+
+function hero() {
+  const ready = state.feats.filter((f) => f.status === "tested").length;
+  const pick = state.feats.find((f) => f.id === "marketing.click-to-ad") || state.feats.find((f) => f.examples.some(isVideo));
+  const art = pick && pick.examples.find(isVideo);
+  return h("section", { class: "hero" },
+    art && h("video", { class: "bg", src: "/" + art, muted: true, loop: true, autoplay: !reduceMotion, playsinline: true, "aria-hidden": "true" }),
+    h("div", { class: "htext" },
+      h("span", { class: "eyebrow" }, "OPEN WEIGHTS · COMFYUI"),
+      h("h2", {}, "Every Higgsfield tool, open source."),
+      h("p", {}, `${ready} tools you can run today, ${state.feats.length} mapped. Built on the Comfy Developer Platform.`),
+      h("div", { class: "hbtns" },
+        h("button", { class: "go", type: "button", onclick: () => { const f = state.feats.find((x) => x.id === "cinema.camera-rig"); if (f) openFeature(f); } }, "Start creating"),
+        h("a", { class: "ghost", href: "https://github.com/codyclack/opensfield", target: "_blank", rel: "noopener" }, "View source"))));
+}
 
 function renderGrid() {
   const q = state.query.toLowerCase();
-  const list = state.feats.filter((f) => (q ? `${f.name} ${f.higgsfield} ${f.studio} ${f.id}`.toLowerCase().includes(q) : f.studio === state.studio));
-  const tiers = ["A", "B", "C"].map((t) => [t, list.filter((f) => f.tier === t).length]).filter(([, n]) => n);
-  $("#main").replaceChildren(
-    marker(q ? `Search: ${state.query}` : state.studio),
-    h("div", { class: "sub" }, `${list.length} feature${list.length === 1 ? "" : "s"}`, tiers.map(([t, n]) => badge(`Tier ${t}: ${n}`, t)),
-      !state.cfg.partner_enabled && h("span", {}, "Partner-model modules hidden")),
-    h("div", { class: "grid" }, list.map(tile)));
+  const filters = h("div", { class: "filters", role: "group", "aria-label": "Filter tools" },
+    FILTERS.map(([k, l]) => h("button", { type: "button", class: "fpill", "aria-pressed": String(state.filter === k), onclick: () => { state.filter = k; render(); } }, l)));
+  let body;
+  if (q || state.studio) {
+    const list = state.feats.filter((f) => (q ? `${f.name} ${f.higgsfield} ${f.studio} ${f.id}`.toLowerCase().includes(q) : f.studio === state.studio)).filter(matches);
+    body = [marker(q ? `Search: ${state.query}` : state.studio), filters,
+      list.length ? h("div", { class: "cards" }, list.map(card)) : h("p", { class: "empty" }, "Nothing here for this filter.")];
+  } else {
+    body = [hero(), filters, ...studios().map(([s]) => {
+      const list = state.feats.filter((f) => f.studio === s).filter(matches).sort((a, b) => (b.status === "tested") - (a.status === "tested"));
+      return list.length && h("section", { class: "row" },
+        h("div", { class: "rowhead" }, h("h3", {}, s), h("button", { type: "button", class: "more", onclick: () => { state.studio = s; render(); } }, `See all ${list.length} →`)),
+        h("div", { class: "strip" }, list.map(card)));
+    })];
+  }
+  $("#main").replaceChildren(...body.filter(Boolean));
   state.links = [];
 }
+
 
 /* ---------------- feature view: a ComfyUI-style graph ---------------- */
 function node({ title, kind, color, req, body, out = false, inn = false, cls = "" }) {
@@ -179,11 +211,77 @@ function drawLinks() {
   }));
 }
 
+/* ---------------- feature view: Higgsfield-style composer (graph view stays available) ---------------- */
+const ratioOf = (o) => { const m = /^(\d+):(\d+)/.exec(o); return m ? [Number(m[1]), Number(m[2])] : null; };
+
+function pills(spec, vals, render = (o) => o) {
+  const group = h("div", { class: "opts", role: "radiogroup", "aria-label": spec.label });
+  const set = (o) => { vals[spec.name] = o; group.querySelectorAll("button").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.v === String(o)))); };
+  for (const o of spec.options) group.append(h("button", { type: "button", role: "radio", "data-v": o, "aria-checked": "false", title: spec.presets?.[o] || o, onclick: () => set(o) }, render(o)));
+  set(vals[spec.name]);
+  return group;
+}
+
+function aspectChip(o) {
+  const r = ratioOf(o), [w, hh] = r, k = 22 / Math.max(w, hh);
+  return [h("i", { class: "ar", style: `width:${Math.round(w * k)}px;height:${Math.round(hh * k)}px` }), h("span", {}, o.split(" ")[0])];
+}
+
+function field(spec, body, hint) {
+  return h("div", { class: "field" }, h("div", { class: "flabel" }, spec.label, spec.required && h("b", {}, " *")), body, hint && h("div", { class: "fhint" }, hint));
+}
+
+function uploadTile(spec, vals) {
+  const id = `f-${spec.name}`;
+  const img = h("img", { alt: "", hidden: true }), cap = h("span", { class: "cap" }, spec.kind === "image" ? "Add image" : spec.kind === "video" ? "Add video" : "Add audio");
+  const ui = { img, label: cap };
+  const input = h("input", { class: "sr", id, type: "file", accept: { image: "image/*", video: "video/*", audio: "audio/*" }[spec.kind],
+    onchange: (e) => e.target.files[0] && upload(e.target.files[0], spec, vals, ui) });
+  const zone = h("label", { class: "utile", for: id }, img, h("span", { class: "plus", "aria-hidden": "true" }, spec.kind === "image" ? "+" : spec.kind === "video" ? "▶" : "♪"), cap, input);
+  zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("over"); });
+  zone.addEventListener("dragleave", () => zone.classList.remove("over"));
+  zone.addEventListener("drop", (e) => { e.preventDefault(); zone.classList.remove("over"); if (e.dataTransfer.files[0]) upload(e.dataTransfer.files[0], spec, vals, ui); });
+  return h("div", { class: "ufield" }, zone, h("div", { class: "flabel" }, spec.label, spec.required && h("b", {}, " *")));
+}
+
+function control(spec, vals) {
+  const n = spec.options?.length || 0;
+  vals[spec.name] = spec.default ?? vals[spec.name] ?? 0;
+  if (spec.kind === "choice") {
+    if (spec.options.every((o) => ratioOf(o))) return field(spec, pills(spec, vals, aspectChip));
+    if (n <= 6) return field(spec, pills(spec, vals), spec.presets && "Hover a style to read its prompt.");
+    return field(spec, h("select", { onchange: (e) => (vals[spec.name] = e.target.value) }, spec.options.map((o) => h("option", { value: o, selected: o === spec.default }, o))));
+  }
+  const steps = (spec.max - spec.min) / (spec.step || 1);
+  if (steps <= 12 && Number.isFinite(steps)) {
+    const o = { ...spec, options: Array.from({ length: steps + 1 }, (_, i) => spec.min + i * (spec.step || 1)) };
+    return field(spec, pills(o, vals));
+  }
+  const out = h("output", {}, String(vals[spec.name]));
+  const range = h("input", { type: "range", min: spec.min, max: spec.max, step: spec.step || 1, value: vals[spec.name], "aria-label": spec.label,
+    oninput: (e) => { vals[spec.name] = Number(e.target.value); out.textContent = e.target.value; } });
+  return field(spec, h("div", { class: "slider" }, range, out));
+}
+
+function buildComposer(f, vals) {
+  const media = f.inputs.filter((s) => ["image", "video", "audio"].includes(s.kind));
+  const texts = f.inputs.filter((s) => s.kind === "text");
+  const opts = f.inputs.filter((s) => ["choice", "number"].includes(s.kind));
+  const seed = f.inputs.find((s) => s.kind === "seed");
+  const presetOpts = opts.filter((s) => s.presets), plainOpts = opts.filter((s) => !s.presets);
+  if (seed) vals[seed.name] = 0;
+  return h("div", { class: "composer" },
+    media.length > 0 && h("div", { class: "uploads" }, media.map((s) => uploadTile(s, vals))),
+    ...presetOpts.map((s) => control(s, vals)),
+    ...texts.map((s) => field(s, h("textarea", { id: `f-${s.name}`, "aria-label": s.label, rows: 4, placeholder: s.required ? "Describe what you want..." : "Optional", oninput: (e) => (vals[s.name] = e.target.value) }))),
+    ...plainOpts.map((s) => control(s, vals)),
+    seed && h("details", { class: "adv" }, h("summary", {}, "Advanced"),
+      field(seed, h("input", { type: "number", min: 0, value: 0, "aria-label": seed.label, oninput: (e) => (vals[seed.name] = Number(e.target.value)) }), "0 picks a random seed each run.")));
+}
+
 function renderFeature(f) {
   const vals = {}, err = h("span", { class: "err", role: "alert" });
-  const go = h("button", { class: "go", type: "button" }, h("span", {}, "Generate"));
-  go.prepend(svgEl("svg", { viewBox: "0 0 14 14", "aria-hidden": "true" }));
-  go.firstChild.append(svgEl("path", { d: "M3 1.5v11l9-5.5z" }));
+  const go = h("button", { class: "go wide", type: "button" }, "Generate");
   const run = async () => {
     err.textContent = ""; go.disabled = true;
     try { await api("/api/jobs", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ feature_id: f.id, inputs: vals }) }); poll(); }
@@ -192,27 +290,35 @@ function renderFeature(f) {
   };
   go.addEventListener("click", run);
   state.run = run;
-
-  const graph = buildGraph(f, vals);
-  $("#main").replaceChildren(
-    h("button", { class: "back", type: "button", onclick: () => { state.feature = null; render(); } }, `< ${state.query ? "Search" : f.studio}`),
-    marker(f.name),
-    h("div", { class: "sub" }, badge(`Tier ${f.tier}`, f.tier), f.track === "partner" && badge("partner", "partner"), badge(f.status), `outputs ${f.output_kind}`),
-    graph,
-    h("div", { class: "runbar" },
-      h("div", { class: "sum" }, `${f.inputs.length} input${f.inputs.length === 1 ? "" : "s"} -> ${f.output_kind}`,
-        !f.runnable && state.cfg.mode === "comfy" ? " (no workflow built yet)" : ""),
-      err, h("kbd", {}, "Ctrl+Enter"), go));
-  if (state.obs) state.obs.disconnect();
-  state.obs = new ResizeObserver(() => requestAnimationFrame(drawLinks));
-  state.obs.observe(graph); graph.querySelectorAll(".node").forEach((n) => state.obs.observe(n));
-  drawLinks(); updatePreview();
+  const head = h("div", { class: "fhead" },
+    h("button", { class: "back", type: "button", onclick: () => { state.feature = null; render(); } }, `← ${state.query ? "Search" : f.studio}`),
+    h("div", { class: "seg", role: "group", "aria-label": "View" },
+      ["studio", "graph"].map((v) => h("button", { type: "button", "aria-pressed": String(state.view === v), onclick: () => { state.view = v; render(); } }, v === "studio" ? "Studio" : "Node graph"))));
+  const sub = h("div", { class: "sub" }, f.engine && badge(f.engine, "A"), badge(statusLabel(f)), f.count > 1 && badge(`${f.count} presets`), f.track === "partner" && badge("partner", "partner"), h("span", {}, `outputs ${f.output_kind}`));
+  if (state.obs) { state.obs.disconnect(); state.obs = null; }
+  if (state.view === "graph") {
+    const graph = buildGraph(f, vals);
+    $("#main").replaceChildren(head, marker(f.name), sub, graph,
+      h("div", { class: "runbar" }, h("div", { class: "sum" }, `${f.inputs.length} input${f.inputs.length === 1 ? "" : "s"} -> ${f.output_kind}`), err, h("kbd", {}, "Ctrl+Enter"), go));
+    state.obs = new ResizeObserver(() => requestAnimationFrame(drawLinks));
+    state.obs.observe(graph); graph.querySelectorAll(".node").forEach((n) => state.obs.observe(n));
+    drawLinks();
+  } else {
+    state.links = [];
+    $("#main").replaceChildren(head, marker(f.name), sub,
+      h("div", { class: "create" },
+        h("aside", { class: "panel" }, h("p", { class: "hf" }, f.higgsfield), f.note && h("p", { class: "note" }, f.note), buildComposer(f, vals),
+          h("div", { class: "gen" }, err, go, h("div", { class: "fine" }, !f.runnable && state.cfg.mode === "comfy" ? "No workflow built yet for this tool." : f.local ? "Runs on this computer's CPU." : "Open weights on Comfy. Ctrl+Enter to run."))),
+        h("section", { class: "results", "aria-label": "Results" }, h("div", { id: "preview", class: "gallery" }))));
+  }
+  updatePreview();
 }
 
 function openFeature(f) { state.feature = f; render(); window.scrollTo(0, 0); }
 function render() { renderRail(); state.feature ? renderFeature(state.feature) : renderGrid(); }
 
 /* ---------------- queue + preview ---------------- */
+
 function jobMedia(j) {
   return [
     h("div", { class: `st ${j.status}` }, j.status + (j.status === "running" ? ` ${Math.round(j.progress * 100)}%` : "")),
@@ -228,12 +334,11 @@ function jobMedia(j) {
 function updatePreview() {
   const box = $("#preview");
   if (!box || !state.feature) return;
-  const j = state.jobs.find((x) => x.feature_id === state.feature.id);
-  const ex = state.feature.examples || [];
-  box.replaceChildren(...(j ? jobMedia(j) : ex.length
-    ? [h("div", { class: "st" }, "Example renders (real, Comfy Cloud). Run the graph to make your own."),
-       ...ex.map((u) => exampleEl(u, "thumb", { controls: true, alt: `${state.feature.name} example` }))]
-    : [h("div", { class: "empty" }, "Run the graph to see the result here.")]));
+  const f = state.feature, mine = state.jobs.filter((x) => x.feature_id === f.id), ex = f.examples || [];
+  box.replaceChildren(
+    ...(mine.length ? [h("h4", {}, "Your generations"), ...mine.map((j) => h("figure", { class: "gcard" }, jobMedia(j)))] : []),
+    ...(ex.length ? [h("h4", {}, mine.length ? "Examples" : "Example renders (real runs on Comfy Cloud)"), ...ex.map((u) => h("figure", { class: "gcard" }, exampleEl(u, "thumb", { controls: true, alt: f.name + " example" })))] : []),
+    ...(!mine.length && !ex.length ? [h("div", { class: "empty" }, "Your results appear here.")] : []));
 }
 
 function renderJobs() {
@@ -260,7 +365,6 @@ async function init() {
   const mode = $("#mode");
   mode.textContent = state.cfg.mode === "mock" ? "Mock mode: no ComfyUI calls" : "ComfyUI connected";
   mode.className = `chip ${state.cfg.mode === "mock" ? "mock" : "live"}`;
-  state.studio = studios()[0][0];
   const link = location.hash.match(/^#([sf])=(.+)$/);  // deep links: #s=<Studio name>, #f=<feature id>
   if (link) {
     const v = decodeURIComponent(link[2]), f = link[1] === "f" && state.feats.find((x) => x.id === v);

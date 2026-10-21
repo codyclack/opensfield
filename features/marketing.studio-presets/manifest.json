@@ -110,7 +110,7 @@
       "model.safetensors"
     ],
     "reuses": "cinema.camera-rig",
-    "output_kind": "image",
+    "output_kind": "video",
     "verified": true,
     "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
     "examples": [

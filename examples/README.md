@@ -61,3 +61,20 @@ Tried and not shipped: `video.lipsync` (LTX-2.3 image+audio: kept the face for o
 
 Known quirks: the first frame of `driving_dance.mp4` is a torso crop (the model's opening frame), and the push-in shot
 crops to the torso and shifts the hair colour. These are model behaviour, not post-processed.
+
+## Fourth batch (2026-10-21, through the app's own comfy-sdk path)
+| Module | File | Notes |
+|---|---|---|
+| video.reframe | `video_reframe_916.mp4` | LTX-2.3 outpainting IC-LoRA, 16:9 dance clip extended to 9:16 (640x1120) |
+| audio.tts | `tts_chatterbox.flac` | Chatterbox, voice from `voice_sample.wav` (a synthetic Windows voice, used only as the sample) |
+| audio.voice-clone | `voice_clone.flac` | same workflow, labelled for cloning |
+| audio.narration | `narration.flac` | same workflow, narration script input (no timing fit) |
+| image.reframe | `image_reframe.png` | Flux Fill outpaint with a continue-the-scene prompt |
+| reshoot.novel-view | `reshoot_over_shoulder.png` | Qwen Image Edit 2511, "over the shoulder" preset. A still-frame re-angle, not a video re-shoot |
+| marketing.ai-influencer | `influencer_cafe.png` | Qwen Edit, coffee shop preset |
+| marketing.ad-multiplier | `ad_variant_new_bg.png` | Qwen Edit, "new background" variant. Image variants only |
+| marketing.ugc-video | `ugc_review.mp4` | LTX-2.5 i2v, product review preset |
+| marketing.click-to-ad | `click_to_ad.mp4` | LTX-2.5 i2v from a product image. No URL scraping |
+| marketing.shorts-studio | `shorts_vertical.mp4` | LTX-2.5 t2v, 9:16 |
+
+Quirk found: the first AI-influencer run came back as noise with a "show them taking a selfie" prompt; rewording it like the working soul.id prompt ("change the scene around them so that they are ...") fixed it.

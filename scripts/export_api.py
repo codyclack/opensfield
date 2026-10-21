@@ -25,13 +25,17 @@ MEDIA_LOADERS = {"LoadImage": "image", "LoadVideo": "video", "LoadAudio": "audio
 def fetch_object_info(base: str, key: str | None) -> dict:
     """GET /object_info. For Comfy Cloud the auth header style is not documented to me, so try the likely ones in turn."""
     attempts = [{"X-API-Key": key}, {"Authorization": f"Bearer {key}"}] if key else [{}]
+    paths = ["/api/object_info", "/object_info"] if "cloud.comfy.org" in base else ["/object_info"]
     last = None
-    for headers in attempts:
-        try:
-            with urllib.request.urlopen(urllib.request.Request(base.rstrip("/") + "/object_info", headers=headers), timeout=90) as r:
-                return json.load(r)
-        except Exception as e:  # noqa: BLE001
-            last = e
+    for path in paths:
+        for headers in attempts:
+            # Cloud's edge rejects the default urllib user agent with 403.
+            req = urllib.request.Request(base.rstrip("/") + path, headers={**headers, "User-Agent": "opensfield/0.1"})
+            try:
+                with urllib.request.urlopen(req, timeout=180) as r:
+                    return json.load(r)
+            except Exception as e:  # noqa: BLE001
+                last = e
     raise SystemExit(f"could not fetch {base}/object_info: {last}")
 
 

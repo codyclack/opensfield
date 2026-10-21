@@ -69,6 +69,7 @@
       "clip_vision_h.safetensors",
       "Wan2_1_VAE_bf16.safetensors"
     ],
+    "output_kind": "video",
     "verified": true,
     "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
     "examples": [
