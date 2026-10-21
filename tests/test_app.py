@@ -85,3 +85,14 @@ def test_job_cap(monkeypatch):
 def test_text_only_feature_runs():
     r = client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "a sneaker"}})
     assert wait(r.json()["id"])["status"] == "done"
+
+
+def test_jobs_persist_and_delete():
+    from app import main
+    r = client.post("/api/jobs", json={"feature_id": "model.bfl-flux3-t2i", "inputs": {"prompt": "a fox"}})
+    jid = r.json()["id"]
+    assert wait(jid)["status"] == "done"
+    saved = main._load_jobs()
+    assert jid in saved and saved[jid]["kind"] == "image" and "outputs" not in str(main.JOBS_FILE).split("osf_jobs_")[0][-3:]
+    assert client.delete(f"/api/jobs/{jid}").status_code == 204
+    assert jid not in main._load_jobs()

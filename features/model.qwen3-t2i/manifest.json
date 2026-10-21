@@ -58,5 +58,6 @@
     "examples": [
       "examples/models/qwen3-t2i.png"
     ]
-  }
+  },
+  "cost": 12
 }

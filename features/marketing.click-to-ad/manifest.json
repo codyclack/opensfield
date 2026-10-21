@@ -119,5 +119,6 @@
     "examples": [
       "examples/click_to_ad.mp4"
     ]
-  }
+  },
+  "group": "Product URL -> video ad"
 }

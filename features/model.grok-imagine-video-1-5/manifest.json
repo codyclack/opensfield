@@ -110,5 +110,6 @@
     "examples": [
       "examples/models/grok-imagine-video-1-5.mp4"
     ]
-  }
+  },
+  "cost": 214
 }

@@ -94,5 +94,7 @@
     "examples": [
       "examples/models/elevenlabs-v4-text-to-speech.mp3"
     ]
-  }
+  },
+  "default": true,
+  "cost": 9
 }

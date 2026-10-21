@@ -480,3 +480,38 @@ from pathlib import Path as _Path  # noqa: E402
 _GEN = _Path(__file__).with_name("models_gen.json")
 if _GEN.exists():
     WIRING.update(_json.loads(_GEN.read_text(encoding="utf-8"))["wiring"])
+
+
+# Seedance 2.5 versions of the preset video tools: the same presets, applied to Seedance's prompt (see registry/features.py).
+_SD = "model.seedance2-5-i2v-1080p"
+_SDT = "model.seedance2-5-t2v-1080p"
+for _w in WIRING:  # generated labels like "Image 1" read better as "Image"
+    for _i in WIRING[_w].get("inputs", []):
+        if _i.get("kind") == "image" and _i.get("label") in ("Image 1", "Images", "Image 1 image"):
+            _i["label"] = "Image"
+for _w in (_SD, _SDT, "model.seedance2-5-r2v"):  # 720p by default: 1080p costs ~865 credits per 5 s clip
+    for _i in WIRING.get(_w, {}).get("inputs", []):
+        if _i["name"] == "resolution" and "720p" in _i.get("options", []):
+            _i["default"] = "720p"
+
+
+def _seedance(src: str) -> dict:
+    base = _SDT if src == "marketing.shorts-studio" else _SD
+    b = {i["name"]: i for i in WIRING[base]["inputs"]}
+    srcin = WIRING[src]["inputs"]
+    out = []
+    media = next((i for i in srcin if i["kind"] == "image"), None)
+    if media and "image_1" in b:
+        out.append(dict(b["image_1"], label=media["label"]))
+    out += [dict(i, apply_to="prompt") for i in srcin if i.get("presets")]
+    sp = next((i for i in srcin if i["name"] == "prompt"), None)
+    out.append(dict(b["prompt"], label=sp["label"] if sp else "Prompt", required=bool(sp and sp.get("required")) or not any(i.get("presets") for i in srcin),
+                    **({"prefix": sp["prefix"]} if sp and sp.get("prefix") else {})))
+    ratio = dict(b["ratio"], default="9:16") if src == "marketing.shorts-studio" else b["ratio"]
+    out += [b["resolution"], ratio, b["duration"], b["seed"]]
+    return dict(template=WIRING[base]["template"], files_from=base, output_kind="video", inputs=out, outputs=WIRING[base]["outputs"], models=[WIRING[base]["template"]])
+
+
+for _src in ("viral.effects", "marketing.ugc-video", "marketing.click-to-ad", "marketing.studio-presets", "cinema.multishot",
+             "marketing.shorts-studio", "marketing.ai-influencer"):
+    WIRING[f"{_src}-seedance"] = _seedance(_src)

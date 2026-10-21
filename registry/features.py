@@ -179,3 +179,33 @@ for _g, _ids in GROUPS.items():
     for _f in FEATURES:
         if _f["id"] in _ids:
             _f["group"] = _g
+
+
+# Seedance 2.5 versions of the preset video tools (Higgsfield runs these on Seedance). Each shares a model switcher with the
+# open-weights LTX version; the Seedance one is the default. Wired in registry/wiring.py.
+SEEDANCE_VARIANTS = ["viral.effects", "marketing.ugc-video", "marketing.click-to-ad", "marketing.studio-presets", "cinema.multishot",
+                     "marketing.shorts-studio", "marketing.ai-influencer"]
+_by_id = {_f["id"]: _f for _f in FEATURES}
+for _src in SEEDANCE_VARIANTS:
+    _s = _by_id[_src]
+    _s["group"] = _s["name"]
+    FEATURES.append(dict(_s, id=f"{_src}-seedance", tier="B", track="partner", partner=["api_seedance2_5_i2v_1080p"], status="planned",
+                         note="Seedance 2.5 through Comfy Cloud API nodes (uses Comfy credits).", default=True))
+
+# The model a Higgsfield-style workspace opens first.
+DEFAULTS = {"model.seedance2-5-i2v-1080p", "model.seedance2-5-t2v-1080p", "model.openai-gpt-image-2-t2i", "model.nano-banana-2-1-image-edit",
+            "model.elevenlabs-v4-text-to-speech", "model.seedance2-5-r2v", "model.kling-v3-flf2v", "model.kling-motion-control3"}
+# Credits observed per run at default settings (Seedance 2.5 at 1080p was ~865 per 5 s clip; it now defaults to 720p, cost not measured) (Comfy Cloud billing feed, 2026-10-21). Shown on the Generate button.
+COSTS = {"model.seedance2-0-r2v": 323, "model.meshy7-1-image-to-model": 362,
+         "model.grok-imagine-video-1-5": 214, "model.grok-imagine-video-1-5-lite-t2v": 36, "model.wan2-6-i2v": 106, "model.minimax-h3-max-i2v": 121,
+         "model.minimax-h3-max-turbo-i2v": 60, "model.bfl-flux3-t2i": 14, "model.nano-banana-2-1-t2i": 12, "model.nano-banana-2-1-image-edit": 12,
+         "model.openai-gpt-image-2-t2i": 2, "model.openai-gpt-image-2-image-edit": 3, "model.ideogram-v4-5-t2i": 18, "model.grok-imagine-image-2-image-edit": 17,
+         "model.qwen3-t2i": 12, "model.qwen3-image-edit": 13, "model.topaz-image-enhance-wonder3-5": 24, "model.elevenlabs-v4-text-to-speech": 9,
+         "model.fishaudio-text-to-speech": 1, "model.kling-v3-t2i": 6, "model.google-nano-banana2-text-to-image": 17}
+for _f in FEATURES:
+    if _f["id"] in DEFAULTS:
+        _f["default"] = True
+    if _f["id"] in COSTS:
+        _f["cost"] = COSTS[_f["id"]]
+    if _f["id"] == "audio.music":
+        _f["group"] = "Music"

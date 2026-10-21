@@ -99,5 +99,6 @@
     "examples": [
       "examples/models/bfl-flux3-t2i.png"
     ]
-  }
+  },
+  "cost": 14
 }

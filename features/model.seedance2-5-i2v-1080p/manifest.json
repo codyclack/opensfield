@@ -20,7 +20,7 @@
     "inputs": [
       {
         "name": "image_1",
-        "label": "Image 1",
+        "label": "Image",
         "kind": "image",
         "node": "2",
         "field": "image",
@@ -45,7 +45,7 @@
           "720p",
           "1080p"
         ],
-        "default": "1080p"
+        "default": "720p"
       },
       {
         "name": "ratio",
@@ -121,5 +121,7 @@
     "examples": [
       "examples/models/seedance2-5-i2v-1080p.mp4"
     ]
-  }
+  },
+  "default": true,
+  "cost": 865
 }

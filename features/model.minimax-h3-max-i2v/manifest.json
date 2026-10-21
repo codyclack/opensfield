@@ -20,7 +20,7 @@
     "inputs": [
       {
         "name": "image_1",
-        "label": "Image 1",
+        "label": "Image",
         "kind": "image",
         "node": "25",
         "field": "image",
@@ -119,5 +119,6 @@
     "examples": [
       "examples/models/minimax-h3-max-i2v.mp4"
     ]
-  }
+  },
+  "cost": 121
 }

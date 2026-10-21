@@ -119,5 +119,6 @@
     "examples": [
       "examples/ugc_review.mp4"
     ]
-  }
+  },
+  "group": "UGC video (review, unboxing, try-on, tutorial, site tour)"
 }

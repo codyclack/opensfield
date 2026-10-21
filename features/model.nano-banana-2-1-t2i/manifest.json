@@ -140,5 +140,6 @@
     "examples": [
       "examples/models/nano-banana-2-1-t2i.png"
     ]
-  }
+  },
+  "cost": 12
 }

@@ -78,5 +78,6 @@
     "examples": [
       "examples/influencer_cafe.png"
     ]
-  }
+  },
+  "group": "AI influencer (character + presets)"
 }

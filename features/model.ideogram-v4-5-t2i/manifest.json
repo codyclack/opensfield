@@ -120,5 +120,6 @@
     "examples": [
       "examples/models/ideogram-v4-5-t2i.png"
     ]
-  }
+  },
+  "cost": 18
 }

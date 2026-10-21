@@ -1,0 +1,122 @@
+{
+  "id": "marketing.click-to-ad-seedance",
+  "studio": "Marketing",
+  "name": "Product URL -> video ad",
+  "tier": "B",
+  "base": [
+    "planner_llm",
+    "ref_edit",
+    "ltx25_i2v",
+    "tts_audio",
+    "stitch"
+  ],
+  "higgsfield": "Click-to-Ad",
+  "track": "partner",
+  "note": "Seedance 2.5 through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_seedance2_5_i2v_1080p"
+  ],
+  "status": "built",
+  "group": "Product URL -> video ad",
+  "default": true,
+  "workflow": {
+    "template": "api_seedance2_5_i2v_1080p",
+    "api": "features/model.seedance2-5-i2v-1080p/workflow_api.json",
+    "ui": "features/model.seedance2-5-i2v-1080p/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Product image (from your listing)",
+        "kind": "image",
+        "node": "2",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "style",
+        "label": "Ad style",
+        "kind": "choice",
+        "options": [
+          "Punchy 6s spot",
+          "Lifestyle spot",
+          "Luxury reveal"
+        ],
+        "default": "Punchy 6s spot",
+        "presets": {
+          "Punchy 6s spot": "A fast, punchy product ad: dynamic push-in, quick light sweeps, product hero shot on a bold colored backdrop, premium commercial look.",
+          "Lifestyle spot": "A warm lifestyle product ad: the product in use in a sunlit home, gentle camera drift, soft focus pulls, commercial look.",
+          "Luxury reveal": "A slow luxury product reveal on a dark reflective surface with a sweeping rim light and shallow depth of field."
+        },
+        "apply_to": "prompt"
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "9",
+        "field": "model.prompt",
+        "required": false,
+        "prefix": "Use the provided start image as the first frame. "
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "9",
+        "field": "model.resolution",
+        "options": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "ratio",
+        "label": "Ratio",
+        "kind": "choice",
+        "node": "9",
+        "field": "model.ratio",
+        "options": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "21:9",
+          "adaptive"
+        ],
+        "default": "adaptive"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "9",
+        "field": "model.duration",
+        "default": 5,
+        "min": 4,
+        "max": 30,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "9",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "7"
+    ],
+    "models": [
+      "api_seedance2_5_i2v_1080p"
+    ],
+    "reuses": "model.seedance2-5-i2v-1080p",
+    "output_kind": "video",
+    "verified": false
+  }
+}

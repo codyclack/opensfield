@@ -1,0 +1,126 @@
+{
+  "id": "viral.effects-seedance",
+  "studio": "Viral Hub",
+  "name": "Viral effect chains (87 presets)",
+  "tier": "B",
+  "base": [
+    "ref_edit",
+    "ltx25_flf2v",
+    "ltx25_i2v"
+  ],
+  "higgsfield": "get_presets source=viral (effects/motion/product-shot)",
+  "track": "partner",
+  "note": "Seedance 2.5 through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 87,
+  "partner": [
+    "api_seedance2_5_i2v_1080p"
+  ],
+  "status": "built",
+  "group": "Viral effect chains (87 presets)",
+  "default": true,
+  "workflow": {
+    "template": "api_seedance2_5_i2v_1080p",
+    "api": "features/model.seedance2-5-i2v-1080p/workflow_api.json",
+    "ui": "features/model.seedance2-5-i2v-1080p/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Start frame",
+        "kind": "image",
+        "node": "2",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "effect",
+        "label": "Effect",
+        "kind": "choice",
+        "options": [
+          "Clones",
+          "Vanish",
+          "Floating fall",
+          "Act natural",
+          "Giant",
+          "Eyes in"
+        ],
+        "default": "Clones",
+        "presets": {
+          "Clones": "Identical clones of the person appear around the scene one after another, each mirroring the person's movements, while the original steps toward the camera. Locked-off camera.",
+          "Vanish": "The person's body suddenly disappears, leaving their empty clothes to collapse and fall flat onto the ground. Locked-off camera.",
+          "Floating fall": "The person falls backward in slow motion while their belongings float in midair around them, the camera drifting through crisp close-ups.",
+          "Act natural": "Time freezes for the person and the objects near them mid-action while everything else in the world keeps moving normally.",
+          "Giant": "The person grows into a towering giant standing in a city street, buildings small beside them, the camera tilting up their body.",
+          "Eyes in": "The camera pushes in on the person's face and dives into their eye, passing through the dark pupil."
+        },
+        "apply_to": "prompt"
+      },
+      {
+        "name": "prompt",
+        "label": "Subject detail (optional)",
+        "kind": "text",
+        "node": "9",
+        "field": "model.prompt",
+        "required": false,
+        "prefix": "Use the provided start image as the first frame. "
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "9",
+        "field": "model.resolution",
+        "options": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "ratio",
+        "label": "Ratio",
+        "kind": "choice",
+        "node": "9",
+        "field": "model.ratio",
+        "options": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "21:9",
+          "adaptive"
+        ],
+        "default": "adaptive"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "9",
+        "field": "model.duration",
+        "default": 5,
+        "min": 4,
+        "max": 30,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "9",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "7"
+    ],
+    "models": [
+      "api_seedance2_5_i2v_1080p"
+    ],
+    "reuses": "model.seedance2-5-i2v-1080p",
+    "output_kind": "video",
+    "verified": false
+  }
+}

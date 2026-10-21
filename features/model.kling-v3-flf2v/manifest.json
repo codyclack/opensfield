@@ -83,5 +83,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "default": true
 }

@@ -119,5 +119,6 @@
     "examples": [
       "examples/models/minimax-h3-max-turbo-i2v.mp4"
     ]
-  }
+  },
+  "cost": 60
 }

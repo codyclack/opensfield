@@ -20,7 +20,7 @@
     "inputs": [
       {
         "name": "image_1",
-        "label": "Image 1",
+        "label": "Image",
         "kind": "image",
         "node": "356",
         "field": "image",
@@ -97,5 +97,6 @@
     "examples": [
       "examples/models/seedance2-0-r2v.mp4"
     ]
-  }
+  },
+  "cost": 323
 }

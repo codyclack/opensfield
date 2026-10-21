@@ -20,7 +20,7 @@
     "inputs": [
       {
         "name": "image_1",
-        "label": "Image 1",
+        "label": "Image",
         "kind": "image",
         "node": "6",
         "field": "image",
@@ -149,5 +149,7 @@
     "examples": [
       "examples/models/nano-banana-2-1-image-edit.png"
     ]
-  }
+  },
+  "default": true,
+  "cost": 12
 }

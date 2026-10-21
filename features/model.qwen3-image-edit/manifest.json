@@ -20,7 +20,7 @@
     "inputs": [
       {
         "name": "image_1",
-        "label": "Image 1",
+        "label": "Image",
         "kind": "image",
         "node": "14",
         "field": "image",
@@ -66,5 +66,6 @@
     "examples": [
       "examples/models/qwen3-image-edit.png"
     ]
-  }
+  },
+  "cost": 13
 }

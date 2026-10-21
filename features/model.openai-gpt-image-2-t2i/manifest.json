@@ -125,5 +125,7 @@
     "examples": [
       "examples/models/openai-gpt-image-2-t2i.png"
     ]
-  }
+  },
+  "default": true,
+  "cost": 2
 }

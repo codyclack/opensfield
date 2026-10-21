@@ -20,7 +20,7 @@
     "inputs": [
       {
         "name": "image_1",
-        "label": "Image 1",
+        "label": "Image",
         "kind": "image",
         "node": "271",
         "field": "image",
@@ -133,5 +133,6 @@
     "examples": [
       "examples/models/openai-gpt-image-2-image-edit.png"
     ]
-  }
+  },
+  "cost": 3
 }

@@ -1,19 +1,38 @@
 "use strict";
+/* OpenSfield UI: Higgsfield's layout (top nav, sidebar, model picker, option chips, generations feed) over Comfy workflows. */
 const $ = (s) => document.querySelector(s);
 const NS = "http://www.w3.org/2000/svg";
-const state = { cfg: null, feats: [], page: null, studio: null, filter: "all", view: "studio", query: "", feature: null, jobs: [], timer: null, links: [], obs: null };
+const state = { cfg: null, feats: [], byId: {}, jobs: [], query: "", filter: "all", view: "studio", timer: null, links: [], obs: null,
+  pick: {}, prefill: null, carry: null, genFilter: "all", genSize: "m", gallery: null, run: null };
 
-// node-title colours per studio (ComfyUI node-colour feel)
 const STUDIO_COLOR = {
   "Genjutsu": "#ff7a59", "Cinema Studio": "#b39ddb", "Reshoot": "#64b5f6", "Viral Hub": "#ff9cf9", "Soul": "#ffa931",
   "Image models": "#81c784", "Image tools": "#4dd0e1", "Video tools": "#7986cb", "Video models": "#aed581",
   "Audio": "#f06292", "Marketing": "#ffd54f", "Match Cut + Tracelab": "#80cbc4", "Platform": "#9e9e9e",
 };
-// socket colours per data type (ComfyUI slot-colour feel)
+const STUDIO_ICON = { "Genjutsu": "GJ", "Cinema Studio": "CS", "Reshoot": "RS", "Viral Hub": "VH", "Soul": "SO", "Image models": "IM", "Image tools": "IT",
+  "Video tools": "VT", "Video models": "VM", "Audio": "AU", "Marketing": "MK", "Match Cut + Tracelab": "MC", "Platform": "PF" };
 const KIND = { image: "#64b5f6", video: "#ff9cf9", audio: "#ffa931", text: "#77dd99", widget: "#a79db3", "3d": "#81c784" };
+const WORKSPACES = {
+  image: { title: "Image", kind: "image", layout: "bar", tabs: [["Create Image", "Text to image"], ["Edit Image", "Image edit"], ["Upscale", "Image upscale"], ["Image to 3D", "Image to 3D"]] },
+  video: { title: "Video", kind: "video", layout: "panel", tabs: [["Create Video", "Image to video"], ["Text to Video", "Text to video"], ["References", "Reference to video"],
+    ["First & Last", "First / last frame"], ["Motion Control", "Motion control"], ["Edit Video", "Video edit"]] },
+  audio: { title: "Audio", kind: "audio", layout: "bar", tabs: [["Speech", "Text to speech"], ["Music", "Music"]] },
+};
+const TOPNAV = [["Explore", "#/"], ["Image", "#/w/image/0"], ["Video", "#/w/video/0"], ["Audio", "#/w/audio/0"], ["Edit", "#/w/image/1"],
+  ["Genjutsu", "#/s/Genjutsu", "Top"], ["Cinema Studio", "#/s/Cinema Studio"], ["Soul", "#/s/Soul"], ["Viral", "#/s/Viral Hub"],
+  ["Marketing", "#/s/Marketing", "New"], ["Apps", "#/apps"], ["Assets", "#/assets"]];
+const SIDE = [["Explore", "#/", "★"], ["Image", "#/w/image/0", "▣"], ["Video", "#/w/video/0", "▶"], ["Audio", "#/w/audio/0", "♪"], ["Edit", "#/w/image/1", "✎"],
+  ["Apps", "#/apps", "⊞"], ["Assets", "#/assets", "◈"], ["History", "#/generations", "◷"]];
+
 const sockKind = (s) => (["image", "video", "audio"].includes(s.kind) ? s.kind : s.kind === "text" ? "text" : "widget");
 const studioColor = (s) => STUDIO_COLOR[s] || "#9e9e9e";
 const hash = (s) => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isVideo = (url) => /\.(mp4|webm|mov)(\?|#|$)/i.test(url);
+const isImage = (url) => /\.(png|jpe?g|webp|gif|svg)(\?|#|$)/i.test(url);
+const isAudio = (url) => /\.(mp3|wav|flac|ogg)(\?|#|$)/i.test(url);
+const store = { get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* private mode */ } } };
 
 function h(tag, props = {}, ...kids) {
   const el = document.createElement(tag);
@@ -28,109 +47,144 @@ function h(tag, props = {}, ...kids) {
 const svgEl = (tag, attrs = {}) => { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); return e; };
 const badge = (text, cls = "") => h("span", { class: `badge ${cls}` }, text);
 const sock = (kind, cls = "") => h("i", { class: `sock ${cls}`, style: `--k:${KIND[kind] || KIND.widget}` });
+const marker = (text) => h("h1", { class: "marker" }, h("span", {}, text));
 const api = async (path, opts) => {
   const r = await fetch(path, opts);
+  if (r.status === 204) return null;
   const body = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(body.detail || `${r.status} ${r.statusText}`);
   return body;
 };
+const json = (method, body) => ({ method, headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
 
-
-/* ---------------- studios rail + home ---------------- */
-const STUDIO_ICON = { "Genjutsu": "GJ", "Cinema Studio": "CS", "Reshoot": "RS", "Viral Hub": "VH", "Soul": "SO", "Image models": "IM", "Image tools": "IT",
-  "Video tools": "VT", "Video models": "VM", "Audio": "AU", "Marketing": "MK", "Match Cut + Tracelab": "MC", "Platform": "PF" };
-const FILTERS = [["all", "All"], ["ready", "Ready to run"], ["image", "Image"], ["video", "Video"], ["audio", "Audio"], ["3d", "3D"]];
-
+/* ---------------- registry helpers ---------------- */
+const statusLabel = (f) => (f.status === "tested" ? "Ready" : f.status === "built" ? "Untested" : "Soon");
+const isOpen = (f) => f.track !== "partner";
+const sameNames = (f) => f.group && members(f.group).every((m) => m.name === f.name);
+const modelName = (f) => (sameNames(f) ? `${f.engine || (isOpen(f) ? "Open weights" : "Partner")}${isOpen(f) ? " (open)" : ""}` : short(f));
+const short = (f) => f.name.replace(/\s*·\s*(Text|Image|Reference|Video|First).*/i, "").replace(/^Seedance(\d)/, "Seedance $1");
+function members(group) {
+  const list = state.feats.filter((x) => x.group === group);
+  const rank = (x) => (x.default ? 0 : /seedance/i.test(x.id) ? 1 : x.status === "tested" ? 2 : 3);
+  return list.sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name));
+}
+function preferred(group) {
+  const m = members(group);
+  return state.byId[state.pick[group]] || m[0];
+}
 function studios() {
   const seen = new Map();
   for (const f of state.feats) seen.set(f.studio, (seen.get(f.studio) || 0) + 1);
   const known = state.cfg.studios.filter((s) => seen.has(s));
-  return [...known, ...[...seen.keys()].filter((s) => !known.includes(s))].map((s) => [s, seen.get(s)]);
+  return [...known, ...[...seen.keys()].filter((s) => !known.includes(s))];
+}
+/** One card per group inside a list (Higgsfield shows a task once and puts models in its picker). */
+function collapse(list) {
+  const out = [], seen = new Set();
+  for (const f of list) {
+    if (!f.group) { out.push({ f, n: 1 }); continue; }
+    if (seen.has(f.group)) continue;
+    seen.add(f.group);
+    const inList = list.filter((x) => x.group === f.group);
+    const best = inList.find((x) => x.default) || inList.find((x) => /seedance/i.test(x.id)) || inList.find((x) => x.status === "tested") || inList[0];
+    out.push({ f: best, n: members(f.group).length });
+  }
+  return out;
 }
 
-function goHome() { state.page = null; state.studio = null; state.query = ""; $("#search").value = ""; state.feature = null; render(); }
-
-function renderRail() {
-  const home = !state.query && !state.feature && !state.studio && !state.page;
-  const item = (label, icon, color, current, onclick) => h("button", { type: "button", "aria-current": String(current), style: `--c:${color}`, title: label, onclick },
-    h("span", { class: "ico" }, icon), h("span", { class: "nm" }, label));
-  $("#rail").replaceChildren(item("Explore", "★", "#d1fe17", home, goHome),
-    item("Assets", "▣", "#ff9cf9", state.page === "assets" && !state.feature, () => { state.page = "assets"; state.feature = null; state.query = ""; $("#search").value = ""; render(); }),
-    ...studios().map(([s]) => item(s, STUDIO_ICON[s] || s.slice(0, 2).toUpperCase(), studioColor(s), !state.query && !state.feature && !state.page && state.studio === s,
-      () => { state.page = null; state.studio = s; state.query = ""; $("#search").value = ""; state.feature = null; render(); })));
-}
-
-const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const isVideo = (url) => /\.(mp4|webm|mov)$/i.test(url);
-const isImage = (url) => /\.(png|jpe?g|webp|gif|svg)$/i.test(url);
+/* ---------------- media ---------------- */
 function exampleEl(url, cls, opts = {}) {
-  if (/\.(mp3|wav|flac|ogg)$/i.test(url)) return h("audio", { src: "/" + url, controls: true, preload: "none" });
-  if (/\.(glb|gltf)$/i.test(url)) return h("a", { class: "st", href: "/" + url, download: "" }, `Download 3D model (${url.split("/").pop()})`);
-  if (!isVideo(url)) return h("img", { class: cls, src: "/" + url, alt: opts.alt || "", loading: "lazy" });
-  return h("video", { class: cls, src: "/" + url + "#t=1.5", muted: true, loop: true, playsinline: true, preload: "metadata",
-    controls: opts.controls, autoplay: !opts.controls && !reduceMotion, "aria-hidden": opts.controls ? null : "true" });
+  const src = url.startsWith("/") ? url : "/" + url;
+  if (isAudio(src)) return h("audio", { src, controls: true, preload: "none" });
+  if (/\.(glb|gltf)$/i.test(src)) return h("a", { class: "st", href: src, download: "" }, `Download 3D model (${src.split("/").pop()})`);
+  if (!isVideo(src)) return h("img", { class: cls, src, alt: opts.alt || "", loading: "lazy" });
+  return h("video", { class: cls, src: src + "#t=1.5", muted: true, loop: true, playsinline: true, preload: "metadata",
+    controls: opts.controls, autoplay: opts.autoplay && !reduceMotion, "aria-hidden": opts.controls ? null : "true" });
 }
-
-const statusLabel = (f) => (f.status === "tested" ? "Ready" : f.status === "built" ? "Built" : "Soon");
-function card(f) {
-  const cover = (f.examples || []).find((u) => isVideo(u) || isImage(u));
-  const el = h("button", { class: `card${cover ? "" : " plain"}`, type: "button", style: `--h:${hash(f.id) % 360}`, onclick: () => openFeature(f) },
-    cover && exampleEl(cover, "bg"),
-    h("span", { class: "pill" }, statusLabel(f)),
-    h("span", { class: "ckind" }, f.output_kind.toUpperCase() + (f.track === "partner" ? " · API" : "")),
-    h("span", { class: "ctext" }, h("b", {}, f.name), h("small", {}, f.engine || f.higgsfield)));
+function hoverPlay(el) {
   const v = el.querySelector("video");
-  if (v && !reduceMotion) { v.autoplay = false; v.removeAttribute("autoplay"); el.addEventListener("mouseenter", () => v.play().catch(() => {})); el.addEventListener("mouseleave", () => v.pause()); }
+  if (v && !reduceMotion) { el.addEventListener("mouseenter", () => v.play().catch(() => {})); el.addEventListener("mouseleave", () => v.pause()); }
   return el;
 }
 
-const marker = (text) => h("h1", { class: "marker" }, h("span", {}, text));
-const matches = (f) => state.filter === "all" || (state.filter === "ready" ? f.status === "tested" : f.output_kind === state.filter);
+/* ---------------- chrome: top nav, sidebar ---------------- */
+function routeKey() { return location.hash || "#/"; }
+function renderChrome() {
+  const cur = routeKey();
+  const active = (href) => cur === href || (href !== "#/" && cur.startsWith(href.replace(/\/\d+$/, "")) && !(href === "#/w/image/0" && cur === "#/w/image/1") && !(href === "#/w/image/1" && cur !== "#/w/image/1"));
+  $("#topnav").replaceChildren(...TOPNAV.map(([t, href, tag]) => h("a", { href, "aria-current": active(href) ? "page" : null }, t, tag && h("span", { class: `tag t-${tag.toLowerCase()}` }, tag))));
+  $("#rail").replaceChildren(
+    ...SIDE.map(([t, href, ico]) => h("a", { href, class: "ritem", "aria-current": active(href) ? "page" : null, title: t }, h("span", { class: "ico" }, ico), h("span", { class: "nm" }, t))),
+    h("div", { class: "rlabel" }, "Studios"),
+    ...studios().map((s) => h("a", { href: `#/s/${encodeURIComponent(s)}`, class: "ritem", style: `--c:${studioColor(s)}`, title: s,
+      "aria-current": cur === `#/s/${encodeURIComponent(s)}` || cur === `#/s/${s}` ? "page" : null },
+      h("span", { class: "ico studio" }, STUDIO_ICON[s] || s.slice(0, 2).toUpperCase()), h("span", { class: "nm" }, s))));
+}
 
+/* ---------------- explore / apps / studio grids ---------------- */
+function card(f, n = 1) {
+  const cover = (f.examples || []).find((u) => isVideo(u) || isImage(u));
+  const title = n > 2 && f.group ? f.group : f.group && n === 2 ? f.group : f.name;
+  const sub = n > 1 ? `${n} models · ${short(f)}` : f.engine || f.higgsfield;
+  return hoverPlay(h("a", { class: `card${cover ? "" : " plain"}`, href: `#/f/${f.id}`, style: `--h:${hash(f.id) % 360}` },
+    cover && exampleEl(cover, "bg"),
+    h("span", { class: `pill ${f.status === "tested" ? "" : "dim"}` }, statusLabel(f)),
+    h("span", { class: "ckind" }, f.output_kind.toUpperCase() + (n > 1 ? "" : isOpen(f) ? " · OPEN" : " · API")),
+    h("span", { class: "ctext" }, h("b", {}, title), h("small", {}, sub))));
+}
+const FILTERS = [["all", "All"], ["ready", "Ready"], ["image", "Image"], ["video", "Video"], ["audio", "Audio"], ["3d", "3D"]];
+const matches = (f) => state.filter === "all" || (state.filter === "ready" ? f.status === "tested" : f.output_kind === state.filter);
+function filterBar() {
+  return h("div", { class: "filters", role: "group", "aria-label": "Filter tools" },
+    FILTERS.map(([k, l]) => h("button", { type: "button", class: "fpill", "aria-pressed": String(state.filter === k), onclick: () => { state.filter = k; route(); } }, l)));
+}
 function hero() {
   const ready = state.feats.filter((f) => f.status === "tested").length;
-  const pick = state.feats.find((f) => f.id === "marketing.click-to-ad") || state.feats.find((f) => f.examples.some(isVideo));
-  const art = pick && pick.examples.find(isVideo);
+  const sd = state.byId["model.seedance2-5-i2v-1080p"];
+  const art = (sd && sd.examples.find(isVideo)) || (state.feats.find((f) => f.examples.some(isVideo)) || { examples: [] }).examples.find(isVideo);
   return h("section", { class: "hero" },
     art && h("video", { class: "bg", src: "/" + art, muted: true, loop: true, autoplay: !reduceMotion, playsinline: true, "aria-hidden": "true" }),
     h("div", { class: "htext" },
-      h("span", { class: "eyebrow" }, "COMFYUI · OPEN WEIGHTS + PARTNER MODELS"),
+      h("span", { class: "eyebrow" }, "SEEDANCE 2.5 · KLING · NANO BANANA · OPEN WEIGHTS"),
       h("h2", {}, "Every Higgsfield tool, on ComfyUI."),
-      h("p", {}, `${ready} tools verified end to end, ${state.feats.length} in the catalog. Open-weight workflows plus Seedance, Kling, GPT Image, Nano Banana and more. Built on the Comfy Developer Platform.`),
-      h("div", { class: "hbtns" },
-        h("button", { class: "go", type: "button", onclick: () => { const f = state.feats.find((x) => x.id === "cinema.camera-rig"); if (f) openFeature(f); } }, "Start creating"),
-        h("a", { class: "ghost", href: "https://github.com/codyclack/opensfield", target: "_blank", rel: "noopener" }, "View source"))));
+      h("p", {}, `${ready} tools run end to end, ${state.feats.length} in the catalog. Partner models through Comfy Cloud, open-weight workflows on any ComfyUI.`),
+      h("div", { class: "hbtns" }, h("a", { class: "go", href: "#/w/video/0" }, "Create video"), h("a", { class: "ghost", href: "#/w/image/0" }, "Create image"),
+        h("a", { class: "ghost", href: "https://github.com/codyclack/opensfield", target: "_blank", rel: "noopener" }, "Source"))));
 }
-
-function renderGrid() {
+function topModels() {
+  const ids = ["model.seedance2-5-i2v-1080p", "model.seedance2-5-t2v-1080p", "model.kling-v3-video", "model.minimax-h3-max-i2v", "model.wan2-6-i2v",
+    "model.nano-banana-2-1-t2i", "model.openai-gpt-image-2-t2i", "model.bfl-flux3-t2i", "model.kling-o3-t2v", "model.seedance2-0-r2v"];
+  const list = ids.map((i) => state.byId[i]).filter(Boolean);
+  return list.length > 0 && h("section", { class: "row" }, h("div", { class: "rowhead" }, h("h3", {}, "Top models")),
+    h("div", { class: "strip" }, list.map((f) => card(f))));
+}
+function renderGrid(mode, studio) {
   const q = state.query.toLowerCase();
-  const filters = h("div", { class: "filters", role: "group", "aria-label": "Filter tools" },
-    FILTERS.map(([k, l]) => h("button", { type: "button", class: "fpill", "aria-pressed": String(state.filter === k), onclick: () => { state.filter = k; render(); } }, l)));
   let body;
-  if (q || state.studio) {
-    const list = state.feats.filter((f) => (q ? `${f.name} ${f.higgsfield} ${f.studio} ${f.id}`.toLowerCase().includes(q) : f.studio === state.studio)).filter(matches);
-    body = [marker(q ? `Search: ${state.query}` : state.studio), filters,
-      list.length ? h("div", { class: "cards" }, list.map(card)) : h("p", { class: "empty" }, "Nothing here for this filter.")];
+  if (q) {
+    const list = state.feats.filter((f) => `${f.name} ${f.higgsfield} ${f.studio} ${f.id} ${f.group || ""}`.toLowerCase().includes(q)).filter(matches);
+    body = [marker(`Search: ${state.query}`), filterBar(), list.length ? h("div", { class: "cards" }, list.map((f) => card(f))) : h("p", { class: "empty" }, "No tools match.")];
+  } else if (studio) {
+    const list = collapse(state.feats.filter((f) => f.studio === studio).filter(matches));
+    body = [marker(studio), filterBar(), list.length ? h("div", { class: "cards" }, list.map(({ f, n }) => card(f, n))) : h("p", { class: "empty" }, "Nothing here for this filter.")];
   } else {
-    body = [hero(), filters, ...studios().map(([s]) => {
-      const list = state.feats.filter((f) => f.studio === s).filter(matches).sort((a, b) => (b.status === "tested") - (a.status === "tested"));
-      return list.length && h("section", { class: "row" },
-        h("div", { class: "rowhead" }, h("h3", {}, s), h("button", { type: "button", class: "more", onclick: () => { state.studio = s; render(); } }, `See all ${list.length} →`)),
-        h("div", { class: "strip" }, list.map(card)));
-    })];
+    const rows = studios().map((s) => {
+      const list = collapse(state.feats.filter((f) => f.studio === s).filter(matches));
+      return list.length > 0 && h("section", { class: "row" },
+        h("div", { class: "rowhead" }, h("h3", {}, s), h("a", { class: "more", href: `#/s/${encodeURIComponent(s)}` }, `See all ${list.length} →`)),
+        h("div", { class: "strip" }, list.map(({ f, n }) => card(f, n))));
+    });
+    body = mode === "apps" ? [marker("Apps"), filterBar(), ...rows] : [hero(), topModels(), filterBar(), ...rows];
   }
   $("#main").replaceChildren(...body.filter(Boolean));
-  state.links = [];
 }
 
-
-/* ---------------- feature view: a ComfyUI-style graph ---------------- */
-function node({ title, kind, color, req, body, out = false, inn = false, cls = "" }) {
-  return h("div", { class: `node ${cls}` },
-    h("div", { class: "ntitle", style: `--c:${color || KIND[kind]}` }, h("i", { class: "dot" }), h("span", {}, title), req && h("span", { class: "req" }, "*"),
-      kind && h("span", { class: "ntype" }, kind === "widget" ? "SETTINGS" : kind.toUpperCase())),
-    out && sock(kind, "out"), inn && sock(kind, "in"),
-    h("div", { class: "nbody" }, body));
+/* ---------------- composer controls ---------------- */
+const ratioOf = (o) => { const m = /^(\d+):(\d+)/.exec(String(o)); return m ? [Number(m[1]), Number(m[2])] : null; };
+function initial(f, spec) {
+  if (state.prefill && state.prefill.feature_id === f.id && state.prefill.inputs[spec.name] != null) return state.prefill.inputs[spec.name];
+  if (spec.kind === "text" && spec.name === "prompt" && state.carry) return state.carry;
+  return spec.default;
 }
 
 async function upload(file, spec, vals, ui) {
@@ -142,7 +196,371 @@ async function upload(file, spec, vals, ui) {
     if (spec.kind === "image") { ui.img.src = URL.createObjectURL(file); ui.img.hidden = false; }
   } catch (e) { delete vals[spec.name]; ui.label.textContent = `upload failed: ${e.message}`; }
 }
+function dropzone(zone, spec, vals, ui) {
+  zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("over"); });
+  zone.addEventListener("dragleave", () => zone.classList.remove("over"));
+  zone.addEventListener("drop", (e) => { e.preventDefault(); zone.classList.remove("over"); if (e.dataTransfer.files[0]) upload(e.dataTransfer.files[0], spec, vals, ui); });
+}
+function uploadTile(f, spec, vals, compact = false) {
+  const id = `f-${spec.name}`;
+  const img = h("img", { alt: "", hidden: true });
+  const cap = h("span", { class: "cap" }, compact ? "" : spec.kind === "image" ? "Add image" : spec.kind === "video" ? "Add video" : "Add audio");
+  const ui = { img, label: cap, spec };
+  const pre = initial(f, spec);
+  if (pre && spec.kind !== "text") { vals[spec.name] = pre; if (spec.kind === "image") { img.src = `/outputs/uploads/${pre}`; img.hidden = false; } else cap.textContent = "reused input"; }
+  const input = h("input", { class: "sr", id, type: "file", accept: { image: "image/*", video: "video/*", audio: "audio/*" }[spec.kind],
+    onchange: (e) => e.target.files[0] && upload(e.target.files[0], spec, vals, ui) });
+  const zone = h("label", { class: `utile${compact ? " small" : ""}`, for: id, title: spec.label }, img,
+    h("span", { class: "plus", "aria-hidden": "true" }, spec.kind === "image" ? "+" : spec.kind === "video" ? "▶" : "♪"), cap, input);
+  dropzone(zone, spec, vals, ui);
+  state.mediaUIs.push(ui);
+  if (compact) return zone;
+  return h("div", { class: "ufield" }, zone, h("div", { class: "flabel" }, spec.label, spec.required && h("b", {}, " *")),
+    h("button", { class: "libbtn", type: "button", onclick: () => pickAsset(spec, vals, ui) }, "From assets"));
+}
 
+function field(spec, body, hint) {
+  return h("div", { class: "field" }, h("div", { class: "flabel" }, spec.label, spec.required && h("b", {}, " *")), body, hint && h("div", { class: "fhint" }, hint));
+}
+function presetCards(spec, vals) {
+  const group = h("div", { class: "opts", role: "radiogroup", "aria-label": spec.label });
+  const set = (o) => { vals[spec.name] = o; group.querySelectorAll("button").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.v === String(o)))); };
+  for (const o of spec.options) group.append(h("button", { type: "button", role: "radio", "data-v": o, "aria-checked": "false", title: spec.presets?.[o] || o, onclick: () => set(o) }, o));
+  set(vals[spec.name]);
+  return group;
+}
+function numberOptions(spec) {
+  const step = spec.step || 1, n = Math.round((spec.max - spec.min) / step);
+  if (!Number.isFinite(n) || n > 40 || n < 1) return null;
+  return Array.from({ length: n + 1 }, (_, i) => +(spec.min + i * step).toFixed(3));
+}
+const CHIP_ICON = { duration: "◷", ratio: "▭", aspect_ratio: "▭", aspect: "▭", resolution: "◇", quality: "♡", size: "▭" };
+function chip(spec, vals) {
+  const opts = spec.kind === "choice" ? spec.options : numberOptions(spec);
+  const unit = /duration/.test(spec.name) ? "s" : "";
+  const label = (o) => `${String(o).replace(/ \(.*\)$/, "")}${unit}`;
+  const ico = CHIP_ICON[spec.name] || (ratioOf(spec.options?.[0]) ? "▭" : "•");
+  if (!opts) {
+    return h("label", { class: "chipctl", title: spec.label }, h("span", { class: "cico" }, ico), h("span", { class: "clab" }, spec.label),
+      h("input", { type: "number", value: vals[spec.name], min: spec.min, max: spec.max, step: spec.step || 1, "aria-label": spec.label,
+        oninput: (e) => (vals[spec.name] = Number(e.target.value)) }));
+  }
+  const shown = h("span", { class: "cval" }, label(vals[spec.name]));
+  const sel = h("select", { "aria-label": spec.label, title: spec.label, onchange: (e) => {
+    vals[spec.name] = spec.kind === "number" ? Number(e.target.value) : e.target.value; shown.textContent = label(e.target.value);
+  } }, opts.map((o) => h("option", { value: o, selected: String(o) === String(vals[spec.name]) }, `${spec.label}: ${label(o)}`)));
+  return h("span", { class: "chipctl", title: spec.label }, h("span", { class: "cico" }, ico), shown, sel);
+}
+
+function elementsButton(f, vals, ta) {
+  return h("button", { type: "button", class: "mini", title: "Insert an asset (Elements) and use it as the image input", onclick: () => pickAsset(
+    f.inputs.find((s) => s.kind === "image") || { kind: "image", name: "_element", label: "Element" }, vals,
+    state.mediaUIs.find((u) => u.spec.kind === "image") || { img: h("img"), label: h("span"), spec: {} }, (a) => {
+      ta.value = `${ta.value}${ta.value && !ta.value.endsWith(" ") ? " " : ""}@${a.name.replace(/\s+/g, "_")} `;
+      ta.dispatchEvent(new Event("input"));
+    }) }, "@ Elements");
+}
+
+function buildControls(f, vals, layout) {
+  state.mediaUIs = [];
+  const media = f.inputs.filter((s) => ["image", "video", "audio"].includes(s.kind));
+  const texts = f.inputs.filter((s) => s.kind === "text");
+  const presets = f.inputs.filter((s) => s.kind === "choice" && s.presets);
+  const options = f.inputs.filter((s) => (s.kind === "choice" && !s.presets && s.options.length > 1) || s.kind === "number");
+  const seed = f.inputs.find((s) => s.kind === "seed");
+  for (const s of [...presets, ...options]) vals[s.name] = initial(f, s) ?? s.default ?? 0;
+  if (seed) vals[seed.name] = 0;
+  const textEls = texts.map((s) => {
+    const v = initial(f, s) || "";
+    if (v) vals[s.name] = v;
+    const ta = h("textarea", { id: `f-${s.name}`, "aria-label": s.label, rows: layout === "bar" ? 2 : 4,
+      placeholder: s.required ? (layout === "bar" ? "Describe the scene you imagine" : "Describe what you want...") : (/optional/i.test(s.label) ? s.label : `${s.label} (optional)`),
+      oninput: (e) => (vals[s.name] = e.target.value) }, v);
+    return { s, ta };
+  });
+  state.carry = null;
+  return { media, presets, options, seed, textEls };
+}
+
+/* ---------------- model picker (popover) ---------------- */
+function modelButton(f, onPick) {
+  if (!f.group || members(f.group).length < 2) return null;
+  const btn = h("button", { type: "button", class: "modelbtn", "aria-haspopup": "listbox" },
+    h("span", { class: "mico", style: `--h:${hash(f.id) % 360}` }, modelName(f).slice(0, 2).toUpperCase()),
+    h("span", { class: "mtext" }, h("small", {}, "Model"), h("b", {}, modelName(f))), h("span", { class: "chev" }, "›"));
+  btn.addEventListener("click", (e) => { e.stopPropagation(); openPicker(btn, f, onPick); });
+  return btn;
+}
+function openPicker(anchor, f, onPick) {
+  document.querySelector(".picker")?.remove();
+  const list = h("div", { class: "plist", role: "listbox" });
+  const search = h("input", { type: "search", placeholder: "Search...", "aria-label": "Search models" });
+  const draw = () => {
+    const q = search.value.toLowerCase();
+    const ms = members(f.group).filter((m) => !q || m.name.toLowerCase().includes(q));
+    list.replaceChildren(h("div", { class: "phead" }, `✦ ${f.group}`), ...ms.map((m) => h("button", { type: "button", role: "option", "aria-selected": String(m.id === f.id), class: "prow",
+      onclick: () => { pop.remove(); onPick(m); } },
+      h("span", { class: "mico", style: `--h:${hash(m.id) % 360}` }, modelName(m).slice(0, 2).toUpperCase()),
+      h("span", { class: "ptext" }, h("b", {}, modelName(m), m.default && h("span", { class: "tag t-top" }, "TOP"), isOpen(m) && h("span", { class: "tag t-open" }, "OPEN")),
+        h("small", {}, [m.engine || (isOpen(m) ? "open weights" : "partner API"), m.cost ? `✦ ${m.cost}` : null, m.status === "tested" ? null : "untested"].filter(Boolean).join("  ·  "))),
+      m.id === f.id && h("span", { class: "check" }, "✓"))));
+  };
+  search.addEventListener("input", draw);
+  const pop = h("div", { class: "picker" }, search, list);
+  draw();
+  document.body.append(pop);
+  const r = anchor.getBoundingClientRect();
+  const top = Math.min(r.top, window.innerHeight - 440);
+  Object.assign(pop.style, { left: `${Math.min(r.right + 8, window.innerWidth - 380)}px`, top: `${Math.max(64, top)}px` });
+  if (r.right + 380 > window.innerWidth) Object.assign(pop.style, { left: `${Math.max(8, r.left)}px`, top: `${Math.max(64, r.top - 440)}px` });
+  search.focus();
+  const close = (e) => { if (!pop.contains(e.target)) { pop.remove(); document.removeEventListener("mousedown", close); } };
+  setTimeout(() => document.addEventListener("mousedown", close), 0);
+  pop.addEventListener("keydown", (e) => { if (e.key === "Escape") { pop.remove(); anchor.focus(); } });
+}
+function carryPrompt() { const t = $("#f-prompt"); state.carry = t && t.value ? t.value : null; }
+
+/* ---------------- generate ---------------- */
+function generateButton(f, vals, err) {
+  const go = h("button", { class: "go wide", type: "button" }, "Generate", f.cost ? h("span", { class: "cost" }, `✦ ${f.cost}`) : null);
+  const run = async () => {
+    err.textContent = ""; go.disabled = true;
+    try {
+      await api("/api/jobs", json("POST", { feature_id: f.id, inputs: vals }));
+      state.prefill = null;
+      poll();
+    } catch (e) { err.textContent = e.message; }
+    go.disabled = false;
+  };
+  go.addEventListener("click", run);
+  state.run = run;
+  return go;
+}
+const fineprint = (f) => (!f.runnable && state.cfg.mode === "comfy" ? "No workflow built yet for this tool." : f.local ? "Runs on this computer's CPU."
+  : isOpen(f) ? "Open weights on Comfy (GPU time only). Ctrl+Enter to run." : `Partner model via Comfy Cloud${f.cost ? `, about ${f.cost} credits a run` : ""}. Ctrl+Enter to run.`);
+
+/* ---------------- panel composer (Video, every tool page) ---------------- */
+function panelComposer(f, vals, onPick, tabs) {
+  const c = buildControls(f, vals, "panel");
+  const err = h("span", { class: "err", role: "alert" });
+  const cover = (f.examples || []).find((u) => isVideo(u) || isImage(u));
+  return h("aside", { class: "panel" },
+    tabs,
+    h("div", { class: "pcard", style: `--h:${hash(f.id) % 360}` }, cover && exampleEl(cover, "bg", { autoplay: true }),
+      h("span", { class: "pctext" }, h("b", {}, (f.group || f.name).toUpperCase()), h("small", {}, modelName(f)))),
+    modelButton(f, onPick),
+    c.media.length > 0 && h("div", { class: "uploads" }, c.media.map((s) => uploadTile(f, s, vals))),
+    ...c.presets.map((s) => field(s, presetCards(s, vals), "Hover a preset to read its prompt.")),
+    ...c.textEls.map(({ s, ta }) => h("div", { class: "field prompt" }, h("div", { class: "flabel" }, s.required ? "Prompt" : s.label, s.required && h("b", {}, " *")), ta,
+      h("div", { class: "prow2" }, elementsButton(f, vals, ta)))),
+    c.options.length > 0 && h("div", { class: "chiprow" }, c.options.map((s) => chip(s, vals))),
+    c.seed && h("details", { class: "adv" }, h("summary", {}, "Advanced"),
+      field(c.seed, h("input", { type: "number", min: 0, value: 0, "aria-label": c.seed.label, oninput: (e) => (vals[c.seed.name] = Number(e.target.value)) }), "0 picks a random seed each run.")),
+    h("div", { class: "gen" }, err, generateButton(f, vals, err), h("div", { class: "fine" }, fineprint(f))));
+}
+
+/* ---------------- bottom prompt bar (Image, Audio) ---------------- */
+function barComposer(f, vals, onPick) {
+  const c = buildControls(f, vals, "bar");
+  const err = h("span", { class: "err", role: "alert" });
+  const main = c.textEls[0];
+  return h("div", { class: "pbar" },
+    h("div", { class: "pbrow" },
+      c.media.map((s) => uploadTile(f, s, vals, true)),
+      main ? main.ta : h("div", { class: "fine" }, "Add the input above, then Generate."),
+      ...c.textEls.slice(1).map(({ ta }) => ta)),
+    h("div", { class: "pbrow2" },
+      main && elementsButton(f, vals, main.ta),
+      modelButton(f, onPick),
+      ...c.presets.map((s) => chip(s, vals)),
+      ...c.options.map((s) => chip(s, vals)),
+      h("span", { class: "grow" }), err, generateButton(f, vals, err)));
+}
+
+/* ---------------- generations gallery ---------------- */
+function genCard(j) {
+  const o = j.outputs.find((x) => !x.mock && x.kind !== "3d") || j.outputs[0];
+  const running = j.status === "queued" || j.status === "running";
+  const prompt = j.inputs.prompt || j.inputs.text || "";
+  const media = running ? h("div", { class: "gwait" }, h("div", { class: "spin" }), h("small", {}, j.status === "queued" ? "Queued" : `Generating ${Math.round(j.progress * 100)}%`))
+    : j.status === "error" ? h("div", { class: "gwait err" }, h("small", {}, j.error || "failed"))
+      : o ? (o.kind === "audio" ? h("div", { class: "gaudio" }, "♪", h("audio", { src: o.url, controls: true })) : exampleEl(o.url, "gmedia", { controls: o.kind === "video" }))
+        : h("div", { class: "gwait" }, h("small", {}, "no output"));
+  const act = (label, title, fn) => h("button", { type: "button", class: "gact", title, "aria-label": title, onclick: (e) => { e.preventDefault(); e.stopPropagation(); fn(e.currentTarget); } }, label);
+  return h("figure", { class: `gcard ${j.kind || ""}` }, media,
+    h("figcaption", {},
+      h("span", { class: "gtitle" }, j.feature_name), prompt && h("span", { class: "gprompt" }, prompt),
+      h("span", { class: "gacts" },
+        o && !running && h("a", { class: "gact", href: o.url, download: o.name, title: "Download", "aria-label": "Download" }, "↓"),
+        o && !running && !o.mock && act("★", "Save to assets", (b) => saveToAssets(o, b)),
+        act("↺", "Reuse these settings", () => { state.prefill = { feature_id: j.feature_id, inputs: j.inputs }; location.hash = `#/f/${j.feature_id}`; }),
+        !running && act("✕", "Remove from history", async () => { await api(`/api/jobs/${j.id}`, { method: "DELETE" }).catch(() => {}); state.jobs = state.jobs.filter((x) => x.id !== j.id); renderGallery(); }))));
+}
+/** state.gallery = {filter(job) -> bool, examples: [urls], title} set by the current page; re-rendered on every poll. */
+function renderGallery() {
+  const box = $("#gallery");
+  if (!box || !state.gallery) return;
+  const g = state.gallery;
+  const mine = state.jobs.filter(g.filter);
+  const ex = g.examples || [];
+  box.className = `gallery size-${state.genSize}`;
+  box.replaceChildren(
+    ...(mine.length ? mine.map(genCard) : []),
+    ...(!mine.length && ex.length ? [h("h4", {}, g.exTitle || "Example renders (real runs through this app)"),
+      ...ex.map((u) => h("figure", { class: "gcard ex" }, exampleEl(u, "gmedia", { controls: true })))] : []),
+    ...(!mine.length && !ex.length ? [h("div", { class: "gempty" }, h("b", {}, "Nothing here yet"), h("small", {}, g.empty || "Your generations appear here."))] : []));
+}
+function galleryHead(title, withFilter) {
+  const sizes = h("div", { class: "seg", role: "group", "aria-label": "Thumbnail size" },
+    [["s", "S"], ["m", "M"], ["l", "L"]].map(([k, l]) => h("button", { type: "button", "aria-pressed": String(state.genSize === k), onclick: (e) => {
+      state.genSize = k; store.set("osf.genSize", k); e.currentTarget.parentElement.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b === e.currentTarget))); renderGallery();
+    } }, l)));
+  return h("div", { class: "ghead" }, h("span", { class: "gtab" }, "◷ ", title), withFilter, h("span", { class: "grow" }), sizes);
+}
+
+/* ---------------- pages ---------------- */
+function renderTool(f) {
+  const vals = {};
+  const onPick = (m) => { carryPrompt(); location.hash = `#/f/${m.id}`; };
+  const head = h("div", { class: "fhead" },
+    h("a", { class: "back", href: `#/s/${encodeURIComponent(f.studio)}` }, `← ${f.studio}`),
+    h("div", { class: "seg", role: "group", "aria-label": "View" },
+      ["studio", "graph"].map((v) => h("button", { type: "button", "aria-pressed": String(state.view === v), onclick: () => { state.view = v; route(); } }, v === "studio" ? "Studio" : "Node graph"))));
+  const sub = h("div", { class: "sub" }, f.engine && badge(f.engine, "A"), badge(statusLabel(f)), badge(isOpen(f) ? "open weights" : "partner", isOpen(f) ? "B" : "partner"),
+    f.cost && badge(`✦ ${f.cost} credits`), h("span", {}, f.higgsfield));
+  if (state.obs) { state.obs.disconnect(); state.obs = null; }
+  state.gallery = { filter: (j) => j.feature_id === f.id || (f.group && state.byId[j.feature_id]?.group === f.group), examples: f.examples,
+    empty: "Run this tool to see results here." };
+  if (state.view === "graph") {
+    const err = h("span", { class: "err", role: "alert" });
+    const graph = buildGraph(f, vals);
+    $("#main").replaceChildren(head, marker(f.name), sub, graph,
+      h("div", { class: "runbar" }, h("div", { class: "sum" }, `${f.inputs.length} input${f.inputs.length === 1 ? "" : "s"} -> ${f.output_kind}`), err, h("kbd", {}, "Ctrl+Enter"), generateButton(f, vals, err)));
+    state.obs = new ResizeObserver(() => requestAnimationFrame(drawLinks));
+    state.obs.observe(graph); graph.querySelectorAll(".node").forEach((n) => state.obs.observe(n));
+    drawLinks(); renderPreviewNode();
+    return;
+  }
+  state.links = [];
+  $("#main").replaceChildren(head, marker(f.name), sub,
+    h("div", { class: "create" }, panelComposer(f, vals, onPick, null),
+      h("section", { class: "results", "aria-label": "Generations" }, galleryHead("History"), h("div", { id: "gallery" }))));
+  renderGallery();
+}
+
+function renderWorkspace(key, tabIdx) {
+  const ws = WORKSPACES[key];
+  const tabsAvail = ws.tabs.filter(([, g]) => members(g).length);
+  const [, group] = tabsAvail[Math.min(tabIdx, tabsAvail.length - 1)] || tabsAvail[0];
+  const realIdx = ws.tabs.findIndex(([, g]) => g === group);
+  const f = preferred(group);
+  const vals = {};
+  const onPick = (m) => { carryPrompt(); state.pick[group] = m.id; store.set("osf.pick", state.pick); route(); };
+  const tabs = h("div", { class: "wtabs", role: "tablist" }, tabsAvail.map(([t, g]) => h("a", { role: "tab", href: `#/w/${key}/${ws.tabs.findIndex(([, gg]) => gg === g)}`,
+    "aria-selected": String(g === group) }, t)));
+  state.gallery = { filter: (j) => (j.kind || state.byId[j.feature_id]?.output_kind) === ws.kind, examples: f.examples,
+    exTitle: `Made with ${short(f)} (real runs through this app)`, empty: `Your ${ws.kind} generations appear here.` };
+  if (ws.layout === "panel") {
+    $("#main").replaceChildren(h("div", { class: "create ws" }, panelComposer(f, vals, onPick, tabs),
+      h("section", { class: "results", "aria-label": "Generations" }, galleryHead("History"), h("div", { id: "gallery" }))));
+  } else {
+    $("#main").replaceChildren(h("div", { class: "wsbar" }, h("div", { class: "wstop" }, tabs, h("span", { class: "grow" })),
+      galleryHead("History"), h("div", { id: "gallery" }), barComposer(f, vals, onPick)));
+  }
+  document.title = `${ws.tabs[realIdx][0]} · OpenSfield`;
+  renderGallery();
+}
+
+function renderGenerations() {
+  const kinds = [["all", "All"], ["image", "Images"], ["video", "Videos"], ["audio", "Audio"]];
+  const filter = h("div", { class: "filters inline" }, kinds.map(([k, l]) => h("button", { type: "button", class: "fpill", "aria-pressed": String(state.genFilter === k),
+    onclick: () => { state.genFilter = k; renderGenerations(); } }, l)));
+  state.gallery = { filter: (j) => state.genFilter === "all" || (j.kind || state.byId[j.feature_id]?.output_kind) === state.genFilter,
+    empty: "Everything you generate is kept here, newest first, across restarts." };
+  $("#main").replaceChildren(marker("Generations"), h("p", { class: "sub" }, `${state.jobs.length} in history. Download, save to Assets, reuse the settings or remove them.`),
+    galleryHead("All generations", filter), h("div", { id: "gallery" }));
+  renderGallery();
+}
+
+/* ---------------- assets ---------------- */
+async function saveToAssets(o, btn) {
+  btn.disabled = true;
+  try {
+    await api("/api/assets/save", json("POST", { url: o.url, name: o.name.replace(/\.[a-z0-9]+$/i, "").slice(0, 40) }));
+    btn.textContent = "✓"; btn.title = "Saved to Assets";
+  } catch (e) { btn.disabled = false; btn.title = `Could not save: ${e.message}`; }
+}
+function assetThumb(a) {
+  if (a.kind === "video") return h("video", { src: a.url + "#t=0.5", muted: true, preload: "metadata", playsinline: true });
+  if (a.kind === "audio") return h("div", { class: "aud" }, "♪", h("audio", { src: a.url, controls: true, preload: "none" }));
+  return h("img", { src: a.url, alt: a.name, loading: "lazy" });
+}
+async function renderAssets() {
+  const main = $("#main");
+  main.replaceChildren(marker("Assets"), h("p", { class: "sub" }, "Characters, props, locations and styles you reuse across tools. Use them with “From assets” or “@ Elements”."));
+  let data;
+  try { data = await api("/api/assets"); } catch (e) { main.append(h("p", { class: "err" }, e.message)); return; }
+  let filter = state.assetFilter || "All";
+  const grid = h("div", { class: "cards assets" });
+  const pillsEl = h("div", { class: "filters" });
+  const typeSel = h("select", { "aria-label": "Type for new uploads" }, data.types.map((t) => h("option", { value: t }, t)));
+  const file = h("input", { type: "file", multiple: true, accept: "image/*,video/*,audio/*", class: "sr", id: "asset-up",
+    onchange: async (e) => {
+      for (const fl of e.target.files) {
+        const fd = new FormData(); fd.append("file", fl); fd.append("type", typeSel.value); fd.append("name", fl.name.replace(/\.[a-z0-9]+$/i, ""));
+        try { await api("/api/assets", { method: "POST", body: fd }); } catch (err) { alert(`${fl.name}: ${err.message}`); }
+      }
+      renderAssets();
+    } });
+  const patch = (a, body) => api(`/api/assets/${a.id}`, json("PATCH", body)).catch(() => {});
+  const draw = () => {
+    pillsEl.replaceChildren(...["All", ...data.types].map((t) => h("button", { type: "button", class: "fpill", "aria-pressed": String(filter === t), onclick: () => { filter = t; state.assetFilter = t; draw(); } }, t)));
+    const items = data.items.filter((a) => filter === "All" || a.type === filter);
+    grid.replaceChildren(...(items.length ? items.map((a) => h("div", { class: "acard" },
+      h("div", { class: "athumb" }, assetThumb(a)),
+      h("div", { class: "ameta" },
+        h("input", { class: "aname", value: a.name, "aria-label": "Name", onchange: (e) => patch(a, { name: e.target.value }) }),
+        h("button", { class: "adel", type: "button", title: "Delete", "aria-label": `Delete ${a.name}`, onclick: async () => { await api(`/api/assets/${a.id}`, { method: "DELETE" }).catch(() => {}); renderAssets(); } }, "✕"),
+        h("select", { "aria-label": "Type", onchange: (e) => patch(a, { type: e.target.value }) }, data.types.map((t) => h("option", { value: t, selected: t === a.type }, t)))))
+    ) : [h("p", { class: "empty" }, data.items.length ? "Nothing of this type yet." : "No assets yet. Upload some, or press ★ on any generation.")]));
+  };
+  main.append(h("div", { class: "uprow" }, h("label", { class: "go", for: "asset-up" }, "+ Upload"), typeSel, file), pillsEl, grid);
+  draw();
+}
+async function pickAsset(spec, vals, ui, onChosen) {
+  let data;
+  try { data = await api("/api/assets"); } catch (e) { alert(e.message); return; }
+  const items = data.items.filter((a) => a.kind === spec.kind);
+  const close = () => { overlay.remove(); document.removeEventListener("keydown", onKey); };
+  const onKey = (e) => { if (e.key === "Escape") close(); };
+  const overlay = h("div", { class: "modal", role: "dialog", "aria-modal": "true", "aria-label": "Choose an asset", onclick: (e) => e.target === overlay && close() },
+    h("div", { class: "mbox" },
+      h("div", { class: "mhead" }, h("b", {}, onChosen ? "Elements" : `Choose ${spec.kind === "image" ? "an image" : spec.kind === "video" ? "a video" : "an audio clip"}`),
+        h("button", { type: "button", class: "adel", "aria-label": "Close", onclick: close }, "✕")),
+      items.length ? h("div", { class: "cards assets" }, items.map((a) => h("button", { type: "button", class: "acard pick", onclick: async () => {
+        try {
+          if (spec.name && spec.name !== "_element") {
+            const up = await api(`/api/assets/${a.id}/use`, { method: "POST" });
+            vals[spec.name] = up.id; ui.label.textContent = a.name;
+            if (spec.kind === "image") { ui.img.src = a.url; ui.img.hidden = false; }
+          }
+          if (onChosen) onChosen(a);
+          close();
+        } catch (e) { alert(e.message); }
+      } }, h("div", { class: "athumb" }, assetThumb(a)), h("div", { class: "ameta" }, h("span", { class: "aname" }, a.name), h("small", {}, a.type)))))
+        : h("p", { class: "empty" }, `No ${spec.kind} assets yet. Add some in Assets, or press ★ on a generation.`)));
+  document.body.append(overlay);
+  document.addEventListener("keydown", onKey);
+}
+
+/* ---------------- node-graph view (ComfyUI style) ---------------- */
+function node({ title, kind, color, req, body, out = false, inn = false, cls = "" }) {
+  return h("div", { class: `node ${cls}` },
+    h("div", { class: "ntitle", style: `--c:${color || KIND[kind]}` }, h("i", { class: "dot" }), h("span", {}, title), req && h("span", { class: "req" }, "*"),
+      kind && h("span", { class: "ntype" }, kind === "widget" ? "SETTINGS" : kind.toUpperCase())),
+    out && sock(kind, "out"), inn && sock(kind, "in"),
+    h("div", { class: "nbody" }, body));
+}
 function mediaBody(spec, vals) {
   const id = `f-${spec.name}`;
   const img = h("img", { alt: "", hidden: true }), label = h("span", {}, `Drop or click: ${spec.kind}`);
@@ -150,12 +568,9 @@ function mediaBody(spec, vals) {
   const input = h("input", { class: "sr", id, type: "file", accept: { image: "image/*", video: "video/*", audio: "audio/*" }[spec.kind],
     onchange: (e) => e.target.files[0] && upload(e.target.files[0], spec, vals, ui) });
   const zone = h("label", { class: "drop", for: id }, img, label, input);
-  zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("over"); });
-  zone.addEventListener("dragleave", () => zone.classList.remove("over"));
-  zone.addEventListener("drop", (e) => { e.preventDefault(); zone.classList.remove("over"); if (e.dataTransfer.files[0]) upload(e.dataTransfer.files[0], spec, vals, ui); });
+  dropzone(zone, spec, vals, ui);
   return zone;
 }
-
 function widgetRow(spec, vals) {
   const id = `f-${spec.name}`;
   vals[spec.name] = spec.default ?? 0;
@@ -164,7 +579,6 @@ function widgetRow(spec, vals) {
     : h("input", { id, type: "number", value: vals[spec.name], min: spec.min, max: spec.max, step: spec.step || 1, oninput: (e) => (vals[spec.name] = Number(e.target.value)) });
   return h("div", { class: "widget" }, h("label", { for: id }, spec.label), ctl);
 }
-
 function buildGraph(f, vals) {
   const media = f.inputs.filter((s) => ["image", "video", "audio"].includes(s.kind));
   const texts = f.inputs.filter((s) => s.kind === "text");
@@ -175,18 +589,16 @@ function buildGraph(f, vals) {
       body: h("textarea", { id: `f-${s.name}`, "aria-label": s.label, placeholder: s.label, oninput: (e) => (vals[s.name] = e.target.value) }) }) })),
   ];
   if (widgets.length) ins.push({ label: "Settings", kind: "widget", el: node({ title: "Settings", kind: "widget", out: true, body: widgets.map((s) => widgetRow(s, vals)) }) });
-
   const slotEls = ins.map((n) => h("div", { class: "slot in" }, sock(n.kind), n.label));
   const outSock = sock(f.output_kind), prevSock = sock(f.output_kind, "in");
   const fnode = node({ title: f.name, color: studioColor(f.studio), cls: "fnode", body: [
     h("div", { class: "hf" }, f.higgsfield),
     slotEls.length ? h("div", {}, slotEls) : h("div", { class: "note" }, "No inputs"),
-    h("div", { class: "chips", title: "Base graphs" }, f.base.map((b) => h("span", {}, b))),
+    h("div", { class: "chips", title: "Template" }, h("span", {}, f.engine || f.studio)),
     f.note && h("p", { class: "note" }, f.note),
     h("div", { class: "slot out" }, f.output_kind.toUpperCase(), outSock)] });
   const onode = h("div", { class: "node onode" }, h("div", { class: "ntitle", style: `--c:${KIND[f.output_kind]}` }, h("i", { class: "dot" }), "Preview", h("span", { class: "ntype" }, f.output_kind.toUpperCase())),
-    prevSock, h("div", { class: "nbody" }, h("div", { id: "preview", class: "preview" })));
-
+    prevSock, h("div", { class: "nbody" }, h("div", { id: "gallery", class: "preview" })));
   const svg = svgEl("svg", { class: "links", "aria-hidden": "true" });
   const graph = h("div", { class: "graph" }, svg, h("div", { class: "col" }, ins.map((n) => n.el)), fnode, onode);
   state.links = [
@@ -196,7 +608,7 @@ function buildGraph(f, vals) {
   state.svg = svg;
   return graph;
 }
-
+function renderPreviewNode() { renderGallery(); }
 function drawLinks() {
   const svg = state.svg, g = svg && svg.parentElement;
   if (!g || !g.isConnected || getComputedStyle(svg).display === "none") return;
@@ -212,259 +624,51 @@ function drawLinks() {
   }));
 }
 
-/* ---------------- feature view: Higgsfield-style composer (graph view stays available) ---------------- */
-const ratioOf = (o) => { const m = /^(\d+):(\d+)/.exec(o); return m ? [Number(m[1]), Number(m[2])] : null; };
-
-function pills(spec, vals, render = (o) => o) {
-  const group = h("div", { class: "opts", role: "radiogroup", "aria-label": spec.label });
-  const set = (o) => { vals[spec.name] = o; group.querySelectorAll("button").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.v === String(o)))); };
-  for (const o of spec.options) group.append(h("button", { type: "button", role: "radio", "data-v": o, "aria-checked": "false", title: spec.presets?.[o] || o, onclick: () => set(o) }, render(o)));
-  set(vals[spec.name]);
-  return group;
-}
-
-function aspectChip(o) {
-  const r = ratioOf(o), [w, hh] = r, k = 22 / Math.max(w, hh);
-  return [h("i", { class: "ar", style: `width:${Math.round(w * k)}px;height:${Math.round(hh * k)}px` }), h("span", {}, o.split(" ")[0])];
-}
-
-function field(spec, body, hint) {
-  return h("div", { class: "field" }, h("div", { class: "flabel" }, spec.label, spec.required && h("b", {}, " *")), body, hint && h("div", { class: "fhint" }, hint));
-}
-
-function uploadTile(spec, vals) {
-  const id = `f-${spec.name}`;
-  const img = h("img", { alt: "", hidden: true }), cap = h("span", { class: "cap" }, spec.kind === "image" ? "Add image" : spec.kind === "video" ? "Add video" : "Add audio");
-  const ui = { img, label: cap };
-  const input = h("input", { class: "sr", id, type: "file", accept: { image: "image/*", video: "video/*", audio: "audio/*" }[spec.kind],
-    onchange: (e) => e.target.files[0] && upload(e.target.files[0], spec, vals, ui) });
-  const zone = h("label", { class: "utile", for: id }, img, h("span", { class: "plus", "aria-hidden": "true" }, spec.kind === "image" ? "+" : spec.kind === "video" ? "▶" : "♪"), cap, input);
-  zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("over"); });
-  zone.addEventListener("dragleave", () => zone.classList.remove("over"));
-  zone.addEventListener("drop", (e) => { e.preventDefault(); zone.classList.remove("over"); if (e.dataTransfer.files[0]) upload(e.dataTransfer.files[0], spec, vals, ui); });
-  return h("div", { class: "ufield" }, zone, h("div", { class: "flabel" }, spec.label, spec.required && h("b", {}, " *")),
-    h("button", { class: "libbtn", type: "button", onclick: () => pickAsset(spec, vals, ui) }, "From assets"));
-}
-
-function control(spec, vals) {
-  const n = spec.options?.length || 0;
-  vals[spec.name] = spec.default ?? vals[spec.name] ?? 0;
-  if (spec.kind === "choice") {
-    if (spec.options.every((o) => ratioOf(o))) return field(spec, pills(spec, vals, aspectChip));
-    if (n <= 6) return field(spec, pills(spec, vals), spec.presets && "Hover a style to read its prompt.");
-    return field(spec, h("select", { onchange: (e) => (vals[spec.name] = e.target.value) }, spec.options.map((o) => h("option", { value: o, selected: o === spec.default }, o))));
-  }
-  const steps = (spec.max - spec.min) / (spec.step || 1);
-  if (steps <= 12 && Number.isFinite(steps)) {
-    const o = { ...spec, options: Array.from({ length: steps + 1 }, (_, i) => spec.min + i * (spec.step || 1)) };
-    return field(spec, pills(o, vals));
-  }
-  const out = h("output", {}, String(vals[spec.name]));
-  const range = h("input", { type: "range", min: spec.min, max: spec.max, step: spec.step || 1, value: vals[spec.name], "aria-label": spec.label,
-    oninput: (e) => { vals[spec.name] = Number(e.target.value); out.textContent = e.target.value; } });
-  return field(spec, h("div", { class: "slider" }, range, out));
-}
-
-function buildComposer(f, vals) {
-  const media = f.inputs.filter((s) => ["image", "video", "audio"].includes(s.kind));
-  const texts = f.inputs.filter((s) => s.kind === "text");
-  const opts = f.inputs.filter((s) => ["choice", "number"].includes(s.kind));
-  const seed = f.inputs.find((s) => s.kind === "seed");
-  const presetOpts = opts.filter((s) => s.presets), plainOpts = opts.filter((s) => !s.presets);
-  if (seed) vals[seed.name] = 0;
-  return h("div", { class: "composer" },
-    modelSwitch(f),
-    media.length > 0 && h("div", { class: "uploads" }, media.map((s) => uploadTile(s, vals))),
-    ...presetOpts.map((s) => control(s, vals)),
-    ...texts.map((s) => field(s, h("textarea", { id: `f-${s.name}`, "aria-label": s.label, rows: 4, placeholder: s.required ? "Describe what you want..." : "Optional", oninput: (e) => (vals[s.name] = e.target.value) },
-      s.name === "prompt" && state.carry ? (vals[s.name] = state.carry, state.carry = null, vals[s.name]) : ""))),
-    ...plainOpts.map((s) => control(s, vals)),
-    seed && h("details", { class: "adv" }, h("summary", {}, "Advanced"),
-      field(seed, h("input", { type: "number", min: 0, value: 0, "aria-label": seed.label, oninput: (e) => (vals[seed.name] = Number(e.target.value)) }), "0 picks a random seed each run.")));
-}
-
-function renderFeature(f) {
-  const vals = {}, err = h("span", { class: "err", role: "alert" });
-  const go = h("button", { class: "go wide", type: "button" }, "Generate");
-  const run = async () => {
-    err.textContent = ""; go.disabled = true;
-    try { await api("/api/jobs", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ feature_id: f.id, inputs: vals }) }); poll(); }
-    catch (e) { err.textContent = e.message; }
-    go.disabled = false;
-  };
-  go.addEventListener("click", run);
-  state.run = run;
-  const head = h("div", { class: "fhead" },
-    h("button", { class: "back", type: "button", onclick: () => { state.feature = null; render(); } }, `← ${state.query ? "Search" : f.studio}`),
-    h("div", { class: "seg", role: "group", "aria-label": "View" },
-      ["studio", "graph"].map((v) => h("button", { type: "button", "aria-pressed": String(state.view === v), onclick: () => { state.view = v; render(); } }, v === "studio" ? "Studio" : "Node graph"))));
-  const sub = h("div", { class: "sub" }, f.engine && badge(f.engine, "A"), badge(statusLabel(f)), f.count > 1 && badge(`${f.count} presets`), f.track === "partner" && badge("partner", "partner"), h("span", {}, `outputs ${f.output_kind}`));
-  if (state.obs) { state.obs.disconnect(); state.obs = null; }
-  if (state.view === "graph") {
-    const graph = buildGraph(f, vals);
-    $("#main").replaceChildren(head, marker(f.name), sub, graph,
-      h("div", { class: "runbar" }, h("div", { class: "sum" }, `${f.inputs.length} input${f.inputs.length === 1 ? "" : "s"} -> ${f.output_kind}`), err, h("kbd", {}, "Ctrl+Enter"), go));
-    state.obs = new ResizeObserver(() => requestAnimationFrame(drawLinks));
-    state.obs.observe(graph); graph.querySelectorAll(".node").forEach((n) => state.obs.observe(n));
-    drawLinks();
-  } else {
-    state.links = [];
-    $("#main").replaceChildren(head, marker(f.name), sub,
-      h("div", { class: "create" },
-        h("aside", { class: "panel" }, h("p", { class: "hf" }, f.higgsfield), f.note && h("p", { class: "note" }, f.note), buildComposer(f, vals),
-          h("div", { class: "gen" }, err, go, h("div", { class: "fine" }, !f.runnable && state.cfg.mode === "comfy" ? "No workflow built yet for this tool." : f.local ? "Runs on this computer's CPU." : f.track === "partner" ? "Partner model through Comfy Cloud. Uses your Comfy credits. Ctrl+Enter to run." : "Open weights on Comfy. Ctrl+Enter to run."))),
-        h("section", { class: "results", "aria-label": "Results" }, h("div", { id: "preview", class: "gallery" }))));
-  }
-  updatePreview();
-}
-
-function openFeature(f) { state.feature = f; render(); window.scrollTo(0, 0); }
-function render() { renderRail(); state.feature ? renderFeature(state.feature) : state.page === "assets" ? renderAssets() : renderGrid(); }
-
-/* ---------------- queue + preview ---------------- */
-
-function jobMedia(j) {
-  return [
-    h("div", { class: `st ${j.status}` }, j.status + (j.status === "running" ? ` ${Math.round(j.progress * 100)}%` : "")),
-    (j.status === "running" || j.status === "queued") && h("div", { class: "bar" }, h("i", { style: `width:${j.progress * 100}%` })),
-    j.error && h("div", { class: "st error" }, j.error),
-    ...j.outputs.map((o) => o.kind === "video" ? h("video", { class: "thumb", src: o.url, controls: true })
-      : o.kind === "audio" ? h("audio", { src: o.url, controls: true }) : h("img", { class: "thumb", src: o.url, alt: `${j.feature_name} output` })),
-    ...j.outputs.filter((o) => o.kind !== "3d" && !o.mock).map((o) => h("button", { class: "savebtn", type: "button", onclick: (e) => saveToAssets(o, e.currentTarget) }, "Save to assets")),
-    ...j.outputs.filter((o) => o.kind === "3d").map((o) => h("a", { class: "st", href: o.url, download: "" }, `Download ${o.name}`)),
-    j.outputs.some((o) => o.mock) && h("div", { class: "st" }, "mock placeholder, no ComfyUI call"),
-  ].filter(Boolean);
-}
-
-function updatePreview() {
-  const box = $("#preview");
-  if (!box || !state.feature) return;
-  const f = state.feature, mine = state.jobs.filter((x) => x.feature_id === f.id), ex = f.examples || [];
-  box.replaceChildren(
-    ...(mine.length ? [h("h4", {}, "Your generations"), ...mine.map((j) => h("figure", { class: "gcard" }, jobMedia(j)))] : []),
-    ...(ex.length ? [h("h4", {}, mine.length ? "Examples" : "Example renders (real runs on Comfy Cloud)"), ...ex.map((u) => h("figure", { class: "gcard" }, exampleEl(u, "thumb", { controls: true, alt: f.name + " example" })))] : []),
-    ...(!mine.length && !ex.length ? [h("div", { class: "empty" }, "Your results appear here.")] : []));
-}
-
-function renderJobs() {
-  const active = state.jobs.filter((j) => j.status === "queued" || j.status === "running").length;
-  $("#qcount").textContent = active;
-  const box = $("#jobs");
-  if (!state.jobs.length) { box.className = "empty"; box.textContent = "No jobs yet."; }
-  else {
-    box.className = "";
-    box.replaceChildren(...state.jobs.map((j) => h("div", { class: "job", title: "Open this feature", onclick: () => { const f = state.feats.find((x) => x.id === j.feature_id); if (f) openFeature(f); } },
-      h("div", { class: "t" }, j.feature_name), ...jobMedia(j))));
-  }
-  updatePreview();
-}
-
+/* ---------------- polling + routing ---------------- */
 async function poll() {
   clearTimeout(state.timer);
-  try { state.jobs = await api("/api/jobs"); renderJobs(); } catch (e) { $("#jobs").textContent = e.message; }
-  if (state.jobs.some((j) => j.status === "queued" || j.status === "running")) state.timer = setTimeout(poll, 700);
+  try { state.jobs = await api("/api/jobs"); } catch { /* keep the last list */ }
+  const active = state.jobs.filter((j) => j.status === "queued" || j.status === "running").length;
+  const q = $("#qcount"); q.textContent = active; q.hidden = !active;
+  renderGallery();
+  if (active) state.timer = setTimeout(poll, 1200);
 }
 
-/* ---------------- model switcher, asset library, asset picker ---------------- */
-function modelSwitch(f) {
-  const sibs = f.group ? state.feats.filter((x) => x.group === f.group) : [];
-  if (sibs.length < 2) return null;
-  const opt = (x) => h("option", { value: x.id, selected: x.id === f.id }, `${x.name}${x.status === "tested" ? "" : "  (untested)"}`);
-  const open = sibs.filter((x) => x.track !== "partner"), part = sibs.filter((x) => x.track === "partner");
-  const sel = h("select", { "aria-label": "Model", onchange: (e) => {
-    const next = state.feats.find((x) => x.id === e.target.value);
-    const t = $("#f-prompt");
-    state.carry = t && t.value ? t.value : null;
-    if (next) openFeature(next);
-  } }, open.length && h("optgroup", { label: "Open weights" }, open.map(opt)), part.length && h("optgroup", { label: "Partner models (Comfy credits)" }, part.map(opt)));
-  return h("div", { class: "field modelsel" }, h("div", { class: "flabel" }, `Model · ${f.group}`), sel);
-}
-
-async function saveToAssets(o, btn) {
-  btn.disabled = true; btn.textContent = "Saving...";
-  try {
-    await api("/api/assets/save", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ url: o.url, name: o.name.replace(/\.[a-z0-9]+$/i, "").slice(0, 40) }) });
-    btn.textContent = "Saved. Organise it in Assets";
-  } catch (e) { btn.disabled = false; btn.textContent = `Could not save: ${e.message}`; }
-}
-
-function assetThumb(a) {
-  if (a.kind === "video") return h("video", { src: a.url + "#t=0.5", muted: true, preload: "metadata", playsinline: true });
-  if (a.kind === "audio") return h("div", { class: "aud" }, "♪", h("audio", { src: a.url, controls: true, preload: "none" }));
-  return h("img", { src: a.url, alt: a.name, loading: "lazy" });
-}
-
-async function renderAssets() {
-  const main = $("#main");
-  main.replaceChildren(marker("Assets"), h("p", { class: "sub" }, "Characters, props, locations and styles you reuse across tools. Pick them as inputs with “From assets”."));
-  let data;
-  try { data = await api("/api/assets"); } catch (e) { main.append(h("p", { class: "err" }, e.message)); return; }
-  let filter = state.assetFilter || "All";
-  const grid = h("div", { class: "cards assets" });
-  const pillsEl = h("div", { class: "filters" });
-  const typeSel = h("select", { "aria-label": "Type for new uploads" }, data.types.map((t) => h("option", { value: t }, t)));
-  const file = h("input", { type: "file", multiple: true, accept: "image/*,video/*,audio/*", class: "sr", id: "asset-up",
-    onchange: async (e) => {
-      for (const fl of e.target.files) {
-        const fd = new FormData(); fd.append("file", fl); fd.append("type", typeSel.value); fd.append("name", fl.name.replace(/\.[a-z0-9]+$/i, ""));
-        try { await api("/api/assets", { method: "POST", body: fd }); } catch (err) { alert(`${fl.name}: ${err.message}`); }
-      }
-      renderAssets();
-    } });
-  const draw = () => {
-    pillsEl.replaceChildren(...["All", ...data.types].map((t) => h("button", { type: "button", class: "fpill", "aria-pressed": String(filter === t), onclick: () => { filter = t; state.assetFilter = t; draw(); } }, t)));
-    const items = data.items.filter((a) => filter === "All" || a.type === filter);
-    grid.replaceChildren(...(items.length ? items.map((a) => h("div", { class: "acard" },
-      h("div", { class: "athumb" }, assetThumb(a)),
-      h("div", { class: "ameta" },
-        h("input", { class: "aname", value: a.name, "aria-label": "Name", onchange: (e) => api(`/api/assets/${a.id}`, { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ name: e.target.value }) }) }),
-        h("select", { "aria-label": "Type", onchange: (e) => api(`/api/assets/${a.id}`, { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ type: e.target.value }) }) },
-          data.types.map((t) => h("option", { value: t, selected: t === a.type }, t))),
-        h("button", { class: "adel", type: "button", title: "Delete", "aria-label": `Delete ${a.name}`, onclick: async () => { await api(`/api/assets/${a.id}`, { method: "DELETE" }).catch(() => {}); renderAssets(); } }, "✕")))
-    ) : [h("p", { class: "empty" }, data.items.length ? "Nothing of this type yet." : "No assets yet. Upload some, or use “Save to assets” on any result.")]));
-  };
-  main.append(h("div", { class: "uprow" }, h("label", { class: "go", for: "asset-up" }, "+ Upload"), typeSel, file), pillsEl, grid);
-  draw();
-}
-
-async function pickAsset(spec, vals, ui) {
-  let data;
-  try { data = await api("/api/assets"); } catch (e) { alert(e.message); return; }
-  const items = data.items.filter((a) => a.kind === spec.kind);
-  const close = () => { overlay.remove(); document.removeEventListener("keydown", onKey); };
-  const onKey = (e) => { if (e.key === "Escape") close(); };
-  const overlay = h("div", { class: "modal", role: "dialog", "aria-modal": "true", "aria-label": "Choose an asset", onclick: (e) => e.target === overlay && close() },
-    h("div", { class: "mbox" },
-      h("div", { class: "mhead" }, h("b", {}, `Choose ${spec.kind === "image" ? "an image" : spec.kind === "video" ? "a video" : "an audio clip"}`), h("button", { type: "button", class: "adel", "aria-label": "Close", onclick: close }, "✕")),
-      items.length ? h("div", { class: "cards assets" }, items.map((a) => h("button", { type: "button", class: "acard pick", onclick: async () => {
-        try {
-          const up = await api(`/api/assets/${a.id}/use`, { method: "POST" });
-          vals[spec.name] = up.id; ui.label.textContent = a.name;
-          if (spec.kind === "image") { ui.img.src = a.url; ui.img.hidden = false; }
-          close();
-        } catch (e) { alert(e.message); }
-      } }, h("div", { class: "athumb" }, assetThumb(a)), h("div", { class: "ameta" }, h("span", { class: "aname" }, a.name), h("small", {}, a.type)))))
-        : h("p", { class: "empty" }, `No ${spec.kind} assets yet. Add some in Assets, or use “Save to assets” on a result.`)));
-  document.body.append(overlay);
-  document.addEventListener("keydown", onKey);
+function route() {
+  const raw = decodeURIComponent(routeKey().slice(1));
+  const legacy = /^([sfp])=(.+)$/.exec(raw);  // old deep links: #s=Studio, #f=id, #p=assets
+  if (legacy) { location.replace(legacy[1] === "p" ? "#/assets" : `#/${legacy[1]}/${legacy[2]}`); return; }
+  const parts = raw.replace(/^\//, "").split("/");
+  renderChrome();
+  document.querySelector(".picker")?.remove();
+  state.gallery = null; state.run = null;
+  if (state.obs && parts[0] !== "f") { state.obs.disconnect(); state.obs = null; }
+  if (state.query) { renderGrid("search"); return; }
+  document.title = "OpenSfield";
+  const [p, a, b] = parts;
+  if (p === "f" && state.byId[a]) { document.title = `${state.byId[a].name} · OpenSfield`; renderTool(state.byId[a]); }
+  else if (p === "w" && WORKSPACES[a]) renderWorkspace(a, Number(b) || 0);
+  else if (p === "s" && a) renderGrid("studio", a);
+  else if (p === "apps") renderGrid("apps");
+  else if (p === "assets") renderAssets();
+  else if (p === "generations") renderGenerations();
+  else renderGrid("explore");
+  window.scrollTo(0, 0);
 }
 
 async function init() {
   [state.cfg, state.feats] = await Promise.all([api("/api/config"), api("/api/features")]);
+  state.byId = Object.fromEntries(state.feats.map((f) => [f.id, f]));
+  state.pick = store.get("osf.pick", {});
+  state.genSize = store.get("osf.genSize", "m");
   const mode = $("#mode");
-  mode.textContent = state.cfg.mode === "mock" ? "Mock mode: no ComfyUI calls" : "ComfyUI connected";
+  mode.textContent = state.cfg.mode === "mock" ? "Mock mode" : "Live";
   mode.className = `chip ${state.cfg.mode === "mock" ? "mock" : "live"}`;
-  const link = location.hash.match(/^#([sfp])=(.+)$/);  // deep links: #s=<Studio name>, #f=<feature id>, #p=assets
-  if (link) {
-    const v = decodeURIComponent(link[2]);
-    if (link[1] === "p" && v === "assets") state.page = "assets";
-    const f = link[1] === "f" && state.feats.find((x) => x.id === v);
-    if (f) { state.feature = f; state.studio = f.studio; } else if (studios().some(([s]) => s === v)) state.studio = v;
-  }
-  $("#search").addEventListener("input", (e) => { state.query = e.target.value.trim(); state.feature = null; state.page = null; render(); });
-  $("#qtoggle").addEventListener("click", () => { const o = document.body.classList.toggle("q-open"); $("#qtoggle").setAttribute("aria-expanded", String(o)); });
-  document.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey) && state.feature && state.run) { e.preventDefault(); state.run(); } });
+  mode.title = state.cfg.mode === "mock" ? "Mock mode: no ComfyUI calls are made" : "Connected to Comfy";
+  $("#search").addEventListener("input", (e) => { state.query = e.target.value.trim(); route(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey) && state.run) { e.preventDefault(); state.run(); } });
   window.addEventListener("resize", () => requestAnimationFrame(drawLinks));
-  render(); poll();
+  window.addEventListener("hashchange", () => { state.query = ""; $("#search").value = ""; route(); });
+  route(); poll();
 }
 init().catch((e) => ($("#main").textContent = `Failed to load: ${e.message}`));

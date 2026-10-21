@@ -1,0 +1,120 @@
+{
+  "id": "marketing.ai-influencer-seedance",
+  "studio": "Marketing",
+  "name": "AI influencer (character + presets)",
+  "tier": "B",
+  "base": [
+    "ref_edit",
+    "ltx23_audio"
+  ],
+  "higgsfield": "ai_influencer_*",
+  "track": "partner",
+  "note": "Seedance 2.5 through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_seedance2_5_i2v_1080p"
+  ],
+  "status": "built",
+  "group": "AI influencer (character + presets)",
+  "default": true,
+  "workflow": {
+    "template": "api_seedance2_5_i2v_1080p",
+    "api": "features/model.seedance2-5-i2v-1080p/workflow_api.json",
+    "ui": "features/model.seedance2-5-i2v-1080p/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Your influencer (face reference)",
+        "kind": "image",
+        "node": "2",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "scene",
+        "label": "Content scene",
+        "kind": "choice",
+        "options": [
+          "Coffee shop selfie",
+          "Gym mirror",
+          "Travel golden hour",
+          "Get ready with me"
+        ],
+        "default": "Coffee shop selfie",
+        "presets": {
+          "Coffee shop selfie": "Keep this person's face, hair, build and clothes exactly the same, and change the scene around them so that they are in a bright coffee shop holding a latte, casual phone-camera look.",
+          "Gym mirror": "Keep this person's face, hair, build and clothes exactly the same, and change the scene around them so that they are in a gym with mirrors and soft overhead light.",
+          "Travel golden hour": "Keep this person's face, hair, build and clothes exactly the same, and change the scene around them so that they are on a rooftop at golden hour with a city skyline behind them.",
+          "Get ready with me": "Keep this person's face, hair, build and clothes exactly the same, and change the scene around them so that they are sitting at a vanity mirror with warm bulbs."
+        },
+        "apply_to": "prompt"
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "9",
+        "field": "model.prompt",
+        "required": false
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "9",
+        "field": "model.resolution",
+        "options": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "ratio",
+        "label": "Ratio",
+        "kind": "choice",
+        "node": "9",
+        "field": "model.ratio",
+        "options": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "21:9",
+          "adaptive"
+        ],
+        "default": "adaptive"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "9",
+        "field": "model.duration",
+        "default": 5,
+        "min": 4,
+        "max": 30,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "9",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "7"
+    ],
+    "models": [
+      "api_seedance2_5_i2v_1080p"
+    ],
+    "reuses": "model.seedance2-5-i2v-1080p",
+    "output_kind": "video",
+    "verified": false
+  }
+}

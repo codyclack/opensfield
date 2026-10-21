@@ -4,6 +4,15 @@ Open-source rebuild of Higgsfield's creative apps on ComfyUI, for Comfy's
 **#OpenSourceHiggsfield** challenge. Two kinds of tools: open-weight workflows (LTX, Wan, Qwen, FLUX, ...) and one tool per Higgsfield partner model
 (Seedance, Kling, GPT Image, Nano Banana, Grok, ...) generated from Comfy's official API-node templates. Partner tools use Comfy credits.
 
+## What it looks like
+A Higgsfield-style app: text top nav (Explore, Image, Video, Audio, Edit, Genjutsu, Cinema Studio, Soul, Viral, Marketing, Apps, Assets),
+a left sidebar with every studio, **Image / Video / Audio workspaces** with Higgsfield's tabs (Create Video, Text to Video, References,
+First & Last, Motion Control, Edit Video), a **model picker** per task (Seedance 2.5 is the default for video; open-weight models sit in the
+same list), option chips (duration, ratio, resolution), a bottom prompt bar on the Image page, **@ Elements** from your asset library, a
+persistent **Generations** history (download, save to Assets, reuse settings, remove), and an optional ComfyUI node-graph view of every tool.
+Preset video tools (viral effects, UGC, click-to-ad, product motion, multishot, shorts, AI influencer) default to Seedance 2.5 with the
+open LTX-2.5 version one click away.
+
 ## Status (honest summary)
 - **48 of 72 modules are built and have real example outputs** in [`examples/`](examples/README.md), using open-weight models
   only: 23 are separate ComfyUI workflows (video outpainting, Chatterbox text-to-speech/voice clone, motion transfer, character replacement, text/image-to-video, first/last frame,

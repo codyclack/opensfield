@@ -92,7 +92,13 @@ def output_kind(base: list[str]) -> str:
     return "image"
 
 
-ENGINES = [("ltx-2.5", "LTX-2.5"), ("ltx-2.3", "LTX-2.3"), ("ltx", "LTX"), ("wan_animate", "Wan Animate 2"), ("scail", "SCAIL-2"), ("wan", "Wan 2.x"),
+ENGINES = [("seedance2_5", "Seedance 2.5"), ("seedance2_0_mini", "Seedance 2.0 Mini"), ("seedance2_0", "Seedance 2.0"), ("seedance1_5", "Seedance 1.5"),
+           ("kling_o3", "Kling O3"), ("kling_v3", "Kling 3.0"), ("kling2_6", "Kling 2.6"), ("kling", "Kling"), ("minimax", "MiniMax H3"), ("grok", "Grok Imagine"),
+           ("nano_banana", "Nano Banana"), ("gpt_image", "GPT Image"), ("flux3", "FLUX 3"), ("ideogram", "Ideogram"), ("recraft", "Recraft"),
+           ("seedream", "Seedream"), ("krea3", "Krea 3"), ("qwen3", "Qwen Image 3"), ("wan3", "Wan 3.0"), ("wan2_6", "Wan 2.6"), ("happyhorse", "HappyHorse"),
+           ("luma", "Luma Ray"), ("pixverse", "PixVerse"), ("vidu", "Vidu"), ("gemini", "Gemini"), ("elevenlabs", "ElevenLabs"), ("fishaudio", "Fish Audio"),
+           ("heygen", "HeyGen"), ("topaz", "Topaz"), ("meshy", "Meshy"), ("tripo", "Tripo"), ("bria", "Bria"),
+           ("ltx-2.5", "LTX-2.5"), ("ltx-2.3", "LTX-2.3"), ("ltx", "LTX"), ("wan_animate", "Wan Animate 2"), ("scail", "SCAIL-2"), ("wan", "Wan 2.x"),
            ("z_image", "Z-Image Turbo"), ("flux", "FLUX"), ("krea", "Krea"), ("qwen_image_edit", "Qwen Image Edit"), ("qwen_image", "Qwen Image"),
            ("seedvr", "SeedVR2"), ("birefnet", "BiRefNet"), ("ace_step", "ACE-Step"), ("chatterbox", "Chatterbox"), ("hunyuan3d", "Hunyuan3D")]
 

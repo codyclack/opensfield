@@ -85,5 +85,6 @@
     "examples": [
       "examples/music_lofi.mp3"
     ]
-  }
+  },
+  "group": "Music"
 }

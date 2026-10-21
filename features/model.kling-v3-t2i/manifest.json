@@ -121,5 +121,6 @@
     "examples": [
       "examples/models/kling-v3-t2i.png"
     ]
-  }
+  },
+  "cost": 6
 }

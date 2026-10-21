@@ -5,6 +5,7 @@ Real runs (later):          OPENSFIELD_MODE=comfy COMFY_BASE_URL=... uv run --ex
 """
 from __future__ import annotations
 
+import json
 import os
 import secrets
 import threading
@@ -30,8 +31,30 @@ if MODE not in ("mock", "comfy"):
 
 app = FastAPI(title="OpenSfield")
 FEATURES = {f["id"]: f for f in load_features()}
-JOBS: dict[str, dict] = {}
 LOCK = threading.Lock()
+JOBS_FILE = Path(os.environ.get("OPENSFIELD_JOBS_FILE", runner.OUTPUTS / "jobs.json"))  # generation history survives restarts (the Generations gallery reads it)
+CREATED_THIS_RUN = 0
+
+
+def _load_jobs() -> dict[str, dict]:
+    try:
+        jobs = json.loads(JOBS_FILE.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    for j in jobs.values():
+        if j["status"] in ("queued", "running"):  # the server stopped mid-job
+            j.update(status="error", error="interrupted: the server restarted")
+    return jobs
+
+
+def _save_jobs():
+    runner.OUTPUTS.mkdir(parents=True, exist_ok=True)
+    tmp = JOBS_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(JOBS), encoding="utf-8")
+    tmp.replace(JOBS_FILE)
+
+
+JOBS: dict[str, dict] = _load_jobs()
 POOL = ThreadPoolExecutor(max_workers=1)  # one GPU: renders are serialized
 runner.UPLOADS.mkdir(parents=True, exist_ok=True)
 
@@ -91,6 +114,8 @@ def _update(job_id: str):
     def update(**kw):
         with LOCK:
             JOBS[job_id].update(kw)
+            if "status" in kw:
+                _save_jobs()
     return update
 
 
@@ -117,7 +142,8 @@ def create_job(req: JobRequest):
     if f["track"] == "partner" and not PARTNER:
         raise HTTPException(403, "partner pack is disabled (set OPENSFIELD_PARTNER=1 (default on; 0 hides))")
     cap = int(os.environ.get("OPENSFIELD_MAX_JOBS", "0"))  # 0 = unlimited; protects credits on a public link
-    if cap and len(JOBS) >= cap:
+    global CREATED_THIS_RUN
+    if cap and CREATED_THIS_RUN >= cap:
         raise HTTPException(429, f"this demo allows {cap} runs per server start; it has reached the limit")
     missing = [i["label"] for i in f["inputs"] if i.get("required") and not req.inputs.get(i["name"])]
     if missing:
@@ -126,10 +152,12 @@ def create_job(req: JobRequest):
         v = req.inputs.get(i["name"])
         if i["kind"] in MEDIA and v and (Path(v).name != v or not (runner.UPLOADS / v).exists()):
             raise HTTPException(422, f"{i['label']}: unknown upload")
-    job = {"id": uuid.uuid4().hex[:12], "feature_id": f["id"], "feature_name": f["name"], "status": "queued",
+    job = {"id": uuid.uuid4().hex[:12], "feature_id": f["id"], "feature_name": f["name"], "kind": f["output_kind"], "status": "queued",
            "progress": 0.0, "inputs": req.inputs, "outputs": [], "error": None, "mode": MODE, "created": time.time()}
     with LOCK:
         JOBS[job["id"]] = job
+        CREATED_THIS_RUN += 1
+        _save_jobs()
     POOL.submit(_execute, job["id"])
     return job
 
@@ -138,6 +166,19 @@ def create_job(req: JobRequest):
 def jobs():
     with LOCK:
         return sorted(JOBS.values(), key=lambda j: j["created"], reverse=True)
+
+
+@app.delete("/api/jobs/{job_id}", status_code=204)
+def delete_job(job_id: str):
+    """Remove a finished generation from the history (its files stay in outputs/)."""
+    with LOCK:
+        j = JOBS.get(job_id)
+        if not j:
+            raise HTTPException(404, "unknown job")
+        if j["status"] in ("queued", "running"):
+            raise HTTPException(409, "job is still running")
+        del JOBS[job_id]
+        _save_jobs()
 
 
 @app.get("/api/jobs/{job_id}")

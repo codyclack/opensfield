@@ -1,0 +1,122 @@
+{
+  "id": "marketing.ugc-video-seedance",
+  "studio": "Marketing",
+  "name": "UGC video (review, unboxing, try-on, tutorial, site tour)",
+  "tier": "B",
+  "base": [
+    "ref_edit",
+    "ltx23_audio",
+    "tts_audio"
+  ],
+  "higgsfield": "workflow ugc-video",
+  "track": "partner",
+  "note": "Seedance 2.5 through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 6,
+  "partner": [
+    "api_seedance2_5_i2v_1080p"
+  ],
+  "status": "built",
+  "group": "UGC video (review, unboxing, try-on, tutorial, site tour)",
+  "default": true,
+  "workflow": {
+    "template": "api_seedance2_5_i2v_1080p",
+    "api": "features/model.seedance2-5-i2v-1080p/workflow_api.json",
+    "ui": "features/model.seedance2-5-i2v-1080p/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Product or person image",
+        "kind": "image",
+        "node": "2",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "format",
+        "label": "UGC format",
+        "kind": "choice",
+        "options": [
+          "Product review",
+          "Unboxing",
+          "Try-on",
+          "Tutorial"
+        ],
+        "default": "Product review",
+        "presets": {
+          "Product review": "Handheld phone-camera video of a person holding the product up to the camera and reacting with a genuine smile, casual home setting, slight camera shake.",
+          "Unboxing": "Handheld phone-camera video of hands opening a package and revealing the product on a table, excited energy, natural window light.",
+          "Try-on": "Handheld mirror-selfie style video of a person trying on the item and turning to show it from different sides, natural light.",
+          "Tutorial": "Locked-off phone video of hands demonstrating how to use the product step by step on a clean table, soft daylight."
+        },
+        "apply_to": "prompt"
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "9",
+        "field": "model.prompt",
+        "required": false,
+        "prefix": "Use the provided start image as the first frame. "
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "9",
+        "field": "model.resolution",
+        "options": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "ratio",
+        "label": "Ratio",
+        "kind": "choice",
+        "node": "9",
+        "field": "model.ratio",
+        "options": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "21:9",
+          "adaptive"
+        ],
+        "default": "adaptive"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "9",
+        "field": "model.duration",
+        "default": 5,
+        "min": 4,
+        "max": 30,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "9",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "7"
+    ],
+    "models": [
+      "api_seedance2_5_i2v_1080p"
+    ],
+    "reuses": "model.seedance2-5-i2v-1080p",
+    "output_kind": "video",
+    "verified": false
+  }
+}

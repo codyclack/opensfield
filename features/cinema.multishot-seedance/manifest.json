@@ -1,0 +1,103 @@
+{
+  "id": "cinema.multishot-seedance",
+  "studio": "Cinema Studio",
+  "name": "Multi-shot sequence + stitch",
+  "tier": "B",
+  "base": [
+    "ltx25_i2v",
+    "ltx25_flf2v",
+    "stitch"
+  ],
+  "higgsfield": "cinematic_studio_3_0 / 4_0, nano_banana_2_shots",
+  "track": "partner",
+  "note": "Seedance 2.5 through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_seedance2_5_i2v_1080p"
+  ],
+  "status": "built",
+  "group": "Multi-shot sequence + stitch",
+  "default": true,
+  "workflow": {
+    "template": "api_seedance2_5_i2v_1080p",
+    "api": "features/model.seedance2-5-i2v-1080p/workflow_api.json",
+    "ui": "features/model.seedance2-5-i2v-1080p/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Start frame",
+        "kind": "image",
+        "node": "2",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Shots: 'Shot 1: ... Shot 2: ...'",
+        "kind": "text",
+        "node": "9",
+        "field": "model.prompt",
+        "required": true,
+        "prefix": "Use the provided start image as the first frame. A multi-shot sequence with hard cuts between shots, consistent character and lighting. "
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "9",
+        "field": "model.resolution",
+        "options": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "ratio",
+        "label": "Ratio",
+        "kind": "choice",
+        "node": "9",
+        "field": "model.ratio",
+        "options": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "21:9",
+          "adaptive"
+        ],
+        "default": "adaptive"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "9",
+        "field": "model.duration",
+        "default": 5,
+        "min": 4,
+        "max": 30,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "9",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "7"
+    ],
+    "models": [
+      "api_seedance2_5_i2v_1080p"
+    ],
+    "reuses": "model.seedance2-5-i2v-1080p",
+    "output_kind": "video",
+    "verified": false
+  }
+}

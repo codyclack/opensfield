@@ -20,7 +20,7 @@
     "inputs": [
       {
         "name": "image_1",
-        "label": "Image 1",
+        "label": "Image",
         "kind": "image",
         "node": "11",
         "field": "image",
@@ -122,5 +122,6 @@
     "examples": [
       "examples/models/grok-imagine-image-2-image-edit.png"
     ]
-  }
+  },
+  "cost": 17
 }

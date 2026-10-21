@@ -120,5 +120,6 @@
     "examples": [
       "examples/models/topaz-image-enhance-wonder3-5.png"
     ]
-  }
+  },
+  "cost": 24
 }

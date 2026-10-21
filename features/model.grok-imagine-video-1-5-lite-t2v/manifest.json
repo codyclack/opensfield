@@ -102,5 +102,6 @@
     "examples": [
       "examples/models/grok-imagine-video-1-5-lite-t2v.mp4"
     ]
-  }
+  },
+  "cost": 36
 }

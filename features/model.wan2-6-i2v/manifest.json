@@ -103,5 +103,6 @@
     "examples": [
       "examples/models/wan2-6-i2v.mp4"
     ]
-  }
+  },
+  "cost": 106
 }

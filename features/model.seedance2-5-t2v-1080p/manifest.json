@@ -37,7 +37,7 @@
           "720p",
           "1080p"
         ],
-        "default": "1080p"
+        "default": "720p"
       },
       {
         "name": "ratio",
@@ -99,5 +99,7 @@
     "examples": [
       "examples/models/seedance2-5-t2v-1080p.mp4"
     ]
-  }
+  },
+  "default": true,
+  "cost": 865
 }

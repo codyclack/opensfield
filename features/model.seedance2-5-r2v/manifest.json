@@ -20,7 +20,7 @@
     "inputs": [
       {
         "name": "image_1",
-        "label": "Image 1",
+        "label": "Image",
         "kind": "image",
         "node": "12",
         "field": "image",
@@ -117,5 +117,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "default": true
 }
