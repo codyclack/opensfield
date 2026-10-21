@@ -6,14 +6,15 @@ Real runs (later):          OPENSFIELD_MODE=comfy COMFY_BASE_URL=... uv run --ex
 from __future__ import annotations
 
 import os
+import secrets
 import threading
 import time
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from fastapi import FastAPI, File, HTTPException, UploadFile
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -33,6 +34,21 @@ JOBS: dict[str, dict] = {}
 LOCK = threading.Lock()
 POOL = ThreadPoolExecutor(max_workers=1)  # one GPU: renders are serialized
 runner.UPLOADS.mkdir(parents=True, exist_ok=True)
+
+
+@app.middleware("http")
+async def access_gate(request: Request, call_next):
+    """Optional shared-secret gate for a public deployment: set OPENSFIELD_ACCESS_KEY, share /?key=<value> once (it sets a cookie)."""
+    key = os.environ.get("OPENSFIELD_ACCESS_KEY")
+    if not key:
+        return await call_next(request)
+    given = request.query_params.get("key", "")
+    if not (secrets.compare_digest(request.cookies.get("osf", ""), key) or secrets.compare_digest(given, key)):
+        return JSONResponse({"detail": "access key required: open the link you were given"}, status_code=401)
+    resp = await call_next(request)
+    if given:
+        resp.set_cookie("osf", key, httponly=True, samesite="lax")
+    return resp
 
 
 class JobRequest(BaseModel):
@@ -98,6 +114,9 @@ def create_job(req: JobRequest):
         raise HTTPException(404, "unknown feature")
     if f["track"] == "partner" and not PARTNER:
         raise HTTPException(403, "partner pack is disabled (set OPENSFIELD_PARTNER=1)")
+    cap = int(os.environ.get("OPENSFIELD_MAX_JOBS", "0"))  # 0 = unlimited; protects credits on a public link
+    if cap and len(JOBS) >= cap:
+        raise HTTPException(429, f"this demo allows {cap} runs per server start; it has reached the limit")
     missing = [i["label"] for i in f["inputs"] if i.get("required") and not req.inputs.get(i["name"])]
     if missing:
         raise HTTPException(422, f"missing required input(s): {', '.join(missing)}")

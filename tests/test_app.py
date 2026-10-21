@@ -64,6 +64,22 @@ def test_examples_are_exposed_and_served():
         assert client.get("/" + url).status_code == 200
 
 
+def test_access_key_gate(monkeypatch):
+    monkeypatch.setenv("OPENSFIELD_ACCESS_KEY", "s3cret")
+    c = TestClient(app)
+    assert c.get("/api/config").status_code == 401
+    assert c.get("/api/config?key=wrong").status_code == 401
+    ok = c.get("/api/config?key=s3cret")
+    assert ok.status_code == 200 and "osf" in ok.cookies
+    assert c.get("/api/config").status_code == 200  # cookie now carries it
+
+
+def test_job_cap(monkeypatch):
+    monkeypatch.setenv("OPENSFIELD_MAX_JOBS", "1")
+    r = client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "x"}})
+    assert r.status_code == 429
+
+
 def test_text_only_feature_runs():
     r = client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "a sneaker"}})
     assert wait(r.json()["id"])["status"] == "done"
