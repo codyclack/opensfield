@@ -4,8 +4,13 @@ Open-source rebuild of Higgsfield's creative apps on ComfyUI, for Comfy's
 **#OpenSourceHiggsfield** challenge. Open weights by default; an optional
 `partner/` pack adds Comfy Router models.
 
-Status: **scaffolding + mock-mode app shell.** No workflow has been run yet (Comfy testing is on hold).
-See [COVERAGE.md](COVERAGE.md) for the full Higgsfield -> OpenSfield feature map.
+## Status (honest summary)
+- **4 of 72 modules are built and rendered for real** (motion transfer, camera-move shot, first/last-frame transition, text-to-image),
+  with open-weight models only. Outputs are in [`examples/`](examples/README.md).
+- **68 modules are mapped but not built.** [COVERAGE.md](COVERAGE.md) lists every Higgsfield feature, its planned open-weight
+  stand-in and its status (`planned` / `built` / `tested`).
+- **The app runs in mock mode out of the box** (placeholder outputs, no ComfyUI needed). Real runs through the app's `comfy-sdk`
+  path are implemented and unit-tested against a stub, but **not verified against a live server yet**.
 
 ## Try the app shell (mock mode, no ComfyUI)
 ```bash
@@ -22,7 +27,8 @@ Env: `OPENSFIELD_MODE=mock|comfy`, `OPENSFIELD_PARTNER=1` (show partner-pack mod
 - `schema/manifest.schema.json` — manifest contract
 - `scripts/build_registry.py` — regenerates manifests + `COVERAGE.md`
 - `app/` — FastAPI + static web UI (`registry.py` reads manifests, `runner.py` has MockRunner + comfy-sdk ComfyRunner, `main.py` is the API)
-- `generators/` — `make_*.py` workflow generators (todo)
+- `registry/wiring.py` — which node/field each form input drives, per built module
+- `examples/` — real example renders
 
 ## Workflows: rendered on Comfy Cloud
 Four hero modules have real workflows wired from official Comfy templates, and each has a real render in
@@ -53,8 +59,15 @@ Template example assets (their sample character/driving clip) are not used; supp
 uv run scripts/build_registry.py
 ```
 
-## Run locally (todo, after workflows exist)
-`pip install comfy-sdk` and point `COMFY_BASE_URL` at a local ComfyUI (via
-`comfy-api-proxy`) or a Comfy API deployment.
+## Real runs (unverified through the app)
+```bash
+uv sync --extra comfy
+export OPENSFIELD_MODE=comfy
+export COMFY_API_KEY=...                      # Comfy Cloud, or
+export COMFY_BASE_URL=http://127.0.0.1:8189   # a self-hosted ComfyUI behind comfy-api-proxy (no key needed)
+uv run uvicorn app.main:app --port 8765
+```
+The four built modules need their models on the target server (names are in each manifest's `workflow.models`; Comfy Cloud
+already has them). You can also open any `features/<id>/workflow_ui.json` directly in ComfyUI.
 
 License: MIT.
