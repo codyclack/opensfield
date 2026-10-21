@@ -232,8 +232,8 @@ C6 = Clip(EX / "first_last_frame_morph.mp4", h=720)
 L6t = title("VIRAL-STYLE TRANSITION", 60, 56)
 L6a = Layer(lambda d: [d.text((1020, 280), "LTX-2.5 first / last frame", font=font(BOLD, 44), fill=WHITE),
                        d.text((1020, 350), "Two stills in, one morph out.", font=font(REG, 36), fill=MUTED),
-                       d.text((1020, 410), "The Viral Hub effects (87 presets)", font=font(REG, 36), fill=MUTED),
-                       d.text((1020, 460), "are built on this engine.", font=font(REG, 36), fill=MUTED)])
+                       d.text((1020, 410), "Viral Hub effects: 6 of 87 presets", font=font(REG, 36), fill=MUTED),
+                       d.text((1020, 460), "are built (on LTX-2.5 image-to-video).", font=font(REG, 36), fill=MUTED)])
 L6c = caption("Spin, flash of light, new outfit and person", "First frame and last frame are both generated stills")
 
 
