@@ -71,9 +71,11 @@ def run_mock(feature: dict, job: dict, update: Update) -> list[dict]:
 def run_local(feature: dict, job: dict, update: Update) -> list[dict]:
     """CPU effects (app/fx.py). Works in any mode: it never touches ComfyUI."""
     from . import fx
-    mode = job["inputs"].get(feature["local"]["mode_input"]) or next(s["default"] for s in feature["inputs"] if s["name"] == feature["local"]["mode_input"])
+    loc = feature["local"]
+    mode = loc.get("mode") or job["inputs"].get(loc["mode_input"]) or next(s["default"] for s in feature["inputs"] if s["name"] == loc["mode_input"])
     out = OUTPUTS / job["id"] / f"{mode}.mp4"
-    fx.process_video(UPLOADS / job["inputs"]["video"], out, mode, max_seconds=10, progress=lambda p: update(progress=p))
+    fx.process_video(UPLOADS / job["inputs"]["video"], out, mode, max_seconds=10, progress=lambda p: update(progress=p),
+                     text=str(job["inputs"].get(loc.get("text_input", ""), "")))
     return [{"url": f"/outputs/{job['id']}/{mode}.mp4", "kind": "video", "name": out.name, "mock": False}]
 
 

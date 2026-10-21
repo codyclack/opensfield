@@ -51,9 +51,13 @@ Third batch (same day). Preset modules were rendered with the app's own prompt a
 | `brand_logo.png` | `marketing.brand-assets` (FLUX 3 Klein) | "Logo mark" preset; no text, as requested |
 | `angle_low.png` | `scene3d.angles` (Qwen-Image-Edit 2511) | `char_b.png`, "Low angle" preset: same person from below with dramatic perspective |
 | `sprite_sheet.png` | `scene3d.autosprite` (Z-Image Turbo) | 4x4 walk-cycle grid of a knight on green |
+| `fx_captions.mp4`, `fx_typewriter.mp4`, `fx_wordstack.mp4` | `audio.captions`, `matchcut.text-motion` | Local CPU text looks. Captions are your own lines spread evenly over the clip: there is no speech recognition |
+| `flicker_input.mp4` -> `fx_deflicker.mp4` | `video.deflicker` | Local CPU. Random brightness flicker was injected into `driving_dance.mp4`; frame-to-frame brightness jitter dropped from 36.9 to 8.7 |
 | `fx_thermal_blackhot.mp4`, `fx_thermal_rainbow.mp4`, `fx_crt.mp4`, `fx_vhs.mp4`, `fx_nokia.mp4` | `matchcut.thermal`, `matchcut.retro-fx` | **Local CPU effects** (`app/fx.py`), not Comfy workflows. Source `driving_dance.mp4`, first 4 s at 640 px |
 
-Tried and not shipped: `soul.location` (two-image template returned corrupted images for portrait + landscape inputs in three attempts).
+| `style_yarn.mp4` | `genjutsu.styles` (LTX-2.3 IC-LoRA) | control video `driving_dance.mp4`, restyled first frame `style_yarn_frame.png` (made with Qwen-Image-Edit from `style_source_frame.png`: "knitted wool yarn world"). The dance and framing carry over and the world is knitted, but the person is redrawn as someone else |
+
+Tried and not shipped: `video.lipsync` (LTX-2.3 image+audio: kept the face for one frame, then invented a different scene), `soul.location` (two-image template returned corrupted images for portrait + landscape inputs in three attempts).
 
 Known quirks: the first frame of `driving_dance.mp4` is a torso crop (the model's opening frame), and the push-in shot
 crops to the torso and shifts the hair colour. These are model behaviour, not post-processed.

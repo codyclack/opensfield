@@ -87,3 +87,38 @@ def test_process_video_round_trip(tmp_path):
     assert seen and seen[-1] <= 0.99
     with pytest.raises(ValueError):
         fx.process_video(src, dst, "nope")
+
+
+def _ctx(text="one\ntwo\nthree", n=30):
+    return {"text": text, "fps": 24.0, "n": n}
+
+
+def test_text_looks_draw_and_progress():
+    f = frame(h=180, w=320)
+    cap_a, cap_b = fx.captions(f, 0, _ctx()), fx.captions(f, 29, _ctx())
+    assert not np.array_equal(cap_a, f) and not np.array_equal(cap_a, cap_b)  # a different line later
+    t_early, t_late = fx.typewriter(f, 2, _ctx("hello world this is typed", 60)), fx.typewriter(f, 50, _ctx("hello world this is typed", 60))
+    green = lambda im: int(((im[..., 1] > 200) & (im[..., 2] < 160) & (im[..., 0] < 170)).sum())  # noqa: E731  (the text colour)
+    assert green(t_late) > green(t_early)  # more typed text on screen later
+    w_early, w_late = fx.wordstack(f, 0, _ctx("a b c d", 40)), fx.wordstack(f, 39, _ctx("a b c d", 40))
+    assert int((w_late != w_early).sum()) > 0
+
+
+def test_deflicker_reduces_brightness_jitter():
+    rng = np.random.default_rng(1)
+    base = frame()
+    frames = [np.clip(base.astype(np.float32) * rng.uniform(0.7, 1.3), 0, 255).astype(np.uint8) for _ in range(30)]
+    means = np.array([float(f.mean()) for f in frames])
+    gains = fx._gains_from_means(means)
+    out = [fx.deflicker(f, i, {"gains": gains}) for i, f in enumerate(frames)]
+    after = np.array([float(o.mean()) for o in out])
+    assert np.std(np.diff(after)) < 0.4 * np.std(np.diff(means))
+
+
+def test_text_looks_refuse_empty_text(tmp_path):
+    clip = tmp_path / "c.mp4"
+    _make_clip(clip)
+    with pytest.raises(ValueError):
+        fx.process_video(clip, tmp_path / "o.mp4", "captions", text="  \n ")
+    fx.process_video(clip, tmp_path / "o.mp4", "typewriter", text="hi there")
+    assert (tmp_path / "o.mp4").exists()

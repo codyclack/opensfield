@@ -15,6 +15,11 @@ try:
 except ImportError:  # pragma: no cover - exercised only without the extra
     cv2 = np = None
 
+try:
+    from PIL import Image, ImageDraw, ImageFont
+except ImportError:  # pragma: no cover
+    Image = ImageDraw = ImageFont = None
+
 THERMAL = ["black-hot", "white-hot", "rainbow", "iron"]
 RETRO = ["crt", "crt-glitch", "vhs", "glitch", "nokia", "retropop", "night-vision"]
 
@@ -151,13 +156,111 @@ MODES: dict[str, Callable] = {
 }
 
 
+def _font(size, bold=True, mono=False):
+    import os
+    names = (["consolab.ttf", "consola.ttf", "DejaVuSansMono-Bold.ttf"] if mono else
+             ["segoeuib.ttf", "arialbd.ttf", "DejaVuSans-Bold.ttf"] if bold else ["segoeui.ttf", "arial.ttf", "DejaVuSans.ttf"])
+    for d in (os.environ.get("WINDIR", "C:/Windows") + "/Fonts", "/usr/share/fonts/truetype/dejavu", "/Library/Fonts"):
+        for n in names:
+            if os.path.exists(os.path.join(d, n)):
+                return ImageFont.truetype(os.path.join(d, n), size)
+    return ImageFont.load_default(size=size)  # Pillow >= 10.1 bitmap fallback
+
+
+def _draw_text(frame, items):
+    """items: [(text, (x, y), size, rgb, kw)] drawn with a dark outline. Returns a new BGR frame."""
+    if Image is None:
+        raise RuntimeError("text looks need Pillow: uv sync --extra fx")
+    img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+    d = ImageDraw.Draw(img, "RGBA")
+    for text, xy, size, rgb, kw in items:
+        d.text(xy, text, font=_font(size, mono=kw.get("mono", False)), fill=rgb + (255,), anchor=kw.get("anchor", "la"),
+               stroke_width=max(1, size // 14), stroke_fill=(0, 0, 0, 255))
+    return cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+
+
+def _lines(text):
+    return [ln.strip() for ln in text.splitlines() if ln.strip()]
+
+
+def captions(frame, idx, ctx):
+    """Burn the given lines as subtitles, spread evenly across the clip (no speech recognition)."""
+    lines = _lines(ctx["text"])
+    h, w = frame.shape[:2]
+    cur = lines[min(len(lines) - 1, int(idx / max(1, ctx["n"]) * len(lines)))]
+    size = max(14, h // 16)
+    out = frame.copy()
+    cv2.rectangle(out, (0, int(h * 0.78)), (w, int(h * 0.94)), (0, 0, 0), -1)
+    out = cv2.addWeighted(out, 0.45, frame, 0.55, 0)
+    return _draw_text(out, [(cur, (w // 2, int(h * 0.86)), size, (255, 255, 255), {"anchor": "mm"})])
+
+
+def typewriter(frame, idx, ctx):
+    """Type the text onto a dark panel, character by character, with a blinking cursor."""
+    text = " ".join(_lines(ctx["text"]))
+    h, w = frame.shape[:2]
+    shown = int(len(text) * min(1.0, idx / max(1, ctx["n"] * 0.7)))
+    cursor = "_" if (idx // max(1, int(ctx["fps"] / 2))) % 2 == 0 or shown < len(text) else " "
+    size = max(14, h // 18)
+    per_line = max(8, int(w * 0.84 / (size * 0.6)))
+    rows = [text[:shown][i:i + per_line] for i in range(0, max(1, shown), per_line)] or [""]
+    rows[-1] += cursor
+    panel = frame.copy()
+    cv2.rectangle(panel, (int(w * 0.06), int(h * 0.08)), (int(w * 0.94), int(h * 0.08) + int(size * 1.5 * (len(rows) + 1))), (0, 0, 0), -1)
+    out = cv2.addWeighted(panel, 0.6, frame, 0.4, 0)
+    return _draw_text(out, [(r, (int(w * 0.09), int(h * 0.08) + int(size * 0.8) + int(i * size * 1.5)), size, (120, 255, 140), {"mono": True})
+                            for i, r in enumerate(rows)])
+
+
+def wordstack(frame, idx, ctx):
+    """Stack the words one by one as big outlined type, alternating white and lime."""
+    words = " ".join(_lines(ctx["text"])).split()
+    h, w = frame.shape[:2]
+    show = max(1, min(len(words), int(np.ceil(len(words) * min(1.0, (idx + 1) / max(1, ctx["n"] * 0.8))))))
+    size = max(18, min(h // 6, int(h * 0.8 / max(1, show) * 0.75)))
+    y0 = h // 2 - int(size * 0.55 * show)
+    items = [(words[i].upper(), (int(w * 0.07), y0 + int(i * size * 1.1)), size, (255, 255, 255) if i % 2 == 0 else (209, 254, 23), {})
+             for i in range(show)]
+    return _draw_text(cv2.addWeighted(frame, 0.7, np.zeros_like(frame), 0.3, 0), items)
+
+
+def deflicker(frame, idx, ctx):
+    """Scale each frame so its mean brightness follows a rolling median (computed in a first pass)."""
+    return _u8(frame.astype(np.float32) * ctx["gains"][min(idx, len(ctx["gains"]) - 1)])
+
+
+def _gains_from_means(means, window=9):
+    m = np.asarray(means, dtype=np.float64) + 1e-3
+    pad = window // 2
+    ref = np.array([np.median(m[max(0, i - pad):i + pad + 1]) for i in range(len(m))])
+    return np.clip(ref / m, 0.6, 1.6)
+
+
+def _deflicker_gains(path, limit, window=9):
+    cap = cv2.VideoCapture(str(path))
+    means = []
+    while len(means) < limit:
+        ok, fr = cap.read()
+        if not ok:
+            break
+        means.append(float(fr.mean()))
+    cap.release()
+    return _gains_from_means(means, window)
+
+
+CTX_MODES: dict[str, Callable] = {"captions": captions, "typewriter": typewriter, "wordstack": wordstack, "deflicker": deflicker}
+TEXT_MODES = {"captions", "typewriter", "wordstack"}
+
+
 def process_video(src: Path, dst: Path, mode: str, max_seconds: float | None = None, max_width: int | None = 960,
-                  progress: Callable[[float], None] | None = None) -> Path:
+                  progress: Callable[[float], None] | None = None, text: str = "") -> Path:
     """Apply one effect to every frame of `src` and write an H.264 mp4 to `dst`."""
     _need()
     import imageio_ffmpeg
-    if mode not in MODES:
-        raise ValueError(f"unknown mode {mode!r}; choose one of {sorted(MODES)}")
+    if mode not in MODES and mode not in CTX_MODES:
+        raise ValueError(f"unknown mode {mode!r}; choose one of {sorted({*MODES, *CTX_MODES})}")
+    if mode in TEXT_MODES and not _lines(text):
+        raise ValueError(f"the {mode!r} look needs some text")
     cap = cv2.VideoCapture(str(src))
     if not cap.isOpened():
         raise RuntimeError(f"cannot read video {src}")
@@ -170,6 +273,9 @@ def process_video(src: Path, dst: Path, mode: str, max_seconds: float | None = N
     dst.parent.mkdir(parents=True, exist_ok=True)
     cmd = [imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{ow}x{oh}",
            "-r", f"{fps:.3f}", "-i", "-", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "23", str(dst)]
+    ctx = {"text": text, "fps": fps, "n": min(total, limit) if total else limit}
+    if mode == "deflicker":
+        ctx["gains"] = _deflicker_gains(src, limit)
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     n = 0
     while n < limit:
@@ -178,7 +284,8 @@ def process_video(src: Path, dst: Path, mode: str, max_seconds: float | None = N
             break
         if (ow, oh) != (w, h):
             fr = cv2.resize(fr, (ow, oh), interpolation=cv2.INTER_AREA)
-        p.stdin.write(np.ascontiguousarray(MODES[mode](fr, n)).tobytes())
+        out = CTX_MODES[mode](fr, n, ctx) if mode in CTX_MODES else MODES[mode](fr, n)
+        p.stdin.write(np.ascontiguousarray(out).tobytes())
         n += 1
         if progress and total:
             progress(min(0.99, n / min(total, limit)))

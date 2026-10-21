@@ -349,3 +349,32 @@ WIRING["scene3d.angles"] = _reuse("image.edit-open", "image.edit-open", [
     WIRING["image.edit-open"]["inputs"][2]])
 
 WIRING["scene3d.angles"].update(verified_via=VIA, examples=["examples/angle_low.png"])  # rendered with the "Low angle" preset
+
+
+WIRING.update({
+    "video.deflicker": dict(
+        local=dict(mode="deflicker"), template="app/fx.py", output_kind="video", outputs=[],
+        inputs=[dict(name="video", label="Flickering video", kind="video", required=True)],
+        verified_via=LOCAL_VIA, examples=["examples/flicker_input.mp4", "examples/fx_deflicker.mp4"]),
+    "audio.captions": dict(
+        local=dict(mode="captions", text_input="text"), template="app/fx.py", output_kind="video", outputs=[],
+        inputs=[dict(name="video", label="Video", kind="video", required=True),
+                dict(name="text", label="Caption lines (one per line, spread evenly; no speech recognition)", kind="text", required=True)],
+        verified_via=LOCAL_VIA, examples=["examples/fx_captions.mp4"]),
+    "matchcut.text-motion": dict(
+        local=dict(mode_input="mode", text_input="text"), template="app/fx.py", output_kind="video", outputs=[],
+        inputs=[dict(name="video", label="Video", kind="video", required=True),
+                dict(name="mode", label="Animation", kind="choice", options=["typewriter", "wordstack"], default="typewriter"),
+                dict(name="text", label="Text", kind="text", required=True)],
+        verified_via=LOCAL_VIA, examples=["examples/fx_typewriter.mp4", "examples/fx_wordstack.mp4"]),
+})
+
+
+# LTX-2.3 IC-LoRA union control: the control video supplies structure/motion, the image supplies the new look of the first frame.
+WIRING["genjutsu.styles"] = dict(
+    template="video_ltx2_3_ic_lora", output_kind="video",
+    inputs=[inp("video", "Control video (motion + structure)", "video", "199", "file", required=True),
+            inp("image", "Restyled first frame (the look you want)", "image", "200", "image", required=True),
+            inp("prompt", "Describe the restyled scene", "text", "129:209", "prompt", required=True)],
+    outputs=["68"], verified_via=VIA, examples=["examples/style_yarn.mp4", "examples/style_yarn_frame.png"])
+# Tried and not shipped: video.lipsync (LTX-2.3 image+audio): kept the face for one frame then invented a different scene.

@@ -12,5 +12,34 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "local": {
+      "mode": "captions",
+      "text_input": "text"
+    },
+    "template": "app/fx.py",
+    "inputs": [
+      {
+        "name": "video",
+        "label": "Video",
+        "kind": "video",
+        "required": true
+      },
+      {
+        "name": "text",
+        "label": "Caption lines (one per line, spread evenly; no speech recognition)",
+        "kind": "text",
+        "required": true
+      }
+    ],
+    "outputs": [],
+    "output_kind": "video",
+    "models": [],
+    "verified": true,
+    "verified_via": "Rendered locally by app/fx.py on CPU, 2026-10-21 (no ComfyUI involved)",
+    "examples": [
+      "examples/fx_captions.mp4"
+    ]
+  }
 }

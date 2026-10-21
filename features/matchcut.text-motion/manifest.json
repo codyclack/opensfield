@@ -11,5 +11,45 @@
   "note": "",
   "count": 6,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "local": {
+      "mode_input": "mode",
+      "text_input": "text"
+    },
+    "template": "app/fx.py",
+    "inputs": [
+      {
+        "name": "video",
+        "label": "Video",
+        "kind": "video",
+        "required": true
+      },
+      {
+        "name": "mode",
+        "label": "Animation",
+        "kind": "choice",
+        "options": [
+          "typewriter",
+          "wordstack"
+        ],
+        "default": "typewriter"
+      },
+      {
+        "name": "text",
+        "label": "Text",
+        "kind": "text",
+        "required": true
+      }
+    ],
+    "outputs": [],
+    "output_kind": "video",
+    "models": [],
+    "verified": true,
+    "verified_via": "Rendered locally by app/fx.py on CPU, 2026-10-21 (no ComfyUI involved)",
+    "examples": [
+      "examples/fx_typewriter.mp4",
+      "examples/fx_wordstack.mp4"
+    ]
+  }
 }
