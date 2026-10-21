@@ -11,5 +11,61 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "image_qwen_image_2_1_image_edit",
+    "api": "features/soul.cast/workflow_api.json",
+    "ui": "features/soul.cast/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Character image",
+        "kind": "image",
+        "node": "470",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "image_b",
+        "label": "Second reference image",
+        "kind": "image",
+        "node": "475",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Instruction (use 'first image' / 'second image')",
+        "kind": "text",
+        "node": "459:500",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "459:458",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "461"
+    ],
+    "models": [
+      "qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+      "qwen3vl_8b_bf16.safetensors",
+      "qwen3vl_8b_int8_convrot.safetensors",
+      "qwen_image_2.1_bf16.safetensors",
+      "qwen_image_2.1_int8_convrot.safetensors",
+      "qwen_image_2.1_vae_bf16.safetensors"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/soul_cast.png"
+    ]
+  }
 }

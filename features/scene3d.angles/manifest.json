@@ -11,5 +11,71 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "image_qwen_image_edit_2511_int8",
+    "api": "features/image.edit-open/workflow_api.json",
+    "ui": "features/image.edit-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Subject image",
+        "kind": "image",
+        "node": "41",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "angle",
+        "label": "Camera angle",
+        "kind": "choice",
+        "options": [
+          "Side view",
+          "Back view",
+          "Low angle",
+          "Top-down"
+        ],
+        "default": "Side view",
+        "presets": {
+          "Side view": "Show the exact same subject from a camera rotated 90 degrees to the left so we see their left side, same outfit, same lighting, plain background.",
+          "Back view": "Show the exact same subject from directly behind, same outfit, same lighting, plain background.",
+          "Low angle": "Show the exact same subject from a low camera angle looking up at them, dramatic perspective, same outfit and lighting.",
+          "Top-down": "Show the exact same subject from a high camera angle looking down at them, same outfit and lighting."
+        },
+        "apply_to": "prompt"
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "170:151",
+        "field": "prompt",
+        "required": false
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "170:169",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "195"
+    ],
+    "models": [
+      "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "qwen_image_edit_2511_int8_convrot.safetensors",
+      "qwen_image_vae.safetensors"
+    ],
+    "reuses": "image.edit-open",
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/angle_low.png"
+    ]
+  }
 }

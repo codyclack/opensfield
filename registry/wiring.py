@@ -88,6 +88,11 @@ WIRING = {
 }
 
 
+def preset(name, label, presets, apply_to="prompt"):
+    """A choice with no node of its own: the chosen text is prepended to the `apply_to` text input (see runner.resolve_values)."""
+    return dict(name=name, label=label, kind="choice", options=list(presets), default=next(iter(presets)), presets=presets, apply_to=apply_to)
+
+
 def _seed(node, field="seed", **kw):
     return inp("seed", SEED["label"], "seed", node, field, default=0, **kw)
 
@@ -153,3 +158,194 @@ WIRING.update({
         verified_via=VIA, examples=["examples/image_to_3d.glb"],
         inputs=[inp("image", "Image", "image", "56", "image", required=True), _seed("91:3")], outputs=["82"]),
 })
+
+
+# Third batch. New templates (own workflow files) first, then preset modules that reuse another module's files via files_from.
+WIRING.update({
+    "image.t2i-open": dict(
+        template="image_flux3_klein_t2i", output_kind="image",
+        inputs=[inp("prompt", "Prompt", "text", "18:17", "value", required=True),
+                inp("aspect", "Aspect", "choice", "19", "aspect_ratio", options=ASPECTS, default="1:1 (Square)"), _seed("18:7")],
+        outputs=["9"]),
+    "soul.cinematic": dict(
+        template="image_krea2_turbo_t2i", output_kind="image",
+        inputs=[inp("prompt", "Scene", "text", "30:19", "value", required=True,
+                    prefix="Cinematic film still, anamorphic lens, shallow depth of field, natural film grain. "),
+                inp("aspect", "Aspect", "choice", "49", "aspect_ratio", options=ASPECTS, default="16:9 (Widescreen)"), _seed("30:3")],
+        outputs=["29"]),
+    "soul.cast": dict(
+        template="image_qwen_image_2_1_image_edit", output_kind="image",
+        inputs=[inp("image", "Character image", "image", "470", "image", required=True),
+                inp("image_b", "Second reference image", "image", "475", "image", required=True),
+                inp("prompt", "Instruction (use 'first image' / 'second image')", "text", "459:500", "prompt", required=True),
+                _seed("459:458")],
+        outputs=["461"]),
+    "soul.styles": dict(
+        template="image_krea2_turbo_int8_image_style_reference", output_kind="image",
+        inputs=[inp("style", "Style reference image", "image", "69", "image", required=True),
+                inp("prompt", "Subject", "text", "30:19", "value", required=True),
+                inp("aspect", "Aspect", "choice", "71", "aspect_ratio", options=ASPECTS, default="1:1 (Square)"), _seed("30:63", "noise_seed")],
+        outputs=["29"]),
+    "image.inpaint-brush": dict(
+        template="flux_fill_inpaint_example", output_kind="image",
+        inputs=[inp("image", "Image (transparent area = repaint here)", "image", "17", "image", required=True),
+                inp("prompt", "What to paint there", "text", "47:23", "text", required=True), _seed("47:3")],
+        outputs=["9"]),
+    "image.outpaint": dict(
+        template="flux_fill_outpaint_example", output_kind="image",
+        inputs=[inp("image", "Image", "image", "17", "image", required=True),
+                inp("prompt", "What the new area should contain", "text", "23", "text", required=True),
+                inp("left", "Extend left (px)", "number", "44", "left", default=256, min=0, max=1024, step=64),
+                inp("right", "Extend right (px)", "number", "44", "right", default=256, min=0, max=1024, step=64),
+                inp("top", "Extend top (px)", "number", "44", "top", default=0, min=0, max=1024, step=64),
+                inp("bottom", "Extend bottom (px)", "number", "44", "bottom", default=0, min=0, max=1024, step=64), _seed("3")],
+        outputs=["9"]),
+    "image.decompose": dict(
+        template="image_qwen_image_layered", output_kind="image",
+        inputs=[inp("image", "Image", "image", "74", "image", required=True),
+                inp("prompt", "Describe the image", "text", "116", "value", required=True),
+                inp("layers", "Layers", "number", "83:118", "layers", default=3, min=2, max=8, step=1), _seed("83:3")],
+        outputs=["60"]),
+    "video.edit": dict(
+        template="video_bernini_r_video_editing", output_kind="video",
+        inputs=[inp("video", "Video", "video", "47", "file", required=True),
+                inp("image", "Reference image (new background / look)", "image", "104", "image", required=True),
+                inp("prompt", "Edit instruction", "text", "298:297", "value", required=True), _seed("298:275", "noise_seed")],
+        outputs=["46"]),
+})
+
+CAM = WIRING["cinema.camera-rig"]["inputs"]  # start_image, prompt, aspect, duration, seed
+
+
+def _with(inputs, **changes):
+    """Copy a module's inputs, applying per-input overrides: _with(CAM, prompt=dict(required=False, prefix="..."))."""
+    out = []
+    for s in inputs:
+        s = dict(s)
+        s.update(changes.get(s["name"], {}))
+        out.append(s)
+    return out
+
+
+def _reuse(src, template_of, inputs, outputs=None, **kw):
+    return dict(template=WIRING[template_of]["template"], files_from=src, output_kind=WIRING[template_of].get("output_kind", "image"),
+                inputs=inputs, outputs=outputs or WIRING[template_of]["outputs"], **kw)
+
+
+EFFECTS = {
+    "Clones": "Identical clones of the person appear around the scene one after another, each mirroring the person's movements, while the original steps toward the camera. Locked-off camera.",
+    "Vanish": "The person's body suddenly disappears, leaving their empty clothes to collapse and fall flat onto the ground. Locked-off camera.",
+    "Floating fall": "The person falls backward in slow motion while their belongings float in midair around them, the camera drifting through crisp close-ups.",
+    "Act natural": "Time freezes for the person and the objects near them mid-action while everything else in the world keeps moving normally.",
+    "Giant": "The person grows into a towering giant standing in a city street, buildings small beside them, the camera tilting up their body.",
+    "Eyes in": "The camera pushes in on the person's face and dives into their eye, passing through the dark pupil.",
+}
+WIRING.update({
+    # soul.location is deliberately NOT wired: the two-image Qwen 2.1 template returned corrupted images for a portrait + a
+    # landscape location photo in three attempts (it worked for two portraits). Revisit with an inpaint-based approach.
+    # single-image tasks use the single-image edit workflow (Qwen-Image-Edit 2511), which follows these instructions better
+    "soul.id": _reuse("image.edit-open", "image.edit-open", [
+        dict(WIRING["image.edit-open"]["inputs"][0], label="Person (identity to keep)"),
+        dict(WIRING["image.edit-open"]["inputs"][1], label="New scene", prefix="Keep this person's face, hair, build and clothes exactly the same, and change the scene around them so that they are "),
+        WIRING["image.edit-open"]["inputs"][2]]),
+    "soul.character-sheet": _reuse("image.edit-open", "image.edit-open", [
+        dict(WIRING["image.edit-open"]["inputs"][0], label="Character image"),
+        dict(WIRING["image.edit-open"]["inputs"][1], required=False, label="Extra detail (optional)",
+             prefix="Turn this into a character reference sheet: the same person shown three times side by side as a front view, a side view and a back view, same outfit, plain light background. "),
+        WIRING["image.edit-open"]["inputs"][2]]),
+    "viral.effects": _reuse("cinema.camera-rig", "cinema.camera-rig", [
+        CAM[0], preset("effect", "Effect", EFFECTS),
+        dict(CAM[1], required=False, label="Subject detail (optional)", prefix="Use the provided start image as the first frame. "), *CAM[2:]]),
+    "cinema.multishot": _reuse("cinema.camera-rig", "cinema.camera-rig", _with(CAM,
+        prompt=dict(label="Shots: 'Shot 1: ... Shot 2: ...'", prefix="Use the provided start image as the first frame. A multi-shot sequence with hard cuts between shots, consistent character and lighting. "),
+        duration=dict(default=8))),
+    "marketing.studio-presets": _reuse("cinema.camera-rig", "cinema.camera-rig", [
+        dict(CAM[0], label="Product image"),
+        preset("motion", "Product motion", {
+            "Orbit": "A smooth 180 degree orbit around the product at eye level on a clean studio surface, soft reflections.",
+            "Slow push-in": "A slow macro push-in on the product, shallow depth of field, soft light sweeping across its surface.",
+            "Rise and reveal": "The product rises into frame from below on a seamless backdrop as a light sweep reveals its details."}),
+        dict(CAM[1], required=False, label="Extra detail (optional)", prefix="Use the provided start image as the first frame. "), *CAM[2:]]),
+    "marketing.product-photoshoot": _reuse("image.edit-open", "image.edit-open", [
+        dict(WIRING["image.edit-open"]["inputs"][0], label="Product photo"),
+        preset("scene", "Shot style", {
+            "Studio packshot": "Place this product on a seamless pure white studio background with a soft natural shadow, e-commerce packshot, evenly lit.",
+            "Lifestyle table": "Place this product on a sunlit wooden table in a bright minimal room, shallow depth of field, lifestyle photo.",
+            "City street": "Place this product on a wet city sidewalk at dusk with neon reflections, shallow depth of field."}),
+        dict(WIRING["image.edit-open"]["inputs"][1], required=False, label="Extra detail (optional)"), WIRING["image.edit-open"]["inputs"][2]]),
+    "marketing.thumbnails": _reuse("soul.cinematic", "soul.cinematic", [
+        preset("framework", "Thumbnail framework", {
+            "Face close-up": "YouTube thumbnail: extreme close-up of an expressive face with wide eyes, high contrast, saturated colors, clear empty space on the left for text.",
+            "Hero object": "YouTube thumbnail: one bold hero object in sharp focus on a vivid gradient background, strong rim light, empty space at the top for text.",
+            "Mystery silhouette": "YouTube thumbnail: dramatic silhouette against a glowing backdrop, moody colors, strong contrast, empty space on the right for text."}),
+        dict(WIRING["soul.cinematic"]["inputs"][0], label="Topic / subject", prefix=""), *WIRING["soul.cinematic"]["inputs"][1:]]),
+    "marketing.ads-studio": _reuse("image.t2i-open", "image.t2i-open", [
+        preset("format", "Ad format", {
+            "Social product ad": "A polished social media product ad photo, product centered, clean colorful background, generous empty space for a headline.",
+            "Poster": "A bold advertising poster layout with a strong focal image and large empty areas reserved for headline and body copy."}),
+        dict(WIRING["image.t2i-open"]["inputs"][0], label="Product / brand and idea"), *WIRING["image.t2i-open"]["inputs"][1:]]),
+    "marketing.brand-assets": _reuse("image.t2i-open", "image.t2i-open", [
+        preset("asset", "Asset type", {
+            "Logo mark": "A clean minimal vector-style logo mark on a plain white background, flat colors, centered, no text.",
+            "Merch mockup": "A product mockup of a plain t-shirt on a hanger against a neutral wall with the brand mark printed on the chest, studio lighting.",
+            "Packaging mockup": "A product packaging mockup: a box and a pouch on a light surface, brand colors, soft studio shadows."}),
+        dict(WIRING["image.t2i-open"]["inputs"][0], label="Brand name and style"), *WIRING["image.t2i-open"]["inputs"][1:]]),
+    "scene3d.autosprite": _reuse("soul.t2i", "soul.t2i", [
+        dict(WIRING["soul.t2i"]["inputs"][0], label="Character", prefix="Game sprite sheet, a 4 by 4 grid of the same character in a walk cycle, flat solid green background, consistent proportions: "),
+        *WIRING["soul.t2i"]["inputs"][1:]]),
+})
+
+
+# Local CPU effects (app/fx.py): no workflow files, no ComfyUI. "verified_via" is added once they have rendered.
+LOCAL_VIA = "Rendered locally by app/fx.py on CPU, 2026-10-21 (no ComfyUI involved)"
+WIRING.update({
+    "matchcut.thermal": dict(
+        local=dict(mode_input="palette"), template="app/fx.py", output_kind="video", outputs=[],
+        inputs=[dict(name="video", label="Video", kind="video", required=True),
+                dict(name="palette", label="Palette", kind="choice", options=["black-hot", "white-hot", "rainbow", "iron"], default="black-hot")],
+        verified_via=LOCAL_VIA, examples=["examples/fx_thermal_blackhot.mp4", "examples/fx_thermal_rainbow.mp4"]),
+    "matchcut.retro-fx": dict(
+        local=dict(mode_input="mode"), template="app/fx.py", output_kind="video", outputs=[],
+        inputs=[dict(name="video", label="Video", kind="video", required=True),
+                dict(name="mode", label="Look", kind="choice", default="crt",
+                     options=["crt", "crt-glitch", "vhs", "glitch", "nokia", "retropop", "night-vision"])],
+        verified_via=LOCAL_VIA, examples=["examples/fx_crt.mp4", "examples/fx_vhs.mp4", "examples/fx_nokia.mp4"]),
+})
+
+
+# Real renders on Comfy Cloud, 2026-10-21 (see examples/README.md). Preset modules were rendered with the app's own prompt assembly.
+_RENDERED = {
+    "image.t2i-open": ["examples/t2i_flux3_sneakers.png"],
+    "soul.cinematic": ["examples/cinematic_krea.png"],
+    "soul.cast": ["examples/soul_cast.png"],
+    "soul.styles": ["examples/style_reference_out.png"],
+    "image.inpaint-brush": ["examples/inpaint_out.png"],
+    "image.outpaint": ["examples/outpaint_out.png"],
+    "image.decompose": ["examples/layers_0.png", "examples/layers_1.png", "examples/layers_2.png"],
+    "video.edit": ["examples/video_edit_street.mp4"],
+    "soul.id": ["examples/soul_id.png"],
+    "soul.character-sheet": ["examples/character_sheet.png"],
+    "viral.effects": ["examples/effect_clones.mp4", "examples/effect_vanish.mp4"],
+    "cinema.multishot": ["examples/multishot.mp4"],
+    "marketing.studio-presets": ["examples/product_orbit.mp4"],
+    "marketing.product-photoshoot": ["examples/product_photoshoot.png"],
+    "marketing.thumbnails": ["examples/thumbnail_hero.png"],
+    "marketing.ads-studio": ["examples/ad_social.png"],
+    "marketing.brand-assets": ["examples/brand_logo.png"],
+    "scene3d.autosprite": ["examples/sprite_sheet.png"],
+}
+for _fid, _ex in _RENDERED.items():
+    WIRING[_fid].update(verified_via=VIA, examples=_ex)
+
+
+WIRING["scene3d.angles"] = _reuse("image.edit-open", "image.edit-open", [
+    dict(WIRING["image.edit-open"]["inputs"][0], label="Subject image"),
+    preset("angle", "Camera angle", {
+        "Side view": "Show the exact same subject from a camera rotated 90 degrees to the left so we see their left side, same outfit, same lighting, plain background.",
+        "Back view": "Show the exact same subject from directly behind, same outfit, same lighting, plain background.",
+        "Low angle": "Show the exact same subject from a low camera angle looking up at them, dramatic perspective, same outfit and lighting.",
+        "Top-down": "Show the exact same subject from a high camera angle looking down at them, same outfit and lighting."}),
+    dict(WIRING["image.edit-open"]["inputs"][1], required=False, label="Extra detail (optional)"),
+    WIRING["image.edit-open"]["inputs"][2]])
+
+WIRING["scene3d.angles"].update(verified_via=VIA, examples=["examples/angle_low.png"])  # rendered with the "Low angle" preset

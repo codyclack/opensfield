@@ -165,7 +165,7 @@ steps = [("1  Feature map", ["72 Higgsfield modules", "tiers, open stand-ins"], 
 L2t = title("EVERY FEATURE = A MANIFEST + A WORKFLOW")
 L2boxes = [Layer(lambda d, i=i, s=s: box(d, 80 + i * 360, 330, 320, 190, s[0], s[1], s[2])) for i, s in enumerate(steps)]
 L2arrows = [Layer(lambda d, i=i: d.text((410 + i * 360 - 8, 395), "→", font=font(BOLD, 56), fill=MUTED)) for i in range(4)]
-L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it and rendered 12 modules for real. Everything runs on open-weight models.")
+L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it and rendered 33 modules for real. Everything runs on open-weight models.")
 
 
 @scene(14)
@@ -269,7 +269,7 @@ C8 = Clip(EX / "text_to_video_alley.mp4", w=560)
 L8t = title("MORE MODULES, ALL REAL RENDERS", 60, 56)
 L8l = [label("IMAGE EDIT (QWEN)", 40 + 536 // 2 + 40, 600, 26, LIME, "ma"), label("BACKGROUND REMOVAL", 40 + 536 + 100 + 253 // 2 + 120, 600, 26, LIME, "ma"),
        label("TEXT-TO-VIDEO (LTX-2.5)", 1580, 600, 26, LIME, "ma")]
-L8c = caption("Edit · cut-out · text-to-video, plus upscale, music and image-to-3D", "Prompt: \"change the black hoodie to yellow\" · every output is in examples/")
+L8c = caption("Edit · cut-out · text-to-video, plus inpaint, video edit, effects, music and 3D", "Prompt: \"change the black hoodie to yellow\" · every output is in examples/")
 
 
 @scene(14)
@@ -285,8 +285,8 @@ def s8(t):
 
 
 # 9. end
-L9 = Layer(lambda d: [marker(d, (120, 170), "12 MODULES RENDERED FOR REAL", 78),
-                      d.text((124, 330), "60 more mapped in COVERAGE.md, tiers and status are honest", font=font(BOLD, 44), fill=WHITE),
+L9 = Layer(lambda d: [marker(d, (120, 170), "33 MODULES RENDERED FOR REAL", 78),
+                      d.text((124, 330), "39 more mapped in COVERAGE.md, tiers and status are honest", font=font(BOLD, 44), fill=WHITE),
                       d.text((124, 410), "Open weights only  ·  MIT  ·  built on comfy-sdk", font=font(REG, 40), fill=MUTED),
                       d.text((124, 560), "github.com/codyclack/opensfield", font=font(BOLD, 72), fill=LIME),
                       d.text((124, 680), "#OpenSourceHiggsfield", font=font(BOLD, 56), fill=WHITE),

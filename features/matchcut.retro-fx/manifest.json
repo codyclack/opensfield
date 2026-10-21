@@ -11,5 +11,44 @@
   "note": "",
   "count": 7,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "local": {
+      "mode_input": "mode"
+    },
+    "template": "app/fx.py",
+    "inputs": [
+      {
+        "name": "video",
+        "label": "Video",
+        "kind": "video",
+        "required": true
+      },
+      {
+        "name": "mode",
+        "label": "Look",
+        "kind": "choice",
+        "default": "crt",
+        "options": [
+          "crt",
+          "crt-glitch",
+          "vhs",
+          "glitch",
+          "nokia",
+          "retropop",
+          "night-vision"
+        ]
+      }
+    ],
+    "outputs": [],
+    "output_kind": "video",
+    "models": [],
+    "verified": true,
+    "verified_via": "Rendered locally by app/fx.py on CPU, 2026-10-21 (no ComfyUI involved)",
+    "examples": [
+      "examples/fx_crt.mp4",
+      "examples/fx_vhs.mp4",
+      "examples/fx_nokia.mp4"
+    ]
+  }
 }

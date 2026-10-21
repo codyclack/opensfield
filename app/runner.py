@@ -41,6 +41,21 @@ def _svg(feature: dict, job: dict) -> str:
 </svg>"""
 
 
+def resolve_values(feature: dict, inputs: dict) -> dict:
+    """Expand preset inputs: a choice with `presets` writes its text into the input named by `apply_to`,
+    and a text input with `prefix` gets it prepended. Preset modules reuse another module's workflow this way."""
+    vals = dict(inputs)
+    for spec in feature["inputs"]:
+        pr, tgt = spec.get("presets"), spec.get("apply_to")
+        if pr and tgt and spec["name"] in vals:
+            user = str(vals.get(tgt) or "").strip()
+            vals[tgt] = (pr.get(vals[spec["name"]], "") + (" " + user if user else "")).strip()
+    for spec in feature["inputs"]:
+        if spec.get("prefix"):
+            vals[spec["name"]] = spec["prefix"] + str(vals.get(spec["name"]) or "")
+    return vals
+
+
 def run_mock(feature: dict, job: dict, update: Update) -> list[dict]:
     delay = float(os.environ.get("OPENSFIELD_MOCK_DELAY", "3"))
     steps = 10
@@ -51,6 +66,15 @@ def run_mock(feature: dict, job: dict, update: Update) -> list[dict]:
     out.mkdir(parents=True, exist_ok=True)
     (out / "out.svg").write_text(_svg(feature, job), encoding="utf-8")
     return [{"url": f"/outputs/{job['id']}/out.svg", "kind": "image", "name": "out.svg", "mock": True}]
+
+
+def run_local(feature: dict, job: dict, update: Update) -> list[dict]:
+    """CPU effects (app/fx.py). Works in any mode: it never touches ComfyUI."""
+    from . import fx
+    mode = job["inputs"].get(feature["local"]["mode_input"]) or next(s["default"] for s in feature["inputs"] if s["name"] == feature["local"]["mode_input"])
+    out = OUTPUTS / job["id"] / f"{mode}.mp4"
+    fx.process_video(UPLOADS / job["inputs"]["video"], out, mode, max_seconds=10, progress=lambda p: update(progress=p))
+    return [{"url": f"/outputs/{job['id']}/{mode}.mp4", "kind": "video", "name": out.name, "mock": False}]
 
 
 def run_comfy(feature: dict, job: dict, update: Update) -> list[dict]:
@@ -65,8 +89,9 @@ def run_comfy(feature: dict, job: dict, update: Update) -> list[dict]:
     key = os.environ.get("COMFY_API_KEY")
     client = Comfy(api_key=key) if key else Comfy()  # base url comes from COMFY_BASE_URL (Comfy Cloud if unset, which needs a key)
     wf = client.workflows.from_file(str(ROOT / wf_meta["api"]))
+    values = resolve_values(feature, job["inputs"])
     for spec in feature["inputs"]:
-        value = job["inputs"].get(spec["name"])
+        value = values.get(spec["name"])
         if spec["kind"] == "seed" and not value:
             value = random.randint(1, 2**48)
         if value in ("", None) or "node" not in spec:

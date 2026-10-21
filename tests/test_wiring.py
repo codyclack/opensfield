@@ -14,13 +14,21 @@ LOADER_FIELD = {"image": ("LoadImage", "image"), "video": ("LoadVideo", "file"),
 
 
 def graph(fid):
-    return json.loads((ROOT / "features" / fid / "workflow_api.json").read_text(encoding="utf-8"))
+    src = WIRING[fid].get("files_from", fid) if fid in WIRING else fid
+    return json.loads((ROOT / "features" / src / "workflow_api.json").read_text(encoding="utf-8"))
 
 
-@pytest.mark.parametrize("fid", sorted(WIRING))
+GRAPHED = sorted(f for f in WIRING if not WIRING[f].get("local"))  # local CPU effects have no workflow files
+
+
+@pytest.mark.parametrize("fid", GRAPHED)
 def test_every_wired_target_exists(fid):
     g = graph(fid)
     for spec in WIRING[fid]["inputs"]:
+        if "node" not in spec:  # preset choices have no node; they write into apply_to
+            assert spec["apply_to"] in {s["name"] for s in WIRING[fid]["inputs"] if "node" in s}
+            assert set(spec["options"]) == set(spec["presets"]) and spec["default"] in spec["presets"]
+            continue
         for t in [{"node": spec["node"], "field": spec["field"]}, *spec.get("also", [])]:
             assert t["node"] in g, f"{fid}: node {t['node']} missing"
             assert t["field"] in g[t["node"]]["inputs"], f"{fid}: {t['node']}.{t['field']} missing"
@@ -45,9 +53,9 @@ def test_manifest_matches_wiring_and_verification_is_backed_by_files(fid):
         assert m["status"] == "built" and m["workflow"]["verified"] is False
 
 
-@pytest.mark.parametrize("fid", sorted(WIRING))
+@pytest.mark.parametrize("fid", GRAPHED)
 def test_ui_and_api_files_exist_and_no_unconverted_nodes(fid):
-    d = ROOT / "features" / fid
+    d = ROOT / "features" / WIRING[fid].get("files_from", fid)
     assert (d / "workflow_ui.json").exists()
     assert not any(n["class_type"] in ("Note", "MarkdownNote", "PrimitiveNode") for n in graph(fid).values())
 
@@ -104,6 +112,27 @@ def test_camera_rig_sets_both_seeds_and_casts_numbers(monkeypatch):
     assert g["398:338"]["inputs"]["noise_seed"] == g["398:339"]["inputs"]["noise_seed"] == 123
     assert g["398:362"]["inputs"]["value"] == 7 and isinstance(g["398:362"]["inputs"]["value"], int)
     assert g["403"]["inputs"]["aspect_ratio"] == "9:16 (Portrait Widescreen)"
+
+
+def test_preset_text_is_composed_and_sent_to_the_reused_workflow(monkeypatch):
+    seen = run_with_stub(monkeypatch, "viral.effects", {"start_image": "s.png", "effect": "Vanish", "prompt": "a runner in red", "duration": 5})
+    text = seen["wf"].json["398:376"]["inputs"]["value"]
+    assert text.startswith("Use the provided start image as the first frame. ")
+    assert "empty clothes to collapse" in text and text.endswith("a runner in red")
+    assert seen["wf"].json["395"]["inputs"]["image"] == ("ASSET", "s.png")
+
+
+def test_character_sheet_reuses_the_single_image_edit_workflow(monkeypatch):
+    seen = run_with_stub(monkeypatch, "soul.character-sheet", {"image": "p.png", "prompt": ""})
+    g = seen["wf"].json
+    assert g["41"]["inputs"]["image"] == ("ASSET", "p.png")
+    assert g["170:151"]["inputs"]["prompt"].startswith("Turn this into a character reference sheet")
+
+
+def test_two_reference_module_feeds_both_loaders(monkeypatch):
+    seen = run_with_stub(monkeypatch, "soul.cast", {"image": "a.png", "image_b": "b.png", "prompt": "Put both together"})
+    g = seen["wf"].json
+    assert g["470"]["inputs"]["image"] == ("ASSET", "a.png") and g["475"]["inputs"]["image"] == ("ASSET", "b.png")
 
 
 def test_blank_optional_values_keep_template_defaults(monkeypatch):

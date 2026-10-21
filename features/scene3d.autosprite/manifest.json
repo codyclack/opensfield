@@ -11,5 +11,66 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "image_z_image_turbo",
+    "api": "features/soul.t2i/workflow_api.json",
+    "ui": "features/soul.t2i/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Character",
+        "kind": "text",
+        "node": "57:27",
+        "field": "text",
+        "required": true,
+        "prefix": "Game sprite sheet, a 4 by 4 grid of the same character in a walk cycle, flat solid green background, consistent proportions: "
+      },
+      {
+        "name": "width",
+        "label": "Width",
+        "kind": "number",
+        "node": "57:13",
+        "field": "width",
+        "default": 1024,
+        "min": 512,
+        "max": 2048,
+        "step": 64
+      },
+      {
+        "name": "height",
+        "label": "Height",
+        "kind": "number",
+        "node": "57:13",
+        "field": "height",
+        "default": 1024,
+        "min": 512,
+        "max": 2048,
+        "step": 64
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "57:3",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "9"
+    ],
+    "models": [
+      "ae.safetensors",
+      "qwen_3_4b.safetensors",
+      "z_image_turbo_bf16.safetensors"
+    ],
+    "reuses": "soul.t2i",
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/sprite_sheet.png"
+    ]
+  }
 }

@@ -12,5 +12,78 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "image_flux3_klein_t2i",
+    "api": "features/image.t2i-open/workflow_api.json",
+    "ui": "features/image.t2i-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "format",
+        "label": "Ad format",
+        "kind": "choice",
+        "options": [
+          "Social product ad",
+          "Poster"
+        ],
+        "default": "Social product ad",
+        "presets": {
+          "Social product ad": "A polished social media product ad photo, product centered, clean colorful background, generous empty space for a headline.",
+          "Poster": "A bold advertising poster layout with a strong focal image and large empty areas reserved for headline and body copy."
+        },
+        "apply_to": "prompt"
+      },
+      {
+        "name": "prompt",
+        "label": "Product / brand and idea",
+        "kind": "text",
+        "node": "18:17",
+        "field": "value",
+        "required": true
+      },
+      {
+        "name": "aspect",
+        "label": "Aspect",
+        "kind": "choice",
+        "node": "19",
+        "field": "aspect_ratio",
+        "options": [
+          "1:1 (Square)",
+          "2:3 (Portrait Photo)",
+          "3:2 (Photo)",
+          "3:4 (Portrait Standard)",
+          "4:3 (Standard)",
+          "9:16 (Portrait Widescreen)",
+          "16:9 (Widescreen)",
+          "21:9 (Ultrawide)"
+        ],
+        "default": "1:1 (Square)"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "18:7",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "9"
+    ],
+    "models": [
+      "flux2-vae.safetensors",
+      "flux3-image-klein-base-bf16.safetensors",
+      "flux3-image-klein-base-int8-convrot.safetensors",
+      "qwen3.5_9b_flux3_prompt_upsampler_w4a8.safetensors",
+      "qwen3vl_4b_int8_convrot.safetensors"
+    ],
+    "reuses": "image.t2i-open",
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/ad_social.png"
+    ]
+  }
 }

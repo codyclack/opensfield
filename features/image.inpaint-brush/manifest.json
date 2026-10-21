@@ -11,5 +11,51 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "flux_fill_inpaint_example",
+    "api": "features/image.inpaint-brush/workflow_api.json",
+    "ui": "features/image.inpaint-brush/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Image (transparent area = repaint here)",
+        "kind": "image",
+        "node": "17",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "What to paint there",
+        "kind": "text",
+        "node": "47:23",
+        "field": "text",
+        "required": true
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "47:3",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "9"
+    ],
+    "models": [
+      "ae.safetensors",
+      "clip_l.safetensors",
+      "flux1-fill-dev.safetensors",
+      "t5xxl_fp16.safetensors"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/inpaint_out.png"
+    ]
+  }
 }

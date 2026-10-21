@@ -11,5 +11,62 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "image_krea2_turbo_t2i",
+    "api": "features/soul.cinematic/workflow_api.json",
+    "ui": "features/soul.cinematic/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Scene",
+        "kind": "text",
+        "node": "30:19",
+        "field": "value",
+        "required": true,
+        "prefix": "Cinematic film still, anamorphic lens, shallow depth of field, natural film grain. "
+      },
+      {
+        "name": "aspect",
+        "label": "Aspect",
+        "kind": "choice",
+        "node": "49",
+        "field": "aspect_ratio",
+        "options": [
+          "1:1 (Square)",
+          "2:3 (Portrait Photo)",
+          "3:2 (Photo)",
+          "3:4 (Portrait Standard)",
+          "4:3 (Standard)",
+          "9:16 (Portrait Widescreen)",
+          "16:9 (Widescreen)",
+          "21:9 (Ultrawide)"
+        ],
+        "default": "16:9 (Widescreen)"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "30:3",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "29"
+    ],
+    "models": [
+      "krea2_darkbrush.safetensors",
+      "krea2_turbo_fp8_scaled.safetensors",
+      "qwen3vl_4b_fp8_scaled.safetensors",
+      "qwen_image_vae.safetensors"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/cinematic_krea.png"
+    ]
+  }
 }

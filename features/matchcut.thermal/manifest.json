@@ -11,5 +11,40 @@
   "note": "Thermal look, rendered locally by app/fx.py.",
   "count": 4,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "local": {
+      "mode_input": "palette"
+    },
+    "template": "app/fx.py",
+    "inputs": [
+      {
+        "name": "video",
+        "label": "Video",
+        "kind": "video",
+        "required": true
+      },
+      {
+        "name": "palette",
+        "label": "Palette",
+        "kind": "choice",
+        "options": [
+          "black-hot",
+          "white-hot",
+          "rainbow",
+          "iron"
+        ],
+        "default": "black-hot"
+      }
+    ],
+    "outputs": [],
+    "output_kind": "video",
+    "models": [],
+    "verified": true,
+    "verified_via": "Rendered locally by app/fx.py on CPU, 2026-10-21 (no ComfyUI involved)",
+    "examples": [
+      "examples/fx_thermal_blackhot.mp4",
+      "examples/fx_thermal_rainbow.mp4"
+    ]
+  }
 }

@@ -13,5 +13,116 @@
   "note": "Chain = start-frame edit -> FLF2V/I2V with effect prompt. 15 seen: Floating fall, Vanish, Eyes in, Cutout, Wild ride, Lidar transition, Smash and grab, Incline, Clones, Infinite clones, Selfception, Act natural, Monster dab, Street colossus, World morphing. Remaining 72 enumerated at build time.",
   "count": 87,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "video_ltx2_5_i2v",
+    "api": "features/cinema.camera-rig/workflow_api.json",
+    "ui": "features/cinema.camera-rig/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "start_image",
+        "label": "Start frame",
+        "kind": "image",
+        "node": "395",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "effect",
+        "label": "Effect",
+        "kind": "choice",
+        "options": [
+          "Clones",
+          "Vanish",
+          "Floating fall",
+          "Act natural",
+          "Giant",
+          "Eyes in"
+        ],
+        "default": "Clones",
+        "presets": {
+          "Clones": "Identical clones of the person appear around the scene one after another, each mirroring the person's movements, while the original steps toward the camera. Locked-off camera.",
+          "Vanish": "The person's body suddenly disappears, leaving their empty clothes to collapse and fall flat onto the ground. Locked-off camera.",
+          "Floating fall": "The person falls backward in slow motion while their belongings float in midair around them, the camera drifting through crisp close-ups.",
+          "Act natural": "Time freezes for the person and the objects near them mid-action while everything else in the world keeps moving normally.",
+          "Giant": "The person grows into a towering giant standing in a city street, buildings small beside them, the camera tilting up their body.",
+          "Eyes in": "The camera pushes in on the person's face and dives into their eye, passing through the dark pupil."
+        },
+        "apply_to": "prompt"
+      },
+      {
+        "name": "prompt",
+        "label": "Subject detail (optional)",
+        "kind": "text",
+        "node": "398:376",
+        "field": "value",
+        "required": false,
+        "prefix": "Use the provided start image as the first frame. "
+      },
+      {
+        "name": "aspect",
+        "label": "Aspect",
+        "kind": "choice",
+        "node": "403",
+        "field": "aspect_ratio",
+        "options": [
+          "1:1 (Square)",
+          "2:3 (Portrait Photo)",
+          "3:2 (Photo)",
+          "3:4 (Portrait Standard)",
+          "4:3 (Standard)",
+          "9:16 (Portrait Widescreen)",
+          "16:9 (Widescreen)",
+          "21:9 (Ultrawide)"
+        ],
+        "default": "16:9 (Widescreen)"
+      },
+      {
+        "name": "duration",
+        "label": "Duration (s)",
+        "kind": "number",
+        "node": "398:362",
+        "field": "value",
+        "default": 5,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "398:338",
+        "field": "noise_seed",
+        "default": 0,
+        "also": [
+          {
+            "node": "398:339",
+            "field": "noise_seed"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      "75"
+    ],
+    "models": [
+      "gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors",
+      "gemma4_e2b_it_int8_convrot.safetensors",
+      "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+      "ltx-2.5-audio-vae-bf16.safetensors",
+      "ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+      "ltx-2.5-video-vae-bf16.safetensors",
+      "ltx-av-step-1751000_vocoder_24K.safetensors",
+      "model.safetensors"
+    ],
+    "reuses": "cinema.camera-rig",
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/effect_clones.mp4",
+      "examples/effect_vanish.mp4"
+    ]
+  }
 }

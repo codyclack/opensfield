@@ -1,0 +1,651 @@
+{
+ "47": {
+  "inputs": {
+   "file": "vintage_field_style_look.mp4"
+  },
+  "class_type": "LoadVideo",
+  "_meta": {
+   "title": "Load Video"
+  }
+ },
+ "46": {
+  "inputs": {
+   "filename_prefix": "video/Bernini_r",
+   "format": "auto",
+   "video": [
+    "298:274",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "100": {
+  "inputs": {
+   "images.image0": [
+    "104",
+    0
+   ]
+  },
+  "class_type": "BatchImagesNode",
+  "_meta": {
+   "title": "Batch Images"
+  }
+ },
+ "104": {
+  "inputs": {
+   "image": "example.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "109": {
+  "inputs": {
+   "start_time": 0,
+   "duration": 5,
+   "strict_duration": false,
+   "video": [
+    "47",
+    0
+   ]
+  },
+  "class_type": "Video Slice",
+  "_meta": {
+   "title": "Trim Video"
+  }
+ },
+ "110": {
+  "inputs": {
+   "video": [
+    "109",
+    0
+   ]
+  },
+  "class_type": "GetVideoComponents",
+  "_meta": {
+   "title": "Get Video Components"
+  }
+ },
+ "111": {
+  "inputs": {
+   "image": [
+    "110",
+    0
+   ]
+  },
+  "class_type": "GetImageSize",
+  "_meta": {
+   "title": "Get Image Size"
+  }
+ },
+ "112": {
+  "inputs": {
+   "source": [
+    "111",
+    2
+   ]
+  },
+  "class_type": "PreviewAny",
+  "_meta": {
+   "title": "Preview as Text (Frame Count)"
+  }
+ },
+ "298:264": {
+  "inputs": {
+   "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+   "type": "wan",
+   "device": "default"
+  },
+  "class_type": "CLIPLoader",
+  "_meta": {
+   "title": "Load CLIP"
+  }
+ },
+ "298:265": {
+  "inputs": {
+   "vae_name": "Wan2_1_VAE_bf16.safetensors"
+  },
+  "class_type": "VAELoader",
+  "_meta": {
+   "title": "Load VAE"
+  }
+ },
+ "298:266": {
+  "inputs": {
+   "lora_name": "lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank64_bf16.safetensors",
+   "strength_model": 1.5,
+   "model": [
+    "298:272",
+    0
+   ]
+  },
+  "class_type": "LoraLoaderModelOnly",
+  "_meta": {
+   "title": "Load LoRA"
+  }
+ },
+ "298:267": {
+  "inputs": {
+   "text": "\u8272\u8c03\u8273\u4e3d\uff0c\u8fc7\u66dd\uff0c\u9759\u6001\uff0c\u7ec6\u8282\u6a21\u7cca\u4e0d\u6e05\uff0c\u5b57\u5e55\uff0c\u98ce\u683c\uff0c\u4f5c\u54c1\uff0c\u753b\u4f5c\uff0c\u753b\u9762\uff0c\u9759\u6b62\uff0c\u6574\u4f53\u53d1\u7070\uff0c\u6700\u5dee\u8d28\u91cf\uff0c\u4f4e\u8d28\u91cf\uff0cJPEG\u538b\u7f29\u6b8b\u7559\uff0c\u4e11\u964b\u7684\uff0c\u6b8b\u7f3a\u7684\uff0c\u591a\u4f59\u7684\u624b\u6307\uff0c\u753b\u5f97\u4e0d\u597d\u7684\u624b\u90e8\uff0c\u753b\u5f97\u4e0d\u597d\u7684\u8138\u90e8\uff0c\u7578\u5f62\u7684\uff0c\u6bc1\u5bb9\u7684\uff0c\u5f62\u6001\u7578\u5f62\u7684\u80a2\u4f53\uff0c\u624b\u6307\u878d\u5408\uff0c\u9759\u6b62\u4e0d\u52a8\u7684\u753b\u9762\uff0c\u6742\u4e71\u7684\u80cc\u666f\uff0c\u4e09\u6761\u817f\uff0c\u80cc\u666f\u4eba\u5f88\u591a\uff0c\u5012\u7740\u8d70",
+   "clip": [
+    "298:264",
+    0
+   ]
+  },
+  "class_type": "CLIPTextEncode",
+  "_meta": {
+   "title": "CLIP Text Encode (Prompt)"
+  }
+ },
+ "298:268": {
+  "inputs": {
+   "sigmas": [
+    "298:276",
+    0
+   ],
+   "step": [
+    "298:290",
+    0
+   ]
+  },
+  "class_type": "SplitSigmas",
+  "_meta": {
+   "title": "SplitSigmas"
+  }
+ },
+ "298:269": {
+  "inputs": {
+   "sampler_name": "res_multistep"
+  },
+  "class_type": "KSamplerSelect",
+  "_meta": {
+   "title": "KSamplerSelect"
+  }
+ },
+ "298:270": {
+  "inputs": {
+   "unet_name": "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+   "weight_dtype": "default"
+  },
+  "class_type": "UNETLoader",
+  "_meta": {
+   "title": "Load Diffusion Model"
+  }
+ },
+ "298:271": {
+  "inputs": {
+   "lora_name": "lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank64_bf16.safetensors",
+   "strength_model": 3,
+   "model": [
+    "298:270",
+    0
+   ]
+  },
+  "class_type": "LoraLoaderModelOnly",
+  "_meta": {
+   "title": "Load LoRA"
+  }
+ },
+ "298:272": {
+  "inputs": {
+   "unet_name": "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+   "weight_dtype": "default"
+  },
+  "class_type": "UNETLoader",
+  "_meta": {
+   "title": "Load Diffusion Model"
+  }
+ },
+ "298:273": {
+  "inputs": {
+   "samples": [
+    "298:277",
+    0
+   ],
+   "vae": [
+    "298:265",
+    0
+   ]
+  },
+  "class_type": "VAEDecode",
+  "_meta": {
+   "title": "VAE Decode"
+  }
+ },
+ "298:274": {
+  "inputs": {
+   "bit_depth": 8,
+   "color_space": "sRGB",
+   "codec": "none",
+   "images": [
+    "298:273",
+    0
+   ],
+   "fps": [
+    "298:279",
+    2
+   ],
+   "audio": [
+    "298:279",
+    1
+   ]
+  },
+  "class_type": "CreateVideo",
+  "_meta": {
+   "title": "Create Video"
+  }
+ },
+ "298:275": {
+  "inputs": {
+   "add_noise": true,
+   "noise_seed": 852303761886160,
+   "model": [
+    "298:295",
+    0
+   ],
+   "cfg": [
+    "298:291",
+    0
+   ],
+   "positive": [
+    "298:278",
+    0
+   ],
+   "negative": [
+    "298:278",
+    1
+   ],
+   "sampler": [
+    "298:269",
+    0
+   ],
+   "sigmas": [
+    "298:268",
+    0
+   ],
+   "latent_image": [
+    "298:278",
+    2
+   ]
+  },
+  "class_type": "SamplerCustom",
+  "_meta": {
+   "title": "SamplerCustom"
+  }
+ },
+ "298:276": {
+  "inputs": {
+   "scheduler": "simple",
+   "denoise": 1,
+   "model": [
+    "298:272",
+    0
+   ],
+   "steps": [
+    "298:287",
+    0
+   ]
+  },
+  "class_type": "BasicScheduler",
+  "_meta": {
+   "title": "BasicScheduler"
+  }
+ },
+ "298:277": {
+  "inputs": {
+   "add_noise": false,
+   "noise_seed": 0,
+   "model": [
+    "298:281",
+    0
+   ],
+   "cfg": [
+    "298:291",
+    0
+   ],
+   "positive": [
+    "298:278",
+    0
+   ],
+   "negative": [
+    "298:278",
+    1
+   ],
+   "sampler": [
+    "298:269",
+    0
+   ],
+   "sigmas": [
+    "298:268",
+    1
+   ],
+   "latent_image": [
+    "298:275",
+    0
+   ]
+  },
+  "class_type": "SamplerCustom",
+  "_meta": {
+   "title": "SamplerCustom"
+  }
+ },
+ "298:278": {
+  "inputs": {
+   "width": 480,
+   "height": 832,
+   "batch_size": 1,
+   "ref_max_size": 848,
+   "positive": [
+    "298:280",
+    0
+   ],
+   "negative": [
+    "298:267",
+    0
+   ],
+   "vae": [
+    "298:265",
+    0
+   ],
+   "length": [
+    "111",
+    2
+   ],
+   "source_video": [
+    "298:279",
+    0
+   ]
+  },
+  "class_type": "BerniniConditioning",
+  "_meta": {
+   "title": "Bernini Conditioning"
+  }
+ },
+ "298:279": {
+  "inputs": {
+   "video": [
+    "109",
+    0
+   ]
+  },
+  "class_type": "GetVideoComponents",
+  "_meta": {
+   "title": "Get Video Components"
+  }
+ },
+ "298:280": {
+  "inputs": {
+   "text": [
+    "298:284",
+    0
+   ],
+   "clip": [
+    "298:264",
+    0
+   ]
+  },
+  "class_type": "CLIPTextEncode",
+  "_meta": {
+   "title": "CLIP Text Encode (Prompt)"
+  }
+ },
+ "298:281": {
+  "inputs": {
+   "switch": [
+    "298:294",
+    0
+   ],
+   "on_false": [
+    "298:272",
+    0
+   ],
+   "on_true": [
+    "298:266",
+    0
+   ]
+  },
+  "class_type": "ComfySwitchNode",
+  "_meta": {
+   "title": "Switch (Low Noise)"
+  }
+ },
+ "298:282": {
+  "inputs": {
+   "choice": "Video Editing (Content Propagation)"
+  },
+  "class_type": "CustomCombo",
+  "_meta": {
+   "title": "Custom Combo"
+  }
+ },
+ "298:283:1": {
+  "inputs": {
+   "source": [
+    "298:283:56",
+    0
+   ]
+  },
+  "class_type": "PreviewAny",
+  "_meta": {
+   "title": "Preview as Text"
+  }
+ },
+ "298:283:2": {
+  "inputs": {
+   "string": "You are a helpful assistant.\nYou are a helpful assistant specialized in text-to-image generation.\nYou are a helpful assistant specialized in text-to-video generation.\nYou are a helpful assistant specialized in image editing.\nYou are a helpful assistant specialized in subject-to-image generation.\nYou are a helpful assistant specialized in image-to-video generation.\nYou are a helpful assistant specialized in video editing.\nYou are a helpful assistant specialized in video editing on content propagation.\nYou are a helpful assistant specialized in video editing with reference.\nYou are a helpful assistant specialized in ads insertion.\nYou are a helpful assistant for editing. You may need to adjust the subject's action or position.\nYou are a helpful assistant for editing. You might need to adjust the video's style, lighting, colors, textures, and the subject's pose or action.",
+   "mode": "First Group",
+   "case_insensitive": false,
+   "multiline": false,
+   "dotall": false,
+   "group_index": 1,
+   "regex_pattern": [
+    "298:283:8",
+    0
+   ]
+  },
+  "class_type": "RegexExtract",
+  "_meta": {
+   "title": "Extract Text"
+  }
+ },
+ "298:283:56": {
+  "inputs": {
+   "value": [
+    "298:282",
+    1
+   ]
+  },
+  "class_type": "PrimitiveInt",
+  "_meta": {
+   "title": "Int (line index)"
+  }
+ },
+ "298:283:8": {
+  "inputs": {
+   "string": "^(?:[^\\n]*\\n){index}([^\\n]*)(?:\\n|$)",
+   "find": "index",
+   "replace": [
+    "298:283:1",
+    0
+   ]
+  },
+  "class_type": "StringReplace",
+  "_meta": {
+   "title": "Replace Text"
+  }
+ },
+ "298:284": {
+  "inputs": {
+   "delimiter": "",
+   "string_a": [
+    "298:283:2",
+    0
+   ],
+   "string_b": [
+    "298:297",
+    0
+   ]
+  },
+  "class_type": "StringConcatenate",
+  "_meta": {
+   "title": "Concatenate Text"
+  }
+ },
+ "298:285": {
+  "inputs": {
+   "value": 40
+  },
+  "class_type": "PrimitiveInt",
+  "_meta": {
+   "title": "Int (Steps)"
+  }
+ },
+ "298:286": {
+  "inputs": {
+   "value": 6
+  },
+  "class_type": "PrimitiveInt",
+  "_meta": {
+   "title": "Int (Steps)"
+  }
+ },
+ "298:287": {
+  "inputs": {
+   "switch": [
+    "298:294",
+    0
+   ],
+   "on_false": [
+    "298:285",
+    0
+   ],
+   "on_true": [
+    "298:286",
+    0
+   ]
+  },
+  "class_type": "ComfySwitchNode",
+  "_meta": {
+   "title": "Switch (Steps)"
+  }
+ },
+ "298:288": {
+  "inputs": {
+   "value": 20
+  },
+  "class_type": "PrimitiveInt",
+  "_meta": {
+   "title": "Int (Split Steps)"
+  }
+ },
+ "298:289": {
+  "inputs": {
+   "value": 3
+  },
+  "class_type": "PrimitiveInt",
+  "_meta": {
+   "title": "Int (Split Steps)"
+  }
+ },
+ "298:290": {
+  "inputs": {
+   "switch": [
+    "298:294",
+    0
+   ],
+   "on_false": [
+    "298:288",
+    0
+   ],
+   "on_true": [
+    "298:289",
+    0
+   ]
+  },
+  "class_type": "ComfySwitchNode",
+  "_meta": {
+   "title": "Switch (Low Steps)"
+  }
+ },
+ "298:291": {
+  "inputs": {
+   "switch": [
+    "298:294",
+    0
+   ],
+   "on_false": [
+    "298:293",
+    0
+   ],
+   "on_true": [
+    "298:292",
+    0
+   ]
+  },
+  "class_type": "ComfySwitchNode",
+  "_meta": {
+   "title": "Switch (CFG)"
+  }
+ },
+ "298:292": {
+  "inputs": {
+   "value": 1
+  },
+  "class_type": "PrimitiveFloat",
+  "_meta": {
+   "title": "Float (CFG)"
+  }
+ },
+ "298:293": {
+  "inputs": {
+   "value": 5
+  },
+  "class_type": "PrimitiveFloat",
+  "_meta": {
+   "title": "Float (CFG)"
+  }
+ },
+ "298:294": {
+  "inputs": {
+   "value": true
+  },
+  "class_type": "PrimitiveBoolean",
+  "_meta": {
+   "title": "Boolean (Enable Turbo LoRA?)"
+  }
+ },
+ "298:295": {
+  "inputs": {
+   "switch": [
+    "298:294",
+    0
+   ],
+   "on_false": [
+    "298:270",
+    0
+   ],
+   "on_true": [
+    "298:271",
+    0
+   ]
+  },
+  "class_type": "ComfySwitchNode",
+  "_meta": {
+   "title": "Switch (High Noise)"
+  }
+ },
+ "298:297": {
+  "inputs": {
+   "value": "Replace the gray studio backdrop with a daytime urban street: brick buildings, shop windows, sidewalk, and soft overcast light. Keep the model's outfit, accessories, body pose, motion, and full-body framing unchanged. Only the environment behind the subject should change."
+  },
+  "class_type": "PrimitiveStringMultiline",
+  "_meta": {
+   "title": "Text (Multiline)"
+  }
+ }
+}

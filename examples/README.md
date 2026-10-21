@@ -28,5 +28,32 @@ Second batch (same day, same conditions; inputs reuse `char_a.png`, `char_b.png`
 | `replace_character_a.mp4`, `replace_character_b.mp4` | `genjutsu.replace-object` (SCAIL-2 int8) | source `driving_dance.mp4`, replacement `char_b.png`, replace "woman", seed 7. The template has two parallel branches and both outputs are kept |
 | `image_to_3d.glb` | `scene3d.image-to-3d` (Hunyuan3D 2.0) | `char_b.png`. Valid glTF binary (3.4 MB); the mesh was not inspected visually |
 
+Third batch (same day). Preset modules were rendered with the app's own prompt assembly (`scripts/overrides.py`), so the prompts below are what the app sends.
+
+| File | Module | Notes |
+|---|---|---|
+| `t2i_flux3_sneakers.png` | `image.t2i-open` (FLUX 3 Klein) | seed 5, 3:2. White chunky sneakers on a wet concrete step at dawn |
+| `cinematic_krea.png` | `soul.cinematic` (Krea-2 Turbo) | seed 5, 16:9. Rain-lit street, woman in a long coat |
+| `soul_cast.png` | `soul.cast` (Qwen Image 2.1, two references) | `char_a.png` + `char_b.png`, "put both together side by side". An outfit-swap instruction returned a composite instead, so this module is a two-reference compose |
+| `style_reference_out.png` | `soul.styles` (Krea-2 style reference) | style image `style_reference_alley.png`; subject "chunky sneakers on a wet city street" |
+| `inpaint_out.png` | `image.inpaint-brush` (FLUX.1 Fill) | input `inpaint_input.png` (transparent = repaint area); "a bright red leather jacket over a white t-shirt" |
+| `outpaint_out.png` | `image.outpaint` (FLUX.1 Fill) | `char_a.png`, 256 px each side, 768 to 1280 wide |
+| `layers_0.png` to `layers_2.png` | `image.decompose` (Qwen-Image-Layered) | `char_b.png`, 3 layers. Layer 0 is the full composite, layer 1 is nearly empty, layer 2 is a legs fragment: the module works but the split is not clean |
+| `video_edit_street.mp4` | `video.edit` (Bernini-R) | source `driving_dance.mp4` + a generated street photo as reference; the studio becomes a brick street, the dancer and her motion are kept |
+| `soul_id.png` | `soul.id` (Qwen-Image-Edit 2511) | `char_b.png`, "walking along a beach at sunset in golden light" |
+| `character_sheet.png` | `soul.character-sheet` (Qwen-Image-Edit 2511) | `char_b.png`; front, side and back views |
+| `effect_clones.mp4`, `effect_vanish.mp4` | `viral.effects` (LTX-2.5 i2v presets) | 2 of the 6 authored effect presets rendered. Clones multiplies the person; Vanish collapses the figure onto the floor |
+| `multishot.mp4` | `cinema.multishot` (LTX-2.5) | 8 s, two shots with a hard cut to a close-up (the face is a different person: no identity lock) |
+| `product_orbit.mp4` | `marketing.studio-presets` (LTX-2.5) | "Orbit" preset: the camera barely moves, so treat this preset as weak |
+| `product_photoshoot.png` | `marketing.product-photoshoot` | the sneaker image onto a white studio packshot |
+| `thumbnail_hero.png` | `marketing.thumbnails` | "Hero object" framework, 16:9; the crop is tight |
+| `ad_social.png` | `marketing.ads-studio` (FLUX 3 Klein) | "Social product ad" with an in-image headline |
+| `brand_logo.png` | `marketing.brand-assets` (FLUX 3 Klein) | "Logo mark" preset; no text, as requested |
+| `angle_low.png` | `scene3d.angles` (Qwen-Image-Edit 2511) | `char_b.png`, "Low angle" preset: same person from below with dramatic perspective |
+| `sprite_sheet.png` | `scene3d.autosprite` (Z-Image Turbo) | 4x4 walk-cycle grid of a knight on green |
+| `fx_thermal_blackhot.mp4`, `fx_thermal_rainbow.mp4`, `fx_crt.mp4`, `fx_vhs.mp4`, `fx_nokia.mp4` | `matchcut.thermal`, `matchcut.retro-fx` | **Local CPU effects** (`app/fx.py`), not Comfy workflows. Source `driving_dance.mp4`, first 4 s at 640 px |
+
+Tried and not shipped: `soul.location` (two-image template returned corrupted images for portrait + landscape inputs in three attempts).
+
 Known quirks: the first frame of `driving_dance.mp4` is a torso crop (the model's opening frame), and the push-in shot
 crops to the torso and shifts the hair colour. These are model behaviour, not post-processed.

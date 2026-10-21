@@ -33,12 +33,26 @@ def write_manifests():
         merged = {**old, **feat}  # registry owns the descriptive fields; keep anything a build step added
         merged["status"] = max(old.get("status", "planned"), feat["status"], key=ORDER.get)
         wiring = WIRING.get(feat["id"])
-        if wiring and (d / "workflow_api.json").exists():
-            fid = feat["id"]
+        if not wiring:  # a module whose wiring was removed goes back to planned (drops stale workflow data)
+            merged.pop("workflow", None)
+            merged["status"] = feat["status"]
+        if wiring and wiring.get("local"):  # CPU effects: no workflow files, run by app/fx.py
+            merged["workflow"] = {"local": wiring["local"], "template": wiring["template"], "inputs": wiring["inputs"], "outputs": [],
+                                  "output_kind": wiring["output_kind"], "models": [], "verified": bool(wiring.get("verified_via"))}
+            if wiring.get("verified_via"):
+                merged["workflow"].update(verified_via=wiring["verified_via"], examples=wiring.get("examples", []))
+            merged["status"] = max(merged["status"], "tested" if wiring.get("verified_via") else "built", key=ORDER.get)
+            mf.write_text(json.dumps(merged, indent=2) + "\n", encoding="utf-8")
+            continue
+        src = wiring.get("files_from") if wiring else None  # preset modules reuse another module's workflow files
+        sd = ROOT / "features" / (src or feat["id"])
+        if wiring and (sd / "workflow_api.json").exists():
+            fid = src or feat["id"]
             merged["workflow"] = {
                 "template": wiring["template"], "api": f"features/{fid}/workflow_api.json",
                 "ui": f"features/{fid}/workflow_ui.json", "inputs": wiring["inputs"],
-                "outputs": wiring["outputs"], "models": wiring.get("models") or models_in(d / "workflow_ui.json"),
+                "outputs": wiring["outputs"], "models": wiring.get("models") or models_in(sd / "workflow_ui.json"),
+                **({"reuses": src} if src else {}),
                 **({"output_kind": wiring["output_kind"]} if wiring.get("output_kind") else {}),
                 "verified": bool(wiring.get("verified_via")),
             }

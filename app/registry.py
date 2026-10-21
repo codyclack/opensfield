@@ -98,7 +98,8 @@ def _enrich(m: dict) -> dict:
     m["inputs"] = wf.get("inputs") or derive_inputs(m["base"])
     m["output_kind"] = wf.get("output_kind") or output_kind(m["base"])
     m["examples"] = wf.get("examples", [])  # real renders, served under /examples
-    m["runnable"] = bool(api and (ROOT / api).exists())
+    m["local"] = wf.get("local")  # e.g. {"mode_input": "palette"} for CPU effects run by app/fx.py
+    m["runnable"] = bool(api and (ROOT / api).exists()) or bool(m["local"])
     return m
 
 

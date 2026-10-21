@@ -11,5 +11,64 @@
   "note": "Qwen-Image-Layered if available.",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "image_qwen_image_layered",
+    "api": "features/image.decompose/workflow_api.json",
+    "ui": "features/image.decompose/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Image",
+        "kind": "image",
+        "node": "74",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Describe the image",
+        "kind": "text",
+        "node": "116",
+        "field": "value",
+        "required": true
+      },
+      {
+        "name": "layers",
+        "label": "Layers",
+        "kind": "number",
+        "node": "83:118",
+        "field": "layers",
+        "default": 3,
+        "min": 2,
+        "max": 8,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "83:3",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "60"
+    ],
+    "models": [
+      "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "qwen_image_layered_bf16.safetensors",
+      "qwen_image_layered_fp8mixed.safetensors",
+      "qwen_image_layered_vae.safetensors"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/layers_0.png",
+      "examples/layers_1.png",
+      "examples/layers_2.png"
+    ]
+  }
 }

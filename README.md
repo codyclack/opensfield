@@ -5,10 +5,14 @@ Open-source rebuild of Higgsfield's creative apps on ComfyUI, for Comfy's
 `partner/` pack adds Comfy Router models.
 
 ## Status (honest summary)
-- **12 of 72 modules are built and rendered for real** (motion transfer, character replacement, camera-move shot,
-  first/last-frame transition, text-to-video, text-to-image, image edit, background removal, image and video upscale, music,
-  image-to-3D), with open-weight models only. Outputs are in [`examples/`](examples/README.md).
-- **60 modules are mapped but not built.** [COVERAGE.md](COVERAGE.md) lists every Higgsfield feature, its planned open-weight
+- **33 of 72 modules are built and have real example outputs** in [`examples/`](examples/README.md), using open-weight models
+  only: 20 are separate ComfyUI workflows (motion transfer, character replacement, text/image-to-video, first/last frame,
+  video edit, image edit, inpaint, outpaint, background removal, layer decomposition, upscale, music, image-to-3D, several
+  text-to-image models, style reference, two-reference compose), 11 are presets that reuse those workflows (camera angles, viral effects,
+  multishot, character sheet, identity, product shots, thumbnails, ads, brand assets, sprites, studio presets) and 2 are local
+  CPU effects (`app/fx.py`: thermal palettes and retro looks).
+- **39 modules are not built.** Reasons: partner-only models, platform features that are not generation, nodes that need your
+  own custom packs, or no usable open workflow found. COVERAGE.md lists each one. [COVERAGE.md](COVERAGE.md) lists every Higgsfield feature, its planned open-weight
   stand-in and its status (`planned` / `built` / `tested`).
 - **The app runs in mock mode out of the box** (placeholder outputs, no ComfyUI needed). Real runs through the app's `comfy-sdk`
   path are implemented and unit-tested against a stub, but **not verified against a live server yet**.

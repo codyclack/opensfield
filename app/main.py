@@ -18,7 +18,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from . import runner
+from . import fx, runner
 from .registry import MEDIA, ROOT, STUDIO_ORDER, load_features
 
 MODE = os.environ.get("OPENSFIELD_MODE", "mock")  # mock | comfy
@@ -100,7 +100,9 @@ def _execute(job_id: str):
     update = _update(job_id)
     update(status="running", started=time.time())
     try:
-        run = runner.run_mock if MODE == "mock" else runner.run_comfy
+        # CPU effects never touch ComfyUI, so they run for real in every mode whenever the fx extra is installed
+        run = runner.run_local if feature.get("local") and fx.cv2 is not None \
+            else runner.run_mock if MODE == "mock" else runner.run_comfy
         outputs = run(feature, job, update)
         update(status="done", outputs=outputs, progress=1.0, finished=time.time())
     except Exception as e:  # surfaced to the UI, not swallowed
