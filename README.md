@@ -62,6 +62,10 @@ uv run scripts/build_registry.py && uv run --extra dev --extra comfy pytest
 ```
 Template example assets (their sample character/driving clip) are not used; supply your own inputs.
 
+## Demo video
+`demo/make_demo.py` builds the demo (captions + real renders + app screenshots + the ACE-Step track made by the music module)
+with no voice-over. Instructions are at the top of the script. The rendered mp4 is not committed.
+
 ## Regenerate coverage
 ```bash
 uv run scripts/build_registry.py

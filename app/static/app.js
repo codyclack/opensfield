@@ -261,6 +261,11 @@ async function init() {
   mode.textContent = state.cfg.mode === "mock" ? "Mock mode: no ComfyUI calls" : "ComfyUI connected";
   mode.className = `chip ${state.cfg.mode === "mock" ? "mock" : "live"}`;
   state.studio = studios()[0][0];
+  const link = location.hash.match(/^#([sf])=(.+)$/);  // deep links: #s=<Studio name>, #f=<feature id>
+  if (link) {
+    const v = decodeURIComponent(link[2]), f = link[1] === "f" && state.feats.find((x) => x.id === v);
+    if (f) { state.feature = f; state.studio = f.studio; } else if (studios().some(([s]) => s === v)) state.studio = v;
+  }
   $("#search").addEventListener("input", (e) => { state.query = e.target.value.trim(); state.feature = null; render(); });
   $("#qtoggle").addEventListener("click", () => { const o = document.body.classList.toggle("q-open"); $("#qtoggle").setAttribute("aria-expanded", String(o)); });
   document.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey) && state.feature && state.run) { e.preventDefault(); state.run(); } });

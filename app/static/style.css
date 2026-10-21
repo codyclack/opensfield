@@ -107,9 +107,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chips span { font: 500 11px var(--body); padding: 3px 8px; border-radius: 8px; background: var(--field); border: 1px solid var(--line); color: var(--muted); }
 .note { color: var(--muted); font-size: 12px; margin: 0; }
-.onode { flex: 1 1 260px; min-width: 240px; }
+.onode { flex: 1 1 260px; min-width: 240px; max-width: 520px; }
 .preview { display: grid; gap: 10px; min-height: 180px; align-content: start; }
-.preview .thumb { width: 100%; border-radius: 10px; border: 1px solid var(--line); background: #000; display: block; }
+.preview .thumb { width: 100%; max-height: 560px; object-fit: contain; border-radius: 10px; border: 1px solid var(--line); background: #000; display: block; }
 
 .widget { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 4px 6px 4px 12px; background: var(--field); border: 1px solid var(--line); border-radius: 10px; min-height: 34px; }
 .widget label { color: var(--muted); font-size: 12px; }
