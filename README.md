@@ -14,7 +14,7 @@ Open-source rebuild of Higgsfield's creative apps on ComfyUI, for Comfy's
   own custom packs, or no usable open workflow found. COVERAGE.md lists each one. [COVERAGE.md](COVERAGE.md) lists every Higgsfield feature, its planned open-weight
   stand-in and its status (`planned` / `built` / `tested`).
 - **The app runs in mock mode out of the box** (placeholder outputs, no ComfyUI needed). Real runs through the app's `comfy-sdk`
-  path are implemented and unit-tested against a stub, but **not verified against a live server yet**.
+  path are implemented and unit-tested against a stub, and **verified end to end for one module**: `image.bg-remove` was run through the app against Comfy Cloud on 2026-10-21 (app -> `comfy-sdk` -> Cloud -> result in the UI). The other modules have not each been run through the app yet; their example renders used Comfy Cloud's template runner.
 
 ## Try the app shell (mock mode, no ComfyUI)
 ```bash
@@ -37,7 +37,7 @@ Env: `OPENSFIELD_MODE=mock|comfy`, `OPENSFIELD_PARTNER=1` (show partner-pack mod
 ## Workflows: rendered on Comfy Cloud
 Twelve modules have real workflows wired from official Comfy templates, and each has a real render in
 [`examples/`](examples/README.md) (open-weight models only; seconds to about a minute of GPU each). They were run through Comfy Cloud's
-template runner using the node ids in `registry/wiring.py`; **the app's own `comfy-sdk` submission path has not been run yet**.
+template runner using the node ids in `registry/wiring.py`; **the app's own `comfy-sdk` submission path has been run live for `image.bg-remove` only**.
 Wiring is also checked statically by `tests/test_wiring.py`.
 
 | Module | Template | Model family |
@@ -74,7 +74,7 @@ with no voice-over. Instructions are at the top of the script. The rendered mp4 
 uv run scripts/build_registry.py
 ```
 
-## Real runs (unverified through the app)
+## Real runs (verified for image.bg-remove)
 ```bash
 uv sync --extra comfy
 export OPENSFIELD_MODE=comfy

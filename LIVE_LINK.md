@@ -3,7 +3,7 @@
 Judges will do roughly 5 to 10 real runs, so the app must run in `comfy` mode with a Comfy API key. Keys and credits stay on
 your machine; never commit or paste the key anywhere public.
 
-**Heads-up:** the app's own `comfy-sdk` path has not been run against a live server yet. The example renders went through
+**Heads-up:** the app's own `comfy-sdk` path has been run live for one module (`image.bg-remove`, 2026-10-21) and worked; other modules have not each been run through the app. The example renders went through
 Comfy Cloud's template runner. Do step 3 (a local test) before you share anything.
 
 ## 1. Create an API key
