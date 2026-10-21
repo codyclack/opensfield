@@ -7,8 +7,8 @@ your machine; never commit or paste the key anywhere public.
 Comfy Cloud's template runner. Do step 3 (a local test) before you share anything.
 
 ## 1. Create an API key
-cloud.comfy.org, signed in as the account with the plan, then Settings and the API keys section (listed under User or Secrets).
-Create a key and keep it private.
+Go to platform.comfy.org/login (not the Secrets page inside Cloud settings), sign in as the account with the plan, open API Keys,
+click + New, name it and click Generate. Copy the key immediately: it is shown once. Keep it private.
 
 ## 2. Start the app in comfy mode (PowerShell)
 ```powershell
