@@ -14,13 +14,13 @@ Publishing, hosting and posting are public actions: do each one deliberately.
 
 ## 1. GitHub repo URL (required)
 Must be public, with an open-source license and setup instructions.
-- [ ] `gh auth login` done (not signed in as of Oct 21)
-- [ ] LICENSE present (MIT) and listed on the repo page
-- [ ] README: what it is, install, run locally, how to point at ComfyUI (`COMFY_BASE_URL`), model download steps, mock mode vs comfy mode
-- [ ] Workflow files + manifests committed; `COVERAGE.md` regenerated and honest about what was tested
-- [ ] Clean-clone test passed (fresh venv, install, download models, run 3 modules)
-- [ ] No keys, `.env`, outputs or model weights committed
-- [ ] Repo made public, URL pasted: ______________________
+- [x] `gh auth login` done (codyclack)
+- [x] LICENSE present (MIT) and detected by GitHub
+- [ ] README: add the one-line `COMFY_API_KEY` / `COMFY_BASE_URL` run steps once the comfy-sdk path is verified
+- [x] Workflow files + manifests committed; `COVERAGE.md` regenerated and honest about what was tested
+- [x] Clean-clone test passed (fresh clone, `uv run --extra dev --extra comfy pytest`: 23 passed); model download not part of it, Cloud used for renders
+- [x] No keys, `.env`, outputs or model weights committed (staged content scanned)
+- [x] Repo made public: https://github.com/codyclack/opensfield
 
 ## 2. Demo video URL (required, under 2 minutes)
 Show the build in action and how it was built. Host it (YouTube unlisted, X, etc.) and test the link logged out.
