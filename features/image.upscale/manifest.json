@@ -11,5 +11,52 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "utility_seedvr2_3b_int8_upscale_image",
+    "api": "features/image.upscale/workflow_api.json",
+    "ui": "features/image.upscale/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Image",
+        "kind": "image",
+        "node": "1",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "scale",
+        "label": "Scale (x)",
+        "kind": "number",
+        "node": "66:57",
+        "field": "resize_type.multiplier",
+        "default": 4,
+        "min": 1,
+        "max": 4,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "66:54",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "9"
+    ],
+    "models": [
+      "seedvr2_3b_int8_convrot.safetensors",
+      "seedvr2_ema_vae_fp16.safetensors"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/upscale_2x.png"
+    ]
+  }
 }

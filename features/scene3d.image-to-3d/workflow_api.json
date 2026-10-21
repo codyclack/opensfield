@@ -1,0 +1,148 @@
+{
+ "82": {
+  "inputs": {
+   "filename_prefix": "3d/ComfyUI",
+   "mesh": [
+    "91:81",
+    0
+   ]
+  },
+  "class_type": "SaveGLB",
+  "_meta": {
+   "title": "Save 3D Model"
+  }
+ },
+ "56": {
+  "inputs": {
+   "image": "3d_hunyuan3d_image_to_model_input_image.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ },
+ "91:3": {
+  "inputs": {
+   "seed": 242832339647017,
+   "steps": 20,
+   "cfg": 8,
+   "sampler_name": "euler",
+   "scheduler": "normal",
+   "denoise": 1,
+   "model": [
+    "91:70",
+    0
+   ],
+   "positive": [
+    "91:80",
+    0
+   ],
+   "negative": [
+    "91:80",
+    1
+   ],
+   "latent_image": [
+    "91:66",
+    0
+   ]
+  },
+  "class_type": "KSampler",
+  "_meta": {
+   "title": "KSampler"
+  }
+ },
+ "91:81": {
+  "inputs": {
+   "algorithm": "surface net",
+   "threshold": 0.6,
+   "voxel": [
+    "91:61",
+    0
+   ]
+  },
+  "class_type": "VoxelToMesh",
+  "_meta": {
+   "title": "Voxel to Mesh"
+  }
+ },
+ "91:80": {
+  "inputs": {
+   "clip_vision_output": [
+    "91:51",
+    0
+   ]
+  },
+  "class_type": "Hunyuan3Dv2Conditioning",
+  "_meta": {
+   "title": "Hunyuan3Dv2Conditioning"
+  }
+ },
+ "91:61": {
+  "inputs": {
+   "num_chunks": 8000,
+   "octree_resolution": 256,
+   "samples": [
+    "91:3",
+    0
+   ],
+   "vae": [
+    "91:54",
+    2
+   ]
+  },
+  "class_type": "VAEDecodeHunyuan3D",
+  "_meta": {
+   "title": "Hunyuan 3D VAE Decode"
+  }
+ },
+ "91:51": {
+  "inputs": {
+   "crop": "center",
+   "clip_vision": [
+    "91:54",
+    1
+   ],
+   "image": [
+    "56",
+    0
+   ]
+  },
+  "class_type": "CLIPVisionEncode",
+  "_meta": {
+   "title": "CLIP Vision Encode"
+  }
+ },
+ "91:66": {
+  "inputs": {
+   "resolution": 3072,
+   "batch_size": 1
+  },
+  "class_type": "EmptyLatentHunyuan3Dv2",
+  "_meta": {
+   "title": "Empty Hunyuan 3D v2 Latent"
+  }
+ },
+ "91:70": {
+  "inputs": {
+   "shift": 1,
+   "sampling": "flow",
+   "model": [
+    "91:54",
+    0
+   ]
+  },
+  "class_type": "ModelSamplingAuraFlow",
+  "_meta": {
+   "title": "ModelSamplingAuraFlow"
+  }
+ },
+ "91:54": {
+  "inputs": {
+   "ckpt_name": "hunyuan3d-dit-v2_fp16.safetensors"
+  },
+  "class_type": "ImageOnlyCheckpointLoader",
+  "_meta": {
+   "title": "Load Checkpoint Image Only (img2vid model)"
+  }
+ }
+}

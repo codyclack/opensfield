@@ -11,5 +11,79 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "audio_ace_step1_5_xl_turbo",
+    "api": "features/audio.music/workflow_api.json",
+    "ui": "features/audio.music/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "tags",
+        "label": "Style tags",
+        "kind": "text",
+        "node": "94",
+        "field": "tags",
+        "required": true
+      },
+      {
+        "name": "lyrics",
+        "label": "Lyrics ([Instrumental] for none)",
+        "kind": "text",
+        "node": "94",
+        "field": "lyrics",
+        "required": true
+      },
+      {
+        "name": "bpm",
+        "label": "BPM",
+        "kind": "number",
+        "node": "94",
+        "field": "bpm",
+        "default": 95,
+        "min": 40,
+        "max": 220,
+        "step": 1
+      },
+      {
+        "name": "duration",
+        "label": "Duration (s)",
+        "kind": "number",
+        "node": "94",
+        "field": "duration",
+        "default": 30,
+        "min": 5,
+        "max": 240,
+        "step": 1,
+        "also": [
+          {
+            "node": "98",
+            "field": "seconds"
+          }
+        ]
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "109",
+        "field": "value",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "111"
+    ],
+    "models": [
+      "ace_1.5_vae.safetensors",
+      "acestep_v1.5_xl_turbo_bf16.safetensors",
+      "qwen_0.6b_ace15.safetensors",
+      "qwen_4b_ace15.safetensors"
+    ],
+    "output_kind": "audio",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/music_lofi.mp3"
+    ]
+  }
 }

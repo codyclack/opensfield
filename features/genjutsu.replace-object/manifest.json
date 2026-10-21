@@ -12,5 +12,90 @@
   "note": "'Openjutsu' in the Comfy brief.",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "video_wan21_scail2_character_replacement_int8",
+    "api": "features/genjutsu.replace-object/workflow_api.json",
+    "ui": "features/genjutsu.replace-object/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "video",
+        "label": "Source video",
+        "kind": "video",
+        "node": "155",
+        "field": "file",
+        "required": true
+      },
+      {
+        "name": "image",
+        "label": "Replacement character image",
+        "kind": "image",
+        "node": "30",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Character description",
+        "kind": "text",
+        "node": "213:3",
+        "field": "text",
+        "required": true,
+        "also": [
+          {
+            "node": "262:258",
+            "field": "text"
+          }
+        ]
+      },
+      {
+        "name": "target",
+        "label": "Who to replace in the video",
+        "kind": "text",
+        "node": "213:191",
+        "field": "text",
+        "required": true,
+        "also": [
+          {
+            "node": "262:242",
+            "field": "text"
+          }
+        ]
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "213:19",
+        "field": "noise_seed",
+        "default": 0,
+        "also": [
+          {
+            "node": "262:227",
+            "field": "noise_seed"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      "202",
+      "271"
+    ],
+    "models": [
+      "Wan2_1_VAE_bf16.safetensors",
+      "clip_vision_h.safetensors",
+      "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors",
+      "sam3.1_multiplex_fp16.safetensors",
+      "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+      "wan2.1_14B_SCAIL_2_int8_convrot.safetensors",
+      "wan2.1_SCAIL_2_DPO_lora_bf16.safetensors"
+    ],
+    "output_kind": "video",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/replace_character_a.mp4",
+      "examples/replace_character_b.mp4"
+    ]
+  }
 }

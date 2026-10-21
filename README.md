@@ -5,9 +5,10 @@ Open-source rebuild of Higgsfield's creative apps on ComfyUI, for Comfy's
 `partner/` pack adds Comfy Router models.
 
 ## Status (honest summary)
-- **4 of 72 modules are built and rendered for real** (motion transfer, camera-move shot, first/last-frame transition, text-to-image),
-  with open-weight models only. Outputs are in [`examples/`](examples/README.md).
-- **68 modules are mapped but not built.** [COVERAGE.md](COVERAGE.md) lists every Higgsfield feature, its planned open-weight
+- **12 of 72 modules are built and rendered for real** (motion transfer, character replacement, camera-move shot,
+  first/last-frame transition, text-to-video, text-to-image, image edit, background removal, image and video upscale, music,
+  image-to-3D), with open-weight models only. Outputs are in [`examples/`](examples/README.md).
+- **60 modules are mapped but not built.** [COVERAGE.md](COVERAGE.md) lists every Higgsfield feature, its planned open-weight
   stand-in and its status (`planned` / `built` / `tested`).
 - **The app runs in mock mode out of the box** (placeholder outputs, no ComfyUI needed). Real runs through the app's `comfy-sdk`
   path are implemented and unit-tested against a stub, but **not verified against a live server yet**.
@@ -31,8 +32,8 @@ Env: `OPENSFIELD_MODE=mock|comfy`, `OPENSFIELD_PARTNER=1` (show partner-pack mod
 - `examples/` — real example renders
 
 ## Workflows: rendered on Comfy Cloud
-Four hero modules have real workflows wired from official Comfy templates, and each has a real render in
-[`examples/`](examples/README.md) (open-weight models only; 5 to 74 s of GPU each). They were run through Comfy Cloud's
+Twelve modules have real workflows wired from official Comfy templates, and each has a real render in
+[`examples/`](examples/README.md) (open-weight models only; seconds to about a minute of GPU each). They were run through Comfy Cloud's
 template runner using the node ids in `registry/wiring.py`; **the app's own `comfy-sdk` submission path has not been run yet**.
 Wiring is also checked statically by `tests/test_wiring.py`.
 
@@ -42,6 +43,13 @@ Wiring is also checked statically by `tests/test_wiring.py`.
 | `cinema.camera-rig` | `video_ltx2_5_i2v` | LTX-2.5 |
 | `cinema.first-last-frame` | `video_ltx2_5_flf2v` | LTX-2.5 |
 | `soul.t2i` | `image_z_image_turbo` | Z-Image Turbo |
+| `image.edit-open` | `image_qwen_image_edit_2511_int8` | Qwen-Image-Edit 2511 |
+| `image.bg-remove` | `utility_birefnet_remove_background` | BiRefNet |
+| `image.upscale` / `video.upscale` | `utility_seedvr2_3b_int8_upscale_image` / `_video` | SeedVR2 3B |
+| `audio.music` | `audio_ace_step1_5_xl_turbo` | ACE-Step 1.5 XL Turbo |
+| `video.t2v-i2v-open` | `video_ltx2_5_t2v` | LTX-2.5 |
+| `genjutsu.replace-object` | `video_wan21_scail2_character_replacement_int8` | SCAIL-2 (Wan 2.1) int8 |
+| `scene3d.image-to-3d` | `3d_hunyuan3d_image_to_model` | Hunyuan3D 2.0 |
 
 Each `features/<id>/` holds `workflow_ui.json` (open in ComfyUI), `workflow_api.json` (what `comfy-sdk` submits) and the
 manifest, whose `workflow.inputs` says which node/field each form input drives. `registry/wiring.py` is the source of that map.

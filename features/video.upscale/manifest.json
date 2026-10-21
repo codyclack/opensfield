@@ -11,5 +11,41 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "utility_seedvr2_3b_int8_upscale_video",
+    "api": "features/video.upscale/workflow_api.json",
+    "ui": "features/video.upscale/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "video",
+        "label": "Video",
+        "kind": "video",
+        "node": "73",
+        "field": "file",
+        "required": true
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "66:54",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "76"
+    ],
+    "models": [
+      "seedvr2_3b_int8_convrot.safetensors",
+      "seedvr2_ema_vae_fp16.safetensors"
+    ],
+    "output_kind": "video",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/video_upscale.mp4"
+    ]
+  }
 }

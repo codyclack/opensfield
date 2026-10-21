@@ -11,5 +11,34 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "utility_birefnet_remove_background",
+    "api": "features/image.bg-remove/workflow_api.json",
+    "ui": "features/image.bg-remove/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Image",
+        "kind": "image",
+        "node": "17",
+        "field": "image",
+        "required": true
+      }
+    ],
+    "outputs": [
+      "18",
+      "20"
+    ],
+    "models": [
+      "birefnet.safetensors"
+    ],
+    "output_kind": "image",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/bg_remove_cutout.png",
+      "examples/bg_remove_mask.png"
+    ]
+  }
 }

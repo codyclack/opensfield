@@ -5,6 +5,7 @@ Status is read back from existing manifests so build/smoke scripts can promote
 a feature (planned -> built -> tested) without this script resetting it.
 """
 import json
+import re
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -15,6 +16,12 @@ from registry.features import BASES, FEATURES, MODEL_ROSTER  # noqa: E402
 from registry.wiring import WIRING  # noqa: E402
 
 ORDER = {"planned": 0, "built": 1, "tested": 2}
+
+
+def models_in(ui_workflow: Path) -> list[str]:
+    """Model files a template references (any *.safetensors/ckpt/gguf string in its widget values)."""
+    found = re.findall(r"[\w.\-]+\.(?:safetensors|ckpt|pt|gguf)", ui_workflow.read_text(encoding="utf-8"))
+    return sorted(set(found))
 
 
 def write_manifests():
@@ -31,7 +38,8 @@ def write_manifests():
             merged["workflow"] = {
                 "template": wiring["template"], "api": f"features/{fid}/workflow_api.json",
                 "ui": f"features/{fid}/workflow_ui.json", "inputs": wiring["inputs"],
-                "outputs": wiring["outputs"], "models": wiring["models"],
+                "outputs": wiring["outputs"], "models": wiring.get("models") or models_in(d / "workflow_ui.json"),
+                **({"output_kind": wiring["output_kind"]} if wiring.get("output_kind") else {}),
                 "verified": bool(wiring.get("verified_via")),
             }
             if wiring.get("verified_via"):

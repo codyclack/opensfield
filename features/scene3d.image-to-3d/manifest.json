@@ -11,5 +11,40 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "3d_hunyuan3d_image_to_model",
+    "api": "features/scene3d.image-to-3d/workflow_api.json",
+    "ui": "features/scene3d.image-to-3d/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Image",
+        "kind": "image",
+        "node": "56",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "91:3",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "82"
+    ],
+    "models": [
+      "hunyuan3d-dit-v2_fp16.safetensors"
+    ],
+    "output_kind": "3d",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/image_to_3d.glb"
+    ]
+  }
 }

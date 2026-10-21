@@ -12,5 +12,82 @@
   "note": "Open stand-ins for the whole video-model roster. Contest LTX VFX bonus lives here.",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "template": "video_ltx2_5_t2v",
+    "api": "features/video.t2v-i2v-open/workflow_api.json",
+    "ui": "features/video.t2v-i2v-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "405:376",
+        "field": "value",
+        "required": true
+      },
+      {
+        "name": "aspect",
+        "label": "Aspect",
+        "kind": "choice",
+        "node": "409",
+        "field": "aspect_ratio",
+        "options": [
+          "1:1 (Square)",
+          "2:3 (Portrait Photo)",
+          "3:2 (Photo)",
+          "3:4 (Portrait Standard)",
+          "4:3 (Standard)",
+          "9:16 (Portrait Widescreen)",
+          "16:9 (Widescreen)",
+          "21:9 (Ultrawide)"
+        ],
+        "default": "16:9 (Widescreen)"
+      },
+      {
+        "name": "duration",
+        "label": "Duration (s)",
+        "kind": "number",
+        "node": "405:362",
+        "field": "value",
+        "default": 5,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "405:338",
+        "field": "noise_seed",
+        "default": 0,
+        "also": [
+          {
+            "node": "405:339",
+            "field": "noise_seed"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      "75"
+    ],
+    "models": [
+      "gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors",
+      "gemma4_e2b_it_int8_convrot.safetensors",
+      "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+      "ltx-2.5-audio-vae-bf16.safetensors",
+      "ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+      "ltx-2.5-video-vae-bf16.safetensors",
+      "ltx-av-step-1751000_vocoder_24K.safetensors",
+      "model.safetensors"
+    ],
+    "output_kind": "video",
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/text_to_video_alley.mp4"
+    ]
+  }
 }

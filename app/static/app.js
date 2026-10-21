@@ -53,7 +53,10 @@ function renderRail() {
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isVideo = (url) => /\.(mp4|webm|mov)$/i.test(url);
+const isImage = (url) => /\.(png|jpe?g|webp|gif|svg)$/i.test(url);
 function exampleEl(url, cls, opts = {}) {
+  if (/\.(mp3|wav|flac|ogg)$/i.test(url)) return h("audio", { src: "/" + url, controls: true, preload: "none" });
+  if (/\.(glb|gltf)$/i.test(url)) return h("a", { class: "st", href: "/" + url, download: "" }, `Download 3D model (${url.split("/").pop()})`);
   if (!isVideo(url)) return h("img", { class: cls, src: "/" + url, alt: opts.alt || "", loading: "lazy" });
   return h("video", { class: cls, src: "/" + url + "#t=1.5", muted: true, loop: true, playsinline: true, preload: "metadata",
     controls: opts.controls, autoplay: !opts.controls && !reduceMotion, "aria-hidden": opts.controls ? null : "true" });
@@ -61,7 +64,7 @@ function exampleEl(url, cls, opts = {}) {
 
 function tile(f) {
   const kinds = [...new Set(f.inputs.map(sockKind))];
-  const cover = f.examples && f.examples[0];
+  const cover = (f.examples || []).find((u) => isVideo(u) || isImage(u));
   return h("button", { class: "tile", type: "button", onclick: () => openFeature(f) },
     h("span", { class: "tbar", style: `--c:${studioColor(f.studio)}` }, h("i", { class: "dot" }), h("span", { class: "grow" }, f.studio),
       f.track === "partner" && badge("partner", "partner")),
@@ -217,6 +220,7 @@ function jobMedia(j) {
     j.error && h("div", { class: "st error" }, j.error),
     ...j.outputs.map((o) => o.kind === "video" ? h("video", { class: "thumb", src: o.url, controls: true })
       : o.kind === "audio" ? h("audio", { src: o.url, controls: true }) : h("img", { class: "thumb", src: o.url, alt: `${j.feature_name} output` })),
+    ...j.outputs.filter((o) => o.kind === "3d").map((o) => h("a", { class: "st", href: o.url, download: "" }, `Download ${o.name}`)),
     j.outputs.some((o) => o.mock) && h("div", { class: "st" }, "mock placeholder, no ComfyUI call"),
   ].filter(Boolean);
 }

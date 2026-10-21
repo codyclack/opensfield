@@ -87,6 +87,7 @@ def run_comfy(feature: dict, job: dict, update: Update) -> list[dict]:
         for o in result.get_outputs(node):
             o.to_file(str(out / o.name))
             ext = Path(o.name).suffix.lower()
-            kind = "video" if ext in (".mp4", ".webm", ".mov") else "audio" if ext in (".wav", ".mp3", ".flac") else "image"
+            kind = ("video" if ext in (".mp4", ".webm", ".mov") else "audio" if ext in (".wav", ".mp3", ".flac", ".ogg")
+                    else "3d" if ext in (".glb", ".gltf") else "image")
             outputs.append({"url": f"/outputs/{job['id']}/{o.name}", "kind": kind, "name": o.name, "mock": False})
     return outputs
