@@ -1,0 +1,13 @@
+{
+  "id": "platform.publish",
+  "studio": "Platform",
+  "name": "TikTok publishing",
+  "tier": "C",
+  "base": [],
+  "higgsfield": "tiktok_*",
+  "track": "open",
+  "note": "Out of scope.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

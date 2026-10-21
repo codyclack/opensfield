@@ -1,0 +1,15 @@
+{
+  "id": "matchcut.thermal",
+  "studio": "Match Cut + Tracelab",
+  "name": "Thermal / black-hot / white-hot / rainbow",
+  "tier": "A",
+  "base": [
+    "thermal"
+  ],
+  "higgsfield": "create_thermal, create_black_hot, create_white_hot, create_rainbow_thermal",
+  "track": "open",
+  "note": "Thermal look, rendered locally by app/fx.py.",
+  "count": 4,
+  "partner": [],
+  "status": "planned"
+}

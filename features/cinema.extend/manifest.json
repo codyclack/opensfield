@@ -1,0 +1,16 @@
+{
+  "id": "cinema.extend",
+  "studio": "Cinema Studio",
+  "name": "Extend / continue a clip",
+  "tier": "B",
+  "base": [
+    "ltx25_i2v",
+    "stitch"
+  ],
+  "higgsfield": "video extend",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

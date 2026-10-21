@@ -1,0 +1,16 @@
+{
+  "id": "marketing.product-photoshoot",
+  "studio": "Marketing",
+  "name": "Product photoshoot / packshot / try-on",
+  "tier": "B",
+  "base": [
+    "ref_edit",
+    "matte"
+  ],
+  "higgsfield": "workflow product-photoshoot",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

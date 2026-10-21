@@ -1,0 +1,16 @@
+{
+  "id": "video.reframe",
+  "studio": "Video tools",
+  "name": "Reframe video (9:16 etc.)",
+  "tier": "B",
+  "base": [
+    "matte",
+    "stitch"
+  ],
+  "higgsfield": "reframe",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

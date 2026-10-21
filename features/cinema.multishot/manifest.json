@@ -1,0 +1,17 @@
+{
+  "id": "cinema.multishot",
+  "studio": "Cinema Studio",
+  "name": "Multi-shot sequence + stitch",
+  "tier": "A",
+  "base": [
+    "ltx25_i2v",
+    "ltx25_flf2v",
+    "stitch"
+  ],
+  "higgsfield": "cinematic_studio_3_0 / 4_0, nano_banana_2_shots",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "cinema.director",
+  "studio": "Cinema Studio",
+  "name": "AI Director: concept -> shot list",
+  "tier": "A",
+  "base": [
+    "planner_llm"
+  ],
+  "higgsfield": "cinematic_studio_2_5 / 3_0 / video_4_0 director",
+  "track": "open",
+  "note": "QwenVL planner outputs per-shot JSON.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

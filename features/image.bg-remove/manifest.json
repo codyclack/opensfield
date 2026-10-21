@@ -1,0 +1,15 @@
+{
+  "id": "image.bg-remove",
+  "studio": "Image tools",
+  "name": "Background remover",
+  "tier": "A",
+  "base": [
+    "matte"
+  ],
+  "higgsfield": "image_background_remover",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OpenSfield feature manifest",
+  "type": "object",
+  "required": ["id", "studio", "name", "tier", "base", "higgsfield", "track", "status"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"},
+    "studio": {"type": "string"},
+    "name": {"type": "string"},
+    "tier": {"enum": ["A", "B", "C"]},
+    "track": {"enum": ["open", "partner"]},
+    "status": {"enum": ["planned", "built", "tested"]},
+    "base": {"type": "array", "items": {"type": "string"}},
+    "higgsfield": {"type": "string"},
+    "count": {"type": "integer", "minimum": 1},
+    "note": {"type": "string"},
+    "partner": {"type": "array", "items": {"type": "string"}},
+    "workflow": {
+      "type": "object",
+      "description": "Filled when built: files + SDK slot mapping.",
+      "properties": {
+        "template": {"type": "string", "description": "official Comfy template this was taken from"},
+        "verified": {"type": "boolean", "description": "true only after a real end-to-end render"},
+        "api": {"type": "string", "description": "workflow_api.json path (what comfy-sdk submits)"},
+        "ui": {"type": "string", "description": "workflow_ui.json path (editable in ComfyUI)"},
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "kind", "node", "field"],
+            "properties": {
+              "name": {"type": "string"},
+              "kind": {"enum": ["text", "number", "choice", "image", "video", "audio", "seed"]},
+              "node": {"type": "string", "description": "API-format node id passed to wf.set_input"},
+              "field": {"type": "string"},
+              "default": {},
+              "required": {"type": "boolean"},
+              "options": {"type": "array"},
+              "also": {"type": "array", "description": "extra node/field targets that receive the same value",
+                       "items": {"type": "object", "required": ["node", "field"], "properties": {"node": {"type": "string"}, "field": {"type": "string"}}}}
+            }
+          }
+        },
+        "outputs": {"type": "array", "items": {"type": "string"}, "description": "Output node ids for job.get_outputs, main result first"},
+        "models": {"type": "array", "items": {"type": "string"}, "description": "model files the template expects"}
+      }
+    }
+  }
+}

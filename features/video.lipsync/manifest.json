@@ -1,0 +1,15 @@
+{
+  "id": "video.lipsync",
+  "studio": "Video tools",
+  "name": "Lip-sync",
+  "tier": "A",
+  "base": [
+    "ltx23_audio"
+  ],
+  "higgsfield": "sync_so",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "scene3d.angles",
+  "studio": "Reshoot",
+  "name": "New camera views of a location/product",
+  "tier": "B",
+  "base": [
+    "ref_edit"
+  ],
+  "higgsfield": "3d_jutsu_angles, soul_location angles",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

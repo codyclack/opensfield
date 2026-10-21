@@ -1,0 +1,15 @@
+{
+  "id": "image.reframe",
+  "studio": "Image tools",
+  "name": "Reframe / aspect-ratio change",
+  "tier": "B",
+  "base": [
+    "fill"
+  ],
+  "higgsfield": "reframe",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

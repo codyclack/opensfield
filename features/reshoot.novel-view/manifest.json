@@ -1,0 +1,16 @@
+{
+  "id": "reshoot.novel-view",
+  "studio": "Reshoot",
+  "name": "Re-shoot a video/shot from any angle",
+  "tier": "A",
+  "base": [
+    "ref_edit",
+    "ltx23_ic_lora"
+  ],
+  "higgsfield": "3d_jutsu_angles, Scene Builder angles",
+  "track": "open",
+  "note": "Contest-named 'Re-shoot'.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

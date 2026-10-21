@@ -1,0 +1,102 @@
+{
+  "id": "cinema.first-last-frame",
+  "studio": "Cinema Studio",
+  "name": "First/last-frame transitions",
+  "tier": "A",
+  "base": [
+    "ltx25_flf2v"
+  ],
+  "higgsfield": "kling_o3_flf, FLF",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "tested",
+  "workflow": {
+    "template": "video_ltx2_5_flf2v",
+    "api": "features/cinema.first-last-frame/workflow_api.json",
+    "ui": "features/cinema.first-last-frame/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "start_image",
+        "label": "First frame",
+        "kind": "image",
+        "node": "31",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "end_image",
+        "label": "Last frame",
+        "kind": "image",
+        "node": "39",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Transition prompt",
+        "kind": "text",
+        "node": "251:252",
+        "field": "value",
+        "required": true
+      },
+      {
+        "name": "width",
+        "label": "Width",
+        "kind": "number",
+        "node": "251:215",
+        "field": "value",
+        "default": 1280,
+        "min": 256,
+        "max": 1920,
+        "step": 32
+      },
+      {
+        "name": "height",
+        "label": "Height",
+        "kind": "number",
+        "node": "251:216",
+        "field": "value",
+        "default": 720,
+        "min": 256,
+        "max": 1920,
+        "step": 32
+      },
+      {
+        "name": "duration",
+        "label": "Duration (s)",
+        "kind": "number",
+        "node": "251:198",
+        "field": "value",
+        "default": 5,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "251:196",
+        "field": "noise_seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "68"
+    ],
+    "models": [
+      "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+      "gemma4_e2b_it_int8_convrot.safetensors",
+      "gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors",
+      "ltx-2.5-video-vae-bf16.safetensors",
+      "ltx-2.5-audio-vae-bf16.safetensors"
+    ],
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/first_last_frame_morph.mp4"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "matchcut.text-motion",
+  "studio": "Match Cut + Tracelab",
+  "name": "Notebook / notereel / scrapboard / wordstack / typewriter / commentcut",
+  "tier": "B",
+  "base": [
+    "postfx"
+  ],
+  "higgsfield": "create_notebook, notereel, scrapboard, wordstack, typewriter, commentcut",
+  "track": "open",
+  "note": "",
+  "count": 6,
+  "partner": [],
+  "status": "planned"
+}

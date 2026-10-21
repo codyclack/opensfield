@@ -1,0 +1,15 @@
+{
+  "id": "matchcut.retro-fx",
+  "studio": "Match Cut + Tracelab",
+  "name": "CRT / CRT-glitch / VHS / glitch / Nokia / retropop / night-vision",
+  "tier": "B",
+  "base": [
+    "postfx"
+  ],
+  "higgsfield": "create_crt, create_crtglitch, create_vhs, create_glitch, create_nokia, create_retropop, create_nightvision",
+  "track": "open",
+  "note": "",
+  "count": 7,
+  "partner": [],
+  "status": "planned"
+}

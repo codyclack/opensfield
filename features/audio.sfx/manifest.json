@@ -1,0 +1,15 @@
+{
+  "id": "audio.sfx",
+  "studio": "Audio",
+  "name": "Sound effects",
+  "tier": "B",
+  "base": [
+    "tts_audio"
+  ],
+  "higgsfield": "mirelo_text_to_audio",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

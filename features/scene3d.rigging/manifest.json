@@ -1,0 +1,13 @@
+{
+  "id": "scene3d.rigging",
+  "studio": "Reshoot",
+  "name": "Auto-rig 3D character",
+  "tier": "C",
+  "base": [],
+  "higgsfield": "3d_rigging, meshy_rigging",
+  "track": "open",
+  "note": "No solid open Comfy path; out of scope.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

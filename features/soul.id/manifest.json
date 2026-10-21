@@ -1,0 +1,16 @@
+{
+  "id": "soul.id",
+  "studio": "Soul",
+  "name": "Soul ID: reusable character identity",
+  "tier": "B",
+  "base": [
+    "ref_edit",
+    "flux_redux_blend"
+  ],
+  "higgsfield": "Soul ID",
+  "track": "open",
+  "note": "Reference-based identity (no training) in v1; LoRA trainer is stretch.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

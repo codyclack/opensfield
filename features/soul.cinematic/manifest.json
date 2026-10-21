@@ -1,0 +1,15 @@
+{
+  "id": "soul.cinematic",
+  "studio": "Soul",
+  "name": "Soul Cinematic / Cinema stills",
+  "tier": "A",
+  "base": [
+    "t2i"
+  ],
+  "higgsfield": "soul_cinematic, soul_cinema_studio",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

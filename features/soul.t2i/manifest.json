@@ -1,0 +1,74 @@
+{
+  "id": "soul.t2i",
+  "studio": "Soul",
+  "name": "Soul 2.0 photoreal text->image",
+  "tier": "A",
+  "base": [
+    "t2i"
+  ],
+  "higgsfield": "soul_2, soul_v2",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "tested",
+  "workflow": {
+    "template": "image_z_image_turbo",
+    "api": "features/soul.t2i/workflow_api.json",
+    "ui": "features/soul.t2i/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "57:27",
+        "field": "text",
+        "required": true
+      },
+      {
+        "name": "width",
+        "label": "Width",
+        "kind": "number",
+        "node": "57:13",
+        "field": "width",
+        "default": 1024,
+        "min": 512,
+        "max": 2048,
+        "step": 64
+      },
+      {
+        "name": "height",
+        "label": "Height",
+        "kind": "number",
+        "node": "57:13",
+        "field": "height",
+        "default": 1024,
+        "min": 512,
+        "max": 2048,
+        "step": 64
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "57:3",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "9"
+    ],
+    "models": [
+      "z_image_turbo_bf16.safetensors",
+      "qwen_3_4b.safetensors",
+      "ae.safetensors"
+    ],
+    "verified": true,
+    "verified_via": "Comfy Cloud run_template using the node ids in this map, 2026-10-21 (not yet via comfy-sdk)",
+    "examples": [
+      "examples/char_a.png",
+      "examples/char_b.png"
+    ]
+  }
+}

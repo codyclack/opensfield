@@ -1,0 +1,15 @@
+{
+  "id": "audio.voice-change",
+  "studio": "Audio",
+  "name": "Voice change",
+  "tier": "B",
+  "base": [
+    "tts_audio"
+  ],
+  "higgsfield": "voice_change",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

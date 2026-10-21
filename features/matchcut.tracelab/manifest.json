@@ -1,0 +1,15 @@
+{
+  "id": "matchcut.tracelab",
+  "studio": "Match Cut + Tracelab",
+  "name": "Tracelab: track objects/faces + HUD overlays",
+  "tier": "A",
+  "base": [
+    "moondream_hud"
+  ],
+  "higgsfield": "create_tracelab",
+  "track": "open",
+  "note": "Existing CC HUD node set.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

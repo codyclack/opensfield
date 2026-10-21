@@ -1,0 +1,16 @@
+{
+  "id": "genjutsu.replace-object",
+  "studio": "Genjutsu",
+  "name": "Replace character/object in a video",
+  "tier": "A",
+  "base": [
+    "wan_animate2",
+    "matte"
+  ],
+  "higgsfield": "hf_mult_replace_object, hf_mult_replace_object_flash",
+  "track": "open",
+  "note": "'Openjutsu' in the Comfy brief.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

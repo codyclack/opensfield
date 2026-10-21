@@ -1,0 +1,15 @@
+{
+  "id": "image.decompose",
+  "studio": "Image tools",
+  "name": "Decompose image into layers",
+  "tier": "B",
+  "base": [
+    "ref_edit"
+  ],
+  "higgsfield": "image_decompose",
+  "track": "open",
+  "note": "Qwen-Image-Layered if available.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "genjutsu.styles",
+  "studio": "Genjutsu",
+  "name": "Restyle a video, keep its motion",
+  "tier": "B",
+  "base": [
+    "ltx23_ic_lora",
+    "ref_edit"
+  ],
+  "higgsfield": "genjutsu-styles (e.g. Knitted Yarn World, Rounded Toy CGI)",
+  "track": "open",
+  "note": "Style presets = prompt+LoRA data.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

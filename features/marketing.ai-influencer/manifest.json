@@ -1,0 +1,16 @@
+{
+  "id": "marketing.ai-influencer",
+  "studio": "Marketing",
+  "name": "AI influencer (character + presets)",
+  "tier": "B",
+  "base": [
+    "ref_edit",
+    "ltx23_audio"
+  ],
+  "higgsfield": "ai_influencer_*",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

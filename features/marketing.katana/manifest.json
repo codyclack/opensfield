@@ -1,0 +1,16 @@
+{
+  "id": "marketing.katana",
+  "studio": "Marketing",
+  "name": "Reference-edit remix (Katana)",
+  "tier": "C",
+  "base": [
+    "planner_llm",
+    "wan_animate2"
+  ],
+  "higgsfield": "workflow katana",
+  "track": "open",
+  "note": "Stretch; depends on Ad Multiplier + Genjutsu.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#131517">
+<title>OpenSfield</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23d1fe17'/%3E%3Ccircle cx='10' cy='11' r='3.2' fill='%23211927'/%3E%3Ccircle cx='22' cy='21' r='3.2' fill='%23211927'/%3E%3Cpath d='M10 11C18 11 14 21 22 21' stroke='%23211927' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/" aria-label="OpenSfield home">
+    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9"/><circle cx="10" cy="11" r="3.2"/><circle cx="22" cy="21" r="3.2"/><path d="M10 11C18 11 14 21 22 21"/></svg>
+    <span>OPEN<b>SFIELD</b></span>
+  </a>
+  <label class="search">
+    <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg>
+    <input id="search" type="search" placeholder="Search every feature" aria-label="Search features" autocomplete="off">
+  </label>
+  <span id="mode" class="chip"></span>
+  <button id="qtoggle" class="runchip" type="button" aria-controls="queue" aria-expanded="false">Queue <b id="qcount">0</b></button>
+</header>
+<div class="shell">
+  <nav id="rail" aria-label="Studios"></nav>
+  <main id="main" class="canvas" tabindex="-1"></main>
+  <aside id="queue" aria-label="Job queue"><h2>Queue</h2><div id="jobs" class="empty">No jobs yet.</div></aside>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>

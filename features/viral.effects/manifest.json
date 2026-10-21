@@ -1,0 +1,17 @@
+{
+  "id": "viral.effects",
+  "studio": "Viral Hub",
+  "name": "Viral effect chains (87 presets)",
+  "tier": "B",
+  "base": [
+    "ref_edit",
+    "ltx25_flf2v",
+    "ltx25_i2v"
+  ],
+  "higgsfield": "get_presets source=viral (effects/motion/product-shot)",
+  "track": "open",
+  "note": "Chain = start-frame edit -> FLF2V/I2V with effect prompt. 15 seen: Floating fall, Vanish, Eyes in, Cutout, Wild ride, Lidar transition, Smash and grab, Incline, Clones, Infinite clones, Selfception, Act natural, Monster dab, Street colossus, World morphing. Remaining 72 enumerated at build time.",
+  "count": 87,
+  "partner": [],
+  "status": "planned"
+}

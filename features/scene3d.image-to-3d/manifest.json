@@ -1,0 +1,15 @@
+{
+  "id": "scene3d.image-to-3d",
+  "studio": "Reshoot",
+  "name": "Image(s) -> 3D model",
+  "tier": "B",
+  "base": [
+    "hunyuan3d"
+  ],
+  "higgsfield": "sam_3_3d, image_to_3d, multi_image_to_3d, meshy_*",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

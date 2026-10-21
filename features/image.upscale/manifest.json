@@ -1,0 +1,15 @@
+{
+  "id": "image.upscale",
+  "studio": "Image tools",
+  "name": "Upscale (Topaz-style)",
+  "tier": "B",
+  "base": [
+    "upscale"
+  ],
+  "higgsfield": "topaz_image(_generative), bytedance_image_upscale",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

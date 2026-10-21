@@ -1,0 +1,15 @@
+{
+  "id": "video.bg-remove",
+  "studio": "Video tools",
+  "name": "Video background remover",
+  "tier": "B",
+  "base": [
+    "matte"
+  ],
+  "higgsfield": "video_background_remover",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

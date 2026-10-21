@@ -1,0 +1,15 @@
+{
+  "id": "image.outpaint",
+  "studio": "Image tools",
+  "name": "Outpaint / generative expand",
+  "tier": "B",
+  "base": [
+    "fill"
+  ],
+  "higgsfield": "outpaint, flux_2_pro_outpaint",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

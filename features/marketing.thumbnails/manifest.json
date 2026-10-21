@@ -1,0 +1,17 @@
+{
+  "id": "marketing.thumbnails",
+  "studio": "Marketing",
+  "name": "YouTube/IG thumbnails",
+  "tier": "B",
+  "base": [
+    "t2i",
+    "ref_edit",
+    "postfx"
+  ],
+  "higgsfield": "workflow thumbnail-generation (16 frameworks)",
+  "track": "open",
+  "note": "",
+  "count": 16,
+  "partner": [],
+  "status": "planned"
+}

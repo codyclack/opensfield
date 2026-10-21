@@ -1,0 +1,16 @@
+{
+  "id": "audio.captions",
+  "studio": "Audio",
+  "name": "Burned captions",
+  "tier": "B",
+  "base": [
+    "tts_audio",
+    "postfx"
+  ],
+  "higgsfield": "video-montage captions",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

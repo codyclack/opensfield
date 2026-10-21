@@ -1,0 +1,15 @@
+{
+  "id": "image.inpaint-brush",
+  "studio": "Image tools",
+  "name": "Brush inpaint / edit region",
+  "tier": "B",
+  "base": [
+    "fill"
+  ],
+  "higgsfield": "Marketing Studio brush inpainting",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

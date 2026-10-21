@@ -1,0 +1,16 @@
+{
+  "id": "marketing.brand-assets",
+  "studio": "Marketing",
+  "name": "Logos, brand kits, mockups",
+  "tier": "B",
+  "base": [
+    "t2i",
+    "ref_edit"
+  ],
+  "higgsfield": "workflow brand-asset-creation",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

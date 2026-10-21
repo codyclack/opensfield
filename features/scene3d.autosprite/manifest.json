@@ -1,0 +1,15 @@
+{
+  "id": "scene3d.autosprite",
+  "studio": "Reshoot",
+  "name": "Sprite sheet generation",
+  "tier": "B",
+  "base": [
+    "t2i"
+  ],
+  "higgsfield": "autosprite",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "video.deflicker",
+  "studio": "Video tools",
+  "name": "Deflicker",
+  "tier": "B",
+  "base": [
+    "upscale"
+  ],
+  "higgsfield": "video_deflicker",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

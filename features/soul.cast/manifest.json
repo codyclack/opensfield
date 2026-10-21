@@ -1,0 +1,15 @@
+{
+  "id": "soul.cast",
+  "studio": "Soul",
+  "name": "Soul Cast: character from reference",
+  "tier": "B",
+  "base": [
+    "ref_edit"
+  ],
+  "higgsfield": "soul_cast",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

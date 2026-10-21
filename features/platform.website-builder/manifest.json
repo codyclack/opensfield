@@ -1,0 +1,13 @@
+{
+  "id": "platform.website-builder",
+  "studio": "Platform",
+  "name": "Website / app / game builder",
+  "tier": "C",
+  "base": [],
+  "higgsfield": "website-builder-flow",
+  "track": "open",
+  "note": "Not a generation workflow; out of scope.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "marketing.video-edit-montage",
+  "studio": "Marketing",
+  "name": "Montage / Higgsedit-style edits",
+  "tier": "C",
+  "base": [
+    "stitch",
+    "postfx"
+  ],
+  "higgsfield": "video-editing, video-montage",
+  "track": "open",
+  "note": "ffmpeg-level; shipped as a thin helper.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

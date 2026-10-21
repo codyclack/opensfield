@@ -1,0 +1,16 @@
+{
+  "id": "video.t2v-i2v-open",
+  "studio": "Video models",
+  "name": "Open text/image->video (LTX 2.5, Wan)",
+  "tier": "A",
+  "base": [
+    "ltx25_t2v",
+    "ltx25_i2v"
+  ],
+  "higgsfield": "seedance*, kling2_6/3_0*, wan2_6, minimax_hailuo, grok_video*, happy_horse_video",
+  "track": "open",
+  "note": "Open stand-ins for the whole video-model roster. Contest LTX VFX bonus lives here.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

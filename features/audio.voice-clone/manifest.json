@@ -1,0 +1,15 @@
+{
+  "id": "audio.voice-clone",
+  "studio": "Audio",
+  "name": "Voice clone / create voice",
+  "tier": "B",
+  "base": [
+    "tts_audio"
+  ],
+  "higgsfield": "create_voice, create_voice_from_confirmed_audio",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

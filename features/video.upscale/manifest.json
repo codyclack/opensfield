@@ -1,0 +1,15 @@
+{
+  "id": "video.upscale",
+  "studio": "Video tools",
+  "name": "Video upscale",
+  "tier": "B",
+  "base": [
+    "upscale"
+  ],
+  "higgsfield": "topaz_video, topaz_hyperion_2_5, video_upscale, bytedance_video_upscale",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

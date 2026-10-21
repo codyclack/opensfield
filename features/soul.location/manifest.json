@@ -1,0 +1,15 @@
+{
+  "id": "soul.location",
+  "studio": "Soul",
+  "name": "Soul Location: place from reference",
+  "tier": "B",
+  "base": [
+    "ref_edit"
+  ],
+  "higgsfield": "soul_location",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

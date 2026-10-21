@@ -1,0 +1,17 @@
+{
+  "id": "marketing.ad-multiplier",
+  "studio": "Marketing",
+  "name": "Multiply one ad into variants (edit / recreate)",
+  "tier": "B",
+  "base": [
+    "wan_animate2",
+    "ref_edit",
+    "matte"
+  ],
+  "higgsfield": "ad_multiplier, ad_multiplier_v2",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

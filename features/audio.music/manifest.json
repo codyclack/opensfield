@@ -1,0 +1,15 @@
+{
+  "id": "audio.music",
+  "studio": "Audio",
+  "name": "Music generation",
+  "tier": "B",
+  "base": [
+    "tts_audio"
+  ],
+  "higgsfield": "sonilo_music",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

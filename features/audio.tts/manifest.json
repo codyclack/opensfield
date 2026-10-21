@@ -1,0 +1,15 @@
+{
+  "id": "audio.tts",
+  "studio": "Audio",
+  "name": "Text to speech",
+  "tier": "B",
+  "base": [
+    "tts_audio"
+  ],
+  "higgsfield": "text2speech_v2, qwen_audio_tts, seed_audio, inworld_text_to_speech, elevenlabs_v4(_turbo)",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

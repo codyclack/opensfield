@@ -1,0 +1,16 @@
+{
+  "id": "marketing.ads-studio",
+  "studio": "Marketing",
+  "name": "Static ad creatives with copy",
+  "tier": "B",
+  "base": [
+    "planner_llm",
+    "ref_edit"
+  ],
+  "higgsfield": "ads_studio_*",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

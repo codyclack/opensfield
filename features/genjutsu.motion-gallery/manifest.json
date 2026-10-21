@@ -1,0 +1,15 @@
+{
+  "id": "genjutsu.motion-gallery",
+  "studio": "Genjutsu",
+  "name": "Trending/new motion preset gallery",
+  "tier": "B",
+  "base": [
+    "wan_animate2"
+  ],
+  "higgsfield": "genjutsu / genjutsu-trending / genjutsu-new",
+  "track": "open",
+  "note": "Driving-video library; 12 trending seen (Athlete Dance Swap, Skyway Chase...). Must use own/licensed driving clips.",
+  "count": 12,
+  "partner": [],
+  "status": "planned"
+}

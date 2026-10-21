@@ -1,0 +1,18 @@
+{
+  "id": "marketing.shorts-studio",
+  "studio": "Marketing",
+  "name": "Shorts studio sessions/presets",
+  "tier": "B",
+  "base": [
+    "planner_llm",
+    "ltx25_i2v",
+    "tts_audio",
+    "stitch"
+  ],
+  "higgsfield": "shorts_studio_*",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "platform.virality",
+  "studio": "Platform",
+  "name": "Virality predictor",
+  "tier": "C",
+  "base": [
+    "planner_llm"
+  ],
+  "higgsfield": "virality_predictor",
+  "track": "open",
+  "note": "Possible QwenVL scoring toy; low priority.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

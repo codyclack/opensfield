@@ -1,0 +1,17 @@
+{
+  "id": "video.clipify",
+  "studio": "Video tools",
+  "name": "Long video -> viral clips",
+  "tier": "B",
+  "base": [
+    "tts_audio",
+    "planner_llm",
+    "stitch"
+  ],
+  "higgsfield": "clipify",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

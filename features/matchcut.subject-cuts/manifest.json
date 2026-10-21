@@ -1,0 +1,16 @@
+{
+  "id": "matchcut.subject-cuts",
+  "studio": "Match Cut + Tracelab",
+  "name": "Face/search/logo/product/sticker/sphere/lens cuts",
+  "tier": "B",
+  "base": [
+    "matte",
+    "postfx"
+  ],
+  "higgsfield": "create_facecut, searchcut, logocut, productcut, stickercut, spherecut, lenscut",
+  "track": "open",
+  "note": "",
+  "count": 7,
+  "partner": [],
+  "status": "planned"
+}

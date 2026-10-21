@@ -1,0 +1,13 @@
+{
+  "id": "platform.billing-community",
+  "studio": "Platform",
+  "name": "Credits, plans, community presets, contests",
+  "tier": "C",
+  "base": [],
+  "higgsfield": "balance, transactions, publish_project",
+  "track": "open",
+  "note": "N/A for an open-source local app.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

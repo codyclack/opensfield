@@ -1,0 +1,16 @@
+{
+  "id": "soul.character-sheet",
+  "studio": "Soul",
+  "name": "Character sheets / turnarounds",
+  "tier": "B",
+  "base": [
+    "t2i",
+    "ref_edit"
+  ],
+  "higgsfield": "workflow character-sheet",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

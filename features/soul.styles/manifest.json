@@ -1,0 +1,16 @@
+{
+  "id": "soul.styles",
+  "studio": "Soul",
+  "name": "Soul style presets",
+  "tier": "B",
+  "base": [
+    "t2i",
+    "flux_redux_blend"
+  ],
+  "higgsfield": "get_presets source=soul",
+  "track": "open",
+  "note": "Style = prompt/LoRA/Redux data.",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "marketing.ugc-video",
+  "studio": "Marketing",
+  "name": "UGC video (review, unboxing, try-on, tutorial, site tour)",
+  "tier": "B",
+  "base": [
+    "ref_edit",
+    "ltx23_audio",
+    "tts_audio"
+  ],
+  "higgsfield": "workflow ugc-video",
+  "track": "open",
+  "note": "",
+  "count": 6,
+  "partner": [],
+  "status": "planned"
+}

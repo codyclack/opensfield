@@ -1,0 +1,17 @@
+{
+  "id": "audio.dubbing",
+  "studio": "Audio",
+  "name": "AI dubbing / translation",
+  "tier": "B",
+  "base": [
+    "tts_audio",
+    "planner_llm",
+    "ltx23_audio"
+  ],
+  "higgsfield": "dubbing",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

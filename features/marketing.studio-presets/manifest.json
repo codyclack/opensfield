@@ -1,0 +1,16 @@
+{
+  "id": "marketing.studio-presets",
+  "studio": "Marketing",
+  "name": "Marketing Studio product-shot / motion presets",
+  "tier": "B",
+  "base": [
+    "ref_edit",
+    "ltx25_i2v"
+  ],
+  "higgsfield": "get_presets source=marketing_studio",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

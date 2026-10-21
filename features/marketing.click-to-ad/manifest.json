@@ -1,0 +1,19 @@
+{
+  "id": "marketing.click-to-ad",
+  "studio": "Marketing",
+  "name": "Product URL -> video ad",
+  "tier": "B",
+  "base": [
+    "planner_llm",
+    "ref_edit",
+    "ltx25_i2v",
+    "tts_audio",
+    "stitch"
+  ],
+  "higgsfield": "Click-to-Ad",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

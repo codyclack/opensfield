@@ -1,0 +1,15 @@
+{
+  "id": "cinema.draw-to-video",
+  "studio": "Cinema Studio",
+  "name": "Sketch/annotation -> video",
+  "tier": "B",
+  "base": [
+    "ltx23_ic_lora"
+  ],
+  "higgsfield": "draw_to_video",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

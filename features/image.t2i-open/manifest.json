@@ -1,0 +1,15 @@
+{
+  "id": "image.t2i-open",
+  "studio": "Image models",
+  "name": "Open text->image (Flux 3/2, Z-Image, Qwen-Image)",
+  "tier": "A",
+  "base": [
+    "t2i"
+  ],
+  "higgsfield": "flux_2, flux_3_image, z_image, flux_kontext",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

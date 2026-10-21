@@ -1,0 +1,16 @@
+{
+  "id": "audio.narration",
+  "studio": "Audio",
+  "name": "Narration fitted to timing",
+  "tier": "B",
+  "base": [
+    "tts_audio",
+    "stitch"
+  ],
+  "higgsfield": "workflow narration",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}

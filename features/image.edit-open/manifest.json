@@ -1,0 +1,17 @@
+{
+  "id": "image.edit-open",
+  "studio": "Image models",
+  "name": "Open reference edit/compose (Nano Banana-style)",
+  "tier": "A",
+  "base": [
+    "ref_edit"
+  ],
+  "higgsfield": "nano_banana, nano_banana_pro, nano_banana_2*, kling_omni_image",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [
+    "comfy-router: nano-banana"
+  ],
+  "status": "planned"
+}

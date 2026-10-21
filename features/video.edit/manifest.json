@@ -1,0 +1,16 @@
+{
+  "id": "video.edit",
+  "studio": "Video tools",
+  "name": "Prompt-based video edit",
+  "tier": "B",
+  "base": [
+    "ltx23_ic_lora",
+    "wan_animate2"
+  ],
+  "higgsfield": "kling_video_edit, flux_3_video_edit",
+  "track": "open",
+  "note": "",
+  "count": 1,
+  "partner": [],
+  "status": "planned"
+}
