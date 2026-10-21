@@ -18,7 +18,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from . import runner
-from .registry import MEDIA, STUDIO_ORDER, load_features
+from .registry import MEDIA, ROOT, STUDIO_ORDER, load_features
 
 MODE = os.environ.get("OPENSFIELD_MODE", "mock")  # mock | comfy
 PARTNER = os.environ.get("OPENSFIELD_PARTNER") == "1"  # optional partner/ pack switch
@@ -130,6 +130,7 @@ def job(job_id: str):
 
 runner.OUTPUTS.mkdir(parents=True, exist_ok=True)
 app.mount("/outputs", StaticFiles(directory=runner.OUTPUTS), name="outputs")
+app.mount("/examples", StaticFiles(directory=ROOT / "examples"), name="examples")
 app.mount("/static", StaticFiles(directory=STATIC), name="static")
 
 

@@ -51,12 +51,21 @@ function renderRail() {
         h("i", { class: "dot" }), h("span", { class: "nm" }, s), h("span", { class: "n" }, n))));
 }
 
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isVideo = (url) => /\.(mp4|webm|mov)$/i.test(url);
+function exampleEl(url, cls, opts = {}) {
+  if (!isVideo(url)) return h("img", { class: cls, src: "/" + url, alt: opts.alt || "", loading: "lazy" });
+  return h("video", { class: cls, src: "/" + url + "#t=1.5", muted: true, loop: true, playsinline: true, preload: "metadata",
+    controls: opts.controls, autoplay: !opts.controls && !reduceMotion, "aria-hidden": opts.controls ? null : "true" });
+}
+
 function tile(f) {
   const kinds = [...new Set(f.inputs.map(sockKind))];
+  const cover = f.examples && f.examples[0];
   return h("button", { class: "tile", type: "button", onclick: () => openFeature(f) },
     h("span", { class: "tbar", style: `--c:${studioColor(f.studio)}` }, h("i", { class: "dot" }), h("span", { class: "grow" }, f.studio),
       f.track === "partner" && badge("partner", "partner")),
-    h("span", { class: "art", style: `--h:${hash(f.id) % 360}` }, h("span", { class: "big" }, f.name)),
+    h("span", { class: `art${cover ? " has-media" : ""}`, style: `--h:${hash(f.id) % 360}` }, cover && exampleEl(cover, "bg"), h("span", { class: "big" }, f.name)),
     h("span", { class: "tmeta" },
       h("span", { class: "src" }, f.higgsfield),
       h("span", { class: "io" },
@@ -216,7 +225,11 @@ function updatePreview() {
   const box = $("#preview");
   if (!box || !state.feature) return;
   const j = state.jobs.find((x) => x.feature_id === state.feature.id);
-  box.replaceChildren(...(j ? jobMedia(j) : [h("div", { class: "empty" }, "Run the graph to see the result here.")]));
+  const ex = state.feature.examples || [];
+  box.replaceChildren(...(j ? jobMedia(j) : ex.length
+    ? [h("div", { class: "st" }, "Example renders (real, Comfy Cloud). Run the graph to make your own."),
+       ...ex.map((u) => exampleEl(u, "thumb", { controls: true, alt: `${state.feature.name} example` }))]
+    : [h("div", { class: "empty" }, "Run the graph to see the result here.")]));
 }
 
 function renderJobs() {

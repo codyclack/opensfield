@@ -97,6 +97,7 @@ def _enrich(m: dict) -> dict:
     api = wf.get("api")
     m["inputs"] = wf.get("inputs") or derive_inputs(m["base"])
     m["output_kind"] = output_kind(m["base"])
+    m["examples"] = wf.get("examples", [])  # real renders, served under /examples
     m["runnable"] = bool(api and (ROOT / api).exists())
     return m
 

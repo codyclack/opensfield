@@ -57,6 +57,13 @@ def test_upload_id_cannot_be_a_path():
     assert r.status_code == 422
 
 
+def test_examples_are_exposed_and_served():
+    f = client.get("/api/features/genjutsu.motion-control").json()
+    assert f["examples"] and "workflow" not in f
+    for url in f["examples"]:
+        assert client.get("/" + url).status_code == 200
+
+
 def test_text_only_feature_runs():
     r = client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "a sneaker"}})
     assert wait(r.json()["id"])["status"] == "done"

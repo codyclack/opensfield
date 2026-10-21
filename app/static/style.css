@@ -77,6 +77,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
   background: radial-gradient(circle at 82% 18%, hsl(var(--h) 95% 62% / .38), transparent 55%), linear-gradient(135deg, hsl(var(--h) 55% 24%), hsl(calc(var(--h) + 50) 60% 9%)); }
 .art::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255, 255, 255, .14) 1px, transparent 1.4px); background-size: 18px 18px; mask-image: linear-gradient(160deg, #000, transparent 70%); }
 .art .big { position: relative; font: 700 21px/1.1 var(--display); text-transform: uppercase; text-shadow: 0 2px 14px rgba(0, 0, 0, .55); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.art .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; }
+.art.has-media::before { z-index: 1; }
+.art.has-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 35%, rgba(0, 0, 0, .78)); }
+.art .big { z-index: 2; }
 .tmeta { display: grid; gap: 10px; padding: 12px; }
 .tmeta .src { color: var(--muted); font-size: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .io { display: flex; align-items: center; justify-content: space-between; gap: 8px; font: 600 10px var(--display); letter-spacing: .1em; color: var(--muted); }
