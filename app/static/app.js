@@ -21,9 +21,9 @@ const WORKSPACES = {
 };
 // Top nav like higgsfield.ai: text items, a badge on hot ones, hover menus listing tools and models. "lo" items hide on narrow screens.
 const TOPNAV = [["Explore", "#/"], ["Image", "#/w/image/0", null, "image"], ["Video", "#/w/video/0", null, "video"], ["Audio", "#/w/audio/0", null, "audio"],
-  ["Edit", "#/w/image/1"], ["Genjutsu", "#/s/Genjutsu", "Top", "studio"], ["Cinema Studio", "#/s/Cinema Studio", null, "studio"],
+  ["Edit", "#/w/image/1"], ["Genjutsu", "#/s/Genjutsu", "Top", "studio"], ["Cinema Studio", "#/cinema", "4.0"],
   ["Soul", "#/s/Soul", null, "studio", "lo"], ["Viral", "#/s/Viral Hub", null, "studio", "lo"], ["Marketing", "#/s/Marketing", "New", "studio", "lo"],
-  ["Apps", "#/apps", null, "apps"], ["Assets", "#/assets"]];
+  ["Apps", "#/apps", null, "apps"], ["Elements", "#/assets"], ["Learn", "#/blog", "New", null, "lo"]];
 
 const sockKind = (s) => (["image", "video", "audio"].includes(s.kind) ? s.kind : s.kind === "text" ? "text" : "widget");
 const studioColor = (s) => STUDIO_COLOR[s] || "#9e9e9e";
@@ -136,7 +136,7 @@ function menuFor(kind, label) {
   }
   if (kind === "apps") {
     const all = studios().map((s) => menuLink(`#/s/${encodeURIComponent(s)}`, s, `${collapse(state.feats.filter((f) => f.studio === s)).length} tools`));
-    return [col("Studios", all.slice(0, 7)), col(" ", all.slice(7)), col("Library", [menuLink("#/apps", "All apps"), menuLink("#/assets", "Assets"), menuLink("#/generations", "History")])];
+    return [col("Studios", all.slice(0, 7)), col(" ", all.slice(7)), col("Library", [menuLink("#/cinema", "Cinema Studio", "Direct a shot"), menuLink("#/apps", "All apps"), menuLink("#/assets", "My elements"), menuLink("#/generations", "History"), menuLink("#/community", "Community"), menuLink("#/blog", "Learn", "Guides and tutorials")])];
   }
   return [];
 }
@@ -224,7 +224,7 @@ function renderGrid(mode, studio) {
     });
     body = mode === "apps" ? [marker("Apps"), filterBar(), ...rows] : [...explore(), topModels(), filterBar(), ...rows];
   }
-  $("#main").replaceChildren(...body.filter(Boolean));
+  $("#main").replaceChildren(...body.filter(Boolean), siteFooter());
 }
 
 /* ---------------- composer controls ---------------- */
@@ -301,7 +301,7 @@ function chip(spec, vals) {
 }
 
 function elementsButton(f, vals, ta) {
-  return h("button", { type: "button", class: "mini", title: "Insert an asset (Elements) and use it as the image input", onclick: () => pickAsset(
+  return h("button", { type: "button", class: "mini", title: "Insert an element (or type @ in the prompt)", onclick: () => pickAsset(
     f.inputs.find((s) => s.kind === "image") || { kind: "image", name: "_element", label: "Element" }, vals,
     state.mediaUIs.find((u) => u.spec.kind === "image") || { img: h("img"), label: h("span"), spec: {} }, (a) => {
       ta.value = `${ta.value}${ta.value && !ta.value.endsWith(" ") ? " " : ""}@${a.name.replace(/\s+/g, "_")} `;
@@ -324,6 +324,7 @@ function buildControls(f, vals, layout) {
     const ta = h("textarea", { id: `f-${s.name}`, "aria-label": s.label, rows: layout === "bar" ? 2 : 4,
       placeholder: s.required ? (layout === "bar" ? "Describe the scene you imagine" : "Describe what you want...") : (/optional/i.test(s.label) ? s.label : `${s.label} (optional)`),
       oninput: (e) => (vals[s.name] = e.target.value) }, v);
+    attachMentions(ta, (el) => useElement(f, vals, el));
     return { s, ta };
   });
   state.carry = null;
@@ -440,7 +441,11 @@ function genCard(j) {
       h("span", { class: "gtitle" }, j.feature_name), prompt && h("span", { class: "gprompt" }, prompt),
       h("span", { class: "gacts" },
         o && !running && h("a", { class: "gact", href: o.url, download: o.name, title: "Download", "aria-label": "Download" }, "↓"),
-        o && !running && !o.mock && act("★", "Save to assets", (b) => saveToAssets(o, b)),
+        !running && act(j.fav ? "♥" : "♡", j.fav ? "Remove from favorites" : "Add to favorites", async () => {
+          const r = await api(`/api/jobs/${j.id}`, json("PATCH", { fav: !j.fav })).catch(() => null);
+          if (r) { Object.assign(j, r); renderGallery(); }
+        }),
+        o && !running && !o.mock && act("★", "Save as element", (b) => saveToAssets(o, b)),
         act("↺", "Reuse these settings", () => { state.prefill = { feature_id: j.feature_id, inputs: j.inputs }; location.hash = `#/f/${j.feature_id}`; }),
         !running && act("✕", "Remove from history", async () => { await api(`/api/jobs/${j.id}`, { method: "DELETE" }).catch(() => {}); state.jobs = state.jobs.filter((x) => x.id !== j.id); renderGallery(); }))));
 }
@@ -556,37 +561,94 @@ function assetThumb(a) {
   if (a.kind === "audio") return h("div", { class: "aud" }, "♪", h("audio", { src: a.url, controls: true, preload: "none" }));
   return h("img", { src: a.url, alt: a.name, loading: "lazy" });
 }
-async function renderAssets() {
-  const main = $("#main");
-  main.replaceChildren(marker("Assets"), h("p", { class: "sub" }, "Characters, props, locations and styles you reuse across tools. Use them with “From assets” or “@ Elements”."));
+/* ---------------- My elements (Higgsfield's elements: named references you @mention) ---------------- */
+const ELEMENT_TABS = [["All", "All"], ["Character", "Characters"], ["Location", "Locations"], ["Prop", "Props"], ["Style", "Styles"], ["Product", "Products"], ["Other", "Other"]];
+async function renderAssets(target) {
+  const main = target || $("#main");
+  main.replaceChildren(h("div", { class: "elhead" }, h("div", {}, marker("My elements"),
+    h("p", { class: "sub" }, "Characters, locations and props you @mention in any prompt. Add several reference images to keep them consistent.")),
+    h("label", { class: "go", for: "asset-up" }, "+ New element")));
   let data;
   try { data = await api("/api/assets"); } catch (e) { main.append(h("p", { class: "err" }, e.message)); return; }
+  state.elements = data.items;
   let filter = state.assetFilter || "All";
-  const grid = h("div", { class: "cards assets" });
-  const pillsEl = h("div", { class: "filters" });
-  const typeSel = h("select", { "aria-label": "Type for new uploads" }, data.types.map((t) => h("option", { value: t }, t)));
+  const grid = h("div", { class: "elgrid" });
+  const tabs = h("div", { class: "wtabs eltabs", role: "tablist" });
   const file = h("input", { type: "file", multiple: true, accept: "image/*,video/*,audio/*", class: "sr", id: "asset-up",
     onchange: async (e) => {
       for (const fl of e.target.files) {
-        const fd = new FormData(); fd.append("file", fl); fd.append("type", typeSel.value); fd.append("name", fl.name.replace(/\.[a-z0-9]+$/i, ""));
+        const fd = new FormData(); fd.append("file", fl); fd.append("type", filter === "All" ? "Character" : filter); fd.append("name", fl.name.replace(/\.[a-z0-9]+$/i, "").slice(0, 30));
         try { await api("/api/assets", { method: "POST", body: fd }); } catch (err) { alert(`${fl.name}: ${err.message}`); }
       }
-      renderAssets();
+      renderAssets(target);
     } });
-  const patch = (a, body) => api(`/api/assets/${a.id}`, json("PATCH", body)).catch(() => {});
+  const patch = (el, body) => api(`/api/assets/${el.id}`, json("PATCH", body)).catch(() => {});
   const draw = () => {
-    pillsEl.replaceChildren(...["All", ...data.types].map((t) => h("button", { type: "button", class: "fpill", "aria-pressed": String(filter === t), onclick: () => { filter = t; state.assetFilter = t; draw(); } }, t)));
-    const items = data.items.filter((a) => filter === "All" || a.type === filter);
-    grid.replaceChildren(...(items.length ? items.map((a) => h("div", { class: "acard" },
-      h("div", { class: "athumb" }, assetThumb(a)),
-      h("div", { class: "ameta" },
-        h("input", { class: "aname", value: a.name, "aria-label": "Name", onchange: (e) => patch(a, { name: e.target.value }) }),
-        h("button", { class: "adel", type: "button", title: "Delete", "aria-label": `Delete ${a.name}`, onclick: async () => { await api(`/api/assets/${a.id}`, { method: "DELETE" }).catch(() => {}); renderAssets(); } }, "✕"),
-        h("select", { "aria-label": "Type", onchange: (e) => patch(a, { type: e.target.value }) }, data.types.map((t) => h("option", { value: t, selected: t === a.type }, t)))))
-    ) : [h("p", { class: "empty" }, data.items.length ? "Nothing of this type yet." : "No assets yet. Upload some, or press ★ on any generation.")]));
+    tabs.replaceChildren(...ELEMENT_TABS.map(([k, l]) => h("button", { type: "button", role: "tab", class: "tabbtn", "aria-selected": String(filter === k),
+      onclick: () => { filter = k; state.assetFilter = k; draw(); } }, l, " ", h("small", {}, String(k === "All" ? data.items.length : data.items.filter((x) => x.type === k).length)))));
+    const items = data.items.filter((x) => filter === "All" || x.type === filter);
+    grid.replaceChildren(...(items.length ? items.map((el) => {
+      const add = h("input", { type: "file", accept: "image/*", class: "sr", id: `add-${el.id}`, onchange: async (e) => {
+        const fd = new FormData(); fd.append("file", e.target.files[0]);
+        try { await api(`/api/assets/${el.id}/images`, { method: "POST", body: fd }); renderAssets(target); } catch (err) { alert(err.message); }
+      } });
+      return h("div", { class: "elcard" },
+        h("div", { class: "elcover" }, assetThumb(el), h("span", { class: "eltype" }, el.type), h("span", { class: "elat" }, `@${el.name.replace(/\s+/g, "_")}`)),
+        h("div", { class: "elstrip" }, (el.images || []).map((im) => h("img", { src: im.url, alt: "" })),
+          el.kind === "image" && h("label", { class: "eladd", for: `add-${el.id}`, title: "Add another reference image" }, "+"), add),
+        h("div", { class: "ameta" },
+          h("input", { class: "aname", value: el.name, "aria-label": "Name", onchange: (e) => patch(el, { name: e.target.value }) }),
+          h("button", { class: "adel", type: "button", title: "Delete", "aria-label": `Delete ${el.name}`, onclick: async () => {
+            if (!confirm(`Delete the element "${el.name}"?`)) return;
+            await api(`/api/assets/${el.id}`, { method: "DELETE" }).catch(() => {}); renderAssets(target);
+          } }, "✕"),
+          h("select", { "aria-label": "Type", onchange: (e) => patch(el, { type: e.target.value }) }, data.types.map((t) => h("option", { value: t, selected: t === el.type }, t)))));
+    }) : [h("div", { class: "gempty" }, h("b", {}, "No elements yet"), h("small", {}, "Upload a character or location, or press ★ on any generation."))]));
   };
-  main.append(h("div", { class: "uprow" }, h("label", { class: "go", for: "asset-up" }, "+ Upload"), typeSel, file), pillsEl, grid);
+  main.append(file, tabs, grid);
   draw();
+}
+
+/* @ mentions: type @ in any prompt box to insert an element and use its image */
+async function loadElements() {
+  if (!state.elements) { try { state.elements = (await api("/api/assets")).items; } catch { state.elements = []; } }
+  return state.elements;
+}
+function attachMentions(ta, onPick) {
+  let pop = null;
+  const close = () => { pop?.remove(); pop = null; };
+  ta.addEventListener("blur", () => setTimeout(close, 150));
+  ta.addEventListener("keydown", (e) => { if (pop && e.key === "Escape") { e.stopPropagation(); close(); } });
+  ta.addEventListener("input", async () => {
+    const m = /(^|\s)@([\w-]*)$/.exec(ta.value.slice(0, ta.selectionStart));
+    if (!m) { close(); return; }
+    const q = m[2].toLowerCase();
+    const els = (await loadElements()).filter((el) => el.name.toLowerCase().replace(/\s+/g, "_").includes(q)).slice(0, 8);
+    close();
+    if (!els.length) return;
+    pop = h("div", { class: "mention", role: "listbox" }, h("div", { class: "phead" }, "Elements"), ...els.map((el) => h("button", { type: "button", role: "option", class: "prow",
+      onmousedown: (e) => {
+        e.preventDefault();
+        const caret = ta.selectionStart;
+        const before = ta.value.slice(0, caret).replace(/@[\w-]*$/, `@${el.name.replace(/\s+/g, "_")} `);
+        ta.value = before + ta.value.slice(caret);
+        ta.dispatchEvent(new Event("input")); close(); ta.focus();
+        if (onPick) onPick(el);
+      } }, h("img", { class: "mthumb", src: el.url, alt: "" }), h("span", { class: "ptext" }, h("b", {}, `@${el.name}`), h("small", {}, el.type)))));
+    document.body.append(pop);
+    const r = ta.getBoundingClientRect();
+    Object.assign(pop.style, { left: `${r.left}px`, top: `${Math.min(r.bottom + 4, window.innerHeight - 320)}px` });
+  });
+}
+async function useElement(f, vals, el) {
+  const spec = f.inputs.find((s) => s.kind === "image" && !vals[s.name]) || f.inputs.find((s) => s.kind === "image");
+  if (!spec || el.kind !== "image") return;
+  try {
+    const up = await api(`/api/assets/${el.id}/use`, { method: "POST" });
+    vals[spec.name] = up.id;
+    const ui = (state.mediaUIs || []).find((u) => u.spec === spec);
+    if (ui) { ui.img.src = el.url; ui.img.hidden = false; ui.label.textContent = el.name; }
+  } catch { /* the mention text still helps the prompt */ }
 }
 async function pickAsset(spec, vals, ui, onChosen) {
   let data;
@@ -700,6 +762,7 @@ function route() {
   const legacy = /^([sfp])=(.+)$/.exec(raw);  // old deep links: #s=Studio, #f=id, #p=assets
   if (legacy) { location.replace(legacy[1] === "p" ? "#/assets" : `#/${legacy[1]}/${legacy[2]}`); return; }
   const parts = raw.replace(/^\//, "").split("/");
+  document.body.classList.toggle("cinema-mode", parts[0] === "cinema");
   renderChrome();
   document.querySelector(".picker")?.remove();
   state.gallery = null; state.run = null;
@@ -712,6 +775,9 @@ function route() {
   else if (p === "s" && a) renderGrid("studio", a);
   else if (p === "apps") renderGrid("apps");
   else if (p === "assets") renderAssets();
+  else if (p === "cinema") renderCinema(a, b);
+  else if (p === "blog") renderBlog(a);
+  else if (p === "community") renderCommunity();
   else if (p === "generations") renderGenerations();
   else renderGrid("explore");
   window.scrollTo(0, 0);

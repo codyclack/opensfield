@@ -77,6 +77,16 @@ async def access_gate(request: Request, call_next):
 class JobRequest(BaseModel):
     feature_id: str
     inputs: dict = {}
+    project: str | None = None  # Cinema Studio project the result is filed under
+
+
+class JobPatch(BaseModel):
+    fav: bool | None = None
+    project: str | None = None
+
+
+class ProjectRequest(BaseModel):
+    name: str
 
 
 def _public(feature: dict) -> dict:
@@ -153,7 +163,8 @@ def create_job(req: JobRequest):
         if i["kind"] in MEDIA and v and (Path(v).name != v or not (runner.UPLOADS / v).exists()):
             raise HTTPException(422, f"{i['label']}: unknown upload")
     job = {"id": uuid.uuid4().hex[:12], "feature_id": f["id"], "feature_name": f["name"], "kind": f["output_kind"], "status": "queued",
-           "progress": 0.0, "inputs": req.inputs, "outputs": [], "error": None, "mode": MODE, "created": time.time()}
+           "progress": 0.0, "inputs": req.inputs, "outputs": [], "error": None, "mode": MODE, "created": time.time(),
+           "fav": False, "project": req.project}
     with LOCK:
         JOBS[job["id"]] = job
         CREATED_THIS_RUN += 1
@@ -179,6 +190,90 @@ def delete_job(job_id: str):
             raise HTTPException(409, "job is still running")
         del JOBS[job_id]
         _save_jobs()
+
+
+@app.patch("/api/jobs/{job_id}")
+def patch_job(job_id: str, req: JobPatch):
+    """Favorite a generation or file it under a project (Higgsfield's My favorites / Projects)."""
+    with LOCK:
+        j = JOBS.get(job_id)
+        if not j:
+            raise HTTPException(404, "unknown job")
+        if req.fav is not None:
+            j["fav"] = req.fav
+        if "project" in req.model_fields_set:
+            j["project"] = req.project or None
+        _save_jobs()
+        return j
+
+
+PROJECTS_FILE = JOBS_FILE.with_name("projects.json")
+
+
+def _projects() -> list[dict]:
+    try:
+        return json.loads(PROJECTS_FILE.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+
+
+@app.get("/api/projects")
+def list_projects():
+    return _projects()
+
+
+@app.post("/api/projects", status_code=201)
+def create_project(req: ProjectRequest):
+    p = {"id": uuid.uuid4().hex[:10], "name": req.name.strip()[:60] or "Untitled project", "created": time.time()}
+    with LOCK:
+        items = [p, *_projects()]
+        PROJECTS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        PROJECTS_FILE.write_text(json.dumps(items), encoding="utf-8")
+    return p
+
+
+@app.delete("/api/projects/{project_id}", status_code=204)
+def delete_project(project_id: str):
+    with LOCK:
+        items = _projects()
+        if not any(p["id"] == project_id for p in items):
+            raise HTTPException(404, "unknown project")
+        PROJECTS_FILE.write_text(json.dumps([p for p in items if p["id"] != project_id]), encoding="utf-8")
+        for j in JOBS.values():  # its generations stay, just unfiled
+            if j.get("project") == project_id:
+                j["project"] = None
+        _save_jobs()
+
+
+BLOG = ROOT / "blog"
+
+
+def _post(path: Path) -> dict:
+    """A blog post is markdown with a small 'key: value' front-matter block between --- lines."""
+    text = path.read_text(encoding="utf-8")
+    meta, body = {}, text
+    if text.startswith("---"):
+        head, _, body = text[3:].partition("\n---")
+        for line in head.strip().splitlines():
+            k, _, v = line.partition(":")
+            meta[k.strip()] = v.strip()
+    meta["slug"] = path.stem
+    meta["minutes"] = max(1, round(len(body.split()) / 220))
+    return {"meta": meta, "body": body.lstrip("-\n")}
+
+
+@app.get("/api/blog")
+def blog_list():
+    posts = [_post(p)["meta"] for p in BLOG.glob("*.md")] if BLOG.exists() else []
+    return sorted(posts, key=lambda m: m.get("date", ""), reverse=True)
+
+
+@app.get("/api/blog/{slug}")
+def blog_post(slug: str):
+    path = BLOG / f"{slug}.md"
+    if Path(slug).name != slug or not path.exists():
+        raise HTTPException(404, "unknown post")
+    return _post(path)
 
 
 @app.get("/api/jobs/{job_id}")

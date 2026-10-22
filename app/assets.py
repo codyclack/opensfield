@@ -1,4 +1,6 @@
-"""Asset library: reusable characters, props, locations, styles and products (Higgsfield's Elements / Assets).
+"""Elements library: reusable characters, locations, props, styles and products (Higgsfield's "My elements").
+
+An element has a name you @-mention in prompts and one or more reference images (the first is its cover).
 
 Files live in library/ with a small index.json. Using an asset as a tool input copies it into the uploads folder, so
 the runner sees an ordinary upload id and nothing else in the app needs to know the library exists.
@@ -31,7 +33,10 @@ def _kind(ext: str) -> str | None:
 
 
 def _load() -> list[dict]:
-    return json.loads(INDEX.read_text(encoding="utf-8")) if INDEX.exists() else []
+    items = json.loads(INDEX.read_text(encoding="utf-8")) if INDEX.exists() else []
+    for a in items:  # older entries hold one file; elements hold a list of reference images
+        a.setdefault("images", [{"file": a["file"], "url": a["url"]}])
+    return items
 
 
 def _save(items: list[dict]) -> None:
@@ -53,7 +58,8 @@ def _add(src_bytes: bytes | None, src_path: Path | None, filename: str, name: st
         shutil.copyfile(src_path, LIB / file)
     else:
         (LIB / file).write_bytes(src_bytes or b"")
-    item = {"id": fid, "name": (name or Path(filename).stem)[:60], "type": type_, "kind": kind, "file": file, "url": f"/library/{file}", "created": time.time()}
+    item = {"id": fid, "name": (name or Path(filename).stem)[:60], "type": type_, "kind": kind, "file": file, "url": f"/library/{file}",
+            "images": [{"file": file, "url": f"/library/{file}"}], "created": time.time()}
     with LOCK:
         items = _load()
         items.insert(0, item)
@@ -95,15 +101,35 @@ def save_output(req: SaveRequest):
     return _add(None, src, src.name, req.name, req.type)
 
 
+@router.post("/{asset_id}/images", status_code=201)
+async def add_image(asset_id: str, file: UploadFile = File(...)):
+    """Add another reference image to an element (another angle of a character, another view of a location)."""
+    ext = Path(file.filename or "").suffix.lower()[:8]
+    if _kind(ext) != "image":
+        raise HTTPException(415, "elements take image references")
+    data = await file.read()
+    with LOCK:
+        items = _load()
+        item = next((a for a in items if a["id"] == asset_id), None)
+        if not item:
+            raise HTTPException(404, "unknown asset")
+        fname = f"{asset_id}_{uuid.uuid4().hex[:6]}{ext}"
+        (LIB / fname).write_bytes(data)
+        item["images"].append({"file": fname, "url": f"/library/{fname}"})
+        _save(items)
+    return item
+
+
 @router.post("/{asset_id}/use")
-def use_asset(asset_id: str):
-    """Copy an asset into uploads and return the upload id a tool input expects."""
+def use_asset(asset_id: str, image: int = 0):
+    """Copy an element's reference image into uploads and return the upload id a tool input expects."""
     item = next((a for a in _load() if a["id"] == asset_id), None)
     if not item:
         raise HTTPException(404, "unknown asset")
-    name = f"{uuid.uuid4().hex}{Path(item['file']).suffix}"
+    ref = item["images"][min(max(image, 0), len(item["images"]) - 1)]
+    name = f"{uuid.uuid4().hex}{Path(ref['file']).suffix}"
     runner.UPLOADS.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(LIB / item["file"], runner.UPLOADS / name)
+    shutil.copyfile(LIB / ref["file"], runner.UPLOADS / name)
     return {"id": name, "name": item["name"], "url": f"/outputs/uploads/{name}", "kind": item["kind"]}
 
 
@@ -134,5 +160,6 @@ def delete_asset(asset_id: str):
         item = next((a for a in items if a["id"] == asset_id), None)
         if not item:
             raise HTTPException(404, "unknown asset")
-        (LIB / item["file"]).unlink(missing_ok=True)
+        for ref in item["images"]:
+            (LIB / ref["file"]).unlink(missing_ok=True)
         _save([a for a in items if a["id"] != asset_id])

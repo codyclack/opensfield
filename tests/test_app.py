@@ -96,3 +96,22 @@ def test_jobs_persist_and_delete():
     assert jid in saved and saved[jid]["kind"] == "image" and "outputs" not in str(main.JOBS_FILE).split("osf_jobs_")[0][-3:]
     assert client.delete(f"/api/jobs/{jid}").status_code == 204
     assert jid not in main._load_jobs()
+
+
+def test_favorites_and_projects():
+    p = client.post("/api/projects", json={"name": "Short film"}).json()
+    assert any(x["id"] == p["id"] for x in client.get("/api/projects").json())
+    r = client.post("/api/jobs", json={"feature_id": "model.bfl-flux3-t2i", "inputs": {"prompt": "a fox", "_studio": "cinema"}, "project": p["id"]})
+    jid = r.json()["id"]
+    assert wait(jid)["project"] == p["id"]
+    assert client.patch(f"/api/jobs/{jid}", json={"fav": True}).json()["fav"] is True
+    assert client.delete(f"/api/projects/{p['id']}").status_code == 204
+    assert client.get(f"/api/jobs/{jid}").json()["project"] is None
+
+
+def test_blog_lists_and_renders_posts():
+    posts = client.get("/api/blog").json()
+    assert len(posts) >= 5 and all(p["title"] and p["category"] and p["slug"] for p in posts)
+    post = client.get(f"/api/blog/{posts[0]['slug']}").json()
+    assert post["body"].strip() and post["meta"]["minutes"] >= 1
+    assert client.get("/api/blog/..%2Fapp%2Fmain").status_code == 404

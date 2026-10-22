@@ -39,3 +39,11 @@ def test_rejects_unknown_type_and_bad_paths():
 def test_save_example_into_library():
     r = client.post("/api/assets/save", json={"url": "/examples/char_a.png", "name": "Dancer", "type": "Prop"})
     assert r.status_code == 201 and r.json()["type"] == "Prop"
+
+
+def test_elements_hold_several_reference_images():
+    r = client.post("/api/assets", files={"file": ("maya.png", b"\x89PNG", "image/png")}, data={"name": "Maya", "type": "Character"}).json()
+    r2 = client.post(f"/api/assets/{r['id']}/images", files={"file": ("side.png", b"\x89PNG2", "image/png")}).json()
+    assert len(r2["images"]) == 2
+    up = client.post(f"/api/assets/{r['id']}/use?image=1").json()
+    assert (runner.UPLOADS / up["id"]).read_bytes() == b"\x89PNG2"
