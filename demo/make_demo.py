@@ -157,7 +157,7 @@ L1b = label("Open-source Higgsfield, rebuilt on ComfyUI", 124, 590, 60, WHITE)
 L1c = label("Open weights + partner models  ·  MIT  ·  #OpenSourceHiggsfield", 124, 690, 40, LIME)
 
 
-@scene(6)
+@scene(5)
 def s1(t):
     f = BGIMG.copy()
     L1a.on(f, min(1, t / 0.6)); L1b.on(f, min(1, max(0, t - 0.5) / 0.6)); L1c.on(f, min(1, max(0, t - 1.0) / 0.6))
@@ -176,7 +176,7 @@ L2arrows = [Layer(lambda d, i=i: d.text((410 + i * 360 - 8, 395), "→", font=fo
 L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it. 76 tools are verified end to end: open-weight workflows plus partner models.")
 
 
-@scene(12)
+@scene(10)
 def s2(t):
     f = BGIMG.copy()
     L2t.on(f)
@@ -188,25 +188,50 @@ def s2(t):
     return f
 
 
-# 3. app tour (Higgsfield layout)
-TOUR = [("ui_explore", "The Higgsfield layout: Explore, Image, Video, Audio and every studio in the top menu", "Feature banners and tiles, then rows of tools that play on hover"),
-        ("ui_video", "Video: Seedance 2.5 by default, every video model in one picker", "Create Video, Text to Video, References, First & Last, Motion Control, Edit Video"),
-        ("ui_viral", "Viral effects, UGC, click-to-ad, AI influencer: presets on Seedance 2.5", "The open LTX-2.5 version is one click away in the same model list"),
-        ("ui_image", "Image: describe it in the bottom bar, pick GPT Image, Nano Banana, FLUX 3...", "Every result lands in History: download, save to Assets, reuse the settings"),
-        ("ui_assets", "Assets and @Elements: characters, props and locations you reuse", "“From assets” on every input, ★ on every result")]
-TOUR_IMG = [still(SH / f"{n}.png") for n, _, _ in TOUR]
-for _im in TOUR_IMG:  # screenshots come from the preview server: hide its "Mock mode" chip
-    _im[10:46, 1544:1642, :3] = (14, 12, 12)
-TOUR_CAP = [caption(a, b) for _, a, b in TOUR]
-SEG = 4.0
+# 3. app tours (Higgsfield layout, Cinema Studio, Elements + Creator Hub)
+def tour(items, seg):
+    imgs = [still(SH / f"{n}.png") for n, _, _ in items]
+    for im in imgs:  # screenshots come from the preview server: hide its "Mock mode" chip (Cinema Studio has no top bar)
+        im[10:46, 1544:1642, :3] = (14, 12, 12)
+    caps = [caption(x, y) for _, x, y in items]
+
+    def render(t):
+        i = min(len(items) - 1, int(t // seg))
+        f = kenburns(imgs[i][..., :3], t - i * seg, seg, 1.0, 1.04)
+        caps[i].on(f, min(1, (t - i * seg) / 0.4))
+        return f
+    return render
 
 
-@scene(20)
+s3_tour = tour([
+    ("ui_explore", "The Higgsfield layout: Explore, Image, Video, Audio and every studio in the top menu", "Feature banners and tiles, then rows of tools that play on hover"),
+    ("ui_video", "Video: Seedance 2.5 by default, every video model in one picker", "Create Video, Text to Video, References, First & Last, Motion Control, Edit Video"),
+    ("ui_viral", "Viral effects, UGC, click-to-ad, AI influencer: presets on Seedance 2.5", "The open LTX-2.5 version is one click away in the same model list"),
+    ("ui_image", "Image: describe it in the bottom bar, pick GPT Image, Nano Banana, FLUX 3...", "Every result lands in History: download, favorite, save as element, reuse")], 4.0)
+s3b_tour = tour([
+    ("cs_home", "Cinema Studio: its own workspace, like Higgsfield Cinema Studio 4.0", "Projects, My elements, My favorites, Community · Image or Video · Seedance 2.5 by default"),
+    ("cs_camera", "Camera: body, lens and aperture, plus 33 camera moves", "#Dolly in, #Crane up... stack them in the prompt, order matters"),
+    ("cs_palette", "Color palette and lighting become director's language in the prompt", "Film setup adds genre, era and tempo"),
+    ("cs_light", "Lighting schemes: window, golden hour, practicals, silhouette, neon...", "Every card writes plain shot language, so any video model understands it")], 3.5)
+s3c_tour = tour([
+    ("ui_elements", "My elements: characters, locations and props with several references each", "Type @ in any prompt to use them, keep faces consistent across shots"),
+    ("ui_blog", "Creator Hub: how-to guides, listicles and a changelog", "Your first video, directing in Cinema Studio, Elements, model comparisons"),
+    ("ui_post", "Step-by-step tutorials, written for this app", "Plus a Community feed of every real render")], 3.4)
+
+
+@scene(16)
 def s3(t):
-    i = min(len(TOUR) - 1, int(t // SEG))
-    f = kenburns(TOUR_IMG[i][..., :3], t - i * SEG, SEG, 1.0, 1.04)
-    TOUR_CAP[i].on(f, min(1, (t - i * SEG) / 0.4))
-    return f
+    return s3_tour(t)
+
+
+@scene(14)
+def s3b(t):
+    return s3b_tour(t)
+
+
+@scene(10)
+def s3c(t):
+    return s3c_tour(t)
 
 
 # 4. same prompt, eight models
@@ -258,7 +283,7 @@ L5r = label("DRIVING CLIP (AI-GENERATED)", 160 + 1150, 150, 26, LIME, "ma")
 L5c = caption("Wan Animate 2 · character image + driving video → same moves", "Rendered on Comfy Cloud with open weights · all people are fictional")
 
 
-@scene(10)
+@scene(8)
 def s5(t):
     f = BGIMG.copy(); L5t.on(f); L5l.on(f); L5r.on(f)
     paste(f, C5.at(t), 160, 190); L5c.on(f)
@@ -288,7 +313,7 @@ L7l, L7r = label("SOURCE VIDEO", 60 + 440, 170, 26, LIME, "ma"), label("SAME SHO
 L7c = caption("SCAIL-2 · swap who is in the footage, keep the motion", "Source: an AI-generated clip · replacement: a generated character image")
 
 
-@scene(9)
+@scene(8)
 def s7(t):
     f = BGIMG.copy(); L7t.on(f); L7l.on(f); L7r.on(f)
     paste(f, C7a.at(t), 60, 220); paste(f, C7b.at(t), 980, 220 + (C7a.h - C7b.h) // 2); L7c.on(f)
@@ -310,7 +335,7 @@ L8l = [label("IMAGE EDIT (QWEN)", 40 + 536 // 2 + 40, 600, 26, LIME, "ma"), labe
 L8c = caption("Edit · cut-out · text-to-video, plus inpaint, video edit, effects, music and 3D", "Prompt: \"change the black hoodie to yellow\" · every output is in examples/")
 
 
-@scene(9)
+@scene(8)
 def s8(t):
     f = BGIMG.copy(); L8t.on(f)
     paste(f, A, 80, 190); paste(f, B, 80 + A.shape[1] + 30, 190)
@@ -331,7 +356,7 @@ L9 = Layer(lambda d: [marker(d, (120, 170), "76 TOOLS RUN FOR REAL", 78),
                       d.text((124, 820), "Examples were rendered through the app on Comfy Cloud. Partner models use Comfy credits.", font=font(REG, 30), fill=MUTED)])
 
 
-@scene(8)
+@scene(6)
 def s9(t):
     f = BGIMG.copy(); L9.on(f, min(1, t / 0.7))
     return f

@@ -526,3 +526,5 @@ body.cinema-mode .canvas { padding: 0; background-image: none; background-color:
   .cscards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cscols { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) { .csapp { grid-template-columns: 1fr; } .cside { position: static; height: auto; } .cscomposer { grid-template-columns: 1fr; } .csmode { grid-auto-flow: column; } }
+.csmmain.one { grid-template-columns: minmax(0, 1fr); }
+.csopt { min-width: 0; align-content: start; } .csoptart { width: 100%; }

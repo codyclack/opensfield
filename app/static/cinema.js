@@ -117,6 +117,11 @@ function csHome(el, projectId) {
   state.gallery = { filter: (j) => j.inputs && j.inputs._studio === "cinema" && (!projectId || j.project === projectId), examples: [],
     empty: "Your shots appear here. Set the cards above, describe the scene and press Generate." };
   renderGallery();
+  // ?open=camera|palette|light|film opens a picker on load (used for docs and demo screenshots)
+  const open = new URLSearchParams(location.search).get("open");
+  const ta = $("#cs-prompt");
+  const openers = { camera: () => csCameraModal(ta, "Movement"), setup: () => csCameraModal(ta), palette: csPaletteModal, light: csLightModal, film: csFilmModal };
+  if (openers[open]) setTimeout(openers[open], 0);
 }
 
 function csCard(label, value, onClick, swatch) {
@@ -237,7 +242,7 @@ function csModal(title, tabs, onReset) {
     h("div", { class: "csmbox" }, h("div", { class: "csmhead" }, h("b", {}, title), h("span", { class: "grow" }),
       onReset && h("button", { type: "button", class: "mini", onclick: () => { onReset(); csSave(); show(0); } }, "Reset all"),
       h("button", { type: "button", class: "adel", "aria-label": "Close", onclick: close }, "✕")),
-      h("div", { class: "csmmain" }, tabs.length > 1 ? side : null, body)));
+      h("div", { class: tabs.length > 1 ? "csmmain" : "csmmain one" }, tabs.length > 1 ? side : null, body)));
   document.body.append(wrap);
   document.addEventListener("keydown", onKey);
   show(0);
