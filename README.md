@@ -1,5 +1,7 @@
 # OpenSfield
 
+**Demo video (117 s):** [watch](demo/OpenSfield_demo.mp4) · [download](https://github.com/codyclack/opensfield/releases/download/v1.0/OpenSfield_demo.mp4)
+
 Open-source rebuild of Higgsfield's creative apps on ComfyUI, for Comfy's
 **#OpenSourceHiggsfield** challenge. Two kinds of tools: open-weight workflows (LTX, Wan, Qwen, FLUX, ...) and one tool per Higgsfield partner model
 (Seedance, Kling, GPT Image, Nano Banana, Grok, ...) generated from Comfy's official API-node templates. Partner tools use Comfy credits.
@@ -77,7 +79,9 @@ Template example assets (their sample character/driving clip) are not used; supp
 
 ## Demo video
 `demo/make_demo.py` builds the demo (captions + real renders + app screenshots + the ACE-Step track made by the music module)
-with no voice-over. Instructions are at the top of the script. The rendered mp4 is not committed.
+with no voice-over. Instructions are at the top of the script.
+
+**Watch it:** [demo/OpenSfield_demo.mp4](demo/OpenSfield_demo.mp4) (117 s) · [download from the v1.0 release](https://github.com/codyclack/opensfield/releases/download/v1.0/OpenSfield_demo.mp4)
 
 ## Regenerate coverage
 ```bash
