@@ -115,7 +115,7 @@
     "output_kind": "video",
     "verified": false
   },
+  "plan_name": "AI influencer (character + presets)",
   "group": "AI Influencer",
-  "default": true,
-  "plan_name": "AI influencer (character + presets)"
+  "default": true
 }

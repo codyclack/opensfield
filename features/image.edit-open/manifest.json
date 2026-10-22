@@ -60,6 +60,6 @@
       "examples/image_edit_yellow_hoodie.png"
     ]
   },
-  "group": "Image edit",
-  "plan_name": "Open reference edit/compose (Nano Banana-style)"
+  "plan_name": "Open reference edit/compose (Nano Banana-style)",
+  "group": "Image edit"
 }

@@ -1,0 +1,222 @@
+{
+ "relight": {
+  "feature": "app.relight-open",
+  "example": "examples/apps/relight.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000), open weights, 2026-10-22"
+ },
+ "shots": {
+  "feature": "app.shots-open",
+  "example": "examples/apps/shots.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "zooms": {
+  "feature": "app.zooms-open",
+  "example": "examples/apps/zooms.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "behind-the-scenes": {
+  "feature": "app.behind-the-scenes-open",
+  "example": "examples/apps/behind-the-scenes.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "color-grading": {
+  "feature": "app.color-grading-open",
+  "example": "examples/apps/color-grading.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "skin-enhancer": {
+  "feature": "app.skin-enhancer-open",
+  "example": "examples/apps/skin-enhancer.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "style-snap": {
+  "feature": "app.style-snap-open",
+  "example": "examples/apps/style-snap.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "vending-machine": {
+  "feature": "app.vending-machine-open",
+  "example": "examples/apps/vending-machine.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "glitter-sticker": {
+  "feature": "app.glitter-sticker-open",
+  "example": "examples/apps/glitter-sticker.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "outfit-shot": {
+  "feature": "app.outfit-shot-open",
+  "example": "examples/apps/outfit-shot.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "commercial-faces": {
+  "feature": "app.commercial-faces-open",
+  "example": "examples/apps/commercial-faces.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "ai-headshot-generator": {
+  "feature": "app.ai-headshot-generator-open",
+  "example": "examples/apps/ai-headshot-generator.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "japanese-show": {
+  "feature": "app.japanese-show-open",
+  "example": "examples/apps/japanese-show.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "poster": {
+  "feature": "app.poster-open",
+  "example": "examples/apps/poster.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "packshot": {
+  "feature": "app.packshot-open",
+  "example": "examples/apps/packshot.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "macroshot-product": {
+  "feature": "app.macroshot-product-open",
+  "example": "examples/apps/macroshot-product.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "game-dump": {
+  "feature": "app.game-dump-open",
+  "example": "examples/apps/game-dump.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "nano-strike": {
+  "feature": "app.nano-strike-open",
+  "example": "examples/apps/nano-strike.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "nano-theft": {
+  "feature": "app.nano-theft-open",
+  "example": "examples/apps/nano-theft.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "simlife": {
+  "feature": "app.simlife-open",
+  "example": "examples/apps/simlife.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "3d-render": {
+  "feature": "app.3d-render-open",
+  "example": "examples/apps/3d-render.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "pixel-game": {
+  "feature": "app.pixel-game-open",
+  "example": "examples/apps/pixel-game.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "brick-cube": {
+  "feature": "app.brick-cube-open",
+  "example": "examples/apps/brick-cube.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "sketch-to-real": {
+  "feature": "app.sketch-to-real-open",
+  "example": "examples/apps/sketch-to-real.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "paint-app": {
+  "feature": "app.paint-app-open",
+  "example": "examples/apps/paint-app.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "signboard": {
+  "feature": "app.signboard-open",
+  "example": "examples/apps/signboard.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "surrounded-by-animals": {
+  "feature": "app.surrounded-by-animals-open",
+  "example": "examples/apps/surrounded-by-animals.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "meme-generator": {
+  "feature": "app.meme-generator-open",
+  "example": "examples/apps/meme-generator.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "latex": {
+  "feature": "app.latex-open",
+  "example": "examples/apps/latex.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "j-magazine": {
+  "feature": "app.j-magazine-open",
+  "example": "examples/apps/j-magazine.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "60s-cafe": {
+  "feature": "app.60s-cafe-open",
+  "example": "examples/apps/60s-cafe.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "victory-card": {
+  "feature": "app.victory-card-open",
+  "example": "examples/apps/victory-card.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "j-poster": {
+  "feature": "app.j-poster-open",
+  "example": "examples/apps/j-poster.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "mascot": {
+  "feature": "app.mascot-open",
+  "example": "examples/apps/mascot.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "burning-sunset": {
+  "feature": "app.burning-sunset-open",
+  "example": "examples/apps/burning-sunset.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "this-is-fine": {
+  "feature": "app.this-is-fine-open",
+  "example": "examples/apps/this-is-fine.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "comic-book": {
+  "feature": "app.comic-book-open",
+  "example": "examples/apps/comic-book.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "giallo-horror": {
+  "feature": "app.giallo-horror-open",
+  "example": "examples/apps/giallo-horror.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "character-swap": {
+  "feature": "app.character-swap",
+  "example": "examples/apps/character-swap.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "face-swap": {
+  "feature": "app.face-swap",
+  "example": "examples/apps/face-swap.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "whats-next": {
+  "feature": "app.whats-next-open",
+  "example": "examples/apps/whats-next.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "ai-stylist": {
+  "feature": "app.ai-stylist-open",
+  "example": "examples/apps/ai-stylist.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "outfit-swap": {
+  "feature": "app.outfit-swap-open",
+  "example": "examples/apps/outfit-swap.png",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "clipcut": {
+  "feature": "app.clipcut-open",
+  "example": "examples/apps/clipcut.mp4",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): LTX-2.3 image-to-video, 3 s, 2026-10-22"
+ }
+}

@@ -47,6 +47,6 @@
       "examples/image_to_3d.glb"
     ]
   },
-  "group": "Image to 3D",
-  "plan_name": "Image(s) -> 3D model"
+  "plan_name": "Image(s) -> 3D model",
+  "group": "Image to 3D"
 }

@@ -59,6 +59,6 @@
       "examples/upscale_2x.png"
     ]
   },
-  "group": "Image upscale",
-  "plan_name": "Upscale (Topaz-style)"
+  "plan_name": "Upscale (Topaz-style)",
+  "group": "Image upscale"
 }

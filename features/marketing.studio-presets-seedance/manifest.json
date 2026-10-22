@@ -114,7 +114,7 @@
     "output_kind": "video",
     "verified": false
   },
+  "plan_name": "Marketing Studio product-shot / motion presets",
   "group": "Product Motion",
-  "default": true,
-  "plan_name": "Marketing Studio product-shot / motion presets"
+  "default": true
 }

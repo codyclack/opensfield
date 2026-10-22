@@ -86,6 +86,6 @@
       "examples/music_lofi.mp3"
     ]
   },
-  "group": "Music",
-  "plan_name": "Music generation"
+  "plan_name": "Music generation",
+  "group": "Music"
 }

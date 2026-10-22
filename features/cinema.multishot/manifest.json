@@ -101,6 +101,6 @@
       "examples/multishot.mp4"
     ]
   },
-  "group": "Multi-shot",
-  "plan_name": "Multi-shot sequence + stitch"
+  "plan_name": "Multi-shot sequence + stitch",
+  "group": "Multi-shot"
 }

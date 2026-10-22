@@ -633,6 +633,19 @@ _QE = WIRING["image.edit-open"]["inputs"]
 _SDI = {i["name"]: i for i in WIRING["model.seedance2-5-i2v-1080p"]["inputs"]}
 _VTO = WIRING["model.kling-vto"]["inputs"]
 _CAST = {i["name"]: i for i in WIRING["soul.cast"]["inputs"]}
+# Local open-weights graphs for the app examples (scripts/make_local_graphs.py): LTX-2.3 i2v with the split model files,
+# and Qwen-Image-Edit 2511 with a second photo for the swap / try-on apps.
+_LTX23 = dict(template="video_ltx2_3_i2v", files_from="_graphs/ltx23_i2v_local", output_kind="video", outputs=["26"],
+              models=["ltx-2.3-22b-dev_transformer_only_fp8_scaled.safetensors", "ltx-2.3-22b-distilled-1.1_lora-dynamic_fro09_avg_rank_111_bf16.safetensors",
+                      "gemma_3_12B_it_fp8_scaled.safetensors", "ltx-2.3_text_projection_bf16.safetensors", "LTX23_video_vae_bf16.safetensors", "LTX23_audio_vae_bf16.safetensors"])
+_LTX23_IN = [inp("image", "Start frame", "image", "40", "image", required=True), inp("prompt", "Prompt", "text", "8", "text", required=True), _seed("18", "noise_seed")]
+_QE2 = dict(template="image_qwen_image_edit_2511_int8", files_from="_graphs/qwen_edit_2511_two_image", output_kind="image", outputs=["195"],
+            models=["qwen_image_edit_2511_int8_convrot.safetensors", "qwen_2.5_vl_7b_fp8_scaled.safetensors", "qwen_image_vae.safetensors",
+                    "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors"])
+_QE2_IN = [inp("image", "Photo", "image", "41", "image", required=True), inp("image_b", "Second photo", "image", "42", "image", required=True),
+           inp("prompt", "Extra detail (optional)", "text", "170:151", "prompt"), _seed("170:169")]
+# The Qwen edit graph's own switch: the 4-step Lightning LoRA (about 10x faster) or the full 40 steps.
+_SPEED = inp("speed", "Speed", "choice", "170:168", "value", options=["Fast", "Quality"], default="Fast", values={"Fast": True, "Quality": False})
 for _a in _APPS:
     _p = _a.get("prompt", "") + " "
     if _a["mode"] == "image":
@@ -640,17 +653,31 @@ for _a in _APPS:
             dict(_NBI["image_1"], label="Your photo"), dict(_NBI["prompt"], required=False, label=_a["extra"], prefix=_p, clear_blank=False),
             _NBI["aspect_ratio"], _NBI["resolution"], _NBI["seed"]])
         WIRING[f"app.{_a['slug']}-open"] = _reuse("image.edit-open", "image.edit-open", [
-            dict(_QE[0], label="Your photo"), dict(_QE[1], required=False, label=_a["extra"], prefix=_p), _QE[2]])
+            dict(_QE[0], label="Your photo"), dict(_QE[1], required=False, label=_a["extra"], prefix=_p), _SPEED, _QE[2]])
     elif _a["mode"] == "video":
         WIRING[f"app.{_a['slug']}"] = _from_model("model.seedance2-5-i2v-1080p", [
             dict(_SDI["image_1"], label=_a["subject"]), dict(_SDI["prompt"], required=False, label="Extra detail (optional)", prefix=_p),
             _SDI["resolution"], _SDI["ratio"], _SDI["duration"], _SDI["seed"]])
-        WIRING[f"app.{_a['slug']}-open"] = _reuse("cinema.camera-rig", "cinema.camera-rig", [
-            dict(CAM[0], label=_a["subject"]), dict(CAM[1], required=False, label="Extra detail (optional)", prefix="Use the provided start image as the first frame. " + _p),
-            *CAM[2:]])
+        WIRING[f"app.{_a['slug']}-open"] = dict(_LTX23, inputs=[
+            dict(_LTX23_IN[0], label=_a["subject"]), dict(_LTX23_IN[1], required=False, label="Extra detail (optional)", prefix=_p), _LTX23_IN[2]])
     elif _a["mode"] == "pair" and _a["feature"] == "model.kling-vto":
         WIRING[f"app.{_a['slug']}"] = _from_model("model.kling-vto", [dict(_VTO[0], label="Your photo"), dict(_VTO[1], label="Outfit or garment photo"), *_VTO[2:]])
     elif _a["mode"] == "pair":
-        WIRING[f"app.{_a['slug']}"] = _reuse("soul.cast", "soul.cast", [
-            dict(_CAST["image"], label="Photo to change"), dict(_CAST["image_b"], label="Face or character to use"),
-            dict(_CAST["prompt"], required=False, label="Extra detail (optional)", prefix=_p), _CAST["seed"]])
+        WIRING[f"app.{_a['slug']}"] = dict(_QE2, inputs=[
+            dict(_QE2_IN[0], label="Photo to change"), dict(_QE2_IN[1], label="Face or character to use"),
+            dict(_QE2_IN[2], prefix=_p), _SPEED, _QE2_IN[3]])
+
+# Open-weights versions of the two try-on apps (Qwen-Image-Edit 2511 with two photos), next to Kling try-on in the model picker.
+for _a in _APPS:
+    if _a["mode"] == "pair" and _a["feature"] == "model.kling-vto":
+        WIRING[f"app.{_a['slug']}-open"] = dict(_QE2, inputs=[
+            dict(_QE2_IN[0], label="Your photo"), dict(_QE2_IN[1], label="Outfit or garment photo"),
+            dict(_QE2_IN[2], prefix="Dress the person from the first image in the outfit from the second image. Keep the first person's face, hair, body and pose exactly the same, match the lighting. "),
+            _SPEED, _QE2_IN[3]])
+
+# App examples rendered through each app's open-weights path (scripts/render_app_examples.py records them here).
+_APP_EX = _Path(__file__).with_name("apps_examples.json")
+if _APP_EX.exists():
+    for _slug, _r in _json.loads(_APP_EX.read_text(encoding="utf-8")).items():
+        if _r["feature"] in WIRING and (_Path(__file__).parent.parent / _r["example"]).exists():
+            WIRING[_r["feature"]].update(verified_via=_r.get("via", "Rendered on Comfy Cloud with open weights, 2026-10-22"), examples=[_r["example"]])

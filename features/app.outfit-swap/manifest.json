@@ -56,5 +56,6 @@
     "output_kind": "image",
     "verified": false
   },
-  "group": null
+  "group": "Outfit Swap",
+  "default": true
 }

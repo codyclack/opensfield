@@ -270,6 +270,6 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Dubbing",
-  "plan_name": "AI dubbing / translation"
+  "plan_name": "AI dubbing / translation",
+  "group": "Dubbing"
 }

@@ -1,6 +1,6 @@
 # OpenSfield
 
-**Demo video (117 s):** [watch](https://codyclack.github.io/opensfield/demo/) · [download](https://github.com/codyclack/opensfield/releases/download/v1.0/OpenSfield_demo.mp4)
+**Demo video (118 s):** [watch](https://codyclack.github.io/opensfield/demo/) · [download](https://github.com/codyclack/opensfield/releases/download/v1.0/OpenSfield_demo.mp4)
 
 Open-source rebuild of Higgsfield's creative apps on ComfyUI, for Comfy's
 **#OpenSourceHiggsfield** challenge. Two kinds of tools: open-weight workflows (LTX, Wan, Qwen, FLUX, ...) and one tool per Higgsfield partner model
@@ -16,10 +16,11 @@ persistent **Generations** history (download, favorite, save as element, reuse s
 Preset video tools (viral effects, UGC, click-to-ad, product motion, multishot, shorts, AI influencer) default to Seedance 2.5 with the
 open LTX-2.5 version one click away.
 
-**Apps:** all 83 one-click apps from higgsfield.ai/apps (Skibidi left out: someone else's IP) in the same 8 categories: Professional, Enhance & Style, Face & Identity, Video Editing, Ads & Products, Games & Characters, Extras and Trending Templates. Photo apps run on Nano Banana 2.1 with a Qwen-Image-Edit open version, video apps on Seedance 2.5 with an LTX-2.5 open version, and the rest open existing tools (Angles, Expand, Transitions, Recast, Breakdown, Click to Ad...). The list and prompts live in `registry/apps.py`.
+**Apps:** all 83 one-click apps from higgsfield.ai/apps (Skibidi left out: someone else's IP) in the same 8 categories: Professional, Enhance & Style, Face & Identity, Video Editing, Ads & Products, Games & Characters, Extras and Trending Templates. Photo apps run on Nano Banana 2.1 with a Qwen-Image-Edit 2511 open version (Fast = the 4-step Lightning LoRA, or Quality = 40 steps), swap and try-on apps on Qwen-Image-Edit 2511 with two photos (Kling try-on as the partner option), video apps on Seedance 2.5 with an LTX-2.3 open version, and the rest open existing tools (Angles, Expand, Transitions, Recast, Breakdown, Click to Ad...). The list and prompts live in `registry/apps.py`. **The app examples in `examples/apps/` were made through the app itself** (`scripts/render_app_examples.py` → `app/runner.py`) on a local ComfyUI on one Quadro RTX 6000, open weights only, no credits.
 
 ## Status (honest summary)
-- **Catalog: 146 tools** (Higgsfield modules plus one tool per partner model). **83 have real example outputs** (live runs on Comfy Cloud, or local CPU tools run on this machine), **63 are wired from official Comfy templates but not yet run** (marked untested in the app), **none are left unbuilt**. Earlier summary: 48 of the original 72 modules were built in [`examples/`](examples/README.md), using open-weight models
+- **Catalog: 146 tools** (Higgsfield modules plus one tool per partner model). **83 have real example outputs** (live runs on Comfy Cloud, or local CPU tools run on this machine), **63 are wired from official Comfy templates but not yet run**, **none are left unbuilt**.
+- **Apps: 83, all wired.** **54 show a real example**: 43 photo and swap apps rendered through the app on a local ComfyUI (Qwen-Image-Edit 2511), 1 video app (LTX-2.3, 3 s) and 10 apps that open existing tools with examples. Not rendered yet: 26 video apps (local LTX-2.3 takes about 7 min a clip on this card and the batch was paused), 2 photo apps (3D Figure, Renaissance; their first renders showed a brand logo and a famous painting, so the prompts were fixed and they wait for a re-run) and Transitions. Earlier summary: 48 of the original 72 modules were built in [`examples/`](examples/README.md), using open-weight models
   only: 23 are separate ComfyUI workflows (video outpainting, Chatterbox text-to-speech/voice clone, motion transfer, character replacement, text/image-to-video, first/last frame,
   video edit, image edit, inpaint, outpaint, background removal, layer decomposition, upscale, music, image-to-3D, several
   text-to-image models, style reference, two-reference compose), 20 are presets that reuse those workflows (UGC video, click-to-ad, shorts, AI influencer, ad variants, re-shoot angles, narration, image reframe, camera angles, viral effects,
@@ -27,8 +28,9 @@ open LTX-2.5 version one click away.
 - **Last modules finished on 2026-10-22:** montage editing, match-cut reel renderer, subject cuts (face, product, sphere, lens, sticker), Tracelab HUD tracking, virality score card, TikTok export and website builder run locally on CPU with real examples; the faceless narrated video (ElevenLabs + Seedance, then muxed), the trending motion gallery (Wan Animate 2 with preset driving clips) and 3D auto-rig (SAM 3D Body) are wired but untested; credits and plans became a Credits & usage page. Virality is a heuristic score card, not a trained model, and TikTok publishing is an export to TikTok spec plus a caption file (you upload it in TikTok).
   own custom packs, or no usable open workflow found. COVERAGE.md lists each one. [COVERAGE.md](COVERAGE.md) lists every Higgsfield feature, its planned open-weight
   stand-in and its status (`planned` / `built` / `tested`).
-- **The app runs in mock mode out of the box** (placeholder outputs, no ComfyUI needed). Real runs through the app's `comfy-sdk`
-  path are implemented and unit-tested against a stub, and **verified end to end for 13 modules** (app -> `comfy-sdk` -> Cloud -> result): `image.bg-remove`, the camera-rig video module, video reframe, text-to-speech, voice clone, narration, image reframe, re-shoot angles, AI influencer, ad multiplier, UGC video, click-to-ad and shorts studio. The rest were rendered with Comfy Cloud's template runner using the same node ids and prompts.
+- **The app runs in mock mode out of the box** (placeholder outputs, no ComfyUI needed). Real runs go through `comfy-sdk` on Comfy Cloud or
+  through the classic HTTP API on your own ComfyUI (`COMFY_BASE_URL`); the self-hosted path made all 44 app examples. The `comfy-sdk` path is
+  **verified end to end for 13 modules** (app -> `comfy-sdk` -> Cloud -> result): `image.bg-remove`, the camera-rig video module, video reframe, text-to-speech, voice clone, narration, image reframe, re-shoot angles, AI influencer, ad multiplier, UGC video, click-to-ad and shorts studio. The rest were rendered with Comfy Cloud's template runner using the same node ids and prompts.
 
 ## Try the app shell (mock mode, no ComfyUI)
 ```bash
@@ -90,15 +92,16 @@ with no voice-over. Instructions are at the top of the script.
 uv run scripts/build_registry.py
 ```
 
-## Real runs (verified for image.bg-remove)
+## Real runs
 ```bash
 uv sync --extra comfy
 export OPENSFIELD_MODE=comfy
-export COMFY_API_KEY=...                      # Comfy Cloud, or
-export COMFY_BASE_URL=http://127.0.0.1:8189   # a self-hosted ComfyUI behind comfy-api-proxy (no key needed)
+export COMFY_API_KEY=...                      # Comfy Cloud (through comfy-sdk), or
+export COMFY_BASE_URL=http://127.0.0.1:8188   # your own ComfyUI: no key, no credits (classic /prompt API)
 uv run uvicorn app.main:app --port 8765
 ```
-The four built modules need their models on the target server (names are in each manifest's `workflow.models`; Comfy Cloud
-already has them). You can also open any `features/<id>/workflow_ui.json` directly in ComfyUI.
+With `COMFY_BASE_URL` pointing at a plain ComfyUI, `app/runner.py` uploads the inputs, queues the graph on `/prompt`, waits on
+`/history` and pulls the results from `/view`. Each tool needs its models on that machine (names are in each manifest's
+`workflow.models`; Comfy Cloud already has them). You can also open any `features/<id>/workflow_ui.json` directly in ComfyUI.
 
 License: MIT.

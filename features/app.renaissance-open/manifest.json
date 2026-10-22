@@ -36,7 +36,23 @@
         "node": "170:151",
         "field": "prompt",
         "required": false,
-        "prefix": "Turn this person into a Renaissance oil portrait hanging in a classical gallery, ornate gold frame, museum visitors in the foreground. "
+        "prefix": "Repaint this photo as an old-master oil painting of the same person: keep their face, hair, pose and clothes, add soft chiaroscuro light, visible brushwork and fine craquelure, and put the canvas in an ornate gold frame on a dark wall. "
+      },
+      {
+        "name": "speed",
+        "label": "Speed",
+        "kind": "choice",
+        "node": "170:168",
+        "field": "value",
+        "options": [
+          "Fast",
+          "Quality"
+        ],
+        "default": "Fast",
+        "values": {
+          "Fast": true,
+          "Quality": false
+        }
       },
       {
         "name": "seed",

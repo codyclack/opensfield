@@ -89,6 +89,6 @@
     "output_kind": "audio",
     "verified": false
   },
-  "group": "Voice Changer",
-  "plan_name": "Voice change"
+  "plan_name": "Voice change",
+  "group": "Voice Changer"
 }

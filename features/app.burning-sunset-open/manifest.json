@@ -5,7 +5,7 @@
   "base": [],
   "higgsfield": "higgsfield.ai/apps/burning-sunset",
   "count": 1,
-  "status": "built",
+  "status": "tested",
   "app": {
     "cat": "Trending Templates",
     "desc": "An epic burning-sky sunset portrait",
@@ -39,6 +39,22 @@
         "prefix": "Place this person in front of an epic fiery orange sunset sky with dramatic backlight and lens flare, cinematic portrait. "
       },
       {
+        "name": "speed",
+        "label": "Speed",
+        "kind": "choice",
+        "node": "170:168",
+        "field": "value",
+        "options": [
+          "Fast",
+          "Quality"
+        ],
+        "default": "Fast",
+        "values": {
+          "Fast": true,
+          "Quality": false
+        }
+      },
+      {
         "name": "seed",
         "label": "Seed (0 = random)",
         "kind": "seed",
@@ -58,7 +74,11 @@
     ],
     "reuses": "image.edit-open",
     "output_kind": "image",
-    "verified": false
+    "verified": true,
+    "verified_via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22",
+    "examples": [
+      "examples/apps/burning-sunset.png"
+    ]
   },
   "group": "Burning Sunset"
 }

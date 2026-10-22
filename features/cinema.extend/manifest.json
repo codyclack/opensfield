@@ -96,6 +96,6 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Extend video",
-  "plan_name": "Extend / continue a clip"
+  "plan_name": "Extend / continue a clip",
+  "group": "Extend video"
 }

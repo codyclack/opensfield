@@ -90,6 +90,6 @@
       "examples/text_to_video_alley.mp4"
     ]
   },
-  "group": "Text to video",
-  "plan_name": "Open text/image->video (LTX 2.5, Wan)"
+  "plan_name": "Open text/image->video (LTX 2.5, Wan)",
+  "group": "Text to video"
 }

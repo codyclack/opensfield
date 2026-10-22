@@ -120,6 +120,6 @@
       "examples/click_to_ad.mp4"
     ]
   },
-  "group": "Click to Ad",
-  "plan_name": "Product URL -> video ad"
+  "plan_name": "Product URL -> video ad",
+  "group": "Click to Ad"
 }

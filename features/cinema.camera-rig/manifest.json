@@ -97,6 +97,6 @@
       "examples/driving_dance.mp4"
     ]
   },
-  "group": "Image to video",
-  "plan_name": "Camera body / lens / focal / move controls"
+  "plan_name": "Camera body / lens / focal / move controls",
+  "group": "Image to video"
 }

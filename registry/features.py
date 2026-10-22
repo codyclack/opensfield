@@ -224,13 +224,16 @@ for _a in _APPS:
     _base = dict(studio="Apps", name=_a["name"], tier="B", base=[], higgsfield=f"higgsfield.ai/apps/{_a['slug']}", count=1, status="planned", app=_meta)
     if _a["mode"] == "pair":
         _track = "partner" if _a["feature"].startswith("model.") else "open"
-        FEATURES.append(dict(_base, id=f"app.{_a['slug']}", track=_track, partner=[], note="", group=None))
+        _grp = _a["name"] if _track == "partner" else None
+        FEATURES.append(dict(_base, id=f"app.{_a['slug']}", track=_track, partner=[], note="", group=_grp, default=_track == "partner"))
+        if _track == "partner":
+            FEATURES.append(dict(_base, id=f"app.{_a['slug']}-open", track="open", partner=[], group=_a["name"], note="Open weights (Qwen-Image-Edit 2511, two photos)."))
         continue
     _engine = "Nano Banana 2.1" if _a["mode"] == "image" else "Seedance 2.5"
     FEATURES.append(dict(_base, id=f"app.{_a['slug']}", track="partner", partner=[_engine], group=_a["name"], default=True,
                          note=f"{_engine} through Comfy Cloud API nodes (uses Comfy credits)."))
     FEATURES.append(dict(_base, id=f"app.{_a['slug']}-open", track="open", partner=[], group=_a["name"],
-                         note="Open weights (Qwen-Image-Edit 2511)." if _a["mode"] == "image" else "Open weights (LTX-2.5)."))
+                         note="Open weights (Qwen-Image-Edit 2511)." if _a["mode"] == "image" else "Open weights (LTX-2.3)."))
 
 
 # Product names shown in the app (the descriptive planning names above stay in COVERAGE.md).

@@ -120,6 +120,6 @@
       "examples/ugc_review.mp4"
     ]
   },
-  "group": "UGC Video",
-  "plan_name": "UGC video (review, unboxing, try-on, tutorial, site tour)"
+  "plan_name": "UGC video (review, unboxing, try-on, tutorial, site tour)",
+  "group": "UGC Video"
 }

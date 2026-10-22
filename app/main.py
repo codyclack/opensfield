@@ -117,9 +117,10 @@ def apps():
             f = FEATURES.get(fid)
         if not f:
             continue
+        examples = (f.get("workflow") or {}).get("examples") or (FEATURES.get(f"app.{a['slug']}-open", {}).get("workflow") or {}).get("examples", [])
         out.append({"slug": a["slug"], "name": a["name"], "cat": a["cat"], "desc": a["desc"], "tag": a["tag"], "mode": a["mode"],
                     "feature": fid, "preset": a.get("preset", {}), "status": f["status"], "output_kind": f["output_kind"],
-                    "examples": [e for e in (f.get("workflow") or {}).get("examples", [])]})
+                    "examples": list(examples)})
     return {"categories": CATEGORIES, "apps": out}
 
 

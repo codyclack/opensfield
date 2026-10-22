@@ -5,7 +5,7 @@
   "base": [],
   "higgsfield": "higgsfield.ai/apps/japanese-show",
   "count": 1,
-  "status": "built",
+  "status": "tested",
   "app": {
     "cat": "Video Editing",
     "desc": "Your photo as a retro 4-panel TV show",
@@ -39,6 +39,22 @@
         "prefix": "Turn this photo into a 2x2 grid of stills from a retro Japanese variety TV show starring this person: bright studio sets, big colorful on-screen captions, 4:3 CRT look. "
       },
       {
+        "name": "speed",
+        "label": "Speed",
+        "kind": "choice",
+        "node": "170:168",
+        "field": "value",
+        "options": [
+          "Fast",
+          "Quality"
+        ],
+        "default": "Fast",
+        "values": {
+          "Fast": true,
+          "Quality": false
+        }
+      },
+      {
         "name": "seed",
         "label": "Seed (0 = random)",
         "kind": "seed",
@@ -58,7 +74,11 @@
     ],
     "reuses": "image.edit-open",
     "output_kind": "image",
-    "verified": false
+    "verified": true,
+    "verified_via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22",
+    "examples": [
+      "examples/apps/japanese-show.png"
+    ]
   },
   "group": "Japanese Show"
 }

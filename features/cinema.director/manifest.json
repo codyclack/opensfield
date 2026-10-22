@@ -119,6 +119,6 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "AI Director",
-  "plan_name": "AI Director: concept -> shot list"
+  "plan_name": "AI Director: concept -> shot list",
+  "group": "AI Director"
 }

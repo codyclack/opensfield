@@ -82,6 +82,6 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Auto-rig",
-  "plan_name": "Auto-rig 3D character"
+  "plan_name": "Auto-rig 3D character",
+  "group": "Auto-rig"
 }

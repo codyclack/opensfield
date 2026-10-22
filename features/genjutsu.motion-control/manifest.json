@@ -77,6 +77,6 @@
       "examples/motion_transfer_compare.mp4"
     ]
   },
-  "group": "Motion control",
-  "plan_name": "Motion transfer (image + driving video)"
+  "plan_name": "Motion transfer (image + driving video)",
+  "group": "Motion control"
 }

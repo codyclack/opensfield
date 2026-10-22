@@ -1,5 +1,12 @@
 # Example outputs
 
+**`apps/`** (2026-10-22): one example per Higgsfield app, made through the app itself (`scripts/render_app_examples.py` calls
+`app/runner.py`, which drives a self-hosted ComfyUI over its HTTP API) on one Quadro RTX 6000, open weights only. Photo apps use
+Qwen-Image-Edit 2511 int8 in Fast mode (4-step Lightning LoRA), about 50-90 s each; swap and try-on apps give it two photos
+(`garment_puffer.png` is the garment, cut from `char_b.png` by the same model). Video apps use LTX-2.3 at 512x768, 3 s, about 7 min a
+clip. The input photos are `char_a.png`, `char_b.png`, `t2i_flux3_sneakers.png`, `influencer_cafe.png`, `style_reference_alley.png` and
+`sketch_input.png`; which app used which is in `scripts/render_app_examples.py`, and `registry/apps_examples.json` records each file.
+
 Real renders from Comfy Cloud on 2026-10-21 using the workflows in `features/`, with open-weight models only
 (Z-Image Turbo, LTX-2.5, Wan Animate 2). All people are AI-generated and fictional. No real likenesses and no
 third-party footage or template sample assets are used. Each render was queued with overrides addressed by the node ids in

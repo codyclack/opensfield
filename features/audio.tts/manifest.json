@@ -64,6 +64,6 @@
       "examples/tts_chatterbox.flac"
     ]
   },
-  "group": "Text to Speech",
-  "plan_name": "Text to speech"
+  "plan_name": "Text to speech",
+  "group": "Text to Speech"
 }

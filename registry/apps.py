@@ -133,7 +133,7 @@ APPS = [
     img("3d-render", "3D Render", G, "Any photo as a stunning 3D render",
         "Turn this into a polished 3D animated film render: stylized proportions, subsurface skin, soft global illumination, same pose and outfit."),
     img("3d-figure", "3D Figure", G, "Your photo as a detailed 3D figure",
-        "Turn this person into a detailed collectible figurine on a display base next to its retail box, studio product photo, painted plastic texture."),
+        "Turn this person into a detailed hand-painted collectible figurine standing on a round black display base, studio product photo on a plain grey backdrop, painted resin texture, no packaging, no text."),
     img("pixel-game", "Pixel Game", G, "Your photo as retro pixel game graphics",
         "Turn this photo into a retro 16-bit pixel art game screen with this person as the playable character, limited palette, HUD with hearts and score."),
     img("brick-cube", "Brick Cube", G, "Your photo as a brick-built cube toy",
@@ -186,7 +186,7 @@ APPS = [
     img("giallo-horror", "Giallo Horror", T, "You in a 70s giallo horror still",
         "Turn this photo into a 1970s Italian giallo horror film still with this person: saturated red and green lighting, grainy film, dramatic shadows."),
     img("renaissance", "Renaissance", T, "You as a classical gallery painting",
-        "Turn this person into a Renaissance oil portrait hanging in a classical gallery, ornate gold frame, museum visitors in the foreground."),
+        "Repaint this photo as an old-master oil painting of the same person: keep their face, hair, pose and clothes, add soft chiaroscuro light, visible brushwork and fine craquelure, and put the canvas in an ornate gold frame on a dark wall."),
     vid("rapgod", "Rap God", T, "Your photo as a rap video clip",
         "This person performs in a rap music video: fisheye lens, low angle, gold chains, friends hyping in the background, quick cuts."),
 ]

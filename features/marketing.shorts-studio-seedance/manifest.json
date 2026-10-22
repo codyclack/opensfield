@@ -107,7 +107,7 @@
     "output_kind": "video",
     "verified": false
   },
+  "plan_name": "Shorts studio sessions/presets",
   "group": "Shorts Studio",
-  "default": true,
-  "plan_name": "Shorts studio sessions/presets"
+  "default": true
 }

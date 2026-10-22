@@ -79,6 +79,6 @@
       "examples/influencer_cafe.png"
     ]
   },
-  "group": "AI Influencer",
-  "plan_name": "AI influencer (character + presets)"
+  "plan_name": "AI influencer (character + presets)",
+  "group": "AI Influencer"
 }

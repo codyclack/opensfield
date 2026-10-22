@@ -117,7 +117,7 @@
     "output_kind": "video",
     "verified": false
   },
+  "plan_name": "Product URL -> video ad",
   "group": "Click to Ad",
-  "default": true,
-  "plan_name": "Product URL -> video ad"
+  "default": true
 }

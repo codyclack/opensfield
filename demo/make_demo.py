@@ -6,6 +6,7 @@ and screenshots of the app in demo/frames/.
 Screenshots: start the app (uv run uvicorn app.main:app --port 8765) and capture with headless Edge, e.g.
     msedge --headless=new --window-size=1920,1080 --virtual-time-budget=6000 --screenshot=demo/frames/home_genjutsu.png "http://127.0.0.1:8765/#s=Genjutsu"
 """
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -108,11 +109,11 @@ def still(path, w=None, h=None):
     return im
 
 
-def cover(img, w, h):
-    """Scale to fill w x h and center-crop (no distortion)."""
+def cover(img, w, h, top=0.5):
+    """Scale to fill w x h and crop (no distortion); `top` places the vertical crop (0.5 = centered)."""
     s = max(w / img.shape[1], h / img.shape[0])
     im = cv2.resize(img[..., :3], (round(img.shape[1] * s), round(img.shape[0] * s)), interpolation=cv2.INTER_AREA)
-    y, x = (im.shape[0] - h) // 2, (im.shape[1] - w) // 2
+    y, x = int((im.shape[0] - h) * top), (im.shape[1] - w) // 2
     return np.ascontiguousarray(im[y:y + h, x:x + w])
 
 
@@ -173,7 +174,7 @@ steps = [("1  Feature map", ["72 Higgsfield modules", "tiers, open stand-ins"], 
 L2t = title("EVERY FEATURE = A MANIFEST + A WORKFLOW")
 L2boxes = [Layer(lambda d, i=i, s=s: box(d, 80 + i * 360, 330, 320, 190, s[0], s[1], s[2])) for i, s in enumerate(steps)]
 L2arrows = [Layer(lambda d, i=i: d.text((410 + i * 360 - 8, 395), "→", font=font(BOLD, 56), fill=MUTED)) for i in range(4)]
-L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it. 83 tools are verified end to end: open-weight workflows plus partner models.")
+L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it. 127 tools and apps have real renders: open-weight workflows plus partner models.")
 
 
 @scene(10)
@@ -191,8 +192,9 @@ def s2(t):
 # 3. app tours (Higgsfield layout, Cinema Studio, Elements + Creator Hub)
 def tour(items, seg):
     imgs = [still(SH / f"{n}.png") for n, _, _ in items]
-    for im in imgs:  # screenshots come from the preview server: hide its "Mock mode" chip (Cinema Studio has no top bar)
-        im[10:46, 1544:1642, :3] = (14, 12, 12)
+    for (n, _, _), im in zip(items, imgs):  # screenshots come from the preview server: hide its "Mock mode" chip (Cinema Studio has no top bar)
+        if n != "ui_apps":  # newer capture, the chip is already painted out
+            im[10:46, 1544:1642, :3] = (14, 12, 12)
     caps = [caption(x, y) for _, x, y in items]
 
     def render(t):
@@ -207,31 +209,63 @@ s3_tour = tour([
     ("ui_explore", "The Higgsfield layout: Explore, Image, Video, Audio and every studio in the top menu", "Feature banners and tiles, then rows of tools that play on hover"),
     ("ui_video", "Video: Seedance 2.5 by default, every video model in one picker", "Create Video, Text to Video, References, First & Last, Motion Control, Edit Video"),
     ("ui_viral", "Viral effects, UGC, click-to-ad, AI influencer: presets on Seedance 2.5", "The open LTX-2.5 version is one click away in the same model list"),
-    ("ui_image", "Image: describe it in the bottom bar, pick GPT Image, Nano Banana, FLUX 3...", "Every result lands in History: download, favorite, save as element, reuse")], 4.0)
+    ("ui_image", "Image: describe it in the bottom bar, pick GPT Image, Nano Banana, FLUX 3...", "Every result lands in History: download, favorite, save as element, reuse")], 3.5)
 s3b_tour = tour([
     ("cs_home", "Cinema Studio: its own workspace, like Higgsfield Cinema Studio 4.0", "Projects, My elements, My favorites, Community · Image or Video · Seedance 2.5 by default"),
     ("cs_camera", "Camera: body, lens and aperture, plus 33 camera moves", "#Dolly in, #Crane up... stack them in the prompt, order matters"),
     ("cs_palette", "Color palette and lighting become director's language in the prompt", "Film setup adds genre, era and tempo"),
-    ("cs_light", "Lighting schemes: window, golden hour, practicals, silhouette, neon...", "Every card writes plain shot language, so any video model understands it")], 3.5)
+    ("cs_light", "Lighting schemes: window, golden hour, practicals, silhouette, neon...", "Every card writes plain shot language, so any video model understands it")], 3.0)
 s3c_tour = tour([
     ("ui_elements", "My elements: characters, locations and props with several references each", "Type @ in any prompt to use them, keep faces consistent across shots"),
     ("ui_blog", "Creator Hub: how-to guides, listicles and a changelog", "Your first video, directing in Cinema Studio, Elements, model comparisons"),
-    ("ui_post", "Step-by-step tutorials, written for this app", "Plus a Community feed of every real render")], 3.4)
+    ("ui_post", "Step-by-step tutorials, written for this app", "Plus a Community feed of every real render")], 3.0)
 
 
-@scene(16)
+@scene(14)
 def s3(t):
     return s3_tour(t)
 
 
-@scene(14)
+@scene(12)
 def s3b(t):
     return s3b_tour(t)
 
 
-@scene(10)
+@scene(9)
 def s3c(t):
     return s3c_tour(t)
+
+
+# 3d. Higgsfield Apps: the catalog page, then a wall of example renders made through each app
+sys.path.insert(0, str(ROOT))
+from registry.apps import APPS  # noqa: E402
+
+_APP_REC = json.loads((ROOT / "registry" / "apps_examples.json").read_text(encoding="utf-8")) if (ROOT / "registry" / "apps_examples.json").exists() else {}
+_APP_NAMES = {a["slug"]: a["name"] for a in APPS}
+_PICK = ["clipcut", "game-dump", "3d-figure", "giant-product", "face-swap", "renaissance", "cloud-surf", "comic-book",
+         "packshot", "sand-worm", "relight", "j-magazine", "volcano-ad", "pixel-game", "outfit-swap", "shots"]
+WALL = [(s, _APP_REC[s]["example"]) for s in _PICK if s in _APP_REC and (ROOT / _APP_REC[s]["example"]).exists()][:8]
+WALL_M = [Clip(ROOT / p, w=420) if p.endswith(".mp4") else still(ROOT / p, w=420) for _, p in WALL]
+L3dl = [label(_APP_NAMES[s].upper(), 60 + (i % 4) * 450 + 210, 150 + (i // 4) * 370, 24, LIME, "ma") for i, (s, _) in enumerate(WALL)]
+L3dt = title(f"{len(APPS)} HIGGSFIELD APPS", 60, 56)
+L3dc = caption("Examples made through the apps themselves, on one local GPU", "Open weights on a local ComfyUI: Qwen-Image-Edit 2511 for photos, LTX-2.3 for video · one tap to switch to Nano Banana or Seedance")
+s3d_tour = tour([("ui_apps", f"Apps: all {len(APPS)} Higgsfield apps, in the same 8 categories", "Professional, Enhance & Style, Face & Identity, Video Editing, Ads & Products, Games, Extras, Trending")], 3.5)
+
+
+@scene(10)
+def s3d(t):
+    if t < 3.5 or not WALL:
+        return s3d_tour(min(t, 3.49))
+    t -= 3.5
+    f = BGIMG.copy(); L3dt.on(f)
+    for i, m in enumerate(WALL_M):
+        k = min(1, max(0, t - i * 0.25) / 0.35)
+        if k > 0:
+            fr = cover(m.at(t) if isinstance(m, Clip) else m, 420, 320, top=0.12)  # portraits: keep the face in frame
+            paste(f, fr, 60 + (i % 4) * 450, 190 + (i // 4) * 370)
+            L3dl[i].on(f, k)
+    L3dc.on(f, min(1, t / 0.5))
+    return f
 
 
 # 4. same prompt, eight models
@@ -243,7 +277,7 @@ L4l = [label(n, 60 + (i % 4) * 450 + 210, 195 + (i // 4) * 330, 24, LIME, "ma") 
 L4c = caption("Same prompt, switch the model: FLUX 3, Nano Banana, GPT Image, Recraft and more", "Prompt: “a pair of white sneakers on a wet city street at dusk” · each run through the app")
 
 
-@scene(12)
+@scene(10)
 def s4(t):
     f = BGIMG.copy(); L4t.on(f)
     for i, m in enumerate(M8):
@@ -263,7 +297,7 @@ L4bl = [label(n, 60 + (i % 2) * 920 + 400, 168 + (i // 2) * 360, 24, LIME, "ma")
 L4bc = caption("Grok, Kling, MiniMax, Seedance, Wan, Luma and more through Comfy API nodes", "Each tool is generated from Comfy's official template, so the form always matches the model")
 
 
-@scene(12)
+@scene(10)
 def s4b(t):
     f = BGIMG.copy(); L4bt.on(f)
     for i, c in enumerate(CV):
@@ -348,12 +382,12 @@ def s8(t):
 
 
 # 9. end
-L9 = Layer(lambda d: [marker(d, (120, 170), "83 TOOLS RUN FOR REAL", 78),
-                      d.text((124, 330), "146 in the catalog: 63 more wired from Comfy templates, none left unbuilt", font=font(BOLD, 44), fill=WHITE),
+L9 = Layer(lambda d: [marker(d, (120, 170), "127 TOOLS & APPS RUN FOR REAL", 78),
+                      d.text((124, 330), "146 tools + 83 Higgsfield apps: every one wired, none left unbuilt", font=font(BOLD, 44), fill=WHITE),
                       d.text((124, 410), "Open weights + partner models  ·  MIT  ·  built on comfy-sdk", font=font(REG, 40), fill=MUTED),
                       d.text((124, 560), "github.com/codyclack/opensfield", font=font(BOLD, 72), fill=LIME),
                       d.text((124, 680), "#OpenSourceHiggsfield", font=font(BOLD, 56), fill=WHITE),
-                      d.text((124, 820), "Examples were rendered through the app on Comfy Cloud. Partner models use Comfy credits.", font=font(REG, 30), fill=MUTED)])
+                      d.text((124, 820), "Examples were rendered through the app on Comfy Cloud and on a local ComfyUI. Partner models use Comfy credits.", font=font(REG, 30), fill=MUTED)])
 
 
 @scene(6)

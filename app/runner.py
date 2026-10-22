@@ -1,15 +1,16 @@
-"""Job runners. MockRunner never touches ComfyUI; ComfyRunner uses comfy-sdk.
-
-ComfyRunner is written against the documented comfy-sdk surface
-(Comfy, workflows.from_file, assets.from_file, wf.set_input, client.run,
-job.get_outputs) and has NOT been exercised yet: Comfy testing is on hold.
+"""Job runners. run_mock never touches ComfyUI; run_comfy uses comfy-sdk against Comfy Cloud, or the classic
+HTTP API (run_comfyui) when COMFY_BASE_URL points at a self-hosted ComfyUI.
 """
 from __future__ import annotations
 
+import json
 import os
 import random
 import shutil
 import time
+import urllib.parse
+import urllib.request
+import uuid
 from html import escape
 from pathlib import Path
 from typing import Callable
@@ -18,6 +19,7 @@ from .registry import ROOT
 
 OUTPUTS = ROOT / "outputs"
 UPLOADS = OUTPUTS / "uploads"
+MEDIA_KINDS = ("image", "video", "audio")
 
 Update = Callable[..., None]
 
@@ -53,6 +55,8 @@ def resolve_values(feature: dict, inputs: dict) -> dict:
             user = str(vals.get(tgt) or "").strip()
             vals[tgt] = (pr.get(choice, "") + (" " + user if user else "")).strip()
     for spec in feature["inputs"]:
+        if spec.get("values"):  # a choice whose labels stand for graph values (e.g. "Fast" -> the Lightning LoRA switch on)
+            vals[spec["name"]] = spec["values"].get(vals.get(spec["name"]) or spec.get("default"))
         if spec.get("prefix"):
             vals[spec["name"]] = spec["prefix"] + str(vals.get(spec["name"]) or "")
         media = spec.get("media_presets")  # a gallery choice that also supplies a media file (e.g. a driving clip)
@@ -120,10 +124,83 @@ def run_pipeline(feature: dict, job: dict, update: Update, steps_runner) -> list
     return list(made.values())
 
 
+def _kind(name: str) -> str:
+    ext = Path(name).suffix.lower()
+    return ("video" if ext in (".mp4", ".webm", ".mov") else "audio" if ext in (".wav", ".mp3", ".flac", ".ogg")
+            else "3d" if ext in (".glb", ".gltf") else "image")
+
+
+def _self_hosted(base: str) -> bool:
+    """A plain ComfyUI (your own GPU) speaks the classic /prompt API; comfy-sdk targets Comfy Cloud's /api/v2."""
+    return bool(base) and not urllib.parse.urlparse(base).hostname.endswith("comfy.org")
+
+
+def run_comfyui(base: str, feature: dict, job: dict, update: Update) -> list[dict]:
+    """Run a tool on a self-hosted ComfyUI over its HTTP API: upload media, POST /prompt, poll /history, fetch outputs from /view."""
+    wf_meta = feature["workflow"]
+    graph = json.loads((ROOT / wf_meta["api"]).read_text(encoding="utf-8"))
+    base = base.rstrip("/")
+
+    def call(path, data=None, headers=None):
+        req = urllib.request.Request(base + path, data=data, headers=headers or {})
+        with urllib.request.urlopen(req, timeout=120) as r:
+            return r.read()
+
+    def upload(path: Path) -> str:
+        boundary = uuid.uuid4().hex
+        body = (f'--{boundary}\r\nContent-Disposition: form-data; name="overwrite"\r\n\r\ntrue\r\n'
+                f'--{boundary}\r\nContent-Disposition: form-data; name="image"; filename="{path.name}"\r\n'
+                f"Content-Type: application/octet-stream\r\n\r\n").encode() + path.read_bytes() + f"\r\n--{boundary}--\r\n".encode()
+        r = json.loads(call("/upload/image", body, {"Content-Type": f"multipart/form-data; boundary={boundary}"}))
+        return f"{r['subfolder']}/{r['name']}" if r.get("subfolder") else r["name"]
+
+    values = resolve_values(feature, job["inputs"])
+    for spec in feature["inputs"]:
+        value = values.get(spec["name"])
+        if spec["kind"] == "seed" and not value:
+            value = random.randint(1, 2**31 - 1)
+        if value in ("", None) and spec.get("clear_blank") and "node" in spec:
+            value = ""
+        elif value in ("", None) or "node" not in spec:
+            continue
+        if spec["kind"] in MEDIA_KINDS:
+            value = upload(UPLOADS / value)
+        elif spec["kind"] == "number":
+            value = int(value) if isinstance(spec.get("default"), int) else float(value)
+        for t in [{"node": spec["node"], "field": spec["field"]}, *spec.get("also", [])]:
+            graph[t["node"]]["inputs"][t["field"]] = value
+    pid = json.loads(call("/prompt", json.dumps({"prompt": graph, "client_id": "opensfield"}).encode(), {"Content-Type": "application/json"}))["prompt_id"]
+    update(progress=0.1)
+    t0 = time.time()
+    while True:
+        hist = json.loads(call(f"/history/{pid}")).get(pid)
+        if hist and hist.get("status", {}).get("completed") or hist and hist.get("status", {}).get("status_str") == "error":
+            break
+        time.sleep(2)
+        update(progress=min(0.95, 0.1 + (time.time() - t0) / 600))
+    if hist["status"].get("status_str") == "error":
+        msg = next((m[1].get("exception_message", "") for m in hist["status"].get("messages", []) if m[0] == "execution_error"), "")
+        raise RunError(f"ComfyUI error: {msg.strip()[:300]}")
+    out = OUTPUTS / job["id"]
+    out.mkdir(parents=True, exist_ok=True)
+    outputs = []
+    for node in wf_meta.get("outputs", []):
+        files = [f for v in hist["outputs"].get(node, {}).values() if isinstance(v, list) for f in v if isinstance(f, dict) and "filename" in f]
+        for i, f in enumerate(files):
+            base_name = f"{node.replace(':', '_')}_{i}_{Path(f['filename']).name}"
+            q = urllib.parse.urlencode({"filename": f["filename"], "subfolder": f.get("subfolder", ""), "type": f.get("type", "output")})
+            (out / base_name).write_bytes(call(f"/view?{q}"))
+            outputs.append({"url": f"/outputs/{job['id']}/{base_name}", "kind": _kind(base_name), "name": base_name, "mock": False})
+    return outputs
+
+
 def run_comfy(feature: dict, job: dict, update: Update) -> list[dict]:
     wf_meta = feature.get("workflow") or {}
     if not feature["runnable"]:
         raise RunError(f"{feature['id']} has no workflow yet (status: {feature['status']}). Use mock mode.")
+    base = os.environ.get("COMFY_BASE_URL", "")
+    if _self_hosted(base):
+        return run_comfyui(base, feature, job, update)
     try:
         from comfy_sdk import Comfy  # lazy: only needed for real runs
     except ImportError as e:
@@ -158,8 +235,5 @@ def run_comfy(feature: dict, job: dict, update: Update) -> list[dict]:
             # SaveVideo/SaveImage names can carry a subfolder ("video/LTX_00001_.mp4"); flatten it and keep names unique per node
             base = f"{node.replace(':', '_')}_{i}_{Path(str(o.name)).name}"
             o.to_file(str(out / base))
-            ext = Path(base).suffix.lower()
-            kind = ("video" if ext in (".mp4", ".webm", ".mov") else "audio" if ext in (".wav", ".mp3", ".flac", ".ogg")
-                    else "3d" if ext in (".glb", ".gltf") else "image")
-            outputs.append({"url": f"/outputs/{job['id']}/{base}", "kind": kind, "name": base, "mock": False})
+            outputs.append({"url": f"/outputs/{job['id']}/{base}", "kind": _kind(base), "name": base, "mock": False})
     return outputs

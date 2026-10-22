@@ -71,6 +71,6 @@
       "examples/char_b.png"
     ]
   },
-  "group": "Text to image",
-  "plan_name": "Soul 2.0 photoreal text->image"
+  "plan_name": "Soul 2.0 photoreal text->image",
+  "group": "Text to image"
 }

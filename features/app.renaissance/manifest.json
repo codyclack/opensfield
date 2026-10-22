@@ -38,7 +38,7 @@
         "node": "4",
         "field": "prompt",
         "required": false,
-        "prefix": "Turn this person into a Renaissance oil portrait hanging in a classical gallery, ornate gold frame, museum visitors in the foreground. ",
+        "prefix": "Repaint this photo as an old-master oil painting of the same person: keep their face, hair, pose and clothes, add soft chiaroscuro light, visible brushwork and fine craquelure, and put the canvas in an ornate gold frame on a dark wall. ",
         "clear_blank": false
       },
       {

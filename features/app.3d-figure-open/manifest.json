@@ -36,7 +36,23 @@
         "node": "170:151",
         "field": "prompt",
         "required": false,
-        "prefix": "Turn this person into a detailed collectible figurine on a display base next to its retail box, studio product photo, painted plastic texture. "
+        "prefix": "Turn this person into a detailed hand-painted collectible figurine standing on a round black display base, studio product photo on a plain grey backdrop, painted resin texture, no packaging, no text. "
+      },
+      {
+        "name": "speed",
+        "label": "Speed",
+        "kind": "choice",
+        "node": "170:168",
+        "field": "value",
+        "options": [
+          "Fast",
+          "Quality"
+        ],
+        "default": "Fast",
+        "values": {
+          "Fast": true,
+          "Quality": false
+        }
       },
       {
         "name": "seed",

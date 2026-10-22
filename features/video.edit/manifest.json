@@ -68,6 +68,6 @@
       "examples/video_edit_street.mp4"
     ]
   },
-  "group": "Video edit",
-  "plan_name": "Prompt-based video edit"
+  "plan_name": "Prompt-based video edit",
+  "group": "Video edit"
 }
