@@ -1,7 +1,7 @@
 {
   "id": "genjutsu.replace-object",
   "studio": "Genjutsu",
-  "name": "Replace character/object in a video",
+  "name": "Replace",
   "tier": "A",
   "base": [
     "wan_animate2",
@@ -97,5 +97,6 @@
       "examples/replace_character_a.mp4",
       "examples/replace_character_b.mp4"
     ]
-  }
+  },
+  "plan_name": "Replace character/object in a video"
 }

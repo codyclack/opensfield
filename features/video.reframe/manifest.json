@@ -1,7 +1,7 @@
 {
   "id": "video.reframe",
   "studio": "Video tools",
-  "name": "Reframe video (9:16 etc.)",
+  "name": "Reframe Video",
   "tier": "B",
   "base": [
     "matte",
@@ -80,5 +80,6 @@
       "examples/video_reframe_916.mp4",
       "examples/driving_dance.mp4"
     ]
-  }
+  },
+  "plan_name": "Reframe video (9:16 etc.)"
 }

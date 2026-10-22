@@ -1,7 +1,7 @@
 {
   "id": "image.t2i-open",
   "studio": "Image models",
-  "name": "Open text->image (Flux 3/2, Z-Image, Qwen-Image)",
+  "name": "Create Image (open)",
   "tier": "A",
   "base": [
     "t2i"
@@ -69,5 +69,6 @@
       "examples/t2i_flux3_sneakers.png"
     ]
   },
-  "group": "Text to image"
+  "group": "Text to image",
+  "plan_name": "Open text->image (Flux 3/2, Z-Image, Qwen-Image)"
 }

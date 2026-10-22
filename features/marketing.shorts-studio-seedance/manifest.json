@@ -1,7 +1,7 @@
 {
   "id": "marketing.shorts-studio-seedance",
   "studio": "Marketing",
-  "name": "Shorts studio sessions/presets",
+  "name": "Shorts Studio",
   "tier": "B",
   "base": [
     "planner_llm",
@@ -107,6 +107,7 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Shorts studio sessions/presets",
-  "default": true
+  "group": "Shorts Studio",
+  "default": true,
+  "plan_name": "Shorts studio sessions/presets"
 }

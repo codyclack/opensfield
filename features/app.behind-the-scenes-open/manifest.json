@@ -1,0 +1,64 @@
+{
+  "studio": "Apps",
+  "name": "Behind the Scenes",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "higgsfield.ai/apps/behind-the-scenes",
+  "count": 1,
+  "status": "built",
+  "app": {
+    "cat": "Professional",
+    "desc": "Turn photos into behind-the-scenes shots",
+    "tag": null,
+    "slug": "behind-the-scenes"
+  },
+  "id": "app.behind-the-scenes-open",
+  "track": "open",
+  "partner": [],
+  "note": "Open weights (Qwen-Image-Edit 2511).",
+  "workflow": {
+    "template": "image_qwen_image_edit_2511_int8",
+    "api": "features/image.edit-open/workflow_api.json",
+    "ui": "features/image.edit-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Your photo",
+        "kind": "image",
+        "node": "41",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "170:151",
+        "field": "prompt",
+        "required": false,
+        "prefix": "Show this exact scene as a behind-the-scenes photo from a film set: the same subject in the middle, with crew, cameras on dollies, light stands, boom microphones and cables around them, candid documentary style. "
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "170:169",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "195"
+    ],
+    "models": [
+      "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "qwen_image_edit_2511_int8_convrot.safetensors",
+      "qwen_image_vae.safetensors"
+    ],
+    "reuses": "image.edit-open",
+    "output_kind": "image",
+    "verified": false
+  },
+  "group": "Behind the Scenes"
+}

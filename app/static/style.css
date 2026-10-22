@@ -541,3 +541,23 @@ body.cinema-mode .canvas { padding: 0; background-image: none; background-color:
 .utable { width: 100%; border-collapse: collapse; font-size: 13px; }
 .utable th, .utable td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; }
 .utable th { color: var(--muted); font-weight: 600; } .utable a { color: var(--accent); text-decoration: none; }
+
+/* ---------- Apps (higgsfield.ai/apps) ---------- */
+.appshero { padding: 26px 0 8px; } .appshero h1 { margin: 0 0 10px; font: 700 clamp(28px, 4vw, 52px)/1.04 var(--display); } .appshero h1 span { color: var(--accent); }
+.appshero p { margin: 0 0 18px; color: var(--muted); max-width: 70ch; }
+.apptabs { margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+.apptabs a[aria-selected="true"] { color: var(--text); box-shadow: inset 0 -2px var(--text); border-radius: 0; }
+.strip.apps .appcard { flex: 0 0 230px; scroll-snap-align: start; }
+.appgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px 14px; }
+.appcard { display: grid; gap: 4px; align-content: start; text-decoration: none; }
+.appart { position: relative; display: grid; place-items: center; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 16px; border: 1px solid var(--line);
+  background: radial-gradient(circle at 70% 20%, hsl(var(--h) 85% 60% / .45), transparent 55%), linear-gradient(150deg, hsl(var(--h) 45% 22%), hsl(calc(var(--h) + 60) 50% 8%)); }
+.appart .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.appglyph { font: 700 64px var(--display); color: rgba(255, 255, 255, .85); text-shadow: 0 6px 30px rgba(0, 0, 0, .5); }
+.appart .tag { position: absolute; top: 10px; left: 10px; }
+.appkind { position: absolute; right: 10px; bottom: 10px; padding: 3px 8px; border-radius: 999px; background: rgba(0, 0, 0, .55); font: 700 9px var(--display); letter-spacing: .08em; }
+.appcard:hover .appart { border-color: var(--accent); }
+.appcard b { margin-top: 6px; font-size: 14px; } .appcard small { color: var(--muted); font-size: 12px; line-height: 1.35; }
+.trynow { justify-self: start; margin-top: 4px; padding: 5px 12px; border-radius: 8px; background: #222228; font-weight: 700; font-size: 12px; }
+.appcard:hover .trynow { background: var(--accent); color: var(--ink); }
+.tag.t-pro { background: #fff; color: #111; } .tag.t-trending { background: #ff7a59; color: #111; }

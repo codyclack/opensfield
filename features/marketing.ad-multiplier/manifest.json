@@ -1,7 +1,7 @@
 {
   "id": "marketing.ad-multiplier",
   "studio": "Marketing",
-  "name": "Multiply one ad into variants (edit / recreate)",
+  "name": "Ad Multiplier",
   "tier": "B",
   "base": [
     "wan_animate2",
@@ -79,5 +79,6 @@
     "examples": [
       "examples/ad_variant_new_bg.png"
     ]
-  }
+  },
+  "plan_name": "Multiply one ad into variants (edit / recreate)"
 }

@@ -1,7 +1,7 @@
 {
   "id": "image.decompose",
   "studio": "Image tools",
-  "name": "Decompose image into layers",
+  "name": "Layers",
   "tier": "B",
   "base": [
     "ref_edit"
@@ -70,5 +70,6 @@
       "examples/layers_1.png",
       "examples/layers_2.png"
     ]
-  }
+  },
+  "plan_name": "Decompose image into layers"
 }

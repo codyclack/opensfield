@@ -1,7 +1,7 @@
 {
   "id": "marketing.video-edit-montage",
   "studio": "Marketing",
-  "name": "Montage / Higgsedit-style edits",
+  "name": "Montage",
   "tier": "C",
   "base": [
     "stitch",
@@ -104,5 +104,6 @@
     "examples": [
       "examples/fx_montage.mp4"
     ]
-  }
+  },
+  "plan_name": "Montage / Higgsedit-style edits"
 }

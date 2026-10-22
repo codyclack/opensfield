@@ -16,6 +16,8 @@ persistent **Generations** history (download, favorite, save as element, reuse s
 Preset video tools (viral effects, UGC, click-to-ad, product motion, multishot, shorts, AI influencer) default to Seedance 2.5 with the
 open LTX-2.5 version one click away.
 
+**Apps:** all 83 one-click apps from higgsfield.ai/apps (Skibidi left out: someone else's IP) in the same 8 categories: Professional, Enhance & Style, Face & Identity, Video Editing, Ads & Products, Games & Characters, Extras and Trending Templates. Photo apps run on Nano Banana 2.1 with a Qwen-Image-Edit open version, video apps on Seedance 2.5 with an LTX-2.5 open version, and the rest open existing tools (Angles, Expand, Transitions, Recast, Breakdown, Click to Ad...). The list and prompts live in `registry/apps.py`.
+
 ## Status (honest summary)
 - **Catalog: 146 tools** (Higgsfield modules plus one tool per partner model). **83 have real example outputs** (live runs on Comfy Cloud, or local CPU tools run on this machine), **63 are wired from official Comfy templates but not yet run** (marked untested in the app), **none are left unbuilt**. Earlier summary: 48 of the original 72 modules were built in [`examples/`](examples/README.md), using open-weight models
   only: 23 are separate ComfyUI workflows (video outpainting, Chatterbox text-to-speech/voice clone, motion transfer, character replacement, text/image-to-video, first/last frame,

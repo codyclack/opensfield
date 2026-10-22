@@ -1,7 +1,7 @@
 {
   "id": "matchcut.retro-fx",
   "studio": "Match Cut + Tracelab",
-  "name": "CRT / CRT-glitch / VHS / glitch / Nokia / retropop / night-vision",
+  "name": "Retro FX",
   "tier": "B",
   "base": [
     "postfx"
@@ -50,5 +50,6 @@
       "examples/fx_vhs.mp4",
       "examples/fx_nokia.mp4"
     ]
-  }
+  },
+  "plan_name": "CRT / CRT-glitch / VHS / glitch / Nokia / retropop / night-vision"
 }

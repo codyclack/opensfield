@@ -1,7 +1,7 @@
 {
   "id": "genjutsu.styles",
   "studio": "Genjutsu",
-  "name": "Restyle a video, keep its motion",
+  "name": "Restyle Video",
   "tier": "B",
   "base": [
     "ltx23_ic_lora",
@@ -60,5 +60,6 @@
       "examples/style_yarn.mp4",
       "examples/style_yarn_frame.png"
     ]
-  }
+  },
+  "plan_name": "Restyle a video, keep its motion"
 }

@@ -1,7 +1,7 @@
 {
   "id": "matchcut.tracelab",
   "studio": "Match Cut + Tracelab",
-  "name": "Tracelab: track objects/faces + HUD overlays",
+  "name": "Tracelab",
   "tier": "A",
   "base": [
     "moondream_hud"
@@ -33,5 +33,6 @@
     "examples": [
       "examples/fx_tracelab.mp4"
     ]
-  }
+  },
+  "plan_name": "Tracelab: track objects/faces + HUD overlays"
 }

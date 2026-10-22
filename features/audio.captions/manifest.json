@@ -1,7 +1,7 @@
 {
   "id": "audio.captions",
   "studio": "Audio",
-  "name": "Burned captions",
+  "name": "Captions",
   "tier": "B",
   "base": [
     "tts_audio",
@@ -41,5 +41,6 @@
     "examples": [
       "examples/fx_captions.mp4"
     ]
-  }
+  },
+  "plan_name": "Burned captions"
 }

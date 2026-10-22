@@ -1,7 +1,7 @@
 {
   "id": "scene3d.autosprite",
   "studio": "Reshoot",
-  "name": "Sprite sheet generation",
+  "name": "Sprite Sheets",
   "tier": "B",
   "base": [
     "t2i"
@@ -72,5 +72,6 @@
     "examples": [
       "examples/sprite_sheet.png"
     ]
-  }
+  },
+  "plan_name": "Sprite sheet generation"
 }

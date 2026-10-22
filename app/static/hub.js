@@ -144,3 +144,37 @@ function renderUsage() {
     siteFooter());
   document.title = "Credits & usage · OpenSfield";
 }
+
+/* Apps (higgsfield.ai/apps): one-click effects by category, each opening the tool that runs it. */
+const appSlug = (c) => c.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
+async function loadApps() {
+  if (!state.apps) state.apps = await api("/api/apps");
+  return state.apps;
+}
+function appCard(a) {
+  const f = state.byId[a.feature];
+  const cover = (a.examples || []).find((u) => isVideo(u) || isImage(u)) || (f && (f.examples || []).find((u) => isVideo(u) || isImage(u)));
+  return hoverPlay(h("a", { class: "appcard", href: `#/f/${a.feature}`, style: `--h:${hash(a.slug) % 360}`,
+    onclick: () => { if (Object.keys(a.preset || {}).length) state.prefill = { feature_id: a.feature, inputs: a.preset }; } },
+    h("span", { class: "appart" }, cover ? exampleEl(cover, "bg") : h("span", { class: "appglyph" }, a.name.slice(0, 1)),
+      a.tag && h("span", { class: `tag t-${a.tag.toLowerCase()}` }, a.tag),
+      h("span", { class: "appkind" }, a.output_kind === "video" ? "▶ VIDEO" : a.output_kind === "image" ? "▣ IMAGE" : a.output_kind.toUpperCase())),
+    h("b", {}, a.name), h("small", {}, a.desc), h("span", { class: "trynow" }, "Try now")));
+}
+async function renderApps(cat) {
+  const main = $("#main");
+  let data;
+  try { data = await loadApps(); } catch (e) { main.replaceChildren(h("p", { class: "err" }, e.message)); return; }
+  const current = data.categories.find((c) => appSlug(c) === cat);
+  const tabs = h("div", { class: "wtabs apptabs", role: "tablist" }, h("a", { role: "tab", href: "#/apps", "aria-selected": String(!current) }, "All"),
+    ...data.categories.map((c) => h("a", { role: "tab", href: `#/apps/${appSlug(c)}`, "aria-selected": String(current === c) }, c)));
+  const rows = (current ? [current] : data.categories).map((c) => {
+    const list = data.apps.filter((a) => a.cat === c);
+    return h("section", { class: "row" }, h("div", { class: "rowhead" }, h("h3", {}, c), !current && h("a", { class: "more", href: `#/apps/${appSlug(c)}` }, `See all ${list.length} →`)),
+      h("div", { class: current ? "appgrid" : "strip apps" }, (current ? list : list.slice(0, 8)).map(appCard)));
+  });
+  main.replaceChildren(h("div", { class: "appshero" }, h("h1", {}, "WELCOME TO ", h("span", {}, "OPENSFIELD APPS")),
+    h("p", {}, `${data.apps.length} one-click effects that turn any photo or clip into ads, viral trends and art. Each runs on a partner model by default with an open-weights version in the model picker.`)),
+  tabs, ...rows, siteFooter());
+  document.title = `${current || "Apps"} · OpenSfield`;
+}

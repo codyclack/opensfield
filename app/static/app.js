@@ -74,7 +74,7 @@ function preferred(group) {
 }
 function studios() {
   const seen = new Map();
-  for (const f of state.feats) seen.set(f.studio, (seen.get(f.studio) || 0) + 1);
+  for (const f of state.feats) if (f.studio !== "Apps") seen.set(f.studio, (seen.get(f.studio) || 0) + 1);
   const known = state.cfg.studios.filter((s) => seen.has(s));
   return [...known, ...[...seen.keys()].filter((s) => !known.includes(s))];
 }
@@ -134,12 +134,14 @@ function menuFor(kind, label) {
     col("Voice models", modelLinks("Text to speech", 6))];
   if (kind === "studio") {
     const list = collapse(state.feats.filter((f) => f.studio === label));
-    return [col(label, list.slice(0, 9).map(({ f, n }) => menuLink(`#/f/${f.id}`, n > 1 && f.group ? f.group : f.name, n > 1 ? `${n} models` : statusLabel(f)))),
-      list.length > 9 && col("More", list.slice(9, 18).map(({ f, n }) => menuLink(`#/f/${f.id}`, n > 1 && f.group ? f.group : f.name, statusLabel(f))))];
+    return [col(label, list.slice(0, 9).map(({ f, n }) => menuLink(`#/f/${f.id}`, n > 1 && f.group ? f.group : f.name, n > 1 ? `${n} models` : (f.engine || "")))),
+      list.length > 9 && col("More", list.slice(9, 18).map(({ f, n }) => menuLink(`#/f/${f.id}`, n > 1 && f.group ? f.group : f.name, f.engine || "")))];
   }
   if (kind === "apps") {
+    const cats = ["Professional", "Enhance & Style", "Face & Identity", "Video Editing", "Ads & Products", "Games & Characters", "Extras", "Trending Templates"];
     const all = studios().map((s) => menuLink(`#/s/${encodeURIComponent(s)}`, s, `${collapse(state.feats.filter((f) => f.studio === s)).length} tools`));
-    return [col("Studios", all.slice(0, 7)), col(" ", all.slice(7)), col("Library", [menuLink("#/cinema", "Cinema Studio", "Direct a shot"), menuLink("#/apps", "All apps"), menuLink("#/assets", "My elements"), menuLink("#/generations", "History"), menuLink("#/community", "Community"), menuLink("#/blog", "Learn", "Guides and tutorials"), menuLink("#/usage", "Credits & usage")])];
+    return [col("Apps", [menuLink("#/apps", "All apps", "One-click effects"), ...cats.map((c) => menuLink(`#/apps/${c.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "")}`, c))]),
+      col("Studios", all.slice(0, 8)), col("Library", [menuLink("#/cinema", "Cinema Studio", "Direct a shot"), menuLink("#/tools", "All tools"), menuLink("#/assets", "My elements"), menuLink("#/generations", "History"), menuLink("#/community", "Community"), menuLink("#/blog", "Learn", "Guides and tutorials"), menuLink("#/usage", "Credits & usage")])];
   }
   return [];
 }
@@ -165,14 +167,13 @@ function renderChrome() {
 function card(f, n = 1) {
   const cover = (f.examples || []).find((u) => isVideo(u) || isImage(u));
   const title = n > 2 && f.group ? f.group : f.group && n === 2 ? f.group : f.name;
-  const sub = n > 1 ? `${n} models · ${short(f)}` : f.engine || f.higgsfield;
+  const sub = n > 1 ? `${n} models · ${short(f)}` : f.engine || f.studio;
   return hoverPlay(h("a", { class: `card${cover ? "" : " plain"}`, href: `#/f/${f.id}`, style: `--h:${hash(f.id) % 360}` },
     cover && exampleEl(cover, "bg"),
-    h("span", { class: `pill ${f.status === "tested" ? "" : "dim"}` }, statusLabel(f)),
     h("span", { class: "ckind" }, f.output_kind.toUpperCase() + (n > 1 ? "" : isOpen(f) ? " · OPEN" : " · API")),
     h("span", { class: "ctext" }, h("b", {}, title), h("small", {}, sub))));
 }
-const FILTERS = [["all", "All"], ["ready", "Ready"], ["image", "Image"], ["video", "Video"], ["audio", "Audio"], ["3d", "3D"]];
+const FILTERS = [["all", "All"], ["image", "Image"], ["video", "Video"], ["audio", "Audio"], ["3d", "3D"]];
 const matches = (f) => state.filter === "all" || (state.filter === "ready" ? f.status === "tested" : f.output_kind === state.filter);
 function filterBar() {
   return h("div", { class: "filters", role: "group", "aria-label": "Filter tools" },
@@ -198,9 +199,17 @@ function explore() {
   const promoArt = exOf("marketing.click-to-ad") || exOf("cinema.camera-rig");
   const promo = h("div", { class: "promo" }, promoArt && exampleEl(promoArt, "bg", { autoplay: true }),
     h("div", { class: "ptext2" }, h("h2", {}, "Every Higgsfield tool,", h("br"), h("span", {}, "on ComfyUI")),
-      h("ul", {}, h("li", {}, "Seedance 2.5, Kling, Nano Banana, GPT Image"), h("li", {}, "Open-weight LTX, Wan and Qwen workflows"), h("li", {}, `${ready} tools run end to end`)),
+      h("ul", {}, h("li", {}, "Seedance 2.5, Kling, Nano Banana, GPT Image"), h("li", {}, "Open-weight LTX, Wan and Qwen workflows"), h("li", {}, `${state.feats.length} tools and apps`)),
       h("a", { class: "go", href: "#/w/video/0" }, "Start creating")));
   return [banners, h("section", { class: "promogrid" }, promo, h("div", { class: "ftiles" }, tiles))];
+}
+function appsRow() {
+  const row = h("section", { class: "row" }, h("div", { class: "rowhead" }, h("h3", {}, "Apps"), h("a", { class: "more", href: "#/apps" }, "See all apps →")), h("div", { class: "strip apps" }));
+  loadApps().then((d) => {
+    const pick = ["transitions", "angles", "relight", "face-swap", "bullet-time-white", "game-dump", "clipcut", "billboard", "3d-figure", "cloud-surf"];
+    row.querySelector(".strip").replaceChildren(...pick.map((s) => d.apps.find((a) => a.slug === s)).filter(Boolean).map(appCard));
+  }).catch(() => row.remove());
+  return row;
 }
 function topModels() {
   const ids = ["model.seedance2-5-i2v-1080p", "model.seedance2-5-t2v-1080p", "model.kling-v3-video", "model.minimax-h3-max-i2v", "model.wan2-6-i2v",
@@ -225,7 +234,7 @@ function renderGrid(mode, studio) {
         h("div", { class: "rowhead" }, h("h3", {}, s), h("a", { class: "more", href: `#/s/${encodeURIComponent(s)}` }, `See all ${list.length} →`)),
         h("div", { class: "strip" }, list.map(({ f, n }) => card(f, n))));
     });
-    body = mode === "apps" ? [marker("Apps"), filterBar(), ...rows] : [...explore(), topModels(), filterBar(), ...rows];
+    body = mode === "apps" ? [marker("All tools"), filterBar(), ...rows] : [...explore(), appsRow(), topModels(), filterBar(), ...rows];
   }
   $("#main").replaceChildren(...body.filter(Boolean), siteFooter());
 }
@@ -354,7 +363,7 @@ function openPicker(anchor, f, onPick) {
       onclick: () => { pop.remove(); onPick(m); } },
       h("span", { class: "mico", style: `--h:${hash(m.id) % 360}` }, modelName(m).slice(0, 2).toUpperCase()),
       h("span", { class: "ptext" }, h("b", {}, modelName(m), m.default && h("span", { class: "tag t-top" }, "TOP"), isOpen(m) && h("span", { class: "tag t-open" }, "OPEN")),
-        h("small", {}, [m.engine || (isOpen(m) ? "open weights" : "partner API"), m.cost ? `✦ ${m.cost}` : null, m.status === "tested" ? null : "untested"].filter(Boolean).join("  ·  "))),
+        h("small", {}, [m.engine || (isOpen(m) ? "open weights" : "partner API"), m.cost ? `✦ ${m.cost}` : null].filter(Boolean).join("  ·  "))),
       m.id === f.id && h("span", { class: "check" }, "✓"))));
   };
   search.addEventListener("input", draw);
@@ -467,7 +476,7 @@ function renderGallery() {
   box.replaceChildren(
     ...howto,
     ...(mine.length ? mine.map(genCard) : []),
-    ...(!mine.length && ex.length ? [h("h4", {}, g.exTitle || "Example renders (real runs through this app)"),
+    ...(!mine.length && ex.length ? [h("h4", {}, g.exTitle || "Examples"),
       ...ex.map((u) => h("figure", { class: "gcard ex" }, exampleEl(u, "gmedia", { controls: true })))] : []),
     ...(!mine.length && !ex.length ? [h("div", { class: "gempty" }, h("b", {}, "Nothing here yet"), h("small", {}, g.empty || "Your generations appear here."))] : []));
 }
@@ -488,8 +497,8 @@ function renderTool(f) {
     h("a", { class: "back", href: `#/s/${encodeURIComponent(f.studio)}` }, `← ${f.studio}`),
     h("div", { class: "seg", role: "group", "aria-label": "View" },
       ["studio", "graph"].map((v) => h("button", { type: "button", "aria-pressed": String(state.view === v), onclick: () => { state.view = v; route(); } }, v === "studio" ? "Studio" : "Node graph"))));
-  const sub = h("div", { class: "sub" }, f.engine && badge(f.engine, "A"), badge(statusLabel(f)), badge(isOpen(f) ? "open weights" : "partner", isOpen(f) ? "B" : "partner"),
-    f.cost && badge(`✦ ${f.cost} credits`), h("span", {}, f.higgsfield));
+  const sub = h("div", { class: "sub" }, f.engine && badge(f.engine, "A"), badge(isOpen(f) ? "open weights" : "partner", isOpen(f) ? "B" : "partner"),
+    f.cost && badge(`✦ ${f.cost} credits`));
   if (state.obs) { state.obs.disconnect(); state.obs = null; }
   state.gallery = { filter: (j) => j.feature_id === f.id || (f.group && state.byId[j.feature_id]?.group === f.group), examples: f.examples,
     empty: "Run this tool to see results here." };
@@ -529,7 +538,7 @@ function renderWorkspace(key, tabIdx) {
         ["GET IMAGES", "Results land in History: download, save to Assets, or reuse", "examples/models/nano-banana-2-1-t2i.png"]] },
   };
   state.gallery = { howto: HOWTO[ws.kind], filter: (j) => (j.kind || state.byId[j.feature_id]?.output_kind) === ws.kind, examples: f.examples,
-    exTitle: `Made with ${short(f)} (real runs through this app)`, empty: `Your ${ws.kind} generations appear here.` };
+    exTitle: `Made with ${short(f)}`, empty: `Your ${ws.kind} generations appear here.` };
   if (ws.layout === "panel") {
     $("#main").replaceChildren(h("div", { class: "create ws" }, panelComposer(f, vals, onPick, tabs),
       h("section", { class: "results", "aria-label": "Generations" }, galleryHead("History"), h("div", { id: "gallery" }))));
@@ -777,7 +786,8 @@ function route() {
   if (p === "f" && state.byId[a]) { document.title = `${state.byId[a].name} · OpenSfield`; renderTool(state.byId[a]); }
   else if (p === "w" && WORKSPACES[a]) renderWorkspace(a, Number(b) || 0);
   else if (p === "s" && a) renderGrid("studio", a);
-  else if (p === "apps") renderGrid("apps");
+  else if (p === "apps") renderApps(a);
+  else if (p === "tools") renderGrid("apps");
   else if (p === "assets") renderAssets();
   else if (p === "cinema") renderCinema(a, b);
   else if (p === "blog") renderBlog(a);

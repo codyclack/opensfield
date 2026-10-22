@@ -1,7 +1,7 @@
 {
   "id": "soul.styles",
   "studio": "Soul",
-  "name": "Soul style presets",
+  "name": "Soul Styles",
   "tier": "B",
   "base": [
     "t2i",
@@ -76,5 +76,6 @@
     "examples": [
       "examples/style_reference_out.png"
     ]
-  }
+  },
+  "plan_name": "Soul style presets"
 }

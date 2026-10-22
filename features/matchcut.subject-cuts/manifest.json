@@ -1,7 +1,7 @@
 {
   "id": "matchcut.subject-cuts",
   "studio": "Match Cut + Tracelab",
-  "name": "Face/search/logo/product/sticker/sphere/lens cuts",
+  "name": "Subject Cuts",
   "tier": "B",
   "base": [
     "matte",
@@ -108,5 +108,6 @@
       "examples/fx_facecut.mp4",
       "examples/fx_stickercut.mp4"
     ]
-  }
+  },
+  "plan_name": "Face/search/logo/product/sticker/sphere/lens cuts"
 }

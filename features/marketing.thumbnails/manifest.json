@@ -1,7 +1,7 @@
 {
   "id": "marketing.thumbnails",
   "studio": "Marketing",
-  "name": "YouTube/IG thumbnails",
+  "name": "Thumbnails",
   "tier": "B",
   "base": [
     "t2i",
@@ -88,5 +88,6 @@
     "examples": [
       "examples/thumbnail_hero.png"
     ]
-  }
+  },
+  "plan_name": "YouTube/IG thumbnails"
 }

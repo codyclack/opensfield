@@ -1,7 +1,7 @@
 {
   "id": "marketing.click-to-ad-seedance",
   "studio": "Marketing",
-  "name": "Product URL -> video ad",
+  "name": "Click to Ad",
   "tier": "B",
   "base": [
     "planner_llm",
@@ -117,6 +117,7 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Product URL -> video ad",
-  "default": true
+  "group": "Click to Ad",
+  "default": true,
+  "plan_name": "Product URL -> video ad"
 }

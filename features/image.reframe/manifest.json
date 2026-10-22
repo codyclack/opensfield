@@ -1,7 +1,7 @@
 {
   "id": "image.reframe",
   "studio": "Image tools",
-  "name": "Reframe / aspect-ratio change",
+  "name": "Reframe Image",
   "tier": "B",
   "base": [
     "fill"
@@ -103,5 +103,6 @@
     "examples": [
       "examples/image_reframe.png"
     ]
-  }
+  },
+  "plan_name": "Reframe / aspect-ratio change"
 }

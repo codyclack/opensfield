@@ -1,7 +1,7 @@
 {
   "id": "image.edit-open",
   "studio": "Image models",
-  "name": "Open reference edit/compose (Nano Banana-style)",
+  "name": "Edit Image (open)",
   "tier": "A",
   "base": [
     "ref_edit"
@@ -60,5 +60,6 @@
       "examples/image_edit_yellow_hoodie.png"
     ]
   },
-  "group": "Image edit"
+  "group": "Image edit",
+  "plan_name": "Open reference edit/compose (Nano Banana-style)"
 }

@@ -1,7 +1,7 @@
 {
   "id": "image.outpaint",
   "studio": "Image tools",
-  "name": "Outpaint / generative expand",
+  "name": "Expand Image",
   "tier": "B",
   "base": [
     "fill"
@@ -101,5 +101,6 @@
     "examples": [
       "examples/outpaint_out.png"
     ]
-  }
+  },
+  "plan_name": "Outpaint / generative expand"
 }

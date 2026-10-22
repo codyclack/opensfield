@@ -1,7 +1,7 @@
 {
   "id": "soul.cast",
   "studio": "Soul",
-  "name": "Soul Cast: character from reference",
+  "name": "Soul Cast",
   "tier": "B",
   "base": [
     "ref_edit"
@@ -67,5 +67,6 @@
     "examples": [
       "examples/soul_cast.png"
     ]
-  }
+  },
+  "plan_name": "Soul Cast: character from reference"
 }

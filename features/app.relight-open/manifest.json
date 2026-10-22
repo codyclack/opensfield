@@ -1,0 +1,64 @@
+{
+  "studio": "Apps",
+  "name": "Relight",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "higgsfield.ai/apps/relight",
+  "count": 1,
+  "status": "built",
+  "app": {
+    "cat": "Enhance & Style",
+    "desc": "Adjust lighting position, color and brightness",
+    "tag": "PRO",
+    "slug": "relight"
+  },
+  "id": "app.relight-open",
+  "track": "open",
+  "partner": [],
+  "note": "Open weights (Qwen-Image-Edit 2511).",
+  "workflow": {
+    "template": "image_qwen_image_edit_2511_int8",
+    "api": "features/image.edit-open/workflow_api.json",
+    "ui": "features/image.edit-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Your photo",
+        "kind": "image",
+        "node": "41",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Lighting you want (optional, e.g. neon pink from the right)",
+        "kind": "text",
+        "node": "170:151",
+        "field": "prompt",
+        "required": false,
+        "prefix": "Relight this photo with a soft warm key light from the left, a subtle cool rim light from behind and gentle falloff, keep the person and scene exactly the same. "
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "170:169",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "195"
+    ],
+    "models": [
+      "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "qwen_image_edit_2511_int8_convrot.safetensors",
+      "qwen_image_vae.safetensors"
+    ],
+    "reuses": "image.edit-open",
+    "output_kind": "image",
+    "verified": false
+  },
+  "group": "Relight"
+}

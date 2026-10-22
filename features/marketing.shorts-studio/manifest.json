@@ -1,7 +1,7 @@
 {
   "id": "marketing.shorts-studio",
   "studio": "Marketing",
-  "name": "Shorts studio sessions/presets",
+  "name": "Shorts Studio",
   "tier": "B",
   "base": [
     "planner_llm",
@@ -110,5 +110,6 @@
       "examples/shorts_vertical.mp4"
     ]
   },
-  "group": "Shorts studio sessions/presets"
+  "group": "Shorts Studio",
+  "plan_name": "Shorts studio sessions/presets"
 }

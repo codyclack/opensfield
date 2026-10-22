@@ -1,7 +1,7 @@
 {
   "id": "image.inpaint-brush",
   "studio": "Image tools",
-  "name": "Brush inpaint / edit region",
+  "name": "Inpaint",
   "tier": "B",
   "base": [
     "fill"
@@ -57,5 +57,6 @@
     "examples": [
       "examples/inpaint_out.png"
     ]
-  }
+  },
+  "plan_name": "Brush inpaint / edit region"
 }

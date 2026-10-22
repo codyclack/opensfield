@@ -1,0 +1,103 @@
+{
+  "studio": "Apps",
+  "name": "Comic Book",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "higgsfield.ai/apps/comic-book",
+  "count": 1,
+  "status": "built",
+  "app": {
+    "cat": "Trending Templates",
+    "desc": "Your photo as comic book art",
+    "tag": null,
+    "slug": "comic-book"
+  },
+  "id": "app.comic-book",
+  "track": "partner",
+  "partner": [
+    "Nano Banana 2.1"
+  ],
+  "note": "Nano Banana 2.1 through Comfy Cloud API nodes (uses Comfy credits).",
+  "workflow": {
+    "template": "api_nano_banana_2_1_image_edit",
+    "api": "features/model.nano-banana-2-1-image-edit/workflow_api.json",
+    "ui": "features/model.nano-banana-2-1-image-edit/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Your photo",
+        "kind": "image",
+        "node": "6",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "4",
+        "field": "prompt",
+        "required": false,
+        "prefix": "Redraw this photo as a dynamic comic book panel: bold ink lines, halftone shading, speech bubble, vivid flat colors. ",
+        "clear_blank": false
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "4",
+        "field": "model.aspect_ratio",
+        "options": [
+          "auto",
+          "1:1",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:3",
+          "4:5",
+          "5:4",
+          "9:16",
+          "16:9",
+          "21:9",
+          "1:4",
+          "4:1",
+          "8:1",
+          "1:8"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "4",
+        "field": "model.resolution",
+        "options": [
+          "1K",
+          "2K",
+          "4K"
+        ],
+        "default": "1K"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "4",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "9"
+    ],
+    "models": [
+      "api_nano_banana_2_1_image_edit"
+    ],
+    "reuses": "model.nano-banana-2-1-image-edit",
+    "output_kind": "image",
+    "verified": false
+  },
+  "group": "Comic Book",
+  "default": true
+}

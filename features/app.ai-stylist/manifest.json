@@ -1,0 +1,60 @@
+{
+  "studio": "Apps",
+  "name": "AI Stylist",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "higgsfield.ai/apps/ai-stylist",
+  "count": 1,
+  "status": "built",
+  "app": {
+    "cat": "Enhance & Style",
+    "desc": "Your AI fitting room: try anything on",
+    "tag": "NEW",
+    "slug": "ai-stylist"
+  },
+  "id": "app.ai-stylist",
+  "track": "partner",
+  "partner": [],
+  "note": "",
+  "workflow": {
+    "template": "api_kling_vto",
+    "api": "features/model.kling-vto/workflow_api.json",
+    "ui": "features/model.kling-vto/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Your photo",
+        "kind": "image",
+        "node": "2",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "image_2",
+        "label": "Outfit or garment photo",
+        "kind": "image",
+        "node": "3",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "1",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "4"
+    ],
+    "models": [
+      "api_kling_vto"
+    ],
+    "reuses": "model.kling-vto",
+    "output_kind": "image",
+    "verified": false
+  },
+  "group": null
+}

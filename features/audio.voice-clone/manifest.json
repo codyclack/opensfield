@@ -1,7 +1,7 @@
 {
   "id": "audio.voice-clone",
   "studio": "Audio",
-  "name": "Voice clone / create voice",
+  "name": "Voice Clone",
   "tier": "B",
   "base": [
     "tts_audio"
@@ -64,5 +64,6 @@
     "examples": [
       "examples/voice_clone.flac"
     ]
-  }
+  },
+  "plan_name": "Voice clone / create voice"
 }

@@ -1,7 +1,7 @@
 {
   "id": "scene3d.rigging",
   "studio": "Reshoot",
-  "name": "Auto-rig 3D character",
+  "name": "Auto-Rig",
   "tier": "C",
   "base": [],
   "higgsfield": "3d_rigging, meshy_rigging",
@@ -82,5 +82,6 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Auto-rig"
+  "group": "Auto-rig",
+  "plan_name": "Auto-rig 3D character"
 }

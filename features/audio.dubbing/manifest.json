@@ -1,7 +1,7 @@
 {
   "id": "audio.dubbing",
   "studio": "Audio",
-  "name": "AI dubbing / translation",
+  "name": "Dubbing",
   "tier": "B",
   "base": [
     "tts_audio",
@@ -270,5 +270,6 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Dubbing"
+  "group": "Dubbing",
+  "plan_name": "AI dubbing / translation"
 }

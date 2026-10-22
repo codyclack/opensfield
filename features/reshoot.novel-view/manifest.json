@@ -1,7 +1,7 @@
 {
   "id": "reshoot.novel-view",
   "studio": "Reshoot",
-  "name": "Re-shoot a video/shot from any angle",
+  "name": "Reshoot",
   "tier": "A",
   "base": [
     "ref_edit",
@@ -78,5 +78,6 @@
     "examples": [
       "examples/reshoot_over_shoulder.png"
     ]
-  }
+  },
+  "plan_name": "Re-shoot a video/shot from any angle"
 }

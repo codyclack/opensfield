@@ -1,7 +1,7 @@
 {
   "id": "marketing.brand-assets",
   "studio": "Marketing",
-  "name": "Logos, brand kits, mockups",
+  "name": "Brand Kit",
   "tier": "B",
   "base": [
     "t2i",
@@ -87,5 +87,6 @@
     "examples": [
       "examples/brand_logo.png"
     ]
-  }
+  },
+  "plan_name": "Logos, brand kits, mockups"
 }

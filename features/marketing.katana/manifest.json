@@ -1,7 +1,7 @@
 {
   "id": "marketing.katana",
   "studio": "Marketing",
-  "name": "Reference-edit remix (Katana)",
+  "name": "Katana",
   "tier": "C",
   "base": [
     "planner_llm",
@@ -149,5 +149,6 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Katana remix"
+  "group": "Katana remix",
+  "plan_name": "Reference-edit remix (Katana)"
 }

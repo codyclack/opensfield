@@ -1,7 +1,7 @@
 {
   "id": "marketing.ugc-video",
   "studio": "Marketing",
-  "name": "UGC video (review, unboxing, try-on, tutorial, site tour)",
+  "name": "UGC Video",
   "tier": "B",
   "base": [
     "ref_edit",
@@ -120,5 +120,6 @@
       "examples/ugc_review.mp4"
     ]
   },
-  "group": "UGC video (review, unboxing, try-on, tutorial, site tour)"
+  "group": "UGC Video",
+  "plan_name": "UGC video (review, unboxing, try-on, tutorial, site tour)"
 }

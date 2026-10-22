@@ -1,7 +1,7 @@
 {
   "id": "image.bg-remove",
   "studio": "Image tools",
-  "name": "Background remover",
+  "name": "Background Remover",
   "tier": "A",
   "base": [
     "matte"
@@ -40,5 +40,6 @@
       "examples/bg_remove_cutout.png",
       "examples/bg_remove_mask.png"
     ]
-  }
+  },
+  "plan_name": "Background remover"
 }

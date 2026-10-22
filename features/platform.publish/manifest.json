@@ -1,7 +1,7 @@
 {
   "id": "platform.publish",
   "studio": "Platform",
-  "name": "TikTok publishing",
+  "name": "TikTok Export",
   "tier": "C",
   "base": [],
   "higgsfield": "tiktok_*",
@@ -51,5 +51,6 @@
     "examples": [
       "examples/fx_tiktok.mp4"
     ]
-  }
+  },
+  "plan_name": "TikTok publishing"
 }

@@ -212,3 +212,52 @@ for _f in FEATURES:
         _f["cost"] = COSTS[_f["id"]]
     if _f["id"] == "audio.music":
         _f["group"] = "Music"
+
+
+# Higgsfield Apps (registry/apps.py): photo and video apps get a partner version (default) and an open-weights version.
+from registry.apps import APPS as _APPS  # noqa: E402
+
+for _a in _APPS:
+    if _a["mode"] == "tool":
+        continue  # the app is an existing tool; /api/apps points at it
+    _meta = dict(cat=_a["cat"], desc=_a["desc"], tag=_a["tag"], slug=_a["slug"])
+    _base = dict(studio="Apps", name=_a["name"], tier="B", base=[], higgsfield=f"higgsfield.ai/apps/{_a['slug']}", count=1, status="planned", app=_meta)
+    if _a["mode"] == "pair":
+        _track = "partner" if _a["feature"].startswith("model.") else "open"
+        FEATURES.append(dict(_base, id=f"app.{_a['slug']}", track=_track, partner=[], note="", group=None))
+        continue
+    _engine = "Nano Banana 2.1" if _a["mode"] == "image" else "Seedance 2.5"
+    FEATURES.append(dict(_base, id=f"app.{_a['slug']}", track="partner", partner=[_engine], group=_a["name"], default=True,
+                         note=f"{_engine} through Comfy Cloud API nodes (uses Comfy credits)."))
+    FEATURES.append(dict(_base, id=f"app.{_a['slug']}-open", track="open", partner=[], group=_a["name"],
+                         note="Open weights (Qwen-Image-Edit 2511)." if _a["mode"] == "image" else "Open weights (LTX-2.5)."))
+
+
+# Product names shown in the app (the descriptive planning names above stay in COVERAGE.md).
+DISPLAY = {
+    "genjutsu.motion-control": "Motion Control", "genjutsu.replace-object": "Replace", "genjutsu.styles": "Restyle Video", "genjutsu.motion-gallery": "Motion Gallery",
+    "cinema.director": "AI Director", "cinema.camera-rig": "Camera Controls", "cinema.multishot": "Multi-shot", "cinema.first-last-frame": "First & Last Frame",
+    "cinema.draw-to-video": "Draw to Video", "cinema.extend": "Extend Video", "reshoot.novel-view": "Reshoot", "scene3d.angles": "Angles",
+    "scene3d.image-to-3d": "Image to 3D", "scene3d.rigging": "Auto-Rig", "scene3d.autosprite": "Sprite Sheets", "viral.effects": "Viral Effects",
+    "soul.t2i": "Soul 2.0", "soul.cinematic": "Soul Cinema", "soul.cast": "Soul Cast", "soul.location": "Soul Location", "soul.id": "Soul ID",
+    "soul.styles": "Soul Styles", "soul.character-sheet": "Character Sheet", "image.t2i-open": "Create Image (open)", "image.edit-open": "Edit Image (open)",
+    "image.bg-remove": "Background Remover", "image.outpaint": "Expand Image", "image.upscale": "Upscale", "image.decompose": "Layers",
+    "image.reframe": "Reframe Image", "image.inpaint-brush": "Inpaint", "video.upscale": "Video Upscale", "video.deflicker": "Deflicker",
+    "video.bg-remove": "Video Background Remover", "video.reframe": "Reframe Video", "video.clipify": "Clipify", "video.lipsync": "Lipsync",
+    "video.edit": "Edit Video", "video.t2v-i2v-open": "Create Video (open)", "audio.tts": "Text to Speech", "audio.voice-clone": "Voice Clone",
+    "audio.voice-change": "Voice Changer", "audio.dubbing": "Dubbing", "audio.music": "Music", "audio.sfx": "Sound Effects", "audio.narration": "Narration",
+    "audio.captions": "Captions", "marketing.click-to-ad": "Click to Ad", "marketing.ugc-video": "UGC Video", "marketing.ads-studio": "Ads Studio",
+    "marketing.product-photoshoot": "Product Photoshoot", "marketing.thumbnails": "Thumbnails", "marketing.brand-assets": "Brand Kit",
+    "marketing.ad-multiplier": "Ad Multiplier", "marketing.katana": "Katana", "marketing.faceless-video": "Faceless Video", "marketing.shorts-studio": "Shorts Studio",
+    "marketing.ai-influencer": "AI Influencer", "marketing.studio-presets": "Product Motion", "marketing.video-edit-montage": "Montage",
+    "matchcut.tracelab": "Tracelab", "matchcut.thermal": "Thermal", "matchcut.retro-fx": "Retro FX", "matchcut.subject-cuts": "Subject Cuts",
+    "matchcut.text-motion": "Text Motion", "matchcut.render": "Match Cut Reel", "platform.website-builder": "Website Builder", "platform.publish": "TikTok Export",
+    "platform.virality": "Virality Predictor", "platform.billing-community": "Credits & Usage",
+}
+for _f in FEATURES:
+    _new = DISPLAY.get(_f["id"].removesuffix("-seedance"))
+    if _new:
+        if _f.get("group") == _f["name"]:
+            _f["group"] = _new
+        _f.setdefault("plan_name", _f["name"])
+        _f["name"] = _new

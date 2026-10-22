@@ -1,7 +1,7 @@
 {
   "id": "audio.voice-change",
   "studio": "Audio",
-  "name": "Voice change",
+  "name": "Voice Changer",
   "tier": "B",
   "base": [
     "tts_audio"
@@ -89,5 +89,6 @@
     "output_kind": "audio",
     "verified": false
   },
-  "group": "Voice change"
+  "group": "Voice Changer",
+  "plan_name": "Voice change"
 }

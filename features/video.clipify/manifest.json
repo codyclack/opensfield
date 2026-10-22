@@ -1,7 +1,7 @@
 {
   "id": "video.clipify",
   "studio": "Video tools",
-  "name": "Long video -> viral clips",
+  "name": "Clipify",
   "tier": "B",
   "base": [
     "tts_audio",
@@ -44,5 +44,6 @@
     "examples": [
       "examples/fx_clipify.mp4"
     ]
-  }
+  },
+  "plan_name": "Long video -> viral clips"
 }

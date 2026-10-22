@@ -1,7 +1,7 @@
 {
   "id": "cinema.multishot",
   "studio": "Cinema Studio",
-  "name": "Multi-shot sequence + stitch",
+  "name": "Multi-shot",
   "tier": "A",
   "base": [
     "ltx25_i2v",
@@ -101,5 +101,6 @@
       "examples/multishot.mp4"
     ]
   },
-  "group": "Multi-shot sequence + stitch"
+  "group": "Multi-shot",
+  "plan_name": "Multi-shot sequence + stitch"
 }

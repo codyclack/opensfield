@@ -1,7 +1,7 @@
 {
   "id": "soul.cinematic",
   "studio": "Soul",
-  "name": "Soul Cinematic / Cinema stills",
+  "name": "Soul Cinema",
   "tier": "A",
   "base": [
     "t2i"
@@ -69,5 +69,6 @@
       "examples/cinematic_krea.png"
     ]
   },
-  "group": "Text to image"
+  "group": "Text to image",
+  "plan_name": "Soul Cinematic / Cinema stills"
 }

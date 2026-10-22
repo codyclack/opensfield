@@ -1,7 +1,7 @@
 {
   "id": "video.lipsync",
   "studio": "Video tools",
-  "name": "Lip-sync",
+  "name": "Lipsync",
   "tier": "A",
   "base": [
     "ltx23_audio"
@@ -81,5 +81,6 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Lip sync"
+  "group": "Lip sync",
+  "plan_name": "Lip-sync"
 }

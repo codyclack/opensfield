@@ -104,6 +104,25 @@ def features():
     return [_public(f) for f in FEATURES.values() if PARTNER or f["track"] != "partner"]
 
 
+@app.get("/api/apps")
+def apps():
+    """Higgsfield's Apps catalog as OpenSfield apps: each points at the tool that runs it (registry/apps.py)."""
+    from registry.apps import APPS, CATEGORIES
+    out = []
+    for a in APPS:
+        fid = a["feature"] if a["mode"] == "tool" else f"app.{a['slug']}"
+        f = FEATURES.get(fid)
+        if not f or (f["track"] == "partner" and not PARTNER and a["mode"] != "pair"):
+            fid = f"app.{a['slug']}-open" if f"app.{a['slug']}-open" in FEATURES else fid
+            f = FEATURES.get(fid)
+        if not f:
+            continue
+        out.append({"slug": a["slug"], "name": a["name"], "cat": a["cat"], "desc": a["desc"], "tag": a["tag"], "mode": a["mode"],
+                    "feature": fid, "preset": a.get("preset", {}), "status": f["status"], "output_kind": f["output_kind"],
+                    "examples": [e for e in (f.get("workflow") or {}).get("examples", [])]})
+    return {"categories": CATEGORIES, "apps": out}
+
+
 @app.get("/api/features/{feature_id}")
 def feature(feature_id: str):
     f = FEATURES.get(feature_id)

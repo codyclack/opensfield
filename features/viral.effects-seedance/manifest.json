@@ -1,7 +1,7 @@
 {
   "id": "viral.effects-seedance",
   "studio": "Viral Hub",
-  "name": "Viral effect chains (87 presets)",
+  "name": "Viral Effects",
   "tier": "B",
   "base": [
     "ref_edit",
@@ -121,6 +121,7 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Viral effect chains (87 presets)",
-  "default": true
+  "group": "Viral Effects",
+  "default": true,
+  "plan_name": "Viral effect chains (87 presets)"
 }

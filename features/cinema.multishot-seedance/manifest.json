@@ -1,7 +1,7 @@
 {
   "id": "cinema.multishot-seedance",
   "studio": "Cinema Studio",
-  "name": "Multi-shot sequence + stitch",
+  "name": "Multi-shot",
   "tier": "B",
   "base": [
     "ltx25_i2v",
@@ -98,6 +98,7 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Multi-shot sequence + stitch",
-  "default": true
+  "group": "Multi-shot",
+  "default": true,
+  "plan_name": "Multi-shot sequence + stitch"
 }

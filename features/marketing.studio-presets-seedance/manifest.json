@@ -1,7 +1,7 @@
 {
   "id": "marketing.studio-presets-seedance",
   "studio": "Marketing",
-  "name": "Marketing Studio product-shot / motion presets",
+  "name": "Product Motion",
   "tier": "B",
   "base": [
     "ref_edit",
@@ -114,6 +114,7 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Marketing Studio product-shot / motion presets",
-  "default": true
+  "group": "Product Motion",
+  "default": true,
+  "plan_name": "Marketing Studio product-shot / motion presets"
 }

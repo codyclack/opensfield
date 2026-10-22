@@ -1,7 +1,7 @@
 {
   "id": "marketing.ai-influencer",
   "studio": "Marketing",
-  "name": "AI influencer (character + presets)",
+  "name": "AI Influencer",
   "tier": "B",
   "base": [
     "ref_edit",
@@ -79,5 +79,6 @@
       "examples/influencer_cafe.png"
     ]
   },
-  "group": "AI influencer (character + presets)"
+  "group": "AI Influencer",
+  "plan_name": "AI influencer (character + presets)"
 }

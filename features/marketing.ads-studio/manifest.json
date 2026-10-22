@@ -1,7 +1,7 @@
 {
   "id": "marketing.ads-studio",
   "studio": "Marketing",
-  "name": "Static ad creatives with copy",
+  "name": "Ads Studio",
   "tier": "B",
   "base": [
     "planner_llm",
@@ -85,5 +85,6 @@
     "examples": [
       "examples/ad_social.png"
     ]
-  }
+  },
+  "plan_name": "Static ad creatives with copy"
 }

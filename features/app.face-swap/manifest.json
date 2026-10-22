@@ -1,0 +1,74 @@
+{
+  "studio": "Apps",
+  "name": "Face Swap",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "higgsfield.ai/apps/face-swap",
+  "count": 1,
+  "status": "built",
+  "app": {
+    "cat": "Face & Identity",
+    "desc": "Instant face swap for photos",
+    "tag": null,
+    "slug": "face-swap"
+  },
+  "id": "app.face-swap",
+  "track": "open",
+  "partner": [],
+  "note": "",
+  "workflow": {
+    "template": "image_qwen_image_2_1_image_edit",
+    "api": "features/soul.cast/workflow_api.json",
+    "ui": "features/soul.cast/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Photo to change",
+        "kind": "image",
+        "node": "470",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "image_b",
+        "label": "Face or character to use",
+        "kind": "image",
+        "node": "475",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "459:500",
+        "field": "prompt",
+        "required": false,
+        "prefix": "Put the face from the second image onto the person in the first image, keeping the first image's hair, body, clothes, lighting and background. Match skin tone and angle. "
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "459:458",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "461"
+    ],
+    "models": [
+      "qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+      "qwen3vl_8b_bf16.safetensors",
+      "qwen3vl_8b_int8_convrot.safetensors",
+      "qwen_image_2.1_bf16.safetensors",
+      "qwen_image_2.1_int8_convrot.safetensors",
+      "qwen_image_2.1_vae_bf16.safetensors"
+    ],
+    "reuses": "soul.cast",
+    "output_kind": "image",
+    "verified": false
+  },
+  "group": null
+}

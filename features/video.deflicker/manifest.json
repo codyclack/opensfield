@@ -34,5 +34,6 @@
       "examples/flicker_input.mp4",
       "examples/fx_deflicker.mp4"
     ]
-  }
+  },
+  "plan_name": "Deflicker"
 }

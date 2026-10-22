@@ -1,7 +1,7 @@
 {
   "id": "platform.virality",
   "studio": "Platform",
-  "name": "Virality predictor",
+  "name": "Virality Predictor",
   "tier": "C",
   "base": [
     "planner_llm"
@@ -33,5 +33,6 @@
     "examples": [
       "examples/fx_virality.png"
     ]
-  }
+  },
+  "plan_name": "Virality predictor"
 }

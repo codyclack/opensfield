@@ -1,7 +1,7 @@
 {
   "id": "scene3d.image-to-3d",
   "studio": "Reshoot",
-  "name": "Image(s) -> 3D model",
+  "name": "Image to 3D",
   "tier": "B",
   "base": [
     "hunyuan3d"
@@ -47,5 +47,6 @@
       "examples/image_to_3d.glb"
     ]
   },
-  "group": "Image to 3D"
+  "group": "Image to 3D",
+  "plan_name": "Image(s) -> 3D model"
 }

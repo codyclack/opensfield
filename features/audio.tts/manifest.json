@@ -1,7 +1,7 @@
 {
   "id": "audio.tts",
   "studio": "Audio",
-  "name": "Text to speech",
+  "name": "Text to Speech",
   "tier": "B",
   "base": [
     "tts_audio"
@@ -64,5 +64,6 @@
       "examples/tts_chatterbox.flac"
     ]
   },
-  "group": "Text to speech"
+  "group": "Text to Speech",
+  "plan_name": "Text to speech"
 }

@@ -1,0 +1,64 @@
+{
+  "studio": "Apps",
+  "name": "Comic Book",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "higgsfield.ai/apps/comic-book",
+  "count": 1,
+  "status": "built",
+  "app": {
+    "cat": "Trending Templates",
+    "desc": "Your photo as comic book art",
+    "tag": null,
+    "slug": "comic-book"
+  },
+  "id": "app.comic-book-open",
+  "track": "open",
+  "partner": [],
+  "note": "Open weights (Qwen-Image-Edit 2511).",
+  "workflow": {
+    "template": "image_qwen_image_edit_2511_int8",
+    "api": "features/image.edit-open/workflow_api.json",
+    "ui": "features/image.edit-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Your photo",
+        "kind": "image",
+        "node": "41",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "170:151",
+        "field": "prompt",
+        "required": false,
+        "prefix": "Redraw this photo as a dynamic comic book panel: bold ink lines, halftone shading, speech bubble, vivid flat colors. "
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "170:169",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "195"
+    ],
+    "models": [
+      "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "qwen_image_edit_2511_int8_convrot.safetensors",
+      "qwen_image_vae.safetensors"
+    ],
+    "reuses": "image.edit-open",
+    "output_kind": "image",
+    "verified": false
+  },
+  "group": "Comic Book"
+}

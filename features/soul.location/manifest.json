@@ -1,7 +1,7 @@
 {
   "id": "soul.location",
   "studio": "Soul",
-  "name": "Soul Location: place from reference",
+  "name": "Soul Location",
   "tier": "B",
   "base": [
     "ref_edit"
@@ -90,5 +90,6 @@
     "reuses": "model.nano-banana-2-1-image-edit",
     "output_kind": "image",
     "verified": false
-  }
+  },
+  "plan_name": "Soul Location: place from reference"
 }

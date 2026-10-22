@@ -1,0 +1,64 @@
+{
+  "studio": "Apps",
+  "name": "Color grading",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "higgsfield.ai/apps/color-grading",
+  "count": 1,
+  "status": "built",
+  "app": {
+    "cat": "Professional",
+    "desc": "Professional color grades for any image",
+    "tag": null,
+    "slug": "color-grading"
+  },
+  "id": "app.color-grading-open",
+  "track": "open",
+  "partner": [],
+  "note": "Open weights (Qwen-Image-Edit 2511).",
+  "workflow": {
+    "template": "image_qwen_image_edit_2511_int8",
+    "api": "features/image.edit-open/workflow_api.json",
+    "ui": "features/image.edit-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Your photo",
+        "kind": "image",
+        "node": "41",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Grade you want (optional, e.g. warm 70s film, cold blue night)",
+        "kind": "text",
+        "node": "170:151",
+        "field": "prompt",
+        "required": false,
+        "prefix": "Regrade this image with a professional cinematic color grade: rich contrast, teal shadows, warm skin tones, gentle film halation, keep the content exactly the same. "
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "170:169",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "195"
+    ],
+    "models": [
+      "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "qwen_image_edit_2511_int8_convrot.safetensors",
+      "qwen_image_vae.safetensors"
+    ],
+    "reuses": "image.edit-open",
+    "output_kind": "image",
+    "verified": false
+  },
+  "group": "Color grading"
+}

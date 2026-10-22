@@ -1,7 +1,7 @@
 {
   "id": "matchcut.render",
   "studio": "Match Cut + Tracelab",
-  "name": "Match-cut reel renderer",
+  "name": "Match Cut Reel",
   "tier": "B",
   "base": [
     "stitch",
@@ -93,5 +93,6 @@
     "examples": [
       "examples/fx_reel_vhs.mp4"
     ]
-  }
+  },
+  "plan_name": "Match-cut reel renderer"
 }

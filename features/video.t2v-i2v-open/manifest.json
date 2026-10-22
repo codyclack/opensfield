@@ -1,7 +1,7 @@
 {
   "id": "video.t2v-i2v-open",
   "studio": "Video models",
-  "name": "Open text/image->video (LTX 2.5, Wan)",
+  "name": "Create Video (open)",
   "tier": "A",
   "base": [
     "ltx25_t2v",
@@ -90,5 +90,6 @@
       "examples/text_to_video_alley.mp4"
     ]
   },
-  "group": "Text to video"
+  "group": "Text to video",
+  "plan_name": "Open text/image->video (LTX 2.5, Wan)"
 }

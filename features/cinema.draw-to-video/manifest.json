@@ -1,7 +1,7 @@
 {
   "id": "cinema.draw-to-video",
   "studio": "Cinema Studio",
-  "name": "Sketch/annotation -> video",
+  "name": "Draw to Video",
   "tier": "B",
   "base": [
     "ltx23_ic_lora"
@@ -89,5 +89,6 @@
     "reuses": "model.kling-o3-i2v",
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "plan_name": "Sketch/annotation -> video"
 }

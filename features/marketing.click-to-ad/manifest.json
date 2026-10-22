@@ -1,7 +1,7 @@
 {
   "id": "marketing.click-to-ad",
   "studio": "Marketing",
-  "name": "Product URL -> video ad",
+  "name": "Click to Ad",
   "tier": "B",
   "base": [
     "planner_llm",
@@ -120,5 +120,6 @@
       "examples/click_to_ad.mp4"
     ]
   },
-  "group": "Product URL -> video ad"
+  "group": "Click to Ad",
+  "plan_name": "Product URL -> video ad"
 }

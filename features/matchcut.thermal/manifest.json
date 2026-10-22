@@ -1,7 +1,7 @@
 {
   "id": "matchcut.thermal",
   "studio": "Match Cut + Tracelab",
-  "name": "Thermal / black-hot / white-hot / rainbow",
+  "name": "Thermal",
   "tier": "A",
   "base": [
     "thermal"
@@ -46,5 +46,6 @@
       "examples/fx_thermal_blackhot.mp4",
       "examples/fx_thermal_rainbow.mp4"
     ]
-  }
+  },
+  "plan_name": "Thermal / black-hot / white-hot / rainbow"
 }

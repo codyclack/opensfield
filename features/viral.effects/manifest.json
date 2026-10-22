@@ -1,7 +1,7 @@
 {
   "id": "viral.effects",
   "studio": "Viral Hub",
-  "name": "Viral effect chains (87 presets)",
+  "name": "Viral Effects",
   "tier": "B",
   "base": [
     "ref_edit",
@@ -125,5 +125,6 @@
       "examples/effect_vanish.mp4"
     ]
   },
-  "group": "Viral effect chains (87 presets)"
+  "group": "Viral Effects",
+  "plan_name": "Viral effect chains (87 presets)"
 }

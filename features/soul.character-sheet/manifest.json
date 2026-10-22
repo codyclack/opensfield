@@ -1,7 +1,7 @@
 {
   "id": "soul.character-sheet",
   "studio": "Soul",
-  "name": "Character sheets / turnarounds",
+  "name": "Character Sheet",
   "tier": "B",
   "base": [
     "t2i",
@@ -60,5 +60,6 @@
     "examples": [
       "examples/character_sheet.png"
     ]
-  }
+  },
+  "plan_name": "Character sheets / turnarounds"
 }

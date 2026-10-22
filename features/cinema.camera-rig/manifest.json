@@ -1,7 +1,7 @@
 {
   "id": "cinema.camera-rig",
   "studio": "Cinema Studio",
-  "name": "Camera body / lens / focal / move controls",
+  "name": "Camera Controls",
   "tier": "A",
   "base": [
     "ltx25_i2v"
@@ -97,5 +97,6 @@
       "examples/driving_dance.mp4"
     ]
   },
-  "group": "Image to video"
+  "group": "Image to video",
+  "plan_name": "Camera body / lens / focal / move controls"
 }

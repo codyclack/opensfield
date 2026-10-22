@@ -1,7 +1,7 @@
 {
   "id": "marketing.product-photoshoot",
   "studio": "Marketing",
-  "name": "Product photoshoot / packshot / try-on",
+  "name": "Product Photoshoot",
   "tier": "B",
   "base": [
     "ref_edit",
@@ -76,5 +76,6 @@
     "examples": [
       "examples/product_photoshoot.png"
     ]
-  }
+  },
+  "plan_name": "Product photoshoot / packshot / try-on"
 }

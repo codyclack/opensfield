@@ -1,0 +1,64 @@
+{
+  "studio": "Apps",
+  "name": "Shots",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "higgsfield.ai/apps/shots",
+  "count": 1,
+  "status": "built",
+  "app": {
+    "cat": "Professional",
+    "desc": "9 unique shots from one image",
+    "tag": null,
+    "slug": "shots"
+  },
+  "id": "app.shots-open",
+  "track": "open",
+  "partner": [],
+  "note": "Open weights (Qwen-Image-Edit 2511).",
+  "workflow": {
+    "template": "image_qwen_image_edit_2511_int8",
+    "api": "features/image.edit-open/workflow_api.json",
+    "ui": "features/image.edit-open/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Your photo",
+        "kind": "image",
+        "node": "41",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Extra detail (optional)",
+        "kind": "text",
+        "node": "170:151",
+        "field": "prompt",
+        "required": false,
+        "prefix": "Turn this image into a 3x3 contact sheet of nine different film shots of the same scene and subject: wide, medium, close-up, over-the-shoulder, low angle, high angle, profile, detail insert and a reverse shot. Same lighting and style in every panel, thin black gutters. "
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "170:169",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "195"
+    ],
+    "models": [
+      "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "qwen_image_edit_2511_int8_convrot.safetensors",
+      "qwen_image_vae.safetensors"
+    ],
+    "reuses": "image.edit-open",
+    "output_kind": "image",
+    "verified": false
+  },
+  "group": "Shots"
+}

@@ -1,7 +1,7 @@
 {
   "id": "video.edit",
   "studio": "Video tools",
-  "name": "Prompt-based video edit",
+  "name": "Edit Video",
   "tier": "B",
   "base": [
     "ltx23_ic_lora",
@@ -68,5 +68,6 @@
       "examples/video_edit_street.mp4"
     ]
   },
-  "group": "Video edit"
+  "group": "Video edit",
+  "plan_name": "Prompt-based video edit"
 }

@@ -1,7 +1,7 @@
 {
   "id": "genjutsu.motion-gallery",
   "studio": "Genjutsu",
-  "name": "Trending/new motion preset gallery",
+  "name": "Motion Gallery",
   "tier": "B",
   "base": [
     "wan_animate2"
@@ -96,5 +96,6 @@
     "reuses": "genjutsu.motion-control",
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "plan_name": "Trending/new motion preset gallery"
 }

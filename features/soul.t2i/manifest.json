@@ -1,7 +1,7 @@
 {
   "id": "soul.t2i",
   "studio": "Soul",
-  "name": "Soul 2.0 photoreal text->image",
+  "name": "Soul 2.0",
   "tier": "A",
   "base": [
     "t2i"
@@ -71,5 +71,6 @@
       "examples/char_b.png"
     ]
   },
-  "group": "Text to image"
+  "group": "Text to image",
+  "plan_name": "Soul 2.0 photoreal text->image"
 }

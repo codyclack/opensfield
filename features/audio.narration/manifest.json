@@ -1,7 +1,7 @@
 {
   "id": "audio.narration",
   "studio": "Audio",
-  "name": "Narration fitted to timing",
+  "name": "Narration",
   "tier": "B",
   "base": [
     "tts_audio",
@@ -65,5 +65,6 @@
     "examples": [
       "examples/narration.flac"
     ]
-  }
+  },
+  "plan_name": "Narration fitted to timing"
 }

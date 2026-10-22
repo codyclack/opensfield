@@ -1,7 +1,7 @@
 {
   "id": "genjutsu.motion-control",
   "studio": "Genjutsu",
-  "name": "Motion transfer (image + driving video)",
+  "name": "Motion Control",
   "tier": "A",
   "base": [
     "wan_animate2"
@@ -77,5 +77,6 @@
       "examples/motion_transfer_compare.mp4"
     ]
   },
-  "group": "Motion control"
+  "group": "Motion control",
+  "plan_name": "Motion transfer (image + driving video)"
 }

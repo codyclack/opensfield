@@ -1,7 +1,7 @@
 {
   "id": "marketing.ai-influencer-seedance",
   "studio": "Marketing",
-  "name": "AI influencer (character + presets)",
+  "name": "AI Influencer",
   "tier": "B",
   "base": [
     "ref_edit",
@@ -115,6 +115,7 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "AI influencer (character + presets)",
-  "default": true
+  "group": "AI Influencer",
+  "default": true,
+  "plan_name": "AI influencer (character + presets)"
 }

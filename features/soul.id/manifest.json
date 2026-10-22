@@ -1,7 +1,7 @@
 {
   "id": "soul.id",
   "studio": "Soul",
-  "name": "Soul ID: reusable character identity",
+  "name": "Soul ID",
   "tier": "B",
   "base": [
     "ref_edit",
@@ -60,5 +60,6 @@
     "examples": [
       "examples/soul_id.png"
     ]
-  }
+  },
+  "plan_name": "Soul ID: reusable character identity"
 }

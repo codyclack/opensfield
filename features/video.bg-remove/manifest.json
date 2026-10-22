@@ -1,7 +1,7 @@
 {
   "id": "video.bg-remove",
   "studio": "Video tools",
-  "name": "Video background remover",
+  "name": "Video Background Remover",
   "tier": "B",
   "base": [
     "matte"
@@ -43,5 +43,6 @@
     "reuses": "model.bria-remove-video-background-transparent",
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "plan_name": "Video background remover"
 }

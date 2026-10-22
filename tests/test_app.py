@@ -28,7 +28,7 @@ def test_config_is_mock():
 
 def test_partner_model_tools_listed_and_run_in_mock():
     feats = {f["id"]: f for f in client.get("/api/features").json()}
-    models = [f for f in feats.values() if f["track"] == "partner"]
+    models = [f for f in feats.values() if f["id"].startswith("model.")]
     assert len(models) >= 40 and "soul.t2i" in feats
     assert all(f["runnable"] and f.get("group") for f in models)
     r = client.post("/api/jobs", json={"feature_id": "model.bfl-flux3-t2i", "inputs": {"prompt": "a red fox"}})
@@ -115,3 +115,11 @@ def test_blog_lists_and_renders_posts():
     post = client.get(f"/api/blog/{posts[0]['slug']}").json()
     assert post["body"].strip() and post["meta"]["minutes"] >= 1
     assert client.get("/api/blog/..%2Fapp%2Fmain").status_code == 404
+
+
+def test_apps_catalog_points_at_runnable_tools():
+    data = client.get("/api/apps").json()
+    feats = {f["id"]: f for f in client.get("/api/features").json()}
+    assert len(data["apps"]) >= 80 and len(data["categories"]) == 8
+    assert all(a["feature"] in feats and feats[a["feature"]]["runnable"] for a in data["apps"])
+    assert not any(a["slug"] == "skibidi" for a in data["apps"])  # left out: built on someone else's IP

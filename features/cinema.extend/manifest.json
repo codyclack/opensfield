@@ -1,7 +1,7 @@
 {
   "id": "cinema.extend",
   "studio": "Cinema Studio",
-  "name": "Extend / continue a clip",
+  "name": "Extend Video",
   "tier": "B",
   "base": [
     "ltx25_i2v",
@@ -96,5 +96,6 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "Extend video"
+  "group": "Extend video",
+  "plan_name": "Extend / continue a clip"
 }

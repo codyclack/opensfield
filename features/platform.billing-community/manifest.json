@@ -1,7 +1,7 @@
 {
   "id": "platform.billing-community",
   "studio": "Platform",
-  "name": "Credits, plans, community presets, contests",
+  "name": "Credits & Usage",
   "tier": "C",
   "base": [],
   "higgsfield": "balance, transactions, publish_project",
@@ -18,5 +18,6 @@
     "output_kind": "image",
     "models": [],
     "verified": false
-  }
+  },
+  "plan_name": "Credits, plans, community presets, contests"
 }

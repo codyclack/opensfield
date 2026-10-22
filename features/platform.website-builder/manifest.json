@@ -1,7 +1,7 @@
 {
   "id": "platform.website-builder",
   "studio": "Platform",
-  "name": "Website / app / game builder",
+  "name": "Website Builder",
   "tier": "C",
   "base": [],
   "higgsfield": "website-builder-flow",
@@ -72,5 +72,6 @@
     "examples": [
       "examples/site_example/index.html"
     ]
-  }
+  },
+  "plan_name": "Website / app / game builder"
 }

@@ -1,7 +1,7 @@
 {
   "id": "cinema.first-last-frame",
   "studio": "Cinema Studio",
-  "name": "First/last-frame transitions",
+  "name": "First & Last Frame",
   "tier": "A",
   "base": [
     "ltx25_flf2v"
@@ -100,5 +100,6 @@
       "examples/first_last_frame_morph.mp4"
     ]
   },
-  "group": "First / last frame"
+  "group": "First / last frame",
+  "plan_name": "First/last-frame transitions"
 }

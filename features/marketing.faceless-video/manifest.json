@@ -1,7 +1,7 @@
 {
   "id": "marketing.faceless-video",
   "studio": "Marketing",
-  "name": "Faceless narrated channel video",
+  "name": "Faceless Video",
   "tier": "B",
   "base": [
     "planner_llm",
@@ -67,5 +67,6 @@
     "output_kind": "video",
     "models": [],
     "verified": false
-  }
+  },
+  "plan_name": "Faceless narrated channel video"
 }

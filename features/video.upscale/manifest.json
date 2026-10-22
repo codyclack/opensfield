@@ -1,7 +1,7 @@
 {
   "id": "video.upscale",
   "studio": "Video tools",
-  "name": "Video upscale",
+  "name": "Video Upscale",
   "tier": "B",
   "base": [
     "upscale"
@@ -47,5 +47,6 @@
     "examples": [
       "examples/video_upscale.mp4"
     ]
-  }
+  },
+  "plan_name": "Video upscale"
 }

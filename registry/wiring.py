@@ -623,3 +623,34 @@ for _fid, _ex in {"marketing.video-edit-montage": ["examples/fx_montage.mp4"], "
                   "platform.virality": ["examples/fx_virality.png"], "platform.publish": ["examples/fx_tiktok.mp4"],
                   "platform.website-builder": ["examples/site_example/index.html"]}.items():
     WIRING[_fid].update(verified_via=LOCAL_VIA, examples=_ex)
+
+
+# ---------------- Higgsfield Apps (registry/apps.py) ----------------
+from registry.apps import APPS as _APPS  # noqa: E402
+
+_NBI = {i["name"]: i for i in WIRING["model.nano-banana-2-1-image-edit"]["inputs"]}
+_QE = WIRING["image.edit-open"]["inputs"]
+_SDI = {i["name"]: i for i in WIRING["model.seedance2-5-i2v-1080p"]["inputs"]}
+_VTO = WIRING["model.kling-vto"]["inputs"]
+_CAST = {i["name"]: i for i in WIRING["soul.cast"]["inputs"]}
+for _a in _APPS:
+    _p = _a.get("prompt", "") + " "
+    if _a["mode"] == "image":
+        WIRING[f"app.{_a['slug']}"] = _from_model("model.nano-banana-2-1-image-edit", [
+            dict(_NBI["image_1"], label="Your photo"), dict(_NBI["prompt"], required=False, label=_a["extra"], prefix=_p, clear_blank=False),
+            _NBI["aspect_ratio"], _NBI["resolution"], _NBI["seed"]])
+        WIRING[f"app.{_a['slug']}-open"] = _reuse("image.edit-open", "image.edit-open", [
+            dict(_QE[0], label="Your photo"), dict(_QE[1], required=False, label=_a["extra"], prefix=_p), _QE[2]])
+    elif _a["mode"] == "video":
+        WIRING[f"app.{_a['slug']}"] = _from_model("model.seedance2-5-i2v-1080p", [
+            dict(_SDI["image_1"], label=_a["subject"]), dict(_SDI["prompt"], required=False, label="Extra detail (optional)", prefix=_p),
+            _SDI["resolution"], _SDI["ratio"], _SDI["duration"], _SDI["seed"]])
+        WIRING[f"app.{_a['slug']}-open"] = _reuse("cinema.camera-rig", "cinema.camera-rig", [
+            dict(CAM[0], label=_a["subject"]), dict(CAM[1], required=False, label="Extra detail (optional)", prefix="Use the provided start image as the first frame. " + _p),
+            *CAM[2:]])
+    elif _a["mode"] == "pair" and _a["feature"] == "model.kling-vto":
+        WIRING[f"app.{_a['slug']}"] = _from_model("model.kling-vto", [dict(_VTO[0], label="Your photo"), dict(_VTO[1], label="Outfit or garment photo"), *_VTO[2:]])
+    elif _a["mode"] == "pair":
+        WIRING[f"app.{_a['slug']}"] = _reuse("soul.cast", "soul.cast", [
+            dict(_CAST["image"], label="Photo to change"), dict(_CAST["image_b"], label="Face or character to use"),
+            dict(_CAST["prompt"], required=False, label="Extra detail (optional)", prefix=_p), _CAST["seed"]])

@@ -1,7 +1,7 @@
 {
   "id": "marketing.studio-presets",
   "studio": "Marketing",
-  "name": "Marketing Studio product-shot / motion presets",
+  "name": "Product Motion",
   "tier": "B",
   "base": [
     "ref_edit",
@@ -117,5 +117,6 @@
       "examples/product_orbit.mp4"
     ]
   },
-  "group": "Marketing Studio product-shot / motion presets"
+  "group": "Product Motion",
+  "plan_name": "Marketing Studio product-shot / motion presets"
 }

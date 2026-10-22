@@ -1,7 +1,7 @@
 {
   "id": "cinema.director",
   "studio": "Cinema Studio",
-  "name": "AI Director: concept -> shot list",
+  "name": "AI Director",
   "tier": "A",
   "base": [
     "planner_llm"
@@ -119,5 +119,6 @@
     "output_kind": "video",
     "verified": false
   },
-  "group": "AI Director"
+  "group": "AI Director",
+  "plan_name": "AI Director: concept -> shot list"
 }
