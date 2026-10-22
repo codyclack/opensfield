@@ -173,7 +173,7 @@ steps = [("1  Feature map", ["72 Higgsfield modules", "tiers, open stand-ins"], 
 L2t = title("EVERY FEATURE = A MANIFEST + A WORKFLOW")
 L2boxes = [Layer(lambda d, i=i, s=s: box(d, 80 + i * 360, 330, 320, 190, s[0], s[1], s[2])) for i, s in enumerate(steps)]
 L2arrows = [Layer(lambda d, i=i: d.text((410 + i * 360 - 8, 395), "→", font=font(BOLD, 56), fill=MUTED)) for i in range(4)]
-L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it. 76 tools are verified end to end: open-weight workflows plus partner models.")
+L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it. 83 tools are verified end to end: open-weight workflows plus partner models.")
 
 
 @scene(10)
@@ -348,8 +348,8 @@ def s8(t):
 
 
 # 9. end
-L9 = Layer(lambda d: [marker(d, (120, 170), "76 TOOLS RUN FOR REAL", 78),
-                      d.text((124, 330), "146 in the catalog: 59 more wired from Comfy templates, 11 not built", font=font(BOLD, 44), fill=WHITE),
+L9 = Layer(lambda d: [marker(d, (120, 170), "83 TOOLS RUN FOR REAL", 78),
+                      d.text((124, 330), "146 in the catalog: 63 more wired from Comfy templates, none left unbuilt", font=font(BOLD, 44), fill=WHITE),
                       d.text((124, 410), "Open weights + partner models  ·  MIT  ·  built on comfy-sdk", font=font(REG, 40), fill=MUTED),
                       d.text((124, 560), "github.com/codyclack/opensfield", font=font(BOLD, 72), fill=LIME),
                       d.text((124, 680), "#OpenSourceHiggsfield", font=font(BOLD, 56), fill=WHITE),

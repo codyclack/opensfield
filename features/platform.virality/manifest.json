@@ -11,5 +11,27 @@
   "note": "Possible QwenVL scoring toy; low priority.",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "local": {
+      "mode": "virality"
+    },
+    "template": "app/fx_tools.py",
+    "inputs": [
+      {
+        "name": "video",
+        "label": "Video to score",
+        "kind": "video",
+        "required": true
+      }
+    ],
+    "outputs": [],
+    "output_kind": "image",
+    "models": [],
+    "verified": true,
+    "verified_via": "Rendered locally by app/fx.py on CPU, 2026-10-21 (no ComfyUI involved)",
+    "examples": [
+      "examples/fx_virality.png"
+    ]
+  }
 }

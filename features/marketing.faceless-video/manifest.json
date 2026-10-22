@@ -15,5 +15,57 @@
   "note": "",
   "count": 5,
   "partner": [],
-  "status": "planned"
+  "status": "built",
+  "workflow": {
+    "pipeline": {
+      "steps": [
+        {
+          "feature": "model.elevenlabs-v4-text-to-speech",
+          "inputs": {
+            "text": "{script}"
+          },
+          "as": "audio"
+        },
+        {
+          "feature": "model.seedance2-5-t2v-1080p",
+          "inputs": {
+            "prompt": "{visuals}",
+            "ratio": "{ratio}"
+          },
+          "as": "video"
+        }
+      ],
+      "combine": "mux"
+    },
+    "template": "pipeline",
+    "inputs": [
+      {
+        "name": "script",
+        "label": "Narration script",
+        "kind": "text",
+        "required": true
+      },
+      {
+        "name": "visuals",
+        "label": "What the video shows (B-roll)",
+        "kind": "text",
+        "required": true
+      },
+      {
+        "name": "ratio",
+        "label": "Aspect",
+        "kind": "choice",
+        "options": [
+          "9:16",
+          "16:9",
+          "1:1"
+        ],
+        "default": "9:16"
+      }
+    ],
+    "outputs": [],
+    "output_kind": "video",
+    "models": [],
+    "verified": false
+  }
 }

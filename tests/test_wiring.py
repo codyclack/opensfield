@@ -18,7 +18,7 @@ def graph(fid):
     return json.loads((ROOT / "features" / src / "workflow_api.json").read_text(encoding="utf-8"))
 
 
-GRAPHED = sorted(f for f in WIRING if not WIRING[f].get("local"))  # local CPU effects have no workflow files
+GRAPHED = sorted(f for f in WIRING if not (WIRING[f].get("local") or WIRING[f].get("pipeline") or WIRING[f].get("page")))  # local tools, pipelines and pages have no workflow files
 
 
 @pytest.mark.parametrize("fid", GRAPHED)

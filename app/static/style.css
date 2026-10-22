@@ -528,3 +528,16 @@ body.cinema-mode .canvas { padding: 0; background-image: none; background-color:
 @media (max-width: 900px) { .csapp { grid-template-columns: 1fr; } .cside { position: static; height: auto; } .cscomposer { grid-template-columns: 1fr; } .csmode { grid-auto-flow: column; } }
 .csmmain.one { grid-template-columns: minmax(0, 1fr); }
 .csopt { min-width: 0; align-content: start; } .csoptart { width: 100%; }
+
+/* ---------- website previews, credits & usage ---------- */
+.htmlprev { display: grid; gap: 6px; padding: 6px; background: #111; }
+.htmlprev iframe { width: 100%; aspect-ratio: 16 / 10; border: 0; border-radius: 8px; background: #fff; }
+.htmlprev .mini { justify-self: start; }
+.ustats { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-bottom: 14px; }
+.ustat { display: grid; gap: 4px; padding: 16px; border-radius: 14px; background: #17171b; border: 1px solid var(--line); text-decoration: none; }
+.ustat b { font: 700 26px var(--display); } .ustat small { color: var(--muted); }
+.ustat.link:hover { border-color: var(--accent); }
+.ulinks { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+.utable { width: 100%; border-collapse: collapse; font-size: 13px; }
+.utable th, .utable td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+.utable th { color: var(--muted); font-weight: 600; } .utable a { color: var(--accent); text-decoration: none; }

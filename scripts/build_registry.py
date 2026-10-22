@@ -46,6 +46,14 @@ def write_manifests():
             merged["status"] = "tested" if wiring.get("verified_via") else "built"  # evidence decides, so a re-wired tool is demoted until re-run
             mf.write_text(json.dumps(merged, indent=2) + "\n", encoding="utf-8")
             continue
+        if wiring and (wiring.get("pipeline") or wiring.get("page")):  # chains of other tools, or an app page
+            merged["workflow"] = {k: wiring[k] for k in ("pipeline", "page", "template", "inputs", "outputs", "output_kind") if k in wiring}
+            merged["workflow"].update(models=[], verified=bool(wiring.get("verified_via")))
+            if wiring.get("verified_via"):
+                merged["workflow"].update(verified_via=wiring["verified_via"], examples=wiring.get("examples", []))
+            merged["status"] = "tested" if wiring.get("verified_via") else "built"
+            mf.write_text(json.dumps(merged, indent=2) + "\n", encoding="utf-8")
+            continue
         src = wiring.get("files_from") if wiring else None  # preset modules reuse another module's workflow files
         sd = ROOT / "features" / (src or feat["id"])
         if wiring and (sd / "workflow_api.json").exists():

@@ -136,8 +136,9 @@ def _execute(job_id: str):
     update(status="running", started=time.time())
     try:
         # CPU effects never touch ComfyUI, so they run for real in every mode whenever the fx extra is installed
+        step = runner.run_mock if MODE == "mock" else runner.run_comfy
         run = runner.run_local if feature.get("local") and fx.cv2 is not None \
-            else runner.run_mock if MODE == "mock" else runner.run_comfy
+            else (lambda f, j, u: runner.run_pipeline(f, j, u, step)) if feature.get("pipeline") else step
         outputs = run(feature, job, update)
         update(status="done", outputs=outputs, progress=1.0, finished=time.time())
     except Exception as e:  # surfaced to the UI, not swallowed

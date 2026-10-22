@@ -5,9 +5,82 @@
   "tier": "C",
   "base": [],
   "higgsfield": "3d_rigging, meshy_rigging",
-  "track": "open",
-  "note": "No solid open Comfy path; out of scope.",
+  "track": "partner",
+  "note": "Runs SAM 3D Body \u00b7 3D Human Mesh Extraction From Video through Comfy Cloud API nodes (uses Comfy credits).",
   "count": 1,
-  "partner": [],
-  "status": "planned"
+  "partner": [
+    "utility_sam3d_body"
+  ],
+  "status": "built",
+  "workflow": {
+    "template": "utility_sam3d_body",
+    "api": "features/scene3d.rigging/workflow_api.json",
+    "ui": "features/scene3d.rigging/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "video_1",
+        "label": "Video",
+        "kind": "video",
+        "node": "85",
+        "field": "file",
+        "required": true
+      },
+      {
+        "name": "camera_translation",
+        "label": "Camera translation",
+        "kind": "choice",
+        "node": "127",
+        "field": "camera_translation",
+        "options": [
+          "off",
+          "centered",
+          "absolute"
+        ],
+        "default": "off"
+      },
+      {
+        "name": "fps",
+        "label": "Fps",
+        "kind": "number",
+        "node": "127",
+        "field": "fps",
+        "default": 24,
+        "min": 1.0,
+        "max": 240.0,
+        "step": 1.0
+      },
+      {
+        "name": "track_index",
+        "label": "Track index",
+        "kind": "number",
+        "node": "127",
+        "field": "track_index",
+        "default": -1,
+        "min": -1,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "bone_smooth_window",
+        "label": "Bone smooth window",
+        "kind": "number",
+        "node": "127",
+        "field": "format.bone_smooth_window",
+        "default": 0,
+        "min": 0,
+        "max": 51,
+        "step": 2
+      }
+    ],
+    "outputs": [
+      "135",
+      "143"
+    ],
+    "models": [
+      "utility_sam3d_body"
+    ],
+    "output_kind": "video",
+    "verified": false
+  },
+  "group": "Auto-rig"
 }

@@ -122,3 +122,21 @@ def test_text_looks_refuse_empty_text(tmp_path):
         fx.process_video(clip, tmp_path / "o.mp4", "captions", text="  \n ")
     fx.process_video(clip, tmp_path / "o.mp4", "typewriter", text="hi there")
     assert (tmp_path / "o.mp4").exists()
+
+def test_website_builder_writes_a_page(tmp_path):
+    from app import fx_tools
+    (tmp_path / "up").mkdir()
+    made = fx_tools.website({"name": "Puddle <Runners>", "tagline": "Wet nights", "features": "Grip: holds on stone", "style": "Light"},
+                            tmp_path / "up", tmp_path / "out", lambda p: None)
+    page = (tmp_path / "out" / made[0][0]).read_text(encoding="utf-8")
+    assert made == [("site/index.html", "html")] and "Puddle &lt;Runners&gt;" in page and "Grip" in page
+
+
+def test_subject_box_finds_the_object():
+    from app import fx_tools
+    img = np.full((200, 120, 3), 240, np.uint8)
+    img[60:140, 30:90] = (20, 30, 200)
+    x, y, w, h = fx_tools._subject_box(img)
+    assert abs(x - 30) < 6 and abs(y - 60) < 6 and abs(w - 60) < 10 and abs(h - 80) < 10
+    hx, hy, hw, hh = fx_tools._head(img)
+    assert 40 <= hx + hw / 2 <= 80 and hy <= 70

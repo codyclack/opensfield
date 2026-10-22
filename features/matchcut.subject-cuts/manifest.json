@@ -12,5 +12,101 @@
   "note": "",
   "count": 7,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "local": {
+      "mode": "subject-cuts"
+    },
+    "template": "app/fx_tools.py",
+    "inputs": [
+      {
+        "name": "image",
+        "label": "Shot 1",
+        "kind": "image",
+        "required": true
+      },
+      {
+        "name": "image_2",
+        "label": "Shot 2",
+        "kind": "image",
+        "required": true
+      },
+      {
+        "name": "image_3",
+        "label": "Shot 3",
+        "kind": "image",
+        "required": false
+      },
+      {
+        "name": "image_4",
+        "label": "Shot 4",
+        "kind": "image",
+        "required": false
+      },
+      {
+        "name": "image_5",
+        "label": "Shot 5",
+        "kind": "image",
+        "required": false
+      },
+      {
+        "name": "image_6",
+        "label": "Shot 6",
+        "kind": "image",
+        "required": false
+      },
+      {
+        "name": "mode",
+        "label": "Cut style",
+        "kind": "choice",
+        "options": [
+          "Face",
+          "Product",
+          "Sphere",
+          "Lens",
+          "Sticker"
+        ],
+        "default": "Face"
+      },
+      {
+        "name": "bpm",
+        "label": "BPM",
+        "kind": "number",
+        "default": 120,
+        "min": 60,
+        "max": 180,
+        "step": 10
+      },
+      {
+        "name": "loops",
+        "label": "Loops",
+        "kind": "number",
+        "default": 3,
+        "min": 1,
+        "max": 6,
+        "step": 1
+      },
+      {
+        "name": "ratio",
+        "label": "Aspect",
+        "kind": "choice",
+        "options": [
+          "9:16",
+          "16:9",
+          "1:1",
+          "4:5"
+        ],
+        "default": "9:16"
+      }
+    ],
+    "outputs": [],
+    "output_kind": "video",
+    "models": [],
+    "verified": true,
+    "verified_via": "Rendered locally by app/fx.py on CPU, 2026-10-21 (no ComfyUI involved)",
+    "examples": [
+      "examples/fx_facecut.mp4",
+      "examples/fx_stickercut.mp4"
+    ]
+  }
 }

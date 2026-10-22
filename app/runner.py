@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import os
 import random
+import shutil
 import time
 from html import escape
 from pathlib import Path
@@ -54,6 +55,15 @@ def resolve_values(feature: dict, inputs: dict) -> dict:
     for spec in feature["inputs"]:
         if spec.get("prefix"):
             vals[spec["name"]] = spec["prefix"] + str(vals.get(spec["name"]) or "")
+        media = spec.get("media_presets")  # a gallery choice that also supplies a media file (e.g. a driving clip)
+        if media and not vals.get(spec["media_target"]):
+            src = ROOT / media.get(vals.get(spec["name"]) or spec.get("default"), "")
+            if src.is_file():
+                UPLOADS.mkdir(parents=True, exist_ok=True)
+                name = f"preset_{src.name}"
+                if not (UPLOADS / name).exists():
+                    shutil.copyfile(src, UPLOADS / name)
+                vals[spec["media_target"]] = name
     return vals
 
 
@@ -72,8 +82,12 @@ def run_mock(feature: dict, job: dict, update: Update) -> list[dict]:
 def run_local(feature: dict, job: dict, update: Update) -> list[dict]:
     """CPU effects (app/fx.py). Works in any mode: it never touches ComfyUI."""
     from . import fx
+    from . import fx_tools  # registers the Tracelab look and the multi-input tools
     loc = feature["local"]
     mode = loc.get("mode") or job["inputs"].get(loc["mode_input"]) or next(s["default"] for s in feature["inputs"] if s["name"] == loc["mode_input"])
+    if mode in fx_tools.TOOLS:
+        made = fx_tools.TOOLS[mode](job["inputs"], UPLOADS, OUTPUTS / job["id"], lambda p: update(progress=p))
+        return [{"url": f"/outputs/{job['id']}/{name}", "kind": kind, "name": Path(name).name, "mock": False} for name, kind in made]
     out = OUTPUTS / job["id"] / f"{mode}.mp4"
     if mode == "clipify":
         fx.clipify(UPLOADS / job["inputs"]["video"], out, seconds=float(job["inputs"].get("seconds") or 10), progress=lambda p: update(progress=p))
@@ -81,6 +95,29 @@ def run_local(feature: dict, job: dict, update: Update) -> list[dict]:
     fx.process_video(UPLOADS / job["inputs"]["video"], out, mode, max_seconds=10, progress=lambda p: update(progress=p),
                      text=str(job["inputs"].get(loc.get("text_input", ""), "")))
     return [{"url": f"/outputs/{job['id']}/{mode}.mp4", "kind": "video", "name": out.name, "mock": False}]
+
+
+def run_pipeline(feature: dict, job: dict, update: Update, steps_runner) -> list[dict]:
+    """Run several existing tools in order, then combine their outputs (e.g. narration + video -> one narrated clip).
+    `steps_runner(feature, job, update)` runs one step (run_comfy live, run_mock in mock mode)."""
+    from .registry import load_features
+    by_id = {f["id"]: f for f in load_features()}
+    pipe = feature["pipeline"]
+    made = {}
+    for i, step in enumerate(pipe["steps"]):
+        sub = by_id[step["feature"]]
+        inputs = {k: str(v).format(**job["inputs"]) for k, v in step["inputs"].items()}
+        sub_job = {"id": f"{job['id']}/step{i}", "inputs": inputs}
+        outs = steps_runner(sub, sub_job, lambda **kw: update(progress=(i + kw.get("progress", 0)) / (len(pipe["steps"]) + 1)))
+        made[step["as"]] = outs[0]
+    if pipe.get("combine") == "mux" and not any(o.get("mock") for o in made.values()):
+        from . import fx_tools
+        video = OUTPUTS / made["video"]["url"].removeprefix("/outputs/")
+        audio = OUTPUTS / made["audio"]["url"].removeprefix("/outputs/")
+        dst = OUTPUTS / job["id"] / "narrated.mp4"
+        fx_tools.mux(video, audio, dst)
+        return [{"url": f"/outputs/{job['id']}/narrated.mp4", "kind": "video", "name": "narrated.mp4", "mock": False}]
+    return list(made.values())
 
 
 def run_comfy(feature: dict, job: dict, update: Update) -> list[dict]:

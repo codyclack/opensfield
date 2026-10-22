@@ -9,5 +9,68 @@
   "note": "Not a generation workflow; out of scope.",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "local": {
+      "mode": "website"
+    },
+    "template": "app/fx_tools.py",
+    "inputs": [
+      {
+        "name": "name",
+        "label": "Brand or project name",
+        "kind": "text",
+        "required": true
+      },
+      {
+        "name": "tagline",
+        "label": "Tagline",
+        "kind": "text"
+      },
+      {
+        "name": "features",
+        "label": "Features, one per line as Title: description (optional)",
+        "kind": "text"
+      },
+      {
+        "name": "cta",
+        "label": "Button text (optional)",
+        "kind": "text"
+      },
+      {
+        "name": "image",
+        "label": "Hero image or clip",
+        "kind": "image"
+      },
+      {
+        "name": "image_2",
+        "label": "Gallery 1",
+        "kind": "image"
+      },
+      {
+        "name": "image_3",
+        "label": "Gallery 2",
+        "kind": "image"
+      },
+      {
+        "name": "style",
+        "label": "Style",
+        "kind": "choice",
+        "options": [
+          "Dark",
+          "Light",
+          "Bold"
+        ],
+        "default": "Dark"
+      }
+    ],
+    "outputs": [],
+    "output_kind": "html",
+    "models": [],
+    "verified": true,
+    "verified_via": "Rendered locally by app/fx.py on CPU, 2026-10-21 (no ComfyUI involved)",
+    "examples": [
+      "examples/site_example/index.html"
+    ]
+  }
 }

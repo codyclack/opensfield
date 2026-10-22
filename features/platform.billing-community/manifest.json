@@ -9,5 +9,14 @@
   "note": "N/A for an open-source local app.",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "built",
+  "workflow": {
+    "page": "#/usage",
+    "template": "app page",
+    "inputs": [],
+    "outputs": [],
+    "output_kind": "image",
+    "models": [],
+    "verified": false
+  }
 }

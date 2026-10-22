@@ -97,6 +97,9 @@ function exampleEl(url, cls, opts = {}) {
   const src = url.startsWith("/") ? url : "/" + url;
   if (isAudio(src)) return h("audio", { src, controls: true, preload: "none" });
   if (/\.(glb|gltf)$/i.test(src)) return h("a", { class: "st", href: src, download: "" }, `Download 3D model (${src.split("/").pop()})`);
+  if (/\.html$/i.test(src)) return h("div", { class: `htmlprev ${cls || ""}` }, h("iframe", { src, loading: "lazy", title: "Website preview", sandbox: "allow-same-origin" }),
+    h("a", { class: "mini", href: src, target: "_blank", rel: "noopener" }, "Open site ↗"));
+  if (/\.txt$/i.test(src)) return h("a", { class: "st", href: src, target: "_blank", rel: "noopener" }, `Open ${src.split("/").pop()}`);
   if (!isVideo(src)) return h("img", { class: cls, src, alt: opts.alt || "", loading: "lazy" });
   return h("video", { class: cls, src: src + "#t=1.5", muted: true, loop: true, playsinline: true, preload: "metadata",
     controls: opts.controls, autoplay: opts.autoplay && !reduceMotion, "aria-hidden": opts.controls ? null : "true" });
@@ -136,7 +139,7 @@ function menuFor(kind, label) {
   }
   if (kind === "apps") {
     const all = studios().map((s) => menuLink(`#/s/${encodeURIComponent(s)}`, s, `${collapse(state.feats.filter((f) => f.studio === s)).length} tools`));
-    return [col("Studios", all.slice(0, 7)), col(" ", all.slice(7)), col("Library", [menuLink("#/cinema", "Cinema Studio", "Direct a shot"), menuLink("#/apps", "All apps"), menuLink("#/assets", "My elements"), menuLink("#/generations", "History"), menuLink("#/community", "Community"), menuLink("#/blog", "Learn", "Guides and tutorials")])];
+    return [col("Studios", all.slice(0, 7)), col(" ", all.slice(7)), col("Library", [menuLink("#/cinema", "Cinema Studio", "Direct a shot"), menuLink("#/apps", "All apps"), menuLink("#/assets", "My elements"), menuLink("#/generations", "History"), menuLink("#/community", "Community"), menuLink("#/blog", "Learn", "Guides and tutorials"), menuLink("#/usage", "Credits & usage")])];
   }
   return [];
 }
@@ -400,7 +403,7 @@ function panelComposer(f, vals, onPick, tabs) {
     modelButton(f, onPick),
     c.media.length > 0 && h("div", { class: "uploads" }, c.media.map((s) => uploadTile(f, s, vals))),
     ...c.presets.map((s) => field(s, presetCards(s, vals), "Hover a preset to read its prompt.")),
-    ...c.textEls.map(({ s, ta }) => h("div", { class: "field prompt" }, h("div", { class: "flabel" }, s.required ? "Prompt" : s.label, s.required && h("b", {}, " *")), ta,
+    ...c.textEls.map(({ s, ta }) => h("div", { class: "field prompt" }, h("div", { class: "flabel" }, s.name === "prompt" && s.required ? "Prompt" : s.label, s.required && h("b", {}, " *")), ta,
       h("div", { class: "prow2" }, elementsButton(f, vals, ta)))),
     c.options.length > 0 && h("div", { class: "chiprow" }, c.options.map((s) => chip(s, vals))),
     c.seed && h("details", { class: "adv" }, h("summary", {}, "Advanced"),
@@ -478,6 +481,7 @@ function galleryHead(title, withFilter) {
 
 /* ---------------- pages ---------------- */
 function renderTool(f) {
+  if (f.page) { location.replace(f.page); return; }  // app pages (credits & usage) live at their own route
   const vals = {};
   const onPick = (m) => { carryPrompt(); location.hash = `#/f/${m.id}`; };
   const head = h("div", { class: "fhead" },
@@ -778,6 +782,7 @@ function route() {
   else if (p === "cinema") renderCinema(a, b);
   else if (p === "blog") renderBlog(a);
   else if (p === "community") renderCommunity();
+  else if (p === "usage") renderUsage();
   else if (p === "generations") renderGenerations();
   else renderGrid("explore");
   window.scrollTo(0, 0);

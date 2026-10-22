@@ -76,6 +76,7 @@ MODELS = [
     ("api_seedance2_5_video_extend", "Cinema Studio", "Extend video", "cinema.extend"),
     ("template_seedance_2_0_plus_llm_prompt_helper", "Cinema Studio", "AI Director", "cinema.director"),
     ("template_seedance2_0_viral_videos_character_swap", "Marketing", "Katana remix", "marketing.katana"),
+    ("utility_sam3d_body", "Reshoot", "Auto-rig", "scene3d.rigging"),
 ]
 
 LOADERS = {"LoadImage": ("image", "image"), "LoadVideo": ("video", "file"), "LoadAudio": ("audio", "audio")}

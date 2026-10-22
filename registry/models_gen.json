@@ -7161,6 +7161,73 @@
    "models": [
     "template_seedance2_0_viral_videos_character_swap"
    ]
+  },
+  "scene3d.rigging": {
+   "template": "utility_sam3d_body",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "video_1",
+     "label": "Video",
+     "kind": "video",
+     "node": "85",
+     "field": "file",
+     "required": true
+    },
+    {
+     "name": "camera_translation",
+     "label": "Camera translation",
+     "kind": "choice",
+     "node": "127",
+     "field": "camera_translation",
+     "options": [
+      "off",
+      "centered",
+      "absolute"
+     ],
+     "default": "off"
+    },
+    {
+     "name": "fps",
+     "label": "Fps",
+     "kind": "number",
+     "node": "127",
+     "field": "fps",
+     "default": 24,
+     "min": 1.0,
+     "max": 240.0,
+     "step": 1.0
+    },
+    {
+     "name": "track_index",
+     "label": "Track index",
+     "kind": "number",
+     "node": "127",
+     "field": "track_index",
+     "default": -1,
+     "min": -1,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "bone_smooth_window",
+     "label": "Bone smooth window",
+     "kind": "number",
+     "node": "127",
+     "field": "format.bone_smooth_window",
+     "default": 0,
+     "min": 0,
+     "max": 51,
+     "step": 2
+    }
+   ],
+   "outputs": [
+    "135",
+    "143"
+   ],
+   "models": [
+    "utility_sam3d_body"
+   ]
   }
  },
  "patch": {
@@ -7219,6 +7286,14 @@
     "template_seedance2_0_viral_videos_character_swap"
    ],
    "note": "Runs Seedance 2.0 \u00b7 Viral Videos Character Swap through Comfy Cloud API nodes (uses Comfy credits)."
+  },
+  "scene3d.rigging": {
+   "track": "partner",
+   "group": "Auto-rig",
+   "partner": [
+    "utility_sam3d_body"
+   ],
+   "note": "Runs SAM 3D Body \u00b7 3D Human Mesh Extraction From Video through Comfy Cloud API nodes (uses Comfy credits)."
   }
  }
 }

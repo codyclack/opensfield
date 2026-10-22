@@ -11,5 +11,90 @@
   "note": "Driving-video library; 12 trending seen (Athlete Dance Swap, Skyway Chase...). Must use own/licensed driving clips.",
   "count": 12,
   "partner": [],
-  "status": "planned"
+  "status": "built",
+  "workflow": {
+    "template": "video_wan_animate2_distilled",
+    "api": "features/genjutsu.motion-control/workflow_api.json",
+    "ui": "features/genjutsu.motion-control/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "character",
+        "label": "Your character",
+        "kind": "image",
+        "node": "189",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "motion",
+        "label": "Motion",
+        "kind": "choice",
+        "options": [
+          "Street dance",
+          "Studio groove",
+          "Spin reveal"
+        ],
+        "default": "Street dance",
+        "apply_to": "motion_prompt",
+        "presets": {
+          "Street dance": "an energetic street dance with sharp arm moves",
+          "Studio groove": "a relaxed groove in a studio, swaying and turning",
+          "Spin reveal": "a spin in place that ends facing the camera"
+        },
+        "media_presets": {
+          "Street dance": "examples/driving_dance.mp4",
+          "Studio groove": "examples/cinema_camera_rig_dance.mp4",
+          "Spin reveal": "examples/first_last_frame_morph.mp4"
+        },
+        "media_target": "driving_video"
+      },
+      {
+        "name": "driving_video",
+        "label": "Or upload your own motion clip (optional)",
+        "kind": "video",
+        "node": "240",
+        "field": "file",
+        "required": false
+      },
+      {
+        "name": "character_prompt",
+        "label": "Character description",
+        "kind": "text",
+        "node": "605",
+        "field": "value",
+        "required": true
+      },
+      {
+        "name": "motion_prompt",
+        "label": "Extra motion detail (optional)",
+        "kind": "text",
+        "node": "604",
+        "field": "value",
+        "required": false
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "261:19",
+        "field": "noise_seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "246",
+      "292"
+    ],
+    "models": [
+      "Wan2_1_VAE_bf16.safetensors",
+      "clip_vision_h.safetensors",
+      "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors",
+      "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+      "wan_animate_2_distill_int8_convrot.safetensors",
+      "wan_animate_2_int8_convrot.safetensors"
+    ],
+    "reuses": "genjutsu.motion-control",
+    "output_kind": "video",
+    "verified": false
+  }
 }

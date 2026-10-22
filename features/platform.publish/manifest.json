@@ -9,5 +9,47 @@
   "note": "Out of scope.",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "local": {
+      "mode": "tiktok-export"
+    },
+    "template": "app/fx_tools.py",
+    "inputs": [
+      {
+        "name": "video",
+        "label": "Video",
+        "kind": "video",
+        "required": true
+      },
+      {
+        "name": "fit",
+        "label": "Fit",
+        "kind": "choice",
+        "options": [
+          "Blur fill",
+          "Crop to fill"
+        ],
+        "default": "Blur fill"
+      },
+      {
+        "name": "caption",
+        "label": "Caption (optional)",
+        "kind": "text"
+      },
+      {
+        "name": "hashtags",
+        "label": "Hashtags (optional)",
+        "kind": "text"
+      }
+    ],
+    "outputs": [],
+    "output_kind": "video",
+    "models": [],
+    "verified": true,
+    "verified_via": "Rendered locally by app/fx.py on CPU, 2026-10-21 (no ComfyUI involved)",
+    "examples": [
+      "examples/fx_tiktok.mp4"
+    ]
+  }
 }

@@ -121,8 +121,10 @@ def _enrich(m: dict) -> dict:
     m["output_kind"] = wf.get("output_kind") or output_kind(m["base"])
     m["examples"] = wf.get("examples", [])  # real renders, served under /examples
     m["local"] = wf.get("local")  # e.g. {"mode_input": "palette"} for CPU effects run by app/fx.py
+    m["pipeline"] = wf.get("pipeline")  # chains other tools (see runner.run_pipeline)
+    m["page"] = wf.get("page")  # an app page rather than a generator (e.g. #/usage)
     m["engine"] = engine(wf, m["local"])
-    m["runnable"] = bool(api and (ROOT / api).exists()) or bool(m["local"])
+    m["runnable"] = bool(api and (ROOT / api).exists()) or bool(m["local"]) or bool(m["pipeline"])
     return m
 
 

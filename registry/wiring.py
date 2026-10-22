@@ -545,3 +545,81 @@ WIRING["video.clipify"] = dict(
     inputs=[dict(name="video", label="Long video", kind="video", required=True),
             dict(name="seconds", label="Clip length (s)", kind="number", default=10, min=5, max=30, step=5)])
 WIRING["video.clipify"].update(verified_via=LOCAL_VIA, examples=["examples/fx_clipify.mp4"])
+
+
+# ---------------- the last Higgsfield modules ----------------
+_LOOKS = ["none", *[m for m in ("black-hot", "white-hot", "rainbow", "iron", "crt", "crt-glitch", "vhs", "glitch", "nokia", "retropop", "night-vision")]]
+_RATIOS = ["9:16", "16:9", "1:1", "4:5"]
+
+
+def _clips(n, first_label="Clip 1"):
+    return [dict(name="video" if i == 0 else f"video_{i + 1}", label=first_label if i == 0 else f"Clip {i + 1}", kind="video", required=i < 2) for i in range(n)]
+
+
+def _images(n, required=2):
+    return [dict(name="image" if i == 0 else f"image_{i + 1}", label=f"Shot {i + 1}", kind="image", required=i < required) for i in range(n)]
+
+
+WIRING.update({
+    # Montage / Higgsedit-style edits: join clips with cuts, crossfades or flash cuts, one aspect ratio, optional look.
+    "marketing.video-edit-montage": dict(local=dict(mode="montage"), template="app/fx_tools.py", output_kind="video", outputs=[],
+        inputs=[*_clips(4), dict(name="ratio", label="Aspect", kind="choice", options=_RATIOS, default="9:16"),
+                dict(name="transition", label="Transition", kind="choice", options=["Crossfade", "Cut", "Flash"], default="Crossfade"),
+                dict(name="seconds", label="Seconds per clip", kind="number", default=3, min=1, max=10, step=1),
+                dict(name="look", label="Look", kind="choice", options=_LOOKS, default="none")]),
+    # Match-cut reel renderer: beat-synced flash cuts across clips with one render look.
+    "matchcut.render": dict(local=dict(mode="reel"), template="app/fx_tools.py", output_kind="video", outputs=[],
+        inputs=[*_clips(4), dict(name="look", label="Render look", kind="choice", options=_LOOKS, default="vhs"),
+                dict(name="bpm", label="BPM", kind="number", default=120, min=60, max=180, step=10),
+                dict(name="ratio", label="Aspect", kind="choice", options=_RATIOS, default="9:16")]),
+    # Face / product / sphere / lens / sticker cuts: the subject stays locked in place across rapid cuts.
+    "matchcut.subject-cuts": dict(local=dict(mode="subject-cuts"), template="app/fx_tools.py", output_kind="video", outputs=[],
+        inputs=[*_images(6), dict(name="mode", label="Cut style", kind="choice", options=["Face", "Product", "Sphere", "Lens", "Sticker"], default="Face"),
+                dict(name="bpm", label="BPM", kind="number", default=120, min=60, max=180, step=10),
+                dict(name="loops", label="Loops", kind="number", default=3, min=1, max=6, step=1),
+                dict(name="ratio", label="Aspect", kind="choice", options=_RATIOS, default="9:16")]),
+    # Tracelab: tracking boxes, IDs, trails and a HUD over any video (faces first, moving objects otherwise).
+    "matchcut.tracelab": dict(local=dict(mode="tracelab"), template="app/fx_tools.py", output_kind="video", outputs=[],
+        inputs=[dict(name="video", label="Video", kind="video", required=True)]),
+    # Virality predictor: a heuristic score card from the video itself.
+    "platform.virality": dict(local=dict(mode="virality"), template="app/fx_tools.py", output_kind="image", outputs=[],
+        inputs=[dict(name="video", label="Video to score", kind="video", required=True)]),
+    # TikTok publishing: export to TikTok's spec plus a caption file, then upload in TikTok (no account access needed).
+    "platform.publish": dict(local=dict(mode="tiktok-export"), template="app/fx_tools.py", output_kind="video", outputs=[],
+        inputs=[dict(name="video", label="Video", kind="video", required=True),
+                dict(name="fit", label="Fit", kind="choice", options=["Blur fill", "Crop to fill"], default="Blur fill"),
+                dict(name="caption", label="Caption (optional)", kind="text"), dict(name="hashtags", label="Hashtags (optional)", kind="text")]),
+    # Website builder: a one-page site from a name, tagline, features and your images or clips.
+    "platform.website-builder": dict(local=dict(mode="website"), template="app/fx_tools.py", output_kind="html", outputs=[],
+        inputs=[dict(name="name", label="Brand or project name", kind="text", required=True), dict(name="tagline", label="Tagline", kind="text"),
+                dict(name="features", label="Features, one per line as Title: description (optional)", kind="text"), dict(name="cta", label="Button text (optional)", kind="text"),
+                dict(name="image", label="Hero image or clip", kind="image"), dict(name="image_2", label="Gallery 1", kind="image"), dict(name="image_3", label="Gallery 2", kind="image"),
+                dict(name="style", label="Style", kind="choice", options=["Dark", "Light", "Bold"], default="Dark")]),
+    # Faceless narrated video: ElevenLabs reads the script, Seedance 2.5 makes the B-roll, the app lays one over the other.
+    "marketing.faceless-video": dict(template="pipeline", output_kind="video", outputs=[],
+        pipeline=dict(steps=[dict(feature="model.elevenlabs-v4-text-to-speech", inputs=dict(text="{script}"), **{"as": "audio"}),
+                             dict(feature="model.seedance2-5-t2v-1080p", inputs=dict(prompt="{visuals}", ratio="{ratio}"), **{"as": "video"})], combine="mux"),
+        inputs=[dict(name="script", label="Narration script", kind="text", required=True),
+                dict(name="visuals", label="What the video shows (B-roll)", kind="text", required=True),
+                dict(name="ratio", label="Aspect", kind="choice", options=["9:16", "16:9", "1:1"], default="9:16")]),
+    # Credits, plans, community presets, contests: an app page (usage and cost history, links to Comfy billing and Community).
+    "platform.billing-community": dict(page="#/usage", template="app page", output_kind="image", outputs=[], inputs=[]),
+})
+
+# Trending motion gallery: pick a motion from the gallery (it supplies the driving clip) and apply it to your character.
+_MC = {i["name"]: i for i in WIRING["genjutsu.motion-control"]["inputs"]}
+_GALLERY = {"Street dance": ("examples/driving_dance.mp4", "an energetic street dance with sharp arm moves"),
+            "Studio groove": ("examples/cinema_camera_rig_dance.mp4", "a relaxed groove in a studio, swaying and turning"),
+            "Spin reveal": ("examples/first_last_frame_morph.mp4", "a spin in place that ends facing the camera")}
+WIRING["genjutsu.motion-gallery"] = _reuse("genjutsu.motion-control", "genjutsu.motion-control", [
+    dict(_MC["character"], label="Your character"),
+    dict(name="motion", label="Motion", kind="choice", options=list(_GALLERY), default="Street dance", apply_to="motion_prompt",
+         presets={k: v[1] for k, v in _GALLERY.items()}, media_presets={k: v[0] for k, v in _GALLERY.items()}, media_target="driving_video"),
+    dict(_MC["driving_video"], required=False, label="Or upload your own motion clip (optional)"),
+    _MC["character_prompt"], dict(_MC["motion_prompt"], required=False, label="Extra motion detail (optional)"), _MC["seed"]])
+
+for _fid, _ex in {"marketing.video-edit-montage": ["examples/fx_montage.mp4"], "matchcut.render": ["examples/fx_reel_vhs.mp4"],
+                  "matchcut.subject-cuts": ["examples/fx_facecut.mp4", "examples/fx_stickercut.mp4"], "matchcut.tracelab": ["examples/fx_tracelab.mp4"],
+                  "platform.virality": ["examples/fx_virality.png"], "platform.publish": ["examples/fx_tiktok.mp4"],
+                  "platform.website-builder": ["examples/site_example/index.html"]}.items():
+    WIRING[_fid].update(verified_via=LOCAL_VIA, examples=_ex)

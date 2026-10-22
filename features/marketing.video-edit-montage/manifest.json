@@ -12,5 +12,97 @@
   "note": "ffmpeg-level; shipped as a thin helper.",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "tested",
+  "workflow": {
+    "local": {
+      "mode": "montage"
+    },
+    "template": "app/fx_tools.py",
+    "inputs": [
+      {
+        "name": "video",
+        "label": "Clip 1",
+        "kind": "video",
+        "required": true
+      },
+      {
+        "name": "video_2",
+        "label": "Clip 2",
+        "kind": "video",
+        "required": true
+      },
+      {
+        "name": "video_3",
+        "label": "Clip 3",
+        "kind": "video",
+        "required": false
+      },
+      {
+        "name": "video_4",
+        "label": "Clip 4",
+        "kind": "video",
+        "required": false
+      },
+      {
+        "name": "ratio",
+        "label": "Aspect",
+        "kind": "choice",
+        "options": [
+          "9:16",
+          "16:9",
+          "1:1",
+          "4:5"
+        ],
+        "default": "9:16"
+      },
+      {
+        "name": "transition",
+        "label": "Transition",
+        "kind": "choice",
+        "options": [
+          "Crossfade",
+          "Cut",
+          "Flash"
+        ],
+        "default": "Crossfade"
+      },
+      {
+        "name": "seconds",
+        "label": "Seconds per clip",
+        "kind": "number",
+        "default": 3,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      {
+        "name": "look",
+        "label": "Look",
+        "kind": "choice",
+        "options": [
+          "none",
+          "black-hot",
+          "white-hot",
+          "rainbow",
+          "iron",
+          "crt",
+          "crt-glitch",
+          "vhs",
+          "glitch",
+          "nokia",
+          "retropop",
+          "night-vision"
+        ],
+        "default": "none"
+      }
+    ],
+    "outputs": [],
+    "output_kind": "video",
+    "models": [],
+    "verified": true,
+    "verified_via": "Rendered locally by app/fx.py on CPU, 2026-10-21 (no ComfyUI involved)",
+    "examples": [
+      "examples/fx_montage.mp4"
+    ]
+  }
 }

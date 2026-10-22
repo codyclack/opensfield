@@ -1,0 +1,341 @@
+{
+ "15": {
+  "inputs": {
+   "text": "person",
+   "clip": [
+    "14",
+    1
+   ]
+  },
+  "class_type": "CLIPTextEncode",
+  "_meta": {
+   "title": "CLIP Text Encode (Prompt)"
+  }
+ },
+ "18": {
+  "inputs": {
+   "detection_threshold": 0.5,
+   "max_objects": 4,
+   "detect_interval": 1,
+   "images": [
+    "86",
+    0
+   ],
+   "model": [
+    "14",
+    0
+   ],
+   "conditioning": [
+    "15",
+    0
+   ]
+  },
+  "class_type": "SAM3_VideoTrack",
+  "_meta": {
+   "title": "Run SAM3 Video Track"
+  }
+ },
+ "14": {
+  "inputs": {
+   "ckpt_name": "sam3.1_multiplex_fp16.safetensors"
+  },
+  "class_type": "CheckpointLoaderSimple",
+  "_meta": {
+   "title": "Load Checkpoint"
+  }
+ },
+ "109": {
+  "inputs": {
+   "threshold": 0.5,
+   "class_name": "person",
+   "max_detections": 100,
+   "model": [
+    "111",
+    0
+   ],
+   "image": [
+    "86",
+    0
+   ]
+  },
+  "class_type": "RTDETR_detect",
+  "_meta": {
+   "title": "Run Real-Time Detection (RT-DETR)"
+  }
+ },
+ "128": {
+  "inputs": {
+   "strength": 1,
+   "mouth_strength": 1,
+   "eye_strength": 2,
+   "brow_strength": 2,
+   "input_threshold": 0.02,
+   "blendshape_smooth_window": 7,
+   "sam3d_body_model": [
+    "119",
+    0
+   ],
+   "mhr_pose_data": [
+    "129",
+    0
+   ],
+   "image": [
+    "86",
+    0
+   ]
+  },
+  "class_type": "SAM3DBody_FaceExpression",
+  "_meta": {
+   "title": "Face Expression to SAM3D Body"
+  }
+ },
+ "129": {
+  "inputs": {
+   "run_hand_refinement": true,
+   "batch_size": 64,
+   "sam3d_body_model": [
+    "119",
+    0
+   ],
+   "image": [
+    "86",
+    0
+   ],
+   "fov": [
+    "126",
+    0
+   ],
+   "track_data": [
+    "18",
+    0
+   ],
+   "bboxes": [
+    "109",
+    0
+   ]
+  },
+  "class_type": "SAM3DBody_Predict",
+  "_meta": {
+   "title": "Run SAM3D Body Prediction"
+  }
+ },
+ "130": {
+  "inputs": {
+   "strength": 1,
+   "method": "gaussian",
+   "window": 7,
+   "rotation_threshold_degrees": 15,
+   "mhr_pose_data": [
+    "128",
+    0
+   ]
+  },
+  "class_type": "SAM3DBody_Smooth",
+  "_meta": {
+   "title": "Smooth SAM3D Body Pose Data"
+  }
+ },
+ "119": {
+  "inputs": {
+   "model_file": "sam_3d_body_dinov3_bf16.safetensors"
+  },
+  "class_type": "SAM3DBody_Loader",
+  "_meta": {
+   "title": "Load SAM3D Body Model"
+  }
+ },
+ "126": {
+  "inputs": {
+   "axis": "vertical",
+   "unit": "degrees",
+   "moge_geometry": [
+    "114",
+    0
+   ]
+  },
+  "class_type": "MoGeGeometryToFOV",
+  "_meta": {
+   "title": "Get FoV from MoGe Geometry"
+  }
+ },
+ "114": {
+  "inputs": {
+   "resolution_level": 9,
+   "fov_x_degrees": 0,
+   "batch_size": 4,
+   "force_projection": true,
+   "apply_mask": true,
+   "refine_steps": 3,
+   "moge_model": [
+    "115",
+    0
+   ],
+   "image": [
+    "86",
+    0
+   ]
+  },
+  "class_type": "MoGeInference",
+  "_meta": {
+   "title": "Run MoGe Inference"
+  }
+ },
+ "115": {
+  "inputs": {
+   "model_name": "moge_2_vitl_normal_fp16.safetensors"
+  },
+  "class_type": "LoadMoGeModel",
+  "_meta": {
+   "title": "Load MoGe Model"
+  }
+ },
+ "127": {
+  "inputs": {
+   "format": "glb",
+   "fps": 24,
+   "camera_translation": "off",
+   "track_index": -1,
+   "pose_data": [
+    "130",
+    0
+   ],
+   "sam3d_body_model": [
+    "119",
+    0
+   ],
+   "format.mesh_style": "scail",
+   "format.mesh_style.stick_radius_m": 0.022,
+   "format.mesh_style.marker_radius_m": 0,
+   "format.mesh_style.material_roughness": 0.3,
+   "format.mesh_style.include_hands": false,
+   "format.mesh_style.hand_marker_radius_m": 0.005,
+   "format.mesh_style.hand_stick_radius_m": 0.003,
+   "format.mesh_style.face_style": "full",
+   "format.bone_smooth_window": 0
+  },
+  "class_type": "BuildPoseFile",
+  "_meta": {
+   "title": "Create 3D Animation File"
+  }
+ },
+ "134": {
+  "inputs": {
+   "bit_depth": 8,
+   "color_space": "sRGB",
+   "codec": "none",
+   "images": [
+    "131",
+    0
+   ],
+   "fps": [
+    "86",
+    2
+   ]
+  },
+  "class_type": "CreateVideo",
+  "_meta": {
+   "title": "Create Video"
+  }
+ },
+ "135": {
+  "inputs": {
+   "filename_prefix": "video/SAM3D_body",
+   "format": "auto",
+   "codec": "auto",
+   "video": [
+    "134",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "85": {
+  "inputs": {
+   "file": "woman_holding_water_glass.mp4"
+  },
+  "class_type": "LoadVideo",
+  "_meta": {
+   "title": "Load Video"
+  }
+ },
+ "125": {
+  "inputs": {
+   "start_time": 0,
+   "duration": 5,
+   "strict_duration": false,
+   "video": [
+    "85",
+    0
+   ]
+  },
+  "class_type": "Video Slice",
+  "_meta": {
+   "title": "Trim Video"
+  }
+ },
+ "86": {
+  "inputs": {
+   "video": [
+    "125",
+    0
+   ]
+  },
+  "class_type": "GetVideoComponents",
+  "_meta": {
+   "title": "Get Video Components"
+  }
+ },
+ "111": {
+  "inputs": {
+   "unet_name": "rt_detr_v4-x-hgnet_fp32.safetensors",
+   "weight_dtype": "default"
+  },
+  "class_type": "UNETLoader",
+  "_meta": {
+   "title": "Load Diffusion Model"
+  }
+ },
+ "131": {
+  "inputs": {
+   "width": 0,
+   "height": 0,
+   "render_style": "mesh",
+   "pose_data": [
+    "130",
+    0
+   ],
+   "background": [
+    "86",
+    0
+   ],
+   "render_style.shader": "default",
+   "render_style.opacity": 1,
+   "render_style.person_palette_falloff": 0.6,
+   "render_style.region": "full_body"
+  },
+  "class_type": "SAM3DBody_Render",
+  "_meta": {
+   "title": "Render 3D Body Pose"
+  }
+ },
+ "143": {
+  "inputs": {
+   "filename_prefix": "3d/ComfyUI",
+   "viewport_state": "",
+   "width": 1024,
+   "height": 1024,
+   "model_3d": [
+    "127",
+    0
+   ]
+  },
+  "class_type": "Save3DAdvanced",
+  "_meta": {
+   "title": "Save 3D (Advanced)"
+  }
+ }
+}

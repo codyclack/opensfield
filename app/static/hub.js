@@ -118,7 +118,29 @@ function siteFooter() {
     col("Image models", [m("model.nano-banana-2-1-t2i", "Nano Banana 2.1"), m("model.openai-gpt-image-2-t2i", "GPT Image 2"), m("model.bfl-flux3-t2i", "FLUX 3"),
       m("model.bytedance-seedream-5-0-pro-t2i", "Seedream 5"), m("model.ideogram-v4-5-t2i", "Ideogram 4.5"), m("soul.t2i", "Z-Image (open)")]),
     col("Studios", [["Cinema Studio", "#/cinema"], ["Genjutsu", "#/s/Genjutsu"], ["Viral Hub", "#/s/Viral Hub"], ["Marketing Studio", "#/s/Marketing"], ["Soul", "#/s/Soul"], ["Match Cut", "#/s/Match Cut + Tracelab"]]),
-    col("Resources", [["Blog", "#/blog"], ["Get started", "#/blog/first-video-seedance"], ["Changelog", "#/blog/changelog-oct-22"], ["Community", "#/community"],
+    col("Resources", [["Blog", "#/blog"], ["Get started", "#/blog/first-video-seedance"], ["Changelog", "#/blog/changelog-oct-22"], ["Community", "#/community"], ["Credits & usage", "#/usage"],
       ["GitHub", "https://github.com/codyclack/opensfield"], ["Coverage", "https://github.com/codyclack/opensfield/blob/main/COVERAGE.md"]]),
     h("div", { class: "fbottom" }, h("small", {}, "OpenSfield is an independent open-source project for Comfy's #OpenSourceHiggsfield challenge. Not affiliated with Higgsfield AI.")));
+}
+
+/* Credits & usage (Higgsfield's credits / plans page): what each generation cost, from the costs measured per model. */
+function renderUsage() {
+  const rows = state.jobs.map((j) => ({ j, f: state.byId[j.feature_id], cost: state.byId[j.feature_id]?.cost || 0 }));
+  const done = rows.filter((r) => r.j.status === "done");
+  const total = done.reduce((s, r) => s + r.cost, 0);
+  const partner = done.filter((r) => r.f && r.f.track === "partner").length;
+  const stat = (label, value, sub) => h("div", { class: "ustat" }, h("small", {}, label), h("b", {}, value), sub && h("small", {}, sub));
+  $("#main").replaceChildren(marker("Credits & usage"),
+    h("p", { class: "sub" }, "Partner models spend your Comfy credits; open-weight tools only use GPU time. Estimates use the credits measured per model; your exact balance is on Comfy."),
+    h("div", { class: "ustats" }, stat("Generations", String(state.jobs.length), `${done.length} finished`), stat("Partner-model runs", String(partner)),
+      stat("Estimated credits", `✦ ${Math.round(total)}`, "for models with a measured cost"),
+      h("a", { class: "ustat link", href: "https://platform.comfy.org", target: "_blank", rel: "noopener" }, h("small", {}, "Balance and plans"), h("b", {}, "Comfy platform ↗"), h("small", {}, "Add credits or change plan"))),
+    h("div", { class: "ulinks" }, h("a", { class: "ghost", href: "#/community" }, "Community"), h("a", { class: "ghost", href: "#/blog" }, "Tutorials"),
+      h("a", { class: "ghost", href: "https://form.typeform.com/to/V1dSQrkS", target: "_blank", rel: "noopener" }, "#OpenSourceHiggsfield contest")),
+    rows.length ? h("table", { class: "utable" }, h("thead", {}, h("tr", {}, ...["When", "Tool", "Model", "Status", "Est. credits"].map((t) => h("th", {}, t)))),
+      h("tbody", {}, ...rows.map(({ j, f, cost }) => h("tr", {}, h("td", {}, new Date(j.created * 1000).toLocaleString()), h("td", {}, h("a", { href: `#/f/${j.feature_id}` }, j.feature_name)),
+        h("td", {}, f ? (f.engine || (f.track === "partner" ? "partner" : "open weights")) : "-"), h("td", {}, j.status), h("td", {}, cost ? `✦ ${cost}` : f && f.track !== "partner" ? "GPU only" : "-")))))
+      : h("div", { class: "gempty" }, h("b", {}, "No generations yet"), h("small", {}, "Run any tool and its cost shows up here.")),
+    siteFooter());
+  document.title = "Credits & usage · OpenSfield";
 }
