@@ -12,7 +12,6 @@
     "api_wan3_0_r2v"
   ],
   "status": "built",
-  "group": "Reference to video",
   "workflow": {
     "template": "api_wan3_0_r2v",
     "api": "features/model.wan3-0-r2v/workflow_api.json",
@@ -128,5 +127,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Reference to video"
 }

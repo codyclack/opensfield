@@ -1,0 +1,263 @@
+{
+ "16": {
+  "inputs": {
+   "filename_prefix": "video/Seedance2.5_video_extend",
+   "format": "auto",
+   "video": [
+    "38",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "35": {
+  "inputs": {
+   "file": "sloth_bullfight.mp4"
+  },
+  "class_type": "LoadVideo",
+  "_meta": {
+   "title": "Load Video"
+  }
+ },
+ "36": {
+  "inputs": {
+   "start_time": 0,
+   "duration": 5,
+   "strict_duration": false,
+   "video": [
+    "35",
+    0
+   ]
+  },
+  "class_type": "Video Slice",
+  "_meta": {
+   "title": "Trim Video"
+  }
+ },
+ "38": {
+  "inputs": {
+   "model": "Seedance 2.5",
+   "seed": 1672978219,
+   "watermark": false,
+   "model.prompt": "Continuing from the previous shot, live-action western rodeo, dusty arena, golden hour. The raging bull calms down and stops, the buzzer rings. The sloth in the cowboy hat hops off the bull's back, lands steadily in the dust, slowly dusts off his hat, then strolls away unhurriedly with a deadpan expression. Slow motion, dust floating in warm sunlight, cheering crowd roars and waves hats in the background. Steadicam follow shot. Western arena music swells. No black frames, no text overlays.",
+   "model.resolution": "720p",
+   "model.ratio": "adaptive",
+   "model.duration": 5,
+   "model.generate_audio": true,
+   "model.task_type": "extend",
+   "model.output_format": "mp4",
+   "model.auto_downscale": true,
+   "model.auto_upscale": false,
+   "model.reference_videos.video_1": [
+    "36",
+    0
+   ]
+  },
+  "class_type": "ByteDance2ReferenceNodeV2",
+  "_meta": {
+   "title": "ByteDance Seedance 2.5 Reference to Video"
+  }
+ },
+ "39:11": {
+  "inputs": {
+   "value": false
+  },
+  "class_type": "PrimitiveBoolean",
+  "_meta": {
+   "title": "Boolean"
+  }
+ },
+ "39:10": {
+  "inputs": {
+   "duration": 60,
+   "sample_rate": 44100,
+   "channels": 2
+  },
+  "class_type": "EmptyAudio",
+  "_meta": {
+   "title": "Empty Audio"
+  }
+ },
+ "39:3": {
+  "inputs": {
+   "switch": [
+    "39:11",
+    0
+   ],
+   "on_false": [
+    "39:42",
+    0
+   ],
+   "on_true": [
+    "39:10",
+    0
+   ]
+  },
+  "class_type": "ComfySwitchNode",
+  "_meta": {
+   "title": "If/Else Switch"
+  }
+ },
+ "39:6": {
+  "inputs": {
+   "padding_color": "white",
+   "interpolation": "lanczos",
+   "image": [
+    "39:2",
+    0
+   ],
+   "target_width": [
+    "39:7",
+    0
+   ],
+   "target_height": [
+    "39:7",
+    1
+   ]
+  },
+  "class_type": "ResizeAndPadImage",
+  "_meta": {
+   "title": "Resize And Pad Image"
+  }
+ },
+ "39:8": {
+  "inputs": {
+   "bit_depth": 8,
+   "color_space": "sRGB",
+   "codec": "none",
+   "images": [
+    "39:13",
+    0
+   ],
+   "fps": [
+    "39:1",
+    2
+   ],
+   "audio": [
+    "39:3",
+    0
+   ]
+  },
+  "class_type": "CreateVideo",
+  "_meta": {
+   "title": "Create Video"
+  }
+ },
+ "39:2": {
+  "inputs": {
+   "video": [
+    "38",
+    0
+   ]
+  },
+  "class_type": "GetVideoComponents",
+  "_meta": {
+   "title": "Get Video Components"
+  }
+ },
+ "39:27": {
+  "inputs": {
+   "switch": [
+    "39:28",
+    0
+   ],
+   "on_false": [
+    "39:2",
+    0
+   ],
+   "on_true": [
+    "39:6",
+    0
+   ]
+  },
+  "class_type": "ComfySwitchNode",
+  "_meta": {
+   "title": "If/Else Switch"
+  }
+ },
+ "39:1": {
+  "inputs": {
+   "video": [
+    "35",
+    0
+   ]
+  },
+  "class_type": "GetVideoComponents",
+  "_meta": {
+   "title": "Get Video Components"
+  }
+ },
+ "39:7": {
+  "inputs": {
+   "image": [
+    "39:1",
+    0
+   ]
+  },
+  "class_type": "GetImageSize",
+  "_meta": {
+   "title": "Get Image Size"
+  }
+ },
+ "39:28": {
+  "inputs": {
+   "value": false
+  },
+  "class_type": "PrimitiveBoolean",
+  "_meta": {
+   "title": "Boolean"
+  }
+ },
+ "39:13": {
+  "inputs": {
+   "images.image0": [
+    "39:1",
+    0
+   ],
+   "images.image1": [
+    "39:27",
+    0
+   ]
+  },
+  "class_type": "BatchImagesNode",
+  "_meta": {
+   "title": "Batch Images"
+  }
+ },
+ "39:42": {
+  "inputs": {
+   "direction": "after",
+   "audio1": [
+    "39:2",
+    1
+   ],
+   "audio2": [
+    "39:1",
+    1
+   ]
+  },
+  "class_type": "AudioConcat",
+  "_meta": {
+   "title": "Concatenate Audio"
+  }
+ },
+ "40": {
+  "inputs": {
+   "filename_prefix": "video/Seedance2.5_video_extend_merged",
+   "format": "auto",
+   "video": [
+    "39:8",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ }
+}

@@ -12,7 +12,6 @@
     "api_kling_motion_control3"
   ],
   "status": "built",
-  "group": "Motion control",
   "workflow": {
     "template": "api_kling_motion_control3",
     "api": "features/model.kling-motion-control3/workflow_api.json",
@@ -88,5 +87,6 @@
     "output_kind": "video",
     "verified": false
   },
+  "group": "Motion control",
   "default": true
 }

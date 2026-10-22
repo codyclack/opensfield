@@ -75,6 +75,9 @@ def run_local(feature: dict, job: dict, update: Update) -> list[dict]:
     loc = feature["local"]
     mode = loc.get("mode") or job["inputs"].get(loc["mode_input"]) or next(s["default"] for s in feature["inputs"] if s["name"] == loc["mode_input"])
     out = OUTPUTS / job["id"] / f"{mode}.mp4"
+    if mode == "clipify":
+        fx.clipify(UPLOADS / job["inputs"]["video"], out, seconds=float(job["inputs"].get("seconds") or 10), progress=lambda p: update(progress=p))
+        return [{"url": f"/outputs/{job['id']}/{mode}.mp4", "kind": "video", "name": out.name, "mock": False}]
     fx.process_video(UPLOADS / job["inputs"]["video"], out, mode, max_seconds=10, progress=lambda p: update(progress=p),
                      text=str(job["inputs"].get(loc.get("text_input", ""), "")))
     return [{"url": f"/outputs/{job['id']}/{mode}.mp4", "kind": "video", "name": out.name, "mock": False}]

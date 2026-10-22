@@ -12,7 +12,6 @@
     "api_qwen3_t2i"
   ],
   "status": "tested",
-  "group": "Text to image",
   "workflow": {
     "template": "api_qwen3_t2i",
     "api": "features/model.qwen3-t2i/workflow_api.json",
@@ -25,17 +24,6 @@
         "node": "14",
         "field": "model.prompt",
         "required": true
-      },
-      {
-        "name": "n",
-        "label": "N",
-        "kind": "number",
-        "node": "14",
-        "field": "n",
-        "default": 1,
-        "min": 1,
-        "max": 6,
-        "step": 1
       },
       {
         "name": "seed",
@@ -59,5 +47,6 @@
       "examples/models/qwen3-t2i.png"
     ]
   },
+  "group": "Text to image",
   "cost": 12
 }

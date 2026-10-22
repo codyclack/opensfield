@@ -12,7 +12,6 @@
     "api_bfl_flux3_t2i"
   ],
   "status": "tested",
-  "group": "Text to image",
   "workflow": {
     "template": "api_bfl_flux3_t2i",
     "api": "features/model.bfl-flux3-t2i/workflow_api.json",
@@ -68,17 +67,6 @@
         "default": "1K"
       },
       {
-        "name": "safety_tolerance",
-        "label": "Safety tolerance",
-        "kind": "number",
-        "node": "1",
-        "field": "safety_tolerance",
-        "default": 4,
-        "min": 0,
-        "max": 4,
-        "step": 1
-      },
-      {
         "name": "seed",
         "label": "Seed (0 = random)",
         "kind": "seed",
@@ -100,5 +88,6 @@
       "examples/models/bfl-flux3-t2i.png"
     ]
   },
+  "group": "Text to image",
   "cost": 14
 }

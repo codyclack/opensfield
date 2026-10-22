@@ -6,7 +6,7 @@ Open-source rebuild of Higgsfield's creative apps on ComfyUI, for Comfy's
 
 ## What it looks like
 A Higgsfield-style app: text top nav (Explore, Image, Video, Audio, Edit, Genjutsu, Cinema Studio, Soul, Viral, Marketing, Apps, Assets),
-a left sidebar with every studio, **Image / Video / Audio workspaces** with Higgsfield's tabs (Create Video, Text to Video, References,
+hover menus listing every studio, tool and model (like higgsfield.ai), a Higgsfield-style Explore page, **Image / Video / Audio workspaces** with Higgsfield's tabs (Create Video, Text to Video, References,
 First & Last, Motion Control, Edit Video), a **model picker** per task (Seedance 2.5 is the default for video; open-weight models sit in the
 same list), option chips (duration, ratio, resolution), a bottom prompt bar on the Image page, **@ Elements** from your asset library, a
 persistent **Generations** history (download, save to Assets, reuse settings, remove), and an optional ComfyUI node-graph view of every tool.
@@ -14,12 +14,12 @@ Preset video tools (viral effects, UGC, click-to-ad, product motion, multishot, 
 open LTX-2.5 version one click away.
 
 ## Status (honest summary)
-- **48 of 72 modules are built and have real example outputs** in [`examples/`](examples/README.md), using open-weight models
+- **Catalog: 146 tools** (Higgsfield modules plus one tool per partner model). **76 have real example outputs** from live runs, **59 are wired from official Comfy templates but not yet run** (marked untested in the app), **11 are not built**. Earlier summary: 48 of the original 72 modules were built in [`examples/`](examples/README.md), using open-weight models
   only: 23 are separate ComfyUI workflows (video outpainting, Chatterbox text-to-speech/voice clone, motion transfer, character replacement, text/image-to-video, first/last frame,
   video edit, image edit, inpaint, outpaint, background removal, layer decomposition, upscale, music, image-to-3D, several
   text-to-image models, style reference, two-reference compose), 20 are presets that reuse those workflows (UGC video, click-to-ad, shorts, AI influencer, ad variants, re-shoot angles, narration, image reframe, camera angles, viral effects,
   multishot, character sheet, identity, product shots, thumbnails, ads, brand assets, sprites, studio presets) and 5 are local CPU effects (`app/fx.py`: thermal palettes, retro looks, deflicker, burned captions, typewriter and word-stack text).
-- **24 modules are not built.** Reasons: partner-only models, platform features that are not generation, nodes that need your
+- **The 11 not built:** billing/community, TikTok publishing, virality predictor and the website builder (platform features, not generation), match-cut subject cuts, the match-cut reel renderer, Tracelab, montage editing, faceless narrated videos, the trending-motion gallery and 3D auto-rigging. Original note: Reasons: partner-only models, platform features that are not generation, nodes that need your
   own custom packs, or no usable open workflow found. COVERAGE.md lists each one. [COVERAGE.md](COVERAGE.md) lists every Higgsfield feature, its planned open-weight
   stand-in and its status (`planned` / `built` / `tested`).
 - **The app runs in mock mode out of the box** (placeholder outputs, no ComfyUI needed). Real runs through the app's `comfy-sdk`

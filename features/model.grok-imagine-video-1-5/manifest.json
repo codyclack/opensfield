@@ -12,7 +12,6 @@
     "api_grok_imagine_video_1_5"
   ],
   "status": "tested",
-  "group": "Image to video",
   "workflow": {
     "template": "api_grok_imagine_video_1_5",
     "api": "features/model.grok-imagine-video-1-5/workflow_api.json",
@@ -111,5 +110,6 @@
       "examples/models/grok-imagine-video-1-5.mp4"
     ]
   },
+  "group": "Image to video",
   "cost": 214
 }

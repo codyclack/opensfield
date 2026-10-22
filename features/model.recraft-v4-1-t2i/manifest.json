@@ -12,7 +12,6 @@
     "api_recraft_v4_1_t2i"
   ],
   "status": "tested",
-  "group": "Text to image",
   "workflow": {
     "template": "api_recraft_v4_1_t2i",
     "api": "features/model.recraft-v4-1-t2i/workflow_api.json",
@@ -63,17 +62,6 @@
         "default": "1024x1024"
       },
       {
-        "name": "n",
-        "label": "N",
-        "kind": "number",
-        "node": "12",
-        "field": "n",
-        "default": 1,
-        "min": 1,
-        "max": 6,
-        "step": 1
-      },
-      {
         "name": "seed",
         "label": "Seed (0 = random)",
         "kind": "seed",
@@ -94,5 +82,6 @@
     "examples": [
       "examples/models/recraft-v4-1-t2i.png"
     ]
-  }
+  },
+  "group": "Text to image"
 }

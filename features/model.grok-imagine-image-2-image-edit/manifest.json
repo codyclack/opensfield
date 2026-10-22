@@ -12,7 +12,6 @@
     "api_grok_imagine_image_2_image_edit"
   ],
   "status": "tested",
-  "group": "Image edit",
   "workflow": {
     "template": "api_grok_imagine_image_2_image_edit",
     "api": "features/model.grok-imagine-image-2-image-edit/workflow_api.json",
@@ -123,5 +122,6 @@
       "examples/models/grok-imagine-image-2-image-edit.png"
     ]
   },
+  "group": "Image edit",
   "cost": 17
 }

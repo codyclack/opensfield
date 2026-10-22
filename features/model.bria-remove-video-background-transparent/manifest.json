@@ -12,7 +12,6 @@
     "api_bria_remove_video_background_transparent"
   ],
   "status": "built",
-  "group": "Video background remover",
   "workflow": {
     "template": "api_bria_remove_video_background_transparent",
     "api": "features/model.bria-remove-video-background-transparent/workflow_api.json",
@@ -43,5 +42,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Video background remover"
 }

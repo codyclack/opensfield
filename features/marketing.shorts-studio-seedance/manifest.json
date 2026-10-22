@@ -17,8 +17,6 @@
     "api_seedance2_5_i2v_1080p"
   ],
   "status": "built",
-  "group": "Shorts studio sessions/presets",
-  "default": true,
   "workflow": {
     "template": "api_seedance2_5_t2v_1080p",
     "api": "features/model.seedance2-5-t2v-1080p/workflow_api.json",
@@ -108,5 +106,7 @@
     "reuses": "model.seedance2-5-t2v-1080p",
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Shorts studio sessions/presets",
+  "default": true
 }

@@ -66,7 +66,16 @@ MODELS = [
     ("api_meshy7_1_image_to_model", "Image models", "Image to 3D"), ("api_tripo_p2_image_to_model", "Image models", "Image to 3D"),
     # audio
     ("api_elevenlabs_v4_text_to_speech", "Audio", "Text to speech"), ("api_fishaudio_text_to_speech", "Audio", "Text to speech"),
-    ("api_heygen_text_to_speech", "Audio", "Text to speech"),
+    ("api_heygen_text_to_speech", "Audio", "Text to speech"), ("api_fishaudio_voice_clone_tts", "Audio", "Voice clone"),
+    ("api_sync_so_talking_image", "Video tools", "Lip sync"),
+    # Higgsfield modules that map 1:1 onto a template: wired straight into the existing feature id (4th field)
+    ("api_elevenlabs_text_to_sound_effects", "Audio", "Sound effects", "audio.sfx"),
+    ("api_elevenlabs_speech_to_speech", "Audio", "Voice change", "audio.voice-change"),
+    ("api_heygen_video_translate", "Audio", "Dubbing", "audio.dubbing"),
+    ("api_sync_so_lip_sync_video", "Video tools", "Lip sync", "video.lipsync"),
+    ("api_seedance2_5_video_extend", "Cinema Studio", "Extend video", "cinema.extend"),
+    ("template_seedance_2_0_plus_llm_prompt_helper", "Cinema Studio", "AI Director", "cinema.director"),
+    ("template_seedance2_0_viral_videos_character_swap", "Marketing", "Katana remix", "marketing.katana"),
 ]
 
 LOADERS = {"LoadImage": ("image", "image"), "LoadVideo": ("video", "file"), "LoadAudio": ("audio", "audio")}
@@ -78,6 +87,9 @@ def saver_kind(cls: str):
                 return kind
     return None
 SKIP_KEYS = {"control_after_generate", "unique_id"}
+HIDE = {"output_format", "bit_depth", "color_space", "codec", "spacing_color", "spacing_width", "video_processing", "response_modalities",
+        "thinking_level", "n", "custom_width", "custom_height", "background", "watermark", "top_p", "temperature", "volume", "direction",
+        "apply_text_normalization", "speaker_frame", "speaker_x", "speaker_y", "model_name", "task_type", "safety_tolerance"}
 ASPECT_RE = re.compile(r"^\d+:\d+")
 
 
@@ -179,10 +191,21 @@ def wire(api: dict, info: dict) -> dict:
         main.update(name="prompt", label="Prompt", required=True)
         main["also"] = [dict(node=t["node"], field=t["field"]) for t in shots[1:]]
         inputs = [i for i in inputs if i not in shots[1:]]
+    # Higgsfield-style forms: hide plumbing (system prompts, codecs, counts) and keep the template's value for those
+    inputs = [i for i in inputs if not (i["name"] in HIDE or "system" in i["name"])]
+    seen_kinds, keep = set(), []
+    for i in inputs:  # one prompt box and one seed per tool; later duplicates keep the template's value
+        if i["kind"] == "seed" or (i["kind"] == "text" and i["name"].startswith("prompt")):
+            key = i["kind"]
+            if key in seen_kinds:
+                continue
+            seen_kinds.add(key)
+        keep.append(i)
+    inputs = keep
     has_media = any(i["kind"] in ("image", "video", "audio") for i in inputs)
     for i in inputs:
         if i["kind"] == "text":
-            if i["name"] == "prompt" or not has_media:
+            if i["name"] in ("prompt", "text") or not has_media:
                 i["required"] = True
             else:
                 i["clear_blank"] = True
@@ -231,10 +254,11 @@ def main() -> int:
     ex_path = ROOT / "registry" / "models_examples.json"
     examples = json.loads(ex_path.read_text(encoding="utf-8")) if ex_path.exists() else {}
     names = titles()
-    for template, studio, group in MODELS:
+    gen.setdefault("patch", {})
+    for template, studio, group, *target in MODELS:
         if only and template not in only:
             continue
-        fid = f"model.{slug(template)}"
+        fid = target[0] if target else f"model.{slug(template)}"
         try:
             ui = download(template)
             api = convert_ui_to_api(ui, info)
@@ -250,7 +274,10 @@ def main() -> int:
         (d / "workflow_ui.json").write_text(json.dumps(ui), encoding="utf-8")
         (d / "workflow_api.json").write_text(json.dumps(api, indent=1), encoding="utf-8")
         title = names.get(template, slug(template)).replace(": ", " · ").replace(" (API)", "")
-        gen["features"][fid] = dict(id=fid, studio=studio, name=title, tier="B", base=[], higgsfield=group, track="partner",
+        if target:  # an existing Higgsfield module: keep its name and studio, mark it partner and group it
+            gen["patch"][fid] = dict(track="partner", group=group, partner=[template], note=f"Runs {title} through Comfy Cloud API nodes (uses Comfy credits).")
+        else:
+            gen["features"][fid] = dict(id=fid, studio=studio, name=title, tier="B", base=[], higgsfield=group, track="partner",
                                    note="Partner model run through Comfy Cloud API nodes (uses Comfy credits).", count=1, partner=[template], status="planned", group=group)
         wiring = dict(template=template, output_kind=w["output_kind"], inputs=w["inputs"], outputs=w["outputs"], models=[template])
         if fid in examples:

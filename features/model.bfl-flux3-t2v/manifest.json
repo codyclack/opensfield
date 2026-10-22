@@ -12,7 +12,6 @@
     "api_bfl_flux3_t2v"
   ],
   "status": "built",
-  "group": "Text to video",
   "workflow": {
     "template": "api_bfl_flux3_t2v",
     "api": "features/model.bfl-flux3-t2v/workflow_api.json",
@@ -86,17 +85,6 @@
         "default": "720p"
       },
       {
-        "name": "safety_tolerance",
-        "label": "Safety tolerance",
-        "kind": "number",
-        "node": "13",
-        "field": "safety_tolerance",
-        "default": 2,
-        "min": 0,
-        "max": 4,
-        "step": 1
-      },
-      {
         "name": "seed",
         "label": "Seed (0 = random)",
         "kind": "seed",
@@ -113,5 +101,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Text to video"
 }

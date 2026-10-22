@@ -12,7 +12,6 @@
     "api_kling_vto"
   ],
   "status": "built",
-  "group": "Virtual try-on",
   "workflow": {
     "template": "api_kling_vto",
     "api": "features/model.kling-vto/workflow_api.json",
@@ -51,5 +50,6 @@
     ],
     "output_kind": "image",
     "verified": false
-  }
+  },
+  "group": "Virtual try-on"
 }

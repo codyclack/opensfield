@@ -12,7 +12,6 @@
     "api_meshy7_1_image_to_model"
   ],
   "status": "built",
-  "group": "Image to 3D",
   "workflow": {
     "template": "api_meshy7_1_image_to_model",
     "api": "features/model.meshy7-1-image-to-model/workflow_api.json",
@@ -141,5 +140,6 @@
     "output_kind": "3d",
     "verified": false
   },
+  "group": "Image to 3D",
   "cost": 362
 }

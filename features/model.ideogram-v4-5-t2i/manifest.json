@@ -12,7 +12,6 @@
     "api_ideogram_v4_5_t2i"
   ],
   "status": "tested",
-  "group": "Text to image",
   "workflow": {
     "template": "api_ideogram_v4_5_t2i",
     "api": "features/model.ideogram-v4-5-t2i/workflow_api.json",
@@ -121,5 +120,6 @@
       "examples/models/ideogram-v4-5-t2i.png"
     ]
   },
+  "group": "Text to image",
   "cost": 18
 }

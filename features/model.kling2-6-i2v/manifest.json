@@ -12,7 +12,6 @@
     "api_kling2_6_i2v"
   ],
   "status": "built",
-  "group": "Image to video",
   "workflow": {
     "template": "api_kling2_6_i2v",
     "api": "features/model.kling2-6-i2v/workflow_api.json",
@@ -33,17 +32,6 @@
         "node": "12",
         "field": "prompt",
         "required": true
-      },
-      {
-        "name": "model_name",
-        "label": "Model name",
-        "kind": "choice",
-        "node": "12",
-        "field": "model_name",
-        "options": [
-          "kling-v2-6"
-        ],
-        "default": "kling-v2-6"
       },
       {
         "name": "mode",
@@ -77,5 +65,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Image to video"
 }

@@ -12,7 +12,6 @@
     "api_nano_banana_2_1_image_edit"
   ],
   "status": "tested",
-  "group": "Image edit",
   "workflow": {
     "template": "api_nano_banana_2_1_image_edit",
     "api": "features/model.nano-banana-2-1-image-edit/workflow_api.json",
@@ -33,27 +32,6 @@
         "node": "4",
         "field": "prompt",
         "required": true
-      },
-      {
-        "name": "system_prompt",
-        "label": "System prompt",
-        "kind": "text",
-        "node": "4",
-        "field": "system_prompt",
-        "required": false,
-        "clear_blank": true
-      },
-      {
-        "name": "response_modalities",
-        "label": "Response modalities",
-        "kind": "choice",
-        "node": "4",
-        "field": "response_modalities",
-        "options": [
-          "IMAGE",
-          "IMAGE+TEXT"
-        ],
-        "default": "IMAGE"
       },
       {
         "name": "aspect_ratio",
@@ -94,41 +72,6 @@
         "default": "1K"
       },
       {
-        "name": "thinking_level",
-        "label": "Thinking level",
-        "kind": "choice",
-        "node": "4",
-        "field": "model.thinking_level",
-        "options": [
-          "MINIMAL",
-          "MEDIUM",
-          "HIGH"
-        ],
-        "default": "MEDIUM"
-      },
-      {
-        "name": "temperature",
-        "label": "Temperature",
-        "kind": "number",
-        "node": "4",
-        "field": "temperature",
-        "default": 1,
-        "min": 0.0,
-        "max": 2.0,
-        "step": 0.01
-      },
-      {
-        "name": "top_p",
-        "label": "Top p",
-        "kind": "number",
-        "node": "4",
-        "field": "top_p",
-        "default": 0.95,
-        "min": 0.0,
-        "max": 1.0,
-        "step": 0.01
-      },
-      {
         "name": "seed",
         "label": "Seed (0 = random)",
         "kind": "seed",
@@ -150,6 +93,7 @@
       "examples/models/nano-banana-2-1-image-edit.png"
     ]
   },
+  "group": "Image edit",
   "default": true,
   "cost": 12
 }

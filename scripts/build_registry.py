@@ -30,6 +30,8 @@ def write_manifests():
         d.mkdir(parents=True, exist_ok=True)
         mf = d / "manifest.json"
         old = json.loads(mf.read_text(encoding="utf-8")) if mf.exists() else {}
+        for k in ("cost", "default", "group"):  # registry-owned: a key removed from the registry must disappear here too
+            old.pop(k, None)
         merged = {**old, **feat}  # registry owns the descriptive fields; keep anything a build step added
         merged["status"] = max(old.get("status", "planned"), feat["status"], key=ORDER.get)
         wiring = WIRING.get(feat["id"])

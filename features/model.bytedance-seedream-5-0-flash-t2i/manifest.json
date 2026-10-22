@@ -12,7 +12,6 @@
     "api_bytedance_seedream_5_0_flash_t2i"
   ],
   "status": "built",
-  "group": "Text to image",
   "workflow": {
     "template": "api_bytedance_seedream_5_0_flash_t2i",
     "api": "features/model.bytedance-seedream-5-0-flash-t2i/workflow_api.json",
@@ -100,5 +99,6 @@
     ],
     "output_kind": "image",
     "verified": false
-  }
+  },
+  "group": "Text to image"
 }

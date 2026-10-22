@@ -1,0 +1,30 @@
+{
+ "136": {
+  "inputs": {
+   "text": "Traffic noise with honking horns, busy highway",
+   "model": "eleven_sfx_v2",
+   "output_format": "mp3_44100_192",
+   "model.duration": 5,
+   "model.loop": false,
+   "model.prompt_influence": 0.3
+  },
+  "class_type": "ElevenLabsTextToSoundEffects",
+  "_meta": {
+   "title": "ElevenLabs Text to Sound Effects"
+  }
+ },
+ "139": {
+  "inputs": {
+   "filename_prefix": "audio/ComfyUI",
+   "format": "flac",
+   "audio": [
+    "136",
+    0
+   ]
+  },
+  "class_type": "SaveAudioAdvanced",
+  "_meta": {
+   "title": "Save Audio (Advanced)"
+  }
+ }
+}

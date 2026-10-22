@@ -12,7 +12,6 @@
     "api_krea3_t2i"
   ],
   "status": "tested",
-  "group": "Text to image",
   "workflow": {
     "template": "api_krea3_t2i",
     "api": "features/model.krea3-t2i/workflow_api.json",
@@ -92,5 +91,6 @@
     "examples": [
       "examples/models/krea3-t2i.png"
     ]
-  }
+  },
+  "group": "Text to image"
 }

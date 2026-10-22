@@ -12,7 +12,6 @@
     "api_heygen_text_to_speech"
   ],
   "status": "built",
-  "group": "Text to speech",
   "workflow": {
     "template": "api_heygen_text_to_speech",
     "api": "features/model.heygen-text-to-speech/workflow_api.json",
@@ -131,5 +130,6 @@
     ],
     "output_kind": "audio",
     "verified": false
-  }
+  },
+  "group": "Text to speech"
 }

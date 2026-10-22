@@ -1,0 +1,59 @@
+{
+ "1": {
+  "inputs": {
+   "text": "[curious] Want a voice that sounds exactly like you?\n[calm] Record a short clip, clone it with Fish Audio, and type your script.\n[confident] Your voice, saying anything. Right in ComfyUI.",
+   "model": "s2.1-pro",
+   "seed": 731226986,
+   "model.temperature": 0.7,
+   "model.top_p": 0.7,
+   "model.speed": 1,
+   "model.volume": 0,
+   "model.normalize": true,
+   "model.voices.voice0": [
+    "10",
+    0
+   ]
+  },
+  "class_type": "FishAudioTextToSpeech",
+  "_meta": {
+   "title": "Fish Audio Text to Speech"
+  }
+ },
+ "5": {
+  "inputs": {
+   "filename_prefix": "audio/Fish_audio_t2s",
+   "format": "mp3",
+   "audio": [
+    "1",
+    0
+   ],
+   "format.quality": "V0"
+  },
+  "class_type": "SaveAudioAdvanced",
+  "_meta": {
+   "title": "Save Audio (Advanced)"
+  }
+ },
+ "10": {
+  "inputs": {
+   "enhance_audio_quality": true,
+   "files.audio0": [
+    "11",
+    0
+   ]
+  },
+  "class_type": "FishAudioInstantVoiceClone",
+  "_meta": {
+   "title": "Fish Audio Instant Voice Clone"
+  }
+ },
+ "11": {
+  "inputs": {
+   "audio": "api_fishaudio_voice_clone_tts_fish_audio_example.mp3"
+  },
+  "class_type": "LoadAudio",
+  "_meta": {
+   "title": "Load Audio"
+  }
+ }
+}

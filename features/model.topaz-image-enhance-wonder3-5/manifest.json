@@ -12,7 +12,6 @@
     "api_topaz_image_enhance_wonder3_5"
   ],
   "status": "tested",
-  "group": "Image upscale",
   "workflow": {
     "template": "api_topaz_image_enhance_wonder3_5",
     "api": "features/model.topaz-image-enhance-wonder3-5/workflow_api.json",
@@ -121,5 +120,6 @@
       "examples/models/topaz-image-enhance-wonder3-5.png"
     ]
   },
+  "group": "Image upscale",
   "cost": 24
 }

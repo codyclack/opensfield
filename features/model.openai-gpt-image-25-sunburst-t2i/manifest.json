@@ -12,7 +12,6 @@
     "api_openai_gpt_image_25_sunburst_t2i"
   ],
   "status": "built",
-  "group": "Text to image",
   "workflow": {
     "template": "api_openai_gpt_image_25_sunburst_t2i",
     "api": "features/model.openai-gpt-image-25-sunburst-t2i/workflow_api.json",
@@ -47,19 +46,6 @@
         "default": "auto"
       },
       {
-        "name": "background",
-        "label": "Background",
-        "kind": "choice",
-        "node": "271",
-        "field": "model.background",
-        "options": [
-          "auto",
-          "opaque",
-          "transparent"
-        ],
-        "default": "auto"
-      },
-      {
         "name": "quality",
         "label": "Quality",
         "kind": "choice",
@@ -73,39 +59,6 @@
           "max"
         ],
         "default": "low"
-      },
-      {
-        "name": "n",
-        "label": "N",
-        "kind": "number",
-        "node": "271",
-        "field": "n",
-        "default": 1,
-        "min": 1,
-        "max": 8,
-        "step": 1
-      },
-      {
-        "name": "custom_width",
-        "label": "Custom width",
-        "kind": "number",
-        "node": "271",
-        "field": "model.custom_width",
-        "default": 1024,
-        "min": 480,
-        "max": 3840,
-        "step": 16
-      },
-      {
-        "name": "custom_height",
-        "label": "Custom height",
-        "kind": "number",
-        "node": "271",
-        "field": "model.custom_height",
-        "default": 1024,
-        "min": 480,
-        "max": 3840,
-        "step": 16
       },
       {
         "name": "seed",
@@ -124,5 +77,6 @@
     ],
     "output_kind": "image",
     "verified": false
-  }
+  },
+  "group": "Text to image"
 }

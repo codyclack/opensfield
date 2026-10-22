@@ -12,7 +12,6 @@
     "api_happyhorse1_1_i2v"
   ],
   "status": "built",
-  "group": "Image to video",
   "workflow": {
     "template": "api_happyhorse1_1_i2v",
     "api": "features/model.happyhorse1-1-i2v/workflow_api.json",
@@ -74,5 +73,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Image to video"
 }

@@ -12,7 +12,6 @@
     "api_kling_o3_video_edit"
   ],
   "status": "built",
-  "group": "Video edit",
   "workflow": {
     "template": "api_kling_o3_video_edit",
     "api": "features/model.kling-o3-video-edit/workflow_api.json",
@@ -43,18 +42,6 @@
         "required": true
       },
       {
-        "name": "model_name",
-        "label": "Model name",
-        "kind": "choice",
-        "node": "23",
-        "field": "model_name",
-        "options": [
-          "kling-v3-omni",
-          "kling-video-o1"
-        ],
-        "default": "kling-v3-omni"
-      },
-      {
         "name": "resolution",
         "label": "Resolution",
         "kind": "choice",
@@ -83,5 +70,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Video edit"
 }

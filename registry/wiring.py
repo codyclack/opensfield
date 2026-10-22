@@ -515,3 +515,33 @@ def _seedance(src: str) -> dict:
 for _src in ("viral.effects", "marketing.ugc-video", "marketing.click-to-ad", "marketing.studio-presets", "cinema.multishot",
              "marketing.shorts-studio", "marketing.ai-influencer"):
     WIRING[f"{_src}-seedance"] = _seedance(_src)
+
+
+# Remaining Higgsfield modules built on partner tools above (same node maps, Higgsfield-style presets).
+def _from_model(model_id: str, inputs: list) -> dict:
+    w = WIRING[model_id]
+    return dict(template=w["template"], files_from=model_id, output_kind=w["output_kind"], inputs=inputs, outputs=w["outputs"], models=w.get("models", []))
+
+
+_K = {i["name"]: i for i in WIRING["model.kling-o3-i2v"]["inputs"]}
+_NB = {i["name"]: i for i in WIRING["model.nano-banana-2-1-image-edit"]["inputs"]}
+_BR = WIRING["model.bria-remove-video-background-transparent"]["inputs"]
+WIRING.update({
+    # Draw-to-video: a sketch or annotated frame becomes the start of a Kling O3 shot.
+    "cinema.draw-to-video": _from_model("model.kling-o3-i2v", [
+        dict(_K["image_1"], label="Sketch or annotated frame"),
+        dict(_K["prompt"], label="What should happen", prefix="Treat the arrows, scribbles and notes in this image as directions: turn the sketch into a realistic live-action shot and animate it as drawn, removing the annotations. "),
+        _K["aspect_ratio"], _K["resolution"], _K["duration"], _K["seed"]]),
+    # Soul Location: keep the person, put them in a described place (Nano Banana 2.1 edit). Location comes from text, not a photo.
+    "soul.location": _from_model("model.nano-banana-2-1-image-edit", [
+        dict(_NB["image_1"], label="Person"),
+        dict(_NB["prompt"], label="Location", prefix="Keep this person's face, hair, body and outfit exactly the same and place them naturally in this location, matching its light and perspective: "),
+        _NB["aspect_ratio"], _NB["resolution"], _NB["seed"]]),
+    "video.bg-remove": _from_model("model.bria-remove-video-background-transparent", [dict(_BR[0], label="Video"), *_BR[1:]]),
+})
+
+WIRING["video.clipify"] = dict(
+    local=dict(mode="clipify"), template="app/fx.py", output_kind="video", outputs=[],
+    inputs=[dict(name="video", label="Long video", kind="video", required=True),
+            dict(name="seconds", label="Clip length (s)", kind="number", default=10, min=5, max=30, step=5)])
+WIRING["video.clipify"].update(verified_via=LOCAL_VIA, examples=["examples/fx_clipify.mp4"])

@@ -12,7 +12,6 @@
     "api_kling_v3_flf2v"
   ],
   "status": "built",
-  "group": "First / last frame",
   "workflow": {
     "template": "api_kling_v3_flf2v",
     "api": "features/model.kling-v3-flf2v/workflow_api.json",
@@ -84,5 +83,6 @@
     "output_kind": "video",
     "verified": false
   },
+  "group": "First / last frame",
   "default": true
 }

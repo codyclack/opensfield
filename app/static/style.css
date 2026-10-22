@@ -37,11 +37,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 15px var(--display); letter-spacing: .08em; flex: none; }
 .brand b { color: var(--accent); }
 .mark { width: 28px; height: 28px; } .mark rect { fill: var(--accent); } .mark circle { fill: var(--ink); } .mark path { stroke: var(--ink); stroke-width: 2; fill: none; }
-.topnav { display: flex; align-items: center; gap: 2px; min-width: 0; overflow-x: auto; scrollbar-width: none; flex: 1; }
+.topnav { display: flex; align-items: center; gap: 0; min-width: 0; flex: 1; height: 100%; }
 .topnav::-webkit-scrollbar { display: none; }
-.topnav a { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px; border-radius: 9px; text-decoration: none; color: var(--muted); font-weight: 500; white-space: nowrap; }
-.topnav a:hover { color: var(--text); background: #18181c; }
-.topnav a[aria-current="page"] { color: var(--accent); }
+.topnav .navlink { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px; border-radius: 9px; text-decoration: none; color: var(--muted); font-weight: 500; white-space: nowrap; }
+.topnav .navlink:hover, .navitem:focus-within .navlink { color: var(--text); background: #18181c; }
+.topnav .navlink[aria-current="page"] { color: var(--accent); }
 .tag { flex: none; align-self: center; line-height: 1.3; white-space: nowrap; font: 700 9px var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border-radius: 6px; background: var(--accent); color: var(--ink); }
 .tag.t-new { background: #c6ff3d; } .tag.t-open { background: #2f3a1a; color: var(--accent); }
 .topright { display: flex; align-items: center; gap: 10px; flex: none; }
@@ -58,7 +58,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .gens b { background: var(--ink); color: var(--accent); border-radius: 999px; padding: 0 7px; min-width: 20px; text-align: center; font-size: 12px; }
 
 /* ---------- layout + sidebar ---------- */
-.shell { display: grid; grid-template-columns: 84px minmax(0, 1fr); min-height: calc(100vh - var(--top)); }
+.shell { display: block; min-height: calc(100vh - var(--top)); }
 #rail { position: sticky; top: var(--top); align-self: start; height: calc(100vh - var(--top)); overflow-y: auto; padding: 10px 6px 20px; border-right: 1px solid var(--line); background: var(--chrome); scrollbar-width: thin; }
 .ritem { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 2px 7px; margin-bottom: 2px; border-radius: 12px; text-decoration: none; color: var(--muted); }
 .ritem:hover { background: #17171b; color: var(--text); }
@@ -215,7 +215,7 @@ textarea { width: 100%; resize: vertical; padding: 10px 12px; background: var(--
 .wsbar { display: grid; gap: 12px; padding-bottom: 170px; }
 .wstop { display: flex; align-items: center; gap: 10px; }
 .wsbar .wtabs a[aria-selected="true"] { background: #1d1d22; box-shadow: none; border-radius: 8px; }
-.pbar { position: fixed; z-index: 15; left: calc(84px + (100vw - 84px) / 2); transform: translateX(-50%); bottom: 18px; width: min(860px, calc(100vw - 84px - 40px));
+.pbar { position: fixed; z-index: 15; left: 50%; transform: translateX(-50%); bottom: 18px; width: min(880px, calc(100vw - 40px));
   display: grid; gap: 8px; padding: 12px; border-radius: 18px; background: rgba(28, 28, 33, .96); border: 1px solid var(--line-2); box-shadow: 0 18px 60px rgba(0, 0, 0, .6); backdrop-filter: blur(12px); }
 .pbrow { display: flex; gap: 8px; align-items: flex-start; }
 .pbrow textarea { flex: 1; min-height: 52px; background: transparent; border: 0; padding: 6px 4px; resize: none; }
@@ -304,11 +304,66 @@ input.aname:hover, input.aname:focus { border-color: var(--line); background: va
 }
 @media (max-width: 1180px) { .search { width: 170px; } .credits { display: none; } }
 @media (max-width: 900px) {
-  .shell { grid-template-columns: 1fr; }
-  #rail { position: static; height: auto; display: flex; gap: 2px; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 6px; }
-  .rlabel { display: none; } .ritem { flex: 0 0 66px; margin: 0; }
   .canvas { padding: 18px 14px 60px; }
   .top { gap: 10px; padding: 0 12px; } .brand span, .chip, .search { display: none; }
   .pbar { left: 50%; width: calc(100vw - 24px); bottom: 10px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* ---------- top-nav hover menus (higgsfield.ai) ---------- */
+.navitem { position: relative; height: 100%; display: flex; align-items: center; }
+.menu { display: none; position: absolute; top: calc(100% - 4px); left: -8px; z-index: 40; grid-auto-flow: column; grid-auto-columns: minmax(190px, max-content); gap: 18px;
+  padding: 16px; border-radius: 16px; background: #141417; border: 1px solid var(--line-2); box-shadow: 0 24px 70px rgba(0, 0, 0, .7); }
+.navitem:hover .menu, .navitem:focus-within .menu { display: grid; }
+.mcol { display: grid; align-content: start; gap: 2px; }
+.mhead2 { padding: 2px 8px 6px; font: 700 10px var(--display); letter-spacing: .14em; text-transform: uppercase; color: #6f6f78; }
+.mlink { display: grid; gap: 1px; padding: 6px 8px; border-radius: 9px; text-decoration: none; }
+.mlink:hover, .mlink:focus-visible { background: #202026; }
+.mlt { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; white-space: nowrap; max-width: 250px; overflow: hidden; text-overflow: ellipsis; }
+.mlink small { color: var(--muted); font-size: 11px; white-space: nowrap; max-width: 240px; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 1380px) { .navitem.lo { display: none; } }
+
+/* ---------- explore (higgsfield.ai home) ---------- */
+.banners { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+.banner { display: grid; gap: 4px; text-decoration: none; }
+.bmedia { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 14px; border: 1px solid var(--line); background: linear-gradient(135deg, #1f2412, #101013); }
+.bmedia .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
+.banner:hover .bg { transform: scale(1.03); }
+.banner b { margin-top: 6px; font: 700 14px var(--display); letter-spacing: .02em; }
+.banner small { color: var(--muted); font-size: 12px; }
+.promogrid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr); gap: 12px; margin-bottom: 28px; }
+.promo { position: relative; overflow: hidden; min-height: 260px; display: flex; align-items: flex-end; border-radius: 16px; border: 1px solid var(--line); background: #141417; }
+.promo .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.promo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8, 8, 10, .92), rgba(8, 8, 10, .35)); }
+.ptext2 { position: relative; z-index: 1; display: grid; gap: 10px; padding: 22px; justify-items: start; }
+.ptext2 h2 { margin: 0; font: 700 clamp(22px, 2.6vw, 32px)/1.05 var(--display); text-transform: uppercase; }
+.ptext2 h2 span { color: var(--accent); }
+.ptext2 ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; color: #d4d4d8; font-size: 13px; }
+.ptext2 li::before { content: "✓ "; color: var(--accent); }
+.ftiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.ftile { display: grid; align-content: space-between; gap: 18px; padding: 14px; border-radius: 14px; background: #17171b; border: 1px solid var(--line); text-decoration: none; }
+.ftile:hover { border-color: var(--line-2); background: #1c1c21; }
+.fico { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; background: #23232a; font-size: 14px; }
+.ftext { display: grid; gap: 3px; } .ftext b { display: flex; align-items: center; gap: 6px; font-size: 14px; } .ftext small { color: var(--muted); font-size: 12px; }
+@container (max-width: 900px) { .banners, .ftiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .promogrid { grid-template-columns: 1fr; } }
+
+/* ---------- how-it-works empty state (Video / Image pages) ---------- */
+.howto { grid-column: 1 / -1; display: grid; gap: 8px; padding: 26px 6px 18px; }
+.howto h2 { margin: 0; font: 700 clamp(22px, 2.6vw, 32px) var(--display); }
+.howto p { margin: 0 0 10px; color: var(--muted); }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.step { display: grid; gap: 6px; }
+.smedia { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 14px; border: 1px solid var(--line); background: #17171b; }
+.smedia .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.step b { margin-top: 6px; font: 700 15px var(--display); } .step small { color: var(--muted); font-size: 12px; }
+
+/* search collapses to an icon until focused on narrower screens, so the nav never overlaps it */
+@media (max-width: 1600px) {
+  .search { width: 36px; padding: 0 10px; transition: width .15s; cursor: text; }
+  .search input { width: 0; }
+  .search:focus-within { width: 220px; }
+  .search:focus-within input { width: auto; }
+}
+@media (max-width: 1180px) { .navitem:has(> a.navlink[href="#/w/image/1"]), .navitem:has(> a.navlink[href="#/assets"]) { display: none; } }
+.topnav { overflow: visible; }
+.topright { flex: none; }

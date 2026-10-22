@@ -12,7 +12,6 @@
     "api_kling_v3_t2i"
   ],
   "status": "tested",
-  "group": "Text to image",
   "workflow": {
     "template": "api_kling_v3_t2i",
     "api": "features/model.kling-v3-t2i/workflow_api.json",
@@ -37,17 +36,6 @@
           "face"
         ],
         "default": "subject"
-      },
-      {
-        "name": "model_name",
-        "label": "Model name",
-        "kind": "choice",
-        "node": "27",
-        "field": "model_name",
-        "options": [
-          "kling-v3"
-        ],
-        "default": "kling-v3"
       },
       {
         "name": "aspect_ratio",
@@ -90,17 +78,6 @@
         "step": 0.01
       },
       {
-        "name": "n",
-        "label": "N",
-        "kind": "number",
-        "node": "27",
-        "field": "n",
-        "default": 1,
-        "min": 1,
-        "max": 9,
-        "step": 1
-      },
-      {
         "name": "seed",
         "label": "Seed (0 = random)",
         "kind": "seed",
@@ -122,5 +99,6 @@
       "examples/models/kling-v3-t2i.png"
     ]
   },
+  "group": "Text to image",
   "cost": 6
 }

@@ -12,7 +12,6 @@
     "api_google_gemini_omni_flash_1_1_i2v"
   ],
   "status": "built",
-  "group": "Image to video",
   "workflow": {
     "template": "api_google_gemini_omni_flash_1_1_i2v",
     "api": "features/model.google-gemini-omni-flash-1-1-i2v/workflow_api.json",
@@ -61,22 +60,6 @@
         "default": "16:9"
       },
       {
-        "name": "task_type",
-        "label": "Task type",
-        "kind": "choice",
-        "node": "7",
-        "field": "model.task_type",
-        "options": [
-          "auto",
-          "text_to_video",
-          "image_to_video",
-          "reference_to_video",
-          "edit",
-          "extend"
-        ],
-        "default": "image_to_video"
-      },
-      {
         "name": "seed",
         "label": "Seed (0 = random)",
         "kind": "seed",
@@ -93,5 +76,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Image to video"
 }

@@ -12,7 +12,6 @@
     "api_wan2_6_i2v"
   ],
   "status": "tested",
-  "group": "Image to video",
   "workflow": {
     "template": "api_wan2_6_i2v",
     "api": "features/model.wan2-6-i2v/workflow_api.json",
@@ -104,5 +103,6 @@
       "examples/models/wan2-6-i2v.mp4"
     ]
   },
+  "group": "Image to video",
   "cost": 106
 }

@@ -1,0 +1,60 @@
+{
+ "219": {
+  "inputs": {
+   "voice": "Jessica (female, american)"
+  },
+  "class_type": "ElevenLabsVoiceSelector",
+  "_meta": {
+   "title": "ElevenLabs Voice Selector"
+  }
+ },
+ "220": {
+  "inputs": {
+   "stability": 0.5,
+   "model": "eleven_multilingual_sts_v2",
+   "output_format": "mp3_44100_192",
+   "seed": 672717223,
+   "remove_background_noise": false,
+   "voice": [
+    "219",
+    0
+   ],
+   "audio": [
+    "221",
+    0
+   ],
+   "model.speed": 1,
+   "model.similarity_boost": 0.75,
+   "model.use_speaker_boost": false,
+   "model.style": 0
+  },
+  "class_type": "ElevenLabsSpeechToSpeech",
+  "_meta": {
+   "title": "ElevenLabs Speech to Speech"
+  }
+ },
+ "221": {
+  "inputs": {
+   "audio": "api_elevenlabs_speech_to_speech.mp3"
+  },
+  "class_type": "LoadAudio",
+  "_meta": {
+   "title": "Load Audio"
+  }
+ },
+ "222": {
+  "inputs": {
+   "filename_prefix": "audio/ComfyUI",
+   "format": "mp3",
+   "audio": [
+    "220",
+    0
+   ],
+   "format.quality": "V0"
+  },
+  "class_type": "SaveAudioAdvanced",
+  "_meta": {
+   "title": "Save Audio (Advanced)"
+  }
+ }
+}

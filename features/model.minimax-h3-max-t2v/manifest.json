@@ -12,7 +12,6 @@
     "api_minimax_h3_max_t2v"
   ],
   "status": "built",
-  "group": "Text to video",
   "workflow": {
     "template": "api_minimax_h3_max_t2v",
     "api": "features/model.minimax-h3-max-t2v/workflow_api.json",
@@ -113,5 +112,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Text to video"
 }

@@ -12,7 +12,6 @@
     "api_seedance2_0_r2v"
   ],
   "status": "tested",
-  "group": "Reference to video",
   "workflow": {
     "template": "api_seedance2_0_r2v",
     "api": "features/model.seedance2-0-r2v/workflow_api.json",
@@ -98,5 +97,6 @@
       "examples/models/seedance2-0-r2v.mp4"
     ]
   },
+  "group": "Reference to video",
   "cost": 323
 }

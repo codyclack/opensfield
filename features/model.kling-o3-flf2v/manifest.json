@@ -12,7 +12,6 @@
     "api_kling_o3_flf2v"
   ],
   "status": "built",
-  "group": "First / last frame",
   "workflow": {
     "template": "api_kling_o3_flf2v",
     "api": "features/model.kling-o3-flf2v/workflow_api.json",
@@ -41,18 +40,6 @@
         "node": "32",
         "field": "prompt",
         "required": true
-      },
-      {
-        "name": "model_name",
-        "label": "Model name",
-        "kind": "choice",
-        "node": "32",
-        "field": "model_name",
-        "options": [
-          "kling-v3-omni",
-          "kling-video-o1"
-        ],
-        "default": "kling-v3-omni"
       },
       {
         "name": "resolution",
@@ -95,5 +82,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "First / last frame"
 }

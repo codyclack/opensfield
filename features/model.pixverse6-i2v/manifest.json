@@ -12,7 +12,6 @@
     "api_pixverse6_i2v"
   ],
   "status": "built",
-  "group": "Image to video",
   "workflow": {
     "template": "api_pixverse6_i2v",
     "api": "features/model.pixverse6-i2v/workflow_api.json",
@@ -93,5 +92,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Image to video"
 }

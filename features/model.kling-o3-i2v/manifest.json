@@ -12,7 +12,6 @@
     "api_kling_o3_i2v"
   ],
   "status": "built",
-  "group": "Image to video",
   "workflow": {
     "template": "api_kling_o3_i2v",
     "api": "features/model.kling-o3-i2v/workflow_api.json",
@@ -33,18 +32,6 @@
         "node": "21",
         "field": "prompt",
         "required": true
-      },
-      {
-        "name": "model_name",
-        "label": "Model name",
-        "kind": "choice",
-        "node": "21",
-        "field": "model_name",
-        "options": [
-          "kling-v3-omni",
-          "kling-video-o1"
-        ],
-        "default": "kling-v3-omni"
       },
       {
         "name": "aspect_ratio",
@@ -100,5 +87,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Image to video"
 }

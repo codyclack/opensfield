@@ -1,0 +1,58 @@
+{
+ "11": {
+  "inputs": {
+   "audio": "gel_cream_ad_voice.mp3"
+  },
+  "class_type": "LoadAudio",
+  "_meta": {
+   "title": "Load Audio"
+  }
+ },
+ "13": {
+  "inputs": {
+   "filename_prefix": "video/lip_sync_3.0",
+   "format": "auto",
+   "video": [
+    "14",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ },
+ "14": {
+  "inputs": {
+   "prompt": "Close-up beauty ad. She holds the Berry Gel Cream tube near her cheek, looks at camera, and speaks softly with subtle lip movement. Keep mouth opening small and natural, no exaggerated wide open mouth. Gentle smile, calm head motion, about 5\u20136 seconds.",
+   "seed": 1168713874,
+   "model": "sync-3",
+   "image": [
+    "15",
+    0
+   ],
+   "audio": [
+    "11",
+    0
+   ],
+   "model.speaker_selection": "default",
+   "model.speaker_x": 0,
+   "model.speaker_y": 0,
+   "model.auto_downscale": true
+  },
+  "class_type": "SyncTalkingImageNode",
+  "_meta": {
+   "title": "sync.so Talking Image"
+  }
+ },
+ "15": {
+  "inputs": {
+   "image": "girl_holding_gel_cream.png"
+  },
+  "class_type": "LoadImage",
+  "_meta": {
+   "title": "Load Image"
+  }
+ }
+}

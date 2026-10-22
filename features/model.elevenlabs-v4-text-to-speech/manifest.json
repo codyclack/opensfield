@@ -12,7 +12,6 @@
     "api_elevenlabs_v4_text_to_speech"
   ],
   "status": "tested",
-  "group": "Text to speech",
   "workflow": {
     "template": "api_elevenlabs_v4_text_to_speech",
     "api": "features/model.elevenlabs-v4-text-to-speech/workflow_api.json",
@@ -25,31 +24,6 @@
         "node": "208",
         "field": "text",
         "required": true
-      },
-      {
-        "name": "apply_text_normalization",
-        "label": "Apply text normalization",
-        "kind": "choice",
-        "node": "208",
-        "field": "apply_text_normalization",
-        "options": [
-          "auto",
-          "on",
-          "off"
-        ],
-        "default": "auto"
-      },
-      {
-        "name": "output_format",
-        "label": "Output format",
-        "kind": "choice",
-        "node": "208",
-        "field": "output_format",
-        "options": [
-          "mp3_44100_192",
-          "opus_48000_192"
-        ],
-        "default": "mp3_44100_192"
       },
       {
         "name": "stability",
@@ -95,6 +69,7 @@
       "examples/models/elevenlabs-v4-text-to-speech.mp3"
     ]
   },
+  "group": "Text to speech",
   "default": true,
   "cost": 9
 }

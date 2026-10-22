@@ -7,9 +7,79 @@
     "ltx23_audio"
   ],
   "higgsfield": "sync_so",
-  "track": "open",
-  "note": "",
+  "track": "partner",
+  "note": "Runs Sync 3 \u00b7 Video Lip-Sync through Comfy Cloud API nodes (uses Comfy credits).",
   "count": 1,
-  "partner": [],
-  "status": "planned"
+  "partner": [
+    "api_sync_so_lip_sync_video"
+  ],
+  "status": "built",
+  "workflow": {
+    "template": "api_sync_so_lip_sync_video",
+    "api": "features/video.lipsync/workflow_api.json",
+    "ui": "features/video.lipsync/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "video_1",
+        "label": "Video",
+        "kind": "video",
+        "node": "9",
+        "field": "file",
+        "required": true
+      },
+      {
+        "name": "audio_1",
+        "label": "Audio",
+        "kind": "audio",
+        "node": "11",
+        "field": "audio",
+        "required": true
+      },
+      {
+        "name": "sync_mode",
+        "label": "Sync mode",
+        "kind": "choice",
+        "node": "8",
+        "field": "model.sync_mode",
+        "options": [
+          "bounce",
+          "cut_off",
+          "loop",
+          "silence",
+          "remap"
+        ],
+        "default": "bounce"
+      },
+      {
+        "name": "speaker_selection",
+        "label": "Speaker selection",
+        "kind": "choice",
+        "node": "8",
+        "field": "model.speaker_selection",
+        "options": [
+          "default",
+          "auto-detect",
+          "coordinates"
+        ],
+        "default": "default"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "8",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "13"
+    ],
+    "models": [
+      "api_sync_so_lip_sync_video"
+    ],
+    "output_kind": "video",
+    "verified": false
+  },
+  "group": "Lip sync"
 }

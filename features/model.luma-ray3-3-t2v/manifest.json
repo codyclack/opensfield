@@ -12,7 +12,6 @@
     "api_luma_ray3_3_t2v"
   ],
   "status": "built",
-  "group": "Text to video",
   "workflow": {
     "template": "api_luma_ray3_3_t2v",
     "api": "features/model.luma-ray3-3-t2v/workflow_api.json",
@@ -85,5 +84,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Text to video"
 }

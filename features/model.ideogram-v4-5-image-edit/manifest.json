@@ -12,7 +12,6 @@
     "api_ideogram_v4_5_image_edit"
   ],
   "status": "built",
-  "group": "Image edit",
   "workflow": {
     "template": "api_ideogram_v4_5_image_edit",
     "api": "features/model.ideogram-v4-5-image-edit/workflow_api.json",
@@ -122,5 +121,6 @@
     ],
     "output_kind": "image",
     "verified": false
-  }
+  },
+  "group": "Image edit"
 }

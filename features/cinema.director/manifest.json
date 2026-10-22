@@ -7,9 +7,117 @@
     "planner_llm"
   ],
   "higgsfield": "cinematic_studio_2_5 / 3_0 / video_4_0 director",
-  "track": "open",
-  "note": "QwenVL planner outputs per-shot JSON.",
+  "track": "partner",
+  "note": "Runs Seedance 2.0 + LLM Prompt Helper through Comfy Cloud API nodes (uses Comfy credits).",
   "count": 1,
-  "partner": [],
-  "status": "planned"
+  "partner": [
+    "template_seedance_2_0_plus_llm_prompt_helper"
+  ],
+  "status": "built",
+  "workflow": {
+    "template": "template_seedance_2_0_plus_llm_prompt_helper",
+    "api": "features/cinema.director/workflow_api.json",
+    "ui": "features/cinema.director/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Image2",
+        "kind": "image",
+        "node": "352",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "image_2",
+        "label": "Image1",
+        "kind": "image",
+        "node": "356",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "360",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "model",
+        "label": "Model",
+        "kind": "choice",
+        "node": "360",
+        "field": "model",
+        "options": [
+          "gemini-2.5-pro",
+          "gemini-2.5-flash",
+          "gemini-3-pro-preview",
+          "gemini-3-1-pro",
+          "gemini-3-1-flash-lite"
+        ],
+        "default": "gemini-3-1-pro"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "368",
+        "field": "model.resolution",
+        "options": [
+          "480p",
+          "720p",
+          "1080p",
+          "4k"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "ratio",
+        "label": "Ratio",
+        "kind": "choice",
+        "node": "368",
+        "field": "model.ratio",
+        "options": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "21:9",
+          "adaptive"
+        ],
+        "default": "9:16"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "368",
+        "field": "model.duration",
+        "default": 15,
+        "min": 4,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "360",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "344",
+      "363"
+    ],
+    "models": [
+      "template_seedance_2_0_plus_llm_prompt_helper"
+    ],
+    "output_kind": "video",
+    "verified": false
+  },
+  "group": "AI Director"
 }

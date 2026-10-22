@@ -8,9 +8,146 @@
     "wan_animate2"
   ],
   "higgsfield": "workflow katana",
-  "track": "open",
-  "note": "Stretch; depends on Ad Multiplier + Genjutsu.",
+  "track": "partner",
+  "note": "Runs Seedance 2.0 \u00b7 Viral Videos Character Swap through Comfy Cloud API nodes (uses Comfy credits).",
   "count": 1,
-  "partner": [],
-  "status": "planned"
+  "partner": [
+    "template_seedance2_0_viral_videos_character_swap"
+  ],
+  "status": "built",
+  "workflow": {
+    "template": "template_seedance2_0_viral_videos_character_swap",
+    "api": "features/marketing.katana/workflow_api.json",
+    "ui": "features/marketing.katana/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "video_1",
+        "label": "Video",
+        "kind": "video",
+        "node": "18",
+        "field": "file",
+        "required": true
+      },
+      {
+        "name": "image_1",
+        "label": "Image 2",
+        "kind": "image",
+        "node": "29",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "26",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "size",
+        "label": "Size",
+        "kind": "choice",
+        "node": "26",
+        "field": "model.size",
+        "options": [
+          "auto",
+          "1024x1024",
+          "1024x1536",
+          "1536x1024",
+          "2048x2048",
+          "2048x1152",
+          "1152x2048",
+          "3840x2160",
+          "2160x3840",
+          "Custom"
+        ],
+        "default": "auto"
+      },
+      {
+        "name": "quality",
+        "label": "Quality",
+        "kind": "choice",
+        "node": "26",
+        "field": "model.quality",
+        "options": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default": "medium"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "300",
+        "field": "model.resolution",
+        "options": [
+          "480p",
+          "720p",
+          "1080p",
+          "4k"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "ratio",
+        "label": "Ratio",
+        "kind": "choice",
+        "node": "300",
+        "field": "model.ratio",
+        "options": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "21:9",
+          "adaptive"
+        ],
+        "default": "16:9"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "300",
+        "field": "model.duration",
+        "default": 7,
+        "min": 4,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "max_output_tokens",
+        "label": "Max output tokens",
+        "kind": "number",
+        "node": "301",
+        "field": "model.max_output_tokens",
+        "default": 32768,
+        "min": 16,
+        "max": 65536,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "26",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "282",
+      "295"
+    ],
+    "models": [
+      "template_seedance2_0_viral_videos_character_swap"
+    ],
+    "output_kind": "video",
+    "verified": false
+  },
+  "group": "Katana remix"
 }

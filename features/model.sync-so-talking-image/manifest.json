@@ -1,0 +1,75 @@
+{
+  "id": "model.sync-so-talking-image",
+  "studio": "Video tools",
+  "name": "Sync 3 \u00b7 Talking Image",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Lip sync",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_sync_so_talking_image"
+  ],
+  "status": "built",
+  "workflow": {
+    "template": "api_sync_so_talking_image",
+    "api": "features/model.sync-so-talking-image/workflow_api.json",
+    "ui": "features/model.sync-so-talking-image/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "audio_1",
+        "label": "Audio",
+        "kind": "audio",
+        "node": "11",
+        "field": "audio",
+        "required": true
+      },
+      {
+        "name": "image_1",
+        "label": "Image",
+        "kind": "image",
+        "node": "15",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "Prompt",
+        "kind": "text",
+        "node": "14",
+        "field": "prompt",
+        "required": true
+      },
+      {
+        "name": "speaker_selection",
+        "label": "Speaker selection",
+        "kind": "choice",
+        "node": "14",
+        "field": "model.speaker_selection",
+        "options": [
+          "default",
+          "coordinates"
+        ],
+        "default": "default"
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "14",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "13"
+    ],
+    "models": [
+      "api_sync_so_talking_image"
+    ],
+    "output_kind": "video",
+    "verified": false
+  },
+  "group": "Lip sync"
+}

@@ -12,7 +12,6 @@
     "api_kling_o3_t2v"
   ],
   "status": "tested",
-  "group": "Text to video",
   "workflow": {
     "template": "api_kling_o3_t2v",
     "api": "features/model.kling-o3-t2v/workflow_api.json",
@@ -25,18 +24,6 @@
         "node": "15",
         "field": "prompt",
         "required": true
-      },
-      {
-        "name": "model_name",
-        "label": "Model name",
-        "kind": "choice",
-        "node": "15",
-        "field": "model_name",
-        "options": [
-          "kling-v3-omni",
-          "kling-video-o1"
-        ],
-        "default": "kling-v3-omni"
       },
       {
         "name": "aspect_ratio",
@@ -96,5 +83,6 @@
     "examples": [
       "examples/models/kling-o3-t2v.mp4"
     ]
-  }
+  },
+  "group": "Text to video"
 }

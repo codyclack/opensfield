@@ -12,7 +12,6 @@
     "api_bfl_flux3_image_edit"
   ],
   "status": "tested",
-  "group": "Image edit",
   "workflow": {
     "template": "api_bfl_flux3_image_edit",
     "api": "features/model.bfl-flux3-image-edit/workflow_api.json",
@@ -76,17 +75,6 @@
         "default": "1K"
       },
       {
-        "name": "safety_tolerance",
-        "label": "Safety tolerance",
-        "kind": "number",
-        "node": "3",
-        "field": "safety_tolerance",
-        "default": 4,
-        "min": 0,
-        "max": 4,
-        "step": 1
-      },
-      {
         "name": "seed",
         "label": "Seed (0 = random)",
         "kind": "seed",
@@ -107,5 +95,6 @@
     "examples": [
       "examples/models/bfl-flux3-image-edit.png"
     ]
-  }
+  },
+  "group": "Image edit"
 }

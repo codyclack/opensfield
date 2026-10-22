@@ -1,0 +1,58 @@
+{
+ "8": {
+  "inputs": {
+   "seed": 1724260774,
+   "model": "sync-3",
+   "video": [
+    "9",
+    0
+   ],
+   "audio": [
+    "11",
+    0
+   ],
+   "model.sync_mode": "bounce",
+   "model.speaker_selection": "default",
+   "model.speaker_frame": 0,
+   "model.speaker_x": 0,
+   "model.speaker_y": 0
+  },
+  "class_type": "SyncLipSyncNode",
+  "_meta": {
+   "title": "sync.so Lip Sync"
+  }
+ },
+ "9": {
+  "inputs": {
+   "file": "girl_looking_at_photo.mp4"
+  },
+  "class_type": "LoadVideo",
+  "_meta": {
+   "title": "Load Video"
+  }
+ },
+ "11": {
+  "inputs": {
+   "audio": "sync3_reference_audio.mp3"
+  },
+  "class_type": "LoadAudio",
+  "_meta": {
+   "title": "Load Audio"
+  }
+ },
+ "13": {
+  "inputs": {
+   "filename_prefix": "video/lip_sync_3.0",
+   "format": "auto",
+   "video": [
+    "8",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ }
+}

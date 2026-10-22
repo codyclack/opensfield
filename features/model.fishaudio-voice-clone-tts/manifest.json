@@ -1,0 +1,66 @@
+{
+  "id": "model.fishaudio-voice-clone-tts",
+  "studio": "Audio",
+  "name": "Fish Audio \u00b7 Voice Clone to Speech",
+  "tier": "B",
+  "base": [],
+  "higgsfield": "Voice clone",
+  "track": "partner",
+  "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+  "count": 1,
+  "partner": [
+    "api_fishaudio_voice_clone_tts"
+  ],
+  "status": "built",
+  "workflow": {
+    "template": "api_fishaudio_voice_clone_tts",
+    "api": "features/model.fishaudio-voice-clone-tts/workflow_api.json",
+    "ui": "features/model.fishaudio-voice-clone-tts/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "audio_1",
+        "label": "Audio0",
+        "kind": "audio",
+        "node": "11",
+        "field": "audio",
+        "required": true
+      },
+      {
+        "name": "text",
+        "label": "Text",
+        "kind": "text",
+        "node": "1",
+        "field": "text",
+        "required": true
+      },
+      {
+        "name": "speed",
+        "label": "Speed",
+        "kind": "number",
+        "node": "1",
+        "field": "model.speed",
+        "default": 1,
+        "min": 0.5,
+        "max": 2.0,
+        "step": 0.01
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "1",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "5"
+    ],
+    "models": [
+      "api_fishaudio_voice_clone_tts"
+    ],
+    "output_kind": "audio",
+    "verified": false
+  },
+  "group": "Voice clone"
+}

@@ -12,7 +12,6 @@
     "api_minimax_h3_max_i2v"
   ],
   "status": "tested",
-  "group": "Image to video",
   "workflow": {
     "template": "api_minimax_h3_max_i2v",
     "api": "features/model.minimax-h3-max-i2v/workflow_api.json",
@@ -120,5 +119,6 @@
       "examples/models/minimax-h3-max-i2v.mp4"
     ]
   },
+  "group": "Image to video",
   "cost": 121
 }

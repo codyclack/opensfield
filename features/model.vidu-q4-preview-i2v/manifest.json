@@ -12,7 +12,6 @@
     "api_vidu_q4_preview_i2v"
   ],
   "status": "built",
-  "group": "Image to video",
   "workflow": {
     "template": "api_vidu_q4_preview_i2v",
     "api": "features/model.vidu-q4-preview-i2v/workflow_api.json",
@@ -77,5 +76,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Image to video"
 }

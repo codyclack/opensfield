@@ -19,11 +19,11 @@ const WORKSPACES = {
     ["First & Last", "First / last frame"], ["Motion Control", "Motion control"], ["Edit Video", "Video edit"]] },
   audio: { title: "Audio", kind: "audio", layout: "bar", tabs: [["Speech", "Text to speech"], ["Music", "Music"]] },
 };
-const TOPNAV = [["Explore", "#/"], ["Image", "#/w/image/0"], ["Video", "#/w/video/0"], ["Audio", "#/w/audio/0"], ["Edit", "#/w/image/1"],
-  ["Genjutsu", "#/s/Genjutsu", "Top"], ["Cinema Studio", "#/s/Cinema Studio"], ["Soul", "#/s/Soul"], ["Viral", "#/s/Viral Hub"],
-  ["Marketing", "#/s/Marketing", "New"], ["Apps", "#/apps"], ["Assets", "#/assets"]];
-const SIDE = [["Explore", "#/", "★"], ["Image", "#/w/image/0", "▣"], ["Video", "#/w/video/0", "▶"], ["Audio", "#/w/audio/0", "♪"], ["Edit", "#/w/image/1", "✎"],
-  ["Apps", "#/apps", "⊞"], ["Assets", "#/assets", "◈"], ["History", "#/generations", "◷"]];
+// Top nav like higgsfield.ai: text items, a badge on hot ones, hover menus listing tools and models. "lo" items hide on narrow screens.
+const TOPNAV = [["Explore", "#/"], ["Image", "#/w/image/0", null, "image"], ["Video", "#/w/video/0", null, "video"], ["Audio", "#/w/audio/0", null, "audio"],
+  ["Edit", "#/w/image/1"], ["Genjutsu", "#/s/Genjutsu", "Top", "studio"], ["Cinema Studio", "#/s/Cinema Studio", null, "studio"],
+  ["Soul", "#/s/Soul", null, "studio", "lo"], ["Viral", "#/s/Viral Hub", null, "studio", "lo"], ["Marketing", "#/s/Marketing", "New", "studio", "lo"],
+  ["Apps", "#/apps", null, "apps"], ["Assets", "#/assets"]];
 
 const sockKind = (s) => (["image", "video", "audio"].includes(s.kind) ? s.kind : s.kind === "text" ? "text" : "widget");
 const studioColor = (s) => STUDIO_COLOR[s] || "#9e9e9e";
@@ -109,16 +109,53 @@ function hoverPlay(el) {
 
 /* ---------------- chrome: top nav, sidebar ---------------- */
 function routeKey() { return location.hash || "#/"; }
+function menuLink(href, label, sub, tag) {
+  return h("a", { href, class: "mlink" }, h("span", { class: "mlt" }, label, tag && h("span", { class: `tag t-${tag.toLowerCase()}` }, tag)), sub && h("small", {}, sub));
+}
+function modelLinks(group, n = 8) {
+  const seen = new Set();
+  return members(group).filter((m) => { const k = modelName(m); if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, n)
+    .map((m) => menuLink(`#/f/${m.id}`, modelName(m), m.engine && m.engine !== modelName(m) ? m.engine : (isOpen(m) ? "open weights" : m.output_kind), m.default ? "Top" : null));
+}
+function menuFor(kind, label) {
+  const col = (title, links) => links.length > 0 && h("div", { class: "mcol" }, h("div", { class: "mhead2" }, title), ...links);
+  const tool = (id, label2, sub) => state.byId[id] && menuLink(`#/f/${id}`, label2 || state.byId[id].name, sub);
+  if (kind === "image") return [col("Create", WORKSPACES.image.tabs.map(([t, g], i) => members(g).length && menuLink(`#/w/image/${i}`, t, g)).filter(Boolean)
+    .concat([tool("soul.location", "Soul Location"), tool("marketing.product-photoshoot", "Product photoshoot"), tool("image.bg-remove", "Background remover")].filter(Boolean))),
+    col("Image models", modelLinks("Text to image")), col("Edit models", modelLinks("Image edit", 6))];
+  if (kind === "video") return [col("Create", WORKSPACES.video.tabs.map(([t, g], i) => members(g).length && menuLink(`#/w/video/${i}`, t, g)).filter(Boolean)
+    .concat([tool("cinema.extend", "Extend video"), tool("video.lipsync", "Lip sync"), tool("cinema.draw-to-video", "Draw to video"), tool("video.upscale", "Upscale video")].filter(Boolean))),
+    col("Video models", modelLinks("Image to video", 10)), col("Text to video", modelLinks("Text to video", 6))];
+  if (kind === "audio") return [col("Create", WORKSPACES.audio.tabs.map(([t, g], i) => members(g).length && menuLink(`#/w/audio/${i}`, t, g)).filter(Boolean)
+    .concat([tool("audio.sfx", "Sound effects"), tool("audio.voice-change", "Voice change"), tool("audio.voice-clone", "Voice clone"), tool("audio.dubbing", "Dubbing"), tool("audio.captions", "Captions")].filter(Boolean))),
+    col("Voice models", modelLinks("Text to speech", 6))];
+  if (kind === "studio") {
+    const list = collapse(state.feats.filter((f) => f.studio === label));
+    return [col(label, list.slice(0, 9).map(({ f, n }) => menuLink(`#/f/${f.id}`, n > 1 && f.group ? f.group : f.name, n > 1 ? `${n} models` : statusLabel(f)))),
+      list.length > 9 && col("More", list.slice(9, 18).map(({ f, n }) => menuLink(`#/f/${f.id}`, n > 1 && f.group ? f.group : f.name, statusLabel(f))))];
+  }
+  if (kind === "apps") {
+    const all = studios().map((s) => menuLink(`#/s/${encodeURIComponent(s)}`, s, `${collapse(state.feats.filter((f) => f.studio === s)).length} tools`));
+    return [col("Studios", all.slice(0, 7)), col(" ", all.slice(7)), col("Library", [menuLink("#/apps", "All apps"), menuLink("#/assets", "Assets"), menuLink("#/generations", "History")])];
+  }
+  return [];
+}
 function renderChrome() {
   const cur = routeKey();
-  const active = (href) => cur === href || (href !== "#/" && cur.startsWith(href.replace(/\/\d+$/, "")) && !(href === "#/w/image/0" && cur === "#/w/image/1") && !(href === "#/w/image/1" && cur !== "#/w/image/1"));
-  $("#topnav").replaceChildren(...TOPNAV.map(([t, href, tag]) => h("a", { href, "aria-current": active(href) ? "page" : null }, t, tag && h("span", { class: `tag t-${tag.toLowerCase()}` }, tag))));
-  $("#rail").replaceChildren(
-    ...SIDE.map(([t, href, ico]) => h("a", { href, class: "ritem", "aria-current": active(href) ? "page" : null, title: t }, h("span", { class: "ico" }, ico), h("span", { class: "nm" }, t))),
-    h("div", { class: "rlabel" }, "Studios"),
-    ...studios().map((s) => h("a", { href: `#/s/${encodeURIComponent(s)}`, class: "ritem", style: `--c:${studioColor(s)}`, title: s,
-      "aria-current": cur === `#/s/${encodeURIComponent(s)}` || cur === `#/s/${s}` ? "page" : null },
-      h("span", { class: "ico studio" }, STUDIO_ICON[s] || s.slice(0, 2).toUpperCase()), h("span", { class: "nm" }, s))));
+  const key = (href) => decodeURIComponent(href);
+  const isCur = (href) => {
+    const c = key(cur), hrf = key(href);
+    if (hrf === "#/") return c === "#/" || c === "#";
+    if (hrf === "#/w/image/1") return c === hrf;
+    if (hrf.startsWith("#/w/")) return c.startsWith(hrf.replace(/\/\d+$/, "/")) && !(hrf.startsWith("#/w/image") && c === "#/w/image/1");
+    if (hrf.startsWith("#/s/")) { const f = /^#\/f\/(.+)$/.exec(c); return c === hrf || (f && state.byId[f[1]] && `#/s/${state.byId[f[1]].studio}` === hrf); }
+    return c === hrf;
+  };
+  $("#topnav").replaceChildren(...TOPNAV.map(([t, href, tag, menu, lo]) => {
+    const link = h("a", { href, class: "navlink", "aria-current": isCur(href) ? "page" : null, "aria-haspopup": menu ? "true" : null }, t, tag && h("span", { class: `tag t-${tag.toLowerCase()}` }, tag));
+    const cols = menu ? menuFor(menu, menu === "studio" ? href.slice(4).replace(/%20/g, " ") : t).filter(Boolean) : [];
+    return h("div", { class: `navitem${lo ? " lo" : ""}` }, link, cols.length > 0 && h("div", { class: "menu", role: "menu" }, ...cols));
+  }));
 }
 
 /* ---------------- explore / apps / studio grids ---------------- */
@@ -138,18 +175,29 @@ function filterBar() {
   return h("div", { class: "filters", role: "group", "aria-label": "Filter tools" },
     FILTERS.map(([k, l]) => h("button", { type: "button", class: "fpill", "aria-pressed": String(state.filter === k), onclick: () => { state.filter = k; route(); } }, l)));
 }
-function hero() {
+const exOf = (id) => (state.byId[id]?.examples || []).find((u) => isVideo(u) || isImage(u));
+// higgsfield.ai home: three big feature banners, then a promo block next to six feature tiles
+const BANNERS = [["model.seedance2-5-i2v-1080p", "SEEDANCE 2.5", "The most advanced video model, with the open LTX-2.5 one click away"],
+  ["genjutsu.motion-control", "GENJUTSU", "Motion control, character replace and restyle from one driving video", "#/s/Genjutsu"],
+  ["model.kling-v3-video", "KLING 3.0", "Multi-shot video with consistent subjects"]];
+const TILES = [["model.seedance2-5-i2v-1080p", "Seedance 2.5", "The most advanced video model", "Top", "▶"],
+  ["model.nano-banana-2-1-image-edit", "Nano Banana 2.1", "Edit any image with words", null, "✎"],
+  ["marketing.ai-influencer-seedance", "AI Influencer", "Build your next hype machine", "New", "☺"],
+  ["viral.effects-seedance", "Viral effects", "Clones, Vanish, Giant and more on Seedance", null, "✦"],
+  ["cinema.director", "AI Director", "A short idea becomes a directed Seedance shot", "New", "🎬"],
+  ["#/assets", "Assets & Elements", "Characters, props and locations you reuse with @", null, "◈"]];
+function explore() {
   const ready = state.feats.filter((f) => f.status === "tested").length;
-  const sd = state.byId["model.seedance2-5-i2v-1080p"];
-  const art = (sd && sd.examples.find(isVideo)) || (state.feats.find((f) => f.examples.some(isVideo)) || { examples: [] }).examples.find(isVideo);
-  return h("section", { class: "hero" },
-    art && h("video", { class: "bg", src: "/" + art, muted: true, loop: true, autoplay: !reduceMotion, playsinline: true, "aria-hidden": "true" }),
-    h("div", { class: "htext" },
-      h("span", { class: "eyebrow" }, "SEEDANCE 2.5 · KLING · NANO BANANA · OPEN WEIGHTS"),
-      h("h2", {}, "Every Higgsfield tool, on ComfyUI."),
-      h("p", {}, `${ready} tools run end to end, ${state.feats.length} in the catalog. Partner models through Comfy Cloud, open-weight workflows on any ComfyUI.`),
-      h("div", { class: "hbtns" }, h("a", { class: "go", href: "#/w/video/0" }, "Create video"), h("a", { class: "ghost", href: "#/w/image/0" }, "Create image"),
-        h("a", { class: "ghost", href: "https://github.com/codyclack/opensfield", target: "_blank", rel: "noopener" }, "Source"))));
+  const banners = h("section", { class: "banners" }, BANNERS.filter(([id]) => state.byId[id]).map(([id, t, sub, href]) => hoverPlay(h("a", { class: "banner", href: href || `#/f/${id}` },
+    h("span", { class: "bmedia" }, exOf(id) && exampleEl(exOf(id), "bg", { autoplay: true })), h("b", {}, t), h("small", {}, sub)))));
+  const tiles = TILES.filter(([id]) => id.startsWith("#") || state.byId[id]).map(([id, t, sub, tag, ico]) => h("a", { class: "ftile", href: id.startsWith("#") ? id : `#/f/${id}` },
+    h("span", { class: "fico" }, ico), h("span", { class: "ftext" }, h("b", {}, t, tag && h("span", { class: `tag t-${tag.toLowerCase()}` }, tag)), h("small", {}, sub))));
+  const promoArt = exOf("marketing.click-to-ad") || exOf("cinema.camera-rig");
+  const promo = h("div", { class: "promo" }, promoArt && exampleEl(promoArt, "bg", { autoplay: true }),
+    h("div", { class: "ptext2" }, h("h2", {}, "Every Higgsfield tool,", h("br"), h("span", {}, "on ComfyUI")),
+      h("ul", {}, h("li", {}, "Seedance 2.5, Kling, Nano Banana, GPT Image"), h("li", {}, "Open-weight LTX, Wan and Qwen workflows"), h("li", {}, `${ready} tools run end to end`)),
+      h("a", { class: "go", href: "#/w/video/0" }, "Start creating")));
+  return [banners, h("section", { class: "promogrid" }, promo, h("div", { class: "ftiles" }, tiles))];
 }
 function topModels() {
   const ids = ["model.seedance2-5-i2v-1080p", "model.seedance2-5-t2v-1080p", "model.kling-v3-video", "model.minimax-h3-max-i2v", "model.wan2-6-i2v",
@@ -174,7 +222,7 @@ function renderGrid(mode, studio) {
         h("div", { class: "rowhead" }, h("h3", {}, s), h("a", { class: "more", href: `#/s/${encodeURIComponent(s)}` }, `See all ${list.length} →`)),
         h("div", { class: "strip" }, list.map(({ f, n }) => card(f, n))));
     });
-    body = mode === "apps" ? [marker("Apps"), filterBar(), ...rows] : [hero(), topModels(), filterBar(), ...rows];
+    body = mode === "apps" ? [marker("Apps"), filterBar(), ...rows] : [...explore(), topModels(), filterBar(), ...rows];
   }
   $("#main").replaceChildren(...body.filter(Boolean));
 }
@@ -404,7 +452,12 @@ function renderGallery() {
   const mine = state.jobs.filter(g.filter);
   const ex = g.examples || [];
   box.className = `gallery size-${state.genSize}`;
+  const howto = !mine.length && g.howto ? [h("div", { class: "howto" },
+    h("h2", {}, g.howto.title), h("p", {}, g.howto.sub),
+    h("div", { class: "steps" }, g.howto.steps.map(([t, sub, url]) => h("div", { class: "step" }, h("div", { class: "smedia" }, url && exampleEl(url, "bg", { autoplay: true })),
+      h("b", {}, t), h("small", {}, sub)))))] : [];
   box.replaceChildren(
+    ...howto,
     ...(mine.length ? mine.map(genCard) : []),
     ...(!mine.length && ex.length ? [h("h4", {}, g.exTitle || "Example renders (real runs through this app)"),
       ...ex.map((u) => h("figure", { class: "gcard ex" }, exampleEl(u, "gmedia", { controls: true })))] : []),
@@ -458,7 +511,15 @@ function renderWorkspace(key, tabIdx) {
   const onPick = (m) => { carryPrompt(); state.pick[group] = m.id; store.set("osf.pick", state.pick); route(); };
   const tabs = h("div", { class: "wtabs", role: "tablist" }, tabsAvail.map(([t, g]) => h("a", { role: "tab", href: `#/w/${key}/${ws.tabs.findIndex(([, gg]) => gg === g)}`,
     "aria-selected": String(g === group) }, t)));
-  state.gallery = { filter: (j) => (j.kind || state.byId[j.feature_id]?.output_kind) === ws.kind, examples: f.examples,
+  const HOWTO = {
+    video: { title: "MAKE VIDEOS IN ONE CLICK", sub: "Pick a model, add a start frame or just a prompt, then Generate. Seedance 2.5 is the default; open LTX-2.5 is in the model list.",
+      steps: [["ADD IMAGE", "Upload an image, or pick one from Assets", "examples/char_a.png"], ["CHOOSE PRESET", "Use a Viral, UGC or product preset, or write your own prompt", "examples/effect_clones.mp4"],
+        ["GET VIDEO", "Your clip lands in History, ready to download or reuse", "examples/models/kling-v3-video.mp4"]] },
+    image: { title: "START CREATING", sub: "Describe the scene you imagine, pick a model from the bar and Generate.",
+      steps: [["DESCRIBE", "Write the scene, or @ an asset from your library", "examples/models/openai-gpt-image-2-t2i.png"], ["PICK A MODEL", "GPT Image 2, Nano Banana, FLUX 3, Seedream, Ideogram...", "examples/models/bfl-flux3-t2i.png"],
+        ["GET IMAGES", "Results land in History: download, save to Assets, or reuse", "examples/models/nano-banana-2-1-t2i.png"]] },
+  };
+  state.gallery = { howto: HOWTO[ws.kind], filter: (j) => (j.kind || state.byId[j.feature_id]?.output_kind) === ws.kind, examples: f.examples,
     exTitle: `Made with ${short(f)} (real runs through this app)`, empty: `Your ${ws.kind} generations appear here.` };
   if (ws.layout === "panel") {
     $("#main").replaceChildren(h("div", { class: "create ws" }, panelComposer(f, vals, onPick, tabs),

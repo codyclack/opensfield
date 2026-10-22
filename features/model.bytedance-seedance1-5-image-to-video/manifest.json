@@ -12,7 +12,6 @@
     "api_bytedance_seedance1_5_image_to_video"
   ],
   "status": "built",
-  "group": "Image to video",
   "workflow": {
     "template": "api_bytedance_seedance1_5_image_to_video",
     "api": "features/model.bytedance-seedance1-5-image-to-video/workflow_api.json",
@@ -105,5 +104,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Image to video"
 }

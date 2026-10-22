@@ -12,7 +12,6 @@
     "api_wan3_0_t2v"
   ],
   "status": "built",
-  "group": "Text to video",
   "workflow": {
     "template": "api_wan3_0_t2v",
     "api": "features/model.wan3-0-t2v/workflow_api.json",
@@ -112,5 +111,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Text to video"
 }

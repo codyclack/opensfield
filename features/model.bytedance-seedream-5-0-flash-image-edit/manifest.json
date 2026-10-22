@@ -12,7 +12,6 @@
     "api_bytedance_seedream_5_0_flash_image_edit"
   ],
   "status": "built",
-  "group": "Image edit",
   "workflow": {
     "template": "api_bytedance_seedream_5_0_flash_image_edit",
     "api": "features/model.bytedance-seedream-5-0-flash-image-edit/workflow_api.json",
@@ -108,5 +107,6 @@
     ],
     "output_kind": "image",
     "verified": false
-  }
+  },
+  "group": "Image edit"
 }

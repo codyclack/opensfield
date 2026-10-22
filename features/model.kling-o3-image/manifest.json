@@ -12,7 +12,6 @@
     "api_kling_o3_image"
   ],
   "status": "built",
-  "group": "Text to image",
   "workflow": {
     "template": "api_kling_o3_image",
     "api": "features/model.kling-o3-image/workflow_api.json",
@@ -41,18 +40,6 @@
         "node": "30",
         "field": "prompt",
         "required": true
-      },
-      {
-        "name": "model_name",
-        "label": "Model name",
-        "kind": "choice",
-        "node": "30",
-        "field": "model_name",
-        "options": [
-          "kling-v3-omni",
-          "kling-image-o1"
-        ],
-        "default": "kling-v3-omni"
       },
       {
         "name": "resolution",
@@ -121,5 +108,6 @@
     ],
     "output_kind": "image",
     "verified": false
-  }
+  },
+  "group": "Text to image"
 }

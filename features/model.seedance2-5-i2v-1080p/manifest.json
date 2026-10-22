@@ -12,7 +12,6 @@
     "api_seedance2_5_i2v_1080p"
   ],
   "status": "tested",
-  "group": "Image to video",
   "workflow": {
     "template": "api_seedance2_5_i2v_1080p",
     "api": "features/model.seedance2-5-i2v-1080p/workflow_api.json",
@@ -65,31 +64,6 @@
         "default": "adaptive"
       },
       {
-        "name": "task_type",
-        "label": "Task type",
-        "kind": "choice",
-        "node": "9",
-        "field": "model.task_type",
-        "options": [
-          "auto",
-          "reference",
-          "edit",
-          "extend"
-        ],
-        "default": "reference"
-      },
-      {
-        "name": "output_format",
-        "label": "Output format",
-        "kind": "choice",
-        "node": "9",
-        "field": "model.output_format",
-        "options": [
-          "mp4"
-        ],
-        "default": "mp4"
-      },
-      {
         "name": "duration",
         "label": "Duration",
         "kind": "number",
@@ -122,6 +96,6 @@
       "examples/models/seedance2-5-i2v-1080p.mp4"
     ]
   },
-  "default": true,
-  "cost": 865
+  "group": "Image to video",
+  "default": true
 }

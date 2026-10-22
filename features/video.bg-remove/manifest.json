@@ -11,5 +11,37 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "built",
+  "workflow": {
+    "template": "api_bria_remove_video_background_transparent",
+    "api": "features/model.bria-remove-video-background-transparent/workflow_api.json",
+    "ui": "features/model.bria-remove-video-background-transparent/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "video_1",
+        "label": "Video",
+        "kind": "video",
+        "node": "5",
+        "field": "file",
+        "required": true
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "4",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "7"
+    ],
+    "models": [
+      "api_bria_remove_video_background_transparent"
+    ],
+    "reuses": "model.bria-remove-video-background-transparent",
+    "output_kind": "video",
+    "verified": false
+  }
 }

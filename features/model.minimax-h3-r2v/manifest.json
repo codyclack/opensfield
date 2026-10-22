@@ -12,7 +12,6 @@
     "api_minimax_h3_r2v"
   ],
   "status": "built",
-  "group": "Reference to video",
   "workflow": {
     "template": "api_minimax_h3_r2v",
     "api": "features/model.minimax-h3-r2v/workflow_api.json",
@@ -91,5 +90,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Reference to video"
 }

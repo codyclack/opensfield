@@ -12,7 +12,6 @@
     "api_bfl_flux3_i2v"
   ],
   "status": "built",
-  "group": "Image to video",
   "workflow": {
     "template": "api_bfl_flux3_i2v",
     "api": "features/model.bfl-flux3-i2v/workflow_api.json",
@@ -94,17 +93,6 @@
         "default": "720p"
       },
       {
-        "name": "safety_tolerance",
-        "label": "Safety tolerance",
-        "kind": "number",
-        "node": "424",
-        "field": "safety_tolerance",
-        "default": 2,
-        "min": 0,
-        "max": 4,
-        "step": 1
-      },
-      {
         "name": "seed",
         "label": "Seed (0 = random)",
         "kind": "seed",
@@ -121,5 +109,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Image to video"
 }

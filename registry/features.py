@@ -165,7 +165,10 @@ from pathlib import Path as _Path  # noqa: E402
 
 _GEN = _Path(__file__).with_name("models_gen.json")
 if _GEN.exists():
-    FEATURES.extend(_json.loads(_GEN.read_text(encoding="utf-8"))["features"].values())
+    _g = _json.loads(_GEN.read_text(encoding="utf-8"))
+    FEATURES.extend(_g["features"].values())
+    for _f in FEATURES:  # modules wired straight from a partner template keep their id, name and studio
+        _f.update(_g.get("patch", {}).get(_f["id"], {}))
 
 
 # Which tools share a model switcher on the create page (open-weights tools and partner models side by side).

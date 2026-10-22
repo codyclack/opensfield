@@ -12,7 +12,6 @@
     "api_grok_imagine_image_2_t2i"
   ],
   "status": "built",
-  "group": "Text to image",
   "workflow": {
     "template": "api_grok_imagine_image_2_t2i",
     "api": "features/model.grok-imagine-image-2-t2i/workflow_api.json",
@@ -115,5 +114,6 @@
     ],
     "output_kind": "image",
     "verified": false
-  }
+  },
+  "group": "Text to image"
 }

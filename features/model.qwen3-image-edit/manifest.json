@@ -12,7 +12,6 @@
     "api_qwen3_image_edit"
   ],
   "status": "tested",
-  "group": "Image edit",
   "workflow": {
     "template": "api_qwen3_image_edit",
     "api": "features/model.qwen3-image-edit/workflow_api.json",
@@ -33,17 +32,6 @@
         "node": "15",
         "field": "model.prompt",
         "required": true
-      },
-      {
-        "name": "n",
-        "label": "N",
-        "kind": "number",
-        "node": "15",
-        "field": "n",
-        "default": 1,
-        "min": 1,
-        "max": 6,
-        "step": 1
       },
       {
         "name": "seed",
@@ -67,5 +55,6 @@
       "examples/models/qwen3-image-edit.png"
     ]
   },
+  "group": "Image edit",
   "cost": 13
 }

@@ -1071,6 +1071,38 @@
    ],
    "status": "planned",
    "group": "Text to video"
+  },
+  "model.fishaudio-voice-clone-tts": {
+   "id": "model.fishaudio-voice-clone-tts",
+   "studio": "Audio",
+   "name": "Fish Audio \u00b7 Voice Clone to Speech",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Voice clone",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_fishaudio_voice_clone_tts"
+   ],
+   "status": "planned",
+   "group": "Voice clone"
+  },
+  "model.sync-so-talking-image": {
+   "id": "model.sync-so-talking-image",
+   "studio": "Video tools",
+   "name": "Sync 3 \u00b7 Talking Image",
+   "tier": "B",
+   "base": [],
+   "higgsfield": "Lip sync",
+   "track": "partner",
+   "note": "Partner model run through Comfy Cloud API nodes (uses Comfy credits).",
+   "count": 1,
+   "partner": [
+    "api_sync_so_talking_image"
+   ],
+   "status": "planned",
+   "group": "Lip sync"
   }
  },
  "wiring": {
@@ -1085,26 +1117,6 @@
      "node": "24",
      "field": "prompt",
      "required": true
-    },
-    {
-     "name": "system_prompt",
-     "label": "System prompt",
-     "kind": "text",
-     "node": "24",
-     "field": "system_prompt",
-     "required": true
-    },
-    {
-     "name": "response_modalities",
-     "label": "Response modalities",
-     "kind": "choice",
-     "node": "24",
-     "field": "response_modalities",
-     "options": [
-      "IMAGE",
-      "IMAGE+TEXT"
-     ],
-     "default": "IMAGE"
     },
     {
      "name": "aspect_ratio",
@@ -1143,40 +1155,6 @@
       "4K"
      ],
      "default": "1K"
-    },
-    {
-     "name": "thinking_level",
-     "label": "Thinking level",
-     "kind": "choice",
-     "node": "24",
-     "field": "model.thinking_level",
-     "options": [
-      "MINIMAL",
-      "HIGH"
-     ],
-     "default": "MINIMAL"
-    },
-    {
-     "name": "temperature",
-     "label": "Temperature",
-     "kind": "number",
-     "node": "24",
-     "field": "temperature",
-     "default": 1,
-     "min": 0.0,
-     "max": 2.0,
-     "step": 0.01
-    },
-    {
-     "name": "top_p",
-     "label": "Top p",
-     "kind": "number",
-     "node": "24",
-     "field": "top_p",
-     "default": 0.95,
-     "min": 0.0,
-     "max": 1.0,
-     "step": 0.01
     },
     {
      "name": "seed",
@@ -1231,18 +1209,6 @@
      "default": "auto"
     },
     {
-     "name": "background",
-     "label": "Background",
-     "kind": "choice",
-     "node": "271",
-     "field": "model.background",
-     "options": [
-      "auto",
-      "opaque"
-     ],
-     "default": "auto"
-    },
-    {
      "name": "quality",
      "label": "Quality",
      "kind": "choice",
@@ -1254,39 +1220,6 @@
       "high"
      ],
      "default": "low"
-    },
-    {
-     "name": "n",
-     "label": "N",
-     "kind": "number",
-     "node": "271",
-     "field": "n",
-     "default": 1,
-     "min": 1,
-     "max": 8,
-     "step": 1
-    },
-    {
-     "name": "custom_width",
-     "label": "Custom width",
-     "kind": "number",
-     "node": "271",
-     "field": "model.custom_width",
-     "default": 1024,
-     "min": 480,
-     "max": 3840,
-     "step": 16
-    },
-    {
-     "name": "custom_height",
-     "label": "Custom height",
-     "kind": "number",
-     "node": "271",
-     "field": "model.custom_height",
-     "default": 1024,
-     "min": 480,
-     "max": 3840,
-     "step": 16
     },
     {
      "name": "seed",
@@ -1341,19 +1274,6 @@
      "default": "auto"
     },
     {
-     "name": "background",
-     "label": "Background",
-     "kind": "choice",
-     "node": "271",
-     "field": "model.background",
-     "options": [
-      "auto",
-      "opaque",
-      "transparent"
-     ],
-     "default": "auto"
-    },
-    {
      "name": "quality",
      "label": "Quality",
      "kind": "choice",
@@ -1367,39 +1287,6 @@
       "max"
      ],
      "default": "low"
-    },
-    {
-     "name": "n",
-     "label": "N",
-     "kind": "number",
-     "node": "271",
-     "field": "n",
-     "default": 1,
-     "min": 1,
-     "max": 8,
-     "step": 1
-    },
-    {
-     "name": "custom_width",
-     "label": "Custom width",
-     "kind": "number",
-     "node": "271",
-     "field": "model.custom_width",
-     "default": 1024,
-     "min": 480,
-     "max": 3840,
-     "step": 16
-    },
-    {
-     "name": "custom_height",
-     "label": "Custom height",
-     "kind": "number",
-     "node": "271",
-     "field": "model.custom_height",
-     "default": 1024,
-     "min": 480,
-     "max": 3840,
-     "step": 16
     },
     {
      "name": "seed",
@@ -1450,19 +1337,6 @@
      "default": "auto"
     },
     {
-     "name": "background",
-     "label": "Background",
-     "kind": "choice",
-     "node": "271",
-     "field": "model.background",
-     "options": [
-      "auto",
-      "opaque",
-      "transparent"
-     ],
-     "default": "auto"
-    },
-    {
      "name": "quality",
      "label": "Quality",
      "kind": "choice",
@@ -1476,39 +1350,6 @@
       "max"
      ],
      "default": "low"
-    },
-    {
-     "name": "n",
-     "label": "N",
-     "kind": "number",
-     "node": "271",
-     "field": "n",
-     "default": 1,
-     "min": 1,
-     "max": 8,
-     "step": 1
-    },
-    {
-     "name": "custom_width",
-     "label": "Custom width",
-     "kind": "number",
-     "node": "271",
-     "field": "model.custom_width",
-     "default": 1024,
-     "min": 480,
-     "max": 3840,
-     "step": 16
-    },
-    {
-     "name": "custom_height",
-     "label": "Custom height",
-     "kind": "number",
-     "node": "271",
-     "field": "model.custom_height",
-     "default": 1024,
-     "min": 480,
-     "max": 3840,
-     "step": 16
     },
     {
      "name": "seed",
@@ -1575,17 +1416,6 @@
      "default": "1024x1024"
     },
     {
-     "name": "n",
-     "label": "N",
-     "kind": "number",
-     "node": "12",
-     "field": "n",
-     "default": 1,
-     "min": 1,
-     "max": 6,
-     "step": 1
-    },
-    {
      "name": "seed",
      "label": "Seed (0 = random)",
      "kind": "seed",
@@ -1630,17 +1460,6 @@
      "default": "subject"
     },
     {
-     "name": "model_name",
-     "label": "Model name",
-     "kind": "choice",
-     "node": "27",
-     "field": "model_name",
-     "options": [
-      "kling-v3"
-     ],
-     "default": "kling-v3"
-    },
-    {
      "name": "aspect_ratio",
      "label": "Aspect ratio",
      "kind": "choice",
@@ -1679,17 +1498,6 @@
      "min": 0.0,
      "max": 1.0,
      "step": 0.01
-    },
-    {
-     "name": "n",
-     "label": "N",
-     "kind": "number",
-     "node": "27",
-     "field": "n",
-     "default": 1,
-     "min": 1,
-     "max": 9,
-     "step": 1
     },
     {
      "name": "seed",
@@ -1738,18 +1546,6 @@
      "node": "30",
      "field": "prompt",
      "required": true
-    },
-    {
-     "name": "model_name",
-     "label": "Model name",
-     "kind": "choice",
-     "node": "30",
-     "field": "model_name",
-     "options": [
-      "kling-v3-omni",
-      "kling-image-o1"
-     ],
-     "default": "kling-v3-omni"
     },
     {
      "name": "resolution",
@@ -1858,18 +1654,6 @@
      "default": "auto"
     },
     {
-     "name": "background",
-     "label": "Background",
-     "kind": "choice",
-     "node": "276",
-     "field": "model.background",
-     "options": [
-      "auto",
-      "opaque"
-     ],
-     "default": "auto"
-    },
-    {
      "name": "quality",
      "label": "Quality",
      "kind": "choice",
@@ -1881,39 +1665,6 @@
       "high"
      ],
      "default": "low"
-    },
-    {
-     "name": "n",
-     "label": "N",
-     "kind": "number",
-     "node": "276",
-     "field": "n",
-     "default": 1,
-     "min": 1,
-     "max": 8,
-     "step": 1
-    },
-    {
-     "name": "custom_width",
-     "label": "Custom width",
-     "kind": "number",
-     "node": "276",
-     "field": "model.custom_width",
-     "default": 1024,
-     "min": 480,
-     "max": 3840,
-     "step": 16
-    },
-    {
-     "name": "custom_height",
-     "label": "Custom height",
-     "kind": "number",
-     "node": "276",
-     "field": "model.custom_height",
-     "default": 1024,
-     "min": 480,
-     "max": 3840,
-     "step": 16
     },
     {
      "name": "seed",
@@ -2063,17 +1814,6 @@
      "required": true
     },
     {
-     "name": "n",
-     "label": "N",
-     "kind": "number",
-     "node": "15",
-     "field": "n",
-     "default": 1,
-     "min": 1,
-     "max": 6,
-     "step": 1
-    },
-    {
      "name": "seed",
      "label": "Seed (0 = random)",
      "kind": "seed",
@@ -2104,18 +1844,6 @@
      "node": "15",
      "field": "prompt",
      "required": true
-    },
-    {
-     "name": "model_name",
-     "label": "Model name",
-     "kind": "choice",
-     "node": "15",
-     "field": "model_name",
-     "options": [
-      "kling-v3-omni",
-      "kling-video-o1"
-     ],
-     "default": "kling-v3-omni"
     },
     {
      "name": "aspect_ratio",
@@ -2333,17 +2061,6 @@
      "default": "720p"
     },
     {
-     "name": "safety_tolerance",
-     "label": "Safety tolerance",
-     "kind": "number",
-     "node": "13",
-     "field": "safety_tolerance",
-     "default": 2,
-     "min": 0,
-     "max": 4,
-     "step": 1
-    },
-    {
      "name": "seed",
      "label": "Seed (0 = random)",
      "kind": "seed",
@@ -2478,31 +2195,6 @@
       "adaptive"
      ],
      "default": "adaptive"
-    },
-    {
-     "name": "task_type",
-     "label": "Task type",
-     "kind": "choice",
-     "node": "9",
-     "field": "model.task_type",
-     "options": [
-      "auto",
-      "reference",
-      "edit",
-      "extend"
-     ],
-     "default": "reference"
-    },
-    {
-     "name": "output_format",
-     "label": "Output format",
-     "kind": "choice",
-     "node": "9",
-     "field": "model.output_format",
-     "options": [
-      "mp4"
-     ],
-     "default": "mp4"
     },
     {
      "name": "duration",
@@ -2740,18 +2432,6 @@
      "required": true
     },
     {
-     "name": "model_name",
-     "label": "Model name",
-     "kind": "choice",
-     "node": "21",
-     "field": "model_name",
-     "options": [
-      "kling-v3-omni",
-      "kling-video-o1"
-     ],
-     "default": "kling-v3-omni"
-    },
-    {
      "name": "aspect_ratio",
      "label": "Aspect ratio",
      "kind": "choice",
@@ -2823,17 +2503,6 @@
      "node": "12",
      "field": "prompt",
      "required": true
-    },
-    {
-     "name": "model_name",
-     "label": "Model name",
-     "kind": "choice",
-     "node": "12",
-     "field": "model_name",
-     "options": [
-      "kling-v2-6"
-     ],
-     "default": "kling-v2-6"
     },
     {
      "name": "mode",
@@ -3501,17 +3170,6 @@
      "default": "720p"
     },
     {
-     "name": "safety_tolerance",
-     "label": "Safety tolerance",
-     "kind": "number",
-     "node": "424",
-     "field": "safety_tolerance",
-     "default": 2,
-     "min": 0,
-     "max": 4,
-     "step": 1
-    },
-    {
      "name": "seed",
      "label": "Seed (0 = random)",
      "kind": "seed",
@@ -3572,22 +3230,6 @@
       "9:16"
      ],
      "default": "16:9"
-    },
-    {
-     "name": "task_type",
-     "label": "Task type",
-     "kind": "choice",
-     "node": "7",
-     "field": "model.task_type",
-     "options": [
-      "auto",
-      "text_to_video",
-      "image_to_video",
-      "reference_to_video",
-      "edit",
-      "extend"
-     ],
-     "default": "image_to_video"
     },
     {
      "name": "seed",
@@ -3928,31 +3570,6 @@
      "default": "adaptive"
     },
     {
-     "name": "task_type",
-     "label": "Task type",
-     "kind": "choice",
-     "node": "24",
-     "field": "model.task_type",
-     "options": [
-      "auto",
-      "reference",
-      "edit",
-      "extend"
-     ],
-     "default": "reference"
-    },
-    {
-     "name": "output_format",
-     "label": "Output format",
-     "kind": "choice",
-     "node": "24",
-     "field": "model.output_format",
-     "options": [
-      "mp4"
-     ],
-     "default": "mp4"
-    },
-    {
      "name": "duration",
      "label": "Duration",
      "kind": "number",
@@ -4265,18 +3882,6 @@
      "required": true
     },
     {
-     "name": "model_name",
-     "label": "Model name",
-     "kind": "choice",
-     "node": "32",
-     "field": "model_name",
-     "options": [
-      "kling-v3-omni",
-      "kling-video-o1"
-     ],
-     "default": "kling-v3-omni"
-    },
-    {
      "name": "resolution",
      "label": "Resolution",
      "kind": "choice",
@@ -4417,18 +4022,6 @@
      "required": true
     },
     {
-     "name": "model_name",
-     "label": "Model name",
-     "kind": "choice",
-     "node": "23",
-     "field": "model_name",
-     "options": [
-      "kling-v3-omni",
-      "kling-video-o1"
-     ],
-     "default": "kling-v3-omni"
-    },
-    {
      "name": "resolution",
      "label": "Resolution",
      "kind": "choice",
@@ -4467,31 +4060,6 @@
      "node": "208",
      "field": "text",
      "required": true
-    },
-    {
-     "name": "apply_text_normalization",
-     "label": "Apply text normalization",
-     "kind": "choice",
-     "node": "208",
-     "field": "apply_text_normalization",
-     "options": [
-      "auto",
-      "on",
-      "off"
-     ],
-     "default": "auto"
-    },
-    {
-     "name": "output_format",
-     "label": "Output format",
-     "kind": "choice",
-     "node": "208",
-     "field": "output_format",
-     "options": [
-      "mp3_44100_192",
-      "opus_48000_192"
-     ],
-     "default": "mp3_44100_192"
     },
     {
      "name": "stability",
@@ -4548,28 +4116,6 @@
      "required": true
     },
     {
-     "name": "temperature",
-     "label": "Temperature",
-     "kind": "number",
-     "node": "1",
-     "field": "model.temperature",
-     "default": 0.7,
-     "min": 0.0,
-     "max": 1.0,
-     "step": 0.01
-    },
-    {
-     "name": "top_p",
-     "label": "Top p",
-     "kind": "number",
-     "node": "1",
-     "field": "model.top_p",
-     "default": 0.7,
-     "min": 0.01,
-     "max": 1.0,
-     "step": 0.01
-    },
-    {
      "name": "speed",
      "label": "Speed",
      "kind": "number",
@@ -4579,17 +4125,6 @@
      "min": 0.5,
      "max": 2.0,
      "step": 0.01
-    },
-    {
-     "name": "volume",
-     "label": "Volume",
-     "kind": "number",
-     "node": "1",
-     "field": "model.volume",
-     "default": 0,
-     "min": -10.0,
-     "max": 10.0,
-     "step": 0.5
     },
     {
      "name": "seed",
@@ -4740,26 +4275,6 @@
      "required": true
     },
     {
-     "name": "system_prompt",
-     "label": "System prompt",
-     "kind": "text",
-     "node": "1",
-     "field": "system_prompt",
-     "required": true
-    },
-    {
-     "name": "response_modalities",
-     "label": "Response modalities",
-     "kind": "choice",
-     "node": "1",
-     "field": "response_modalities",
-     "options": [
-      "IMAGE",
-      "IMAGE+TEXT"
-     ],
-     "default": "IMAGE"
-    },
-    {
      "name": "aspect_ratio",
      "label": "Aspect ratio",
      "kind": "choice",
@@ -4798,41 +4313,6 @@
      "default": "1K"
     },
     {
-     "name": "thinking_level",
-     "label": "Thinking level",
-     "kind": "choice",
-     "node": "1",
-     "field": "model.thinking_level",
-     "options": [
-      "MINIMAL",
-      "MEDIUM",
-      "HIGH"
-     ],
-     "default": "MEDIUM"
-    },
-    {
-     "name": "temperature",
-     "label": "Temperature",
-     "kind": "number",
-     "node": "1",
-     "field": "temperature",
-     "default": 1,
-     "min": 0.0,
-     "max": 2.0,
-     "step": 0.01
-    },
-    {
-     "name": "top_p",
-     "label": "Top p",
-     "kind": "number",
-     "node": "1",
-     "field": "top_p",
-     "default": 0.95,
-     "min": 0.0,
-     "max": 1.0,
-     "step": 0.01
-    },
-    {
      "name": "seed",
      "label": "Seed (0 = random)",
      "kind": "seed",
@@ -4863,26 +4343,6 @@
      "node": "3",
      "field": "prompt",
      "required": true
-    },
-    {
-     "name": "system_prompt",
-     "label": "System prompt",
-     "kind": "text",
-     "node": "3",
-     "field": "system_prompt",
-     "required": true
-    },
-    {
-     "name": "response_modalities",
-     "label": "Response modalities",
-     "kind": "choice",
-     "node": "3",
-     "field": "response_modalities",
-     "options": [
-      "IMAGE",
-      "IMAGE+TEXT"
-     ],
-     "default": "IMAGE"
     },
     {
      "name": "aspect_ratio",
@@ -4919,40 +4379,6 @@
       "1K"
      ],
      "default": "1K"
-    },
-    {
-     "name": "thinking_level",
-     "label": "Thinking level",
-     "kind": "choice",
-     "node": "3",
-     "field": "model.thinking_level",
-     "options": [
-      "MINIMAL",
-      "HIGH"
-     ],
-     "default": "MINIMAL"
-    },
-    {
-     "name": "temperature",
-     "label": "Temperature",
-     "kind": "number",
-     "node": "3",
-     "field": "temperature",
-     "default": 1,
-     "min": 0.0,
-     "max": 2.0,
-     "step": 0.01
-    },
-    {
-     "name": "top_p",
-     "label": "Top p",
-     "kind": "number",
-     "node": "3",
-     "field": "top_p",
-     "default": 0.95,
-     "min": 0.0,
-     "max": 1.0,
-     "step": 0.01
     },
     {
      "name": "seed",
@@ -5198,17 +4624,6 @@
      "default": "1K"
     },
     {
-     "name": "safety_tolerance",
-     "label": "Safety tolerance",
-     "kind": "number",
-     "node": "1",
-     "field": "safety_tolerance",
-     "default": 4,
-     "min": 0,
-     "max": 4,
-     "step": 1
-    },
-    {
      "name": "seed",
      "label": "Seed (0 = random)",
      "kind": "seed",
@@ -5349,27 +4764,6 @@
      "required": true
     },
     {
-     "name": "system_prompt",
-     "label": "System prompt",
-     "kind": "text",
-     "node": "4",
-     "field": "system_prompt",
-     "required": false,
-     "clear_blank": true
-    },
-    {
-     "name": "response_modalities",
-     "label": "Response modalities",
-     "kind": "choice",
-     "node": "4",
-     "field": "response_modalities",
-     "options": [
-      "IMAGE",
-      "IMAGE+TEXT"
-     ],
-     "default": "IMAGE"
-    },
-    {
      "name": "aspect_ratio",
      "label": "Aspect ratio",
      "kind": "choice",
@@ -5406,41 +4800,6 @@
       "4K"
      ],
      "default": "1K"
-    },
-    {
-     "name": "thinking_level",
-     "label": "Thinking level",
-     "kind": "choice",
-     "node": "4",
-     "field": "model.thinking_level",
-     "options": [
-      "MINIMAL",
-      "MEDIUM",
-      "HIGH"
-     ],
-     "default": "MEDIUM"
-    },
-    {
-     "name": "temperature",
-     "label": "Temperature",
-     "kind": "number",
-     "node": "4",
-     "field": "temperature",
-     "default": 1,
-     "min": 0.0,
-     "max": 2.0,
-     "step": 0.01
-    },
-    {
-     "name": "top_p",
-     "label": "Top p",
-     "kind": "number",
-     "node": "4",
-     "field": "top_p",
-     "default": 0.95,
-     "min": 0.0,
-     "max": 1.0,
-     "step": 0.01
     },
     {
      "name": "seed",
@@ -5615,17 +4974,6 @@
       "4K"
      ],
      "default": "1K"
-    },
-    {
-     "name": "safety_tolerance",
-     "label": "Safety tolerance",
-     "kind": "number",
-     "node": "3",
-     "field": "safety_tolerance",
-     "default": 4,
-     "min": 0,
-     "max": 4,
-     "step": 1
     },
     {
      "name": "seed",
@@ -6306,17 +5654,6 @@
      "required": true
     },
     {
-     "name": "n",
-     "label": "N",
-     "kind": "number",
-     "node": "14",
-     "field": "n",
-     "default": 1,
-     "min": 1,
-     "max": 6,
-     "step": 1
-    },
-    {
      "name": "seed",
      "label": "Seed (0 = random)",
      "kind": "seed",
@@ -6515,17 +5852,6 @@
       "adaptive"
      ],
      "default": "16:9"
-    },
-    {
-     "name": "output_format",
-     "label": "Output format",
-     "kind": "choice",
-     "node": "11",
-     "field": "model.output_format",
-     "options": [
-      "mp4"
-     ],
-     "default": "mp4"
     },
     {
      "name": "duration",
@@ -6764,22 +6090,6 @@
      "default": "16:9"
     },
     {
-     "name": "task_type",
-     "label": "Task type",
-     "kind": "choice",
-     "node": "26",
-     "field": "model.task_type",
-     "options": [
-      "auto",
-      "text_to_video",
-      "image_to_video",
-      "reference_to_video",
-      "edit",
-      "extend"
-     ],
-     "default": "auto"
-    },
-    {
      "name": "seed",
      "label": "Seed (0 = random)",
      "kind": "seed",
@@ -7008,6 +6318,907 @@
    "models": [
     "api_minimax_h3_max_t2v"
    ]
+  },
+  "model.fishaudio-voice-clone-tts": {
+   "template": "api_fishaudio_voice_clone_tts",
+   "output_kind": "audio",
+   "inputs": [
+    {
+     "name": "audio_1",
+     "label": "Audio0",
+     "kind": "audio",
+     "node": "11",
+     "field": "audio",
+     "required": true
+    },
+    {
+     "name": "text",
+     "label": "Text",
+     "kind": "text",
+     "node": "1",
+     "field": "text",
+     "required": true
+    },
+    {
+     "name": "speed",
+     "label": "Speed",
+     "kind": "number",
+     "node": "1",
+     "field": "model.speed",
+     "default": 1,
+     "min": 0.5,
+     "max": 2.0,
+     "step": 0.01
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "1",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "5"
+   ],
+   "models": [
+    "api_fishaudio_voice_clone_tts"
+   ]
+  },
+  "model.sync-so-talking-image": {
+   "template": "api_sync_so_talking_image",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "audio_1",
+     "label": "Audio",
+     "kind": "audio",
+     "node": "11",
+     "field": "audio",
+     "required": true
+    },
+    {
+     "name": "image_1",
+     "label": "Image",
+     "kind": "image",
+     "node": "15",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "14",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "speaker_selection",
+     "label": "Speaker selection",
+     "kind": "choice",
+     "node": "14",
+     "field": "model.speaker_selection",
+     "options": [
+      "default",
+      "coordinates"
+     ],
+     "default": "default"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "14",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "13"
+   ],
+   "models": [
+    "api_sync_so_talking_image"
+   ]
+  },
+  "audio.sfx": {
+   "template": "api_elevenlabs_text_to_sound_effects",
+   "output_kind": "audio",
+   "inputs": [
+    {
+     "name": "text",
+     "label": "Text",
+     "kind": "text",
+     "node": "136",
+     "field": "text",
+     "required": true
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "136",
+     "field": "model.duration",
+     "default": 5,
+     "min": 0.5,
+     "max": 30.0,
+     "step": 0.1
+    },
+    {
+     "name": "prompt_influence",
+     "label": "Prompt influence",
+     "kind": "number",
+     "node": "136",
+     "field": "model.prompt_influence",
+     "default": 0.3,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    }
+   ],
+   "outputs": [
+    "139"
+   ],
+   "models": [
+    "api_elevenlabs_text_to_sound_effects"
+   ]
+  },
+  "audio.voice-change": {
+   "template": "api_elevenlabs_speech_to_speech",
+   "output_kind": "audio",
+   "inputs": [
+    {
+     "name": "audio_1",
+     "label": "Audio",
+     "kind": "audio",
+     "node": "221",
+     "field": "audio",
+     "required": true
+    },
+    {
+     "name": "stability",
+     "label": "Stability",
+     "kind": "number",
+     "node": "220",
+     "field": "stability",
+     "default": 0.5,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "speed",
+     "label": "Speed",
+     "kind": "number",
+     "node": "220",
+     "field": "model.speed",
+     "default": 1,
+     "min": 0.7,
+     "max": 1.2,
+     "step": 0.01
+    },
+    {
+     "name": "similarity_boost",
+     "label": "Similarity boost",
+     "kind": "number",
+     "node": "220",
+     "field": "model.similarity_boost",
+     "default": 0.75,
+     "min": 0.0,
+     "max": 1.0,
+     "step": 0.01
+    },
+    {
+     "name": "style",
+     "label": "Style",
+     "kind": "number",
+     "node": "220",
+     "field": "model.style",
+     "default": 0,
+     "min": 0.0,
+     "max": 0.2,
+     "step": 0.01
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "220",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "222"
+   ],
+   "models": [
+    "api_elevenlabs_speech_to_speech"
+   ]
+  },
+  "audio.dubbing": {
+   "template": "api_heygen_video_translate",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "video_1",
+     "label": "Video",
+     "kind": "video",
+     "node": "5",
+     "field": "file",
+     "required": true
+    },
+    {
+     "name": "output_language",
+     "label": "Output language",
+     "kind": "choice",
+     "node": "4",
+     "field": "output_language",
+     "options": [
+      "English",
+      "Spanish",
+      "Spanish (Spain)",
+      "Spanish (Mexico)",
+      "French",
+      "French (France)",
+      "German",
+      "German (Germany)",
+      "Portuguese",
+      "Portuguese (Brazil)",
+      "Italian",
+      "Italian (Italy)",
+      "Japanese",
+      "Japanese (Japan)",
+      "Korean",
+      "Chinese (Mandarin, Simplified)",
+      "Arabic",
+      "Hindi",
+      "Hindi (India)",
+      "Russian",
+      "Russian (Russia)",
+      "Dutch",
+      "Polish",
+      "Turkish",
+      "Indonesian",
+      "Vietnamese",
+      "Ukrainian",
+      "Afrikaans (South Africa)",
+      "Albanian (Albania)",
+      "Amharic (Ethiopia)",
+      "Arabic (Algeria)",
+      "Arabic (Bahrain)",
+      "Arabic (Egypt)",
+      "Arabic (Iraq)",
+      "Arabic (Jordan)",
+      "Arabic (Kuwait)",
+      "Arabic (Lebanon)",
+      "Arabic (Libya)",
+      "Arabic (Morocco)",
+      "Arabic (Oman)",
+      "Arabic (Qatar)",
+      "Arabic (Saudi Arabia)",
+      "Arabic (Syria)",
+      "Arabic (Tunisia)",
+      "Arabic (United Arab Emirates)",
+      "Arabic (World)",
+      "Arabic (Yemen)",
+      "Armenian (Armenia)",
+      "Azerbaijani (Latin, Azerbaijan)",
+      "Bangla (Bangladesh)",
+      "Basque",
+      "Belarusian (Belarus)",
+      "Bengali (India)",
+      "Bosnian (Bosnia and Herzegovina)",
+      "Bulgarian",
+      "Bulgarian (Bulgaria)",
+      "Burmese (Myanmar)",
+      "Catalan",
+      "Chinese (Cantonese, Traditional)",
+      "Chinese (Jilu Mandarin, Simplified)",
+      "Chinese (Northeastern Mandarin, Simplified)",
+      "Chinese (Southwestern Mandarin, Simplified)",
+      "Chinese (Taiwanese Mandarin, Traditional)",
+      "Chinese (Wu, Simplified)",
+      "Chinese (Zhongyuan Mandarin Henan, Simplified)",
+      "Chinese (Zhongyuan Mandarin Shaanxi, Simplified)",
+      "Croatian",
+      "Croatian (Croatia)",
+      "Czech",
+      "Czech (Czechia)",
+      "Danish",
+      "Danish (Denmark)",
+      "Dutch (Belgium)",
+      "Dutch (Netherlands)",
+      "English (Australia)",
+      "English (Canada)",
+      "English (Hong Kong SAR)",
+      "English (India)",
+      "English (Ireland)",
+      "English (Kenya)",
+      "English (New Zealand)",
+      "English (Nigeria)",
+      "English (Philippines)",
+      "English (Singapore)",
+      "English (South Africa)",
+      "English (Tanzania)",
+      "English (UK)",
+      "English (United States)",
+      "Estonian (Estonia)",
+      "Filipino",
+      "Filipino (Cebuano)",
+      "Filipino (Philippines)",
+      "Finnish",
+      "Finnish (Finland)",
+      "French (Belgium)",
+      "French (Canada)",
+      "French (Switzerland)",
+      "Galician",
+      "Georgian (Georgia)",
+      "German (Austria)",
+      "German (Switzerland)",
+      "Greek",
+      "Greek (Greece)",
+      "Gujarati (India)",
+      "Haitian Creole (Haiti)",
+      "Hebrew (Israel)",
+      "Hungarian (Hungary)",
+      "Icelandic (Iceland)",
+      "Indonesian (Indonesia)",
+      "Irish (Ireland)",
+      "Javanese (Latin, Indonesia)",
+      "Kannada (India)",
+      "Kazakh (Kazakhstan)",
+      "Khmer (Cambodia)",
+      "Konkani (India)",
+      "Korean (Korea)",
+      "Lao (Laos)",
+      "Latin (Vatican City)",
+      "Latvian (Latvia)",
+      "Lithuanian (Lithuania)",
+      "Luxembourgish (Luxembourg)",
+      "Macedonian (North Macedonia)",
+      "Maithili (India)",
+      "Malagasy (Madagascar)",
+      "Malay",
+      "Malay (Malaysia)",
+      "Malayalam (India)",
+      "Maltese (Malta)",
+      "Mandarin",
+      "Marathi (India)",
+      "Mongolian (Mongolia)",
+      "Nepali (Nepal)",
+      "Norwegian Bokm\u00e5l (Norway)",
+      "Norwegian Nynorsk (Norway)",
+      "Odia (India)",
+      "Pashto (Afghanistan)",
+      "Persian (Iran)",
+      "Polish (Poland)",
+      "Portuguese (Portugal)",
+      "Punjabi (India)",
+      "Romanian",
+      "Romanian (Romania)",
+      "Serbian (Latin, Serbia)",
+      "Sindhi (India)",
+      "Sinhala (Sri Lanka)",
+      "Slovak",
+      "Slovak (Slovakia)",
+      "Slovenian (Slovenia)",
+      "Somali (Somalia)",
+      "Spanish (Argentina)",
+      "Spanish (Bolivia)",
+      "Spanish (Chile)",
+      "Spanish (Colombia)",
+      "Spanish (Costa Rica)",
+      "Spanish (Cuba)",
+      "Spanish (Dominican Republic)",
+      "Spanish (Ecuador)",
+      "Spanish (El Salvador)",
+      "Spanish (Equatorial Guinea)",
+      "Spanish (Guatemala)",
+      "Spanish (Honduras)",
+      "Spanish (Latin America)",
+      "Spanish (Nicaragua)",
+      "Spanish (Panama)",
+      "Spanish (Paraguay)",
+      "Spanish (Peru)",
+      "Spanish (Puerto Rico)",
+      "Spanish (United States)",
+      "Spanish (Uruguay)",
+      "Spanish (Venezuela)",
+      "Sundanese (Indonesia)",
+      "Swahili (Kenya)",
+      "Swahili (Tanzania)",
+      "Swedish",
+      "Swedish (Sweden)",
+      "Tamil",
+      "Tamil (India)",
+      "Tamil (Malaysia)",
+      "Tamil (Singapore)",
+      "Tamil (Sri Lanka)",
+      "Telugu (India)",
+      "Thai (Thailand)",
+      "Turkish (T\u00fcrkiye)",
+      "Ukrainian (Ukraine)",
+      "Urdu (India)",
+      "Urdu (Pakistan)",
+      "Uzbek (Latin, Uzbekistan)",
+      "Vietnamese (Vietnam)",
+      "Welsh (United Kingdom)",
+      "Zulu (South Africa)"
+     ],
+     "default": "Japanese"
+    },
+    {
+     "name": "mode",
+     "label": "Mode",
+     "kind": "choice",
+     "node": "4",
+     "field": "mode",
+     "options": [
+      "speed",
+      "precision"
+     ],
+     "default": "speed"
+    },
+    {
+     "name": "speaker_count",
+     "label": "Speaker count",
+     "kind": "number",
+     "node": "4",
+     "field": "speaker_count",
+     "default": 0,
+     "min": 0,
+     "max": 10,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "4",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "6"
+   ],
+   "models": [
+    "api_heygen_video_translate"
+   ]
+  },
+  "video.lipsync": {
+   "template": "api_sync_so_lip_sync_video",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "video_1",
+     "label": "Video",
+     "kind": "video",
+     "node": "9",
+     "field": "file",
+     "required": true
+    },
+    {
+     "name": "audio_1",
+     "label": "Audio",
+     "kind": "audio",
+     "node": "11",
+     "field": "audio",
+     "required": true
+    },
+    {
+     "name": "sync_mode",
+     "label": "Sync mode",
+     "kind": "choice",
+     "node": "8",
+     "field": "model.sync_mode",
+     "options": [
+      "bounce",
+      "cut_off",
+      "loop",
+      "silence",
+      "remap"
+     ],
+     "default": "bounce"
+    },
+    {
+     "name": "speaker_selection",
+     "label": "Speaker selection",
+     "kind": "choice",
+     "node": "8",
+     "field": "model.speaker_selection",
+     "options": [
+      "default",
+      "auto-detect",
+      "coordinates"
+     ],
+     "default": "default"
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "8",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "13"
+   ],
+   "models": [
+    "api_sync_so_lip_sync_video"
+   ]
+  },
+  "cinema.extend": {
+   "template": "api_seedance2_5_video_extend",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "video_1",
+     "label": "Video",
+     "kind": "video",
+     "node": "35",
+     "field": "file",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "38",
+     "field": "model.prompt",
+     "required": true
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "38",
+     "field": "model.resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "38",
+     "field": "model.ratio",
+     "options": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9",
+      "adaptive"
+     ],
+     "default": "adaptive"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "38",
+     "field": "model.duration",
+     "default": 5,
+     "min": 4,
+     "max": 30,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "38",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "16",
+    "40"
+   ],
+   "models": [
+    "api_seedance2_5_video_extend"
+   ]
+  },
+  "cinema.director": {
+   "template": "template_seedance_2_0_plus_llm_prompt_helper",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "image_1",
+     "label": "Image2",
+     "kind": "image",
+     "node": "352",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "image_2",
+     "label": "Image1",
+     "kind": "image",
+     "node": "356",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "360",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "model",
+     "label": "Model",
+     "kind": "choice",
+     "node": "360",
+     "field": "model",
+     "options": [
+      "gemini-2.5-pro",
+      "gemini-2.5-flash",
+      "gemini-3-pro-preview",
+      "gemini-3-1-pro",
+      "gemini-3-1-flash-lite"
+     ],
+     "default": "gemini-3-1-pro"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "368",
+     "field": "model.resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p",
+      "4k"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "368",
+     "field": "model.ratio",
+     "options": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9",
+      "adaptive"
+     ],
+     "default": "9:16"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "368",
+     "field": "model.duration",
+     "default": 15,
+     "min": 4,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "360",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "344",
+    "363"
+   ],
+   "models": [
+    "template_seedance_2_0_plus_llm_prompt_helper"
+   ]
+  },
+  "marketing.katana": {
+   "template": "template_seedance2_0_viral_videos_character_swap",
+   "output_kind": "video",
+   "inputs": [
+    {
+     "name": "video_1",
+     "label": "Video",
+     "kind": "video",
+     "node": "18",
+     "field": "file",
+     "required": true
+    },
+    {
+     "name": "image_1",
+     "label": "Image 2",
+     "kind": "image",
+     "node": "29",
+     "field": "image",
+     "required": true
+    },
+    {
+     "name": "prompt",
+     "label": "Prompt",
+     "kind": "text",
+     "node": "26",
+     "field": "prompt",
+     "required": true
+    },
+    {
+     "name": "size",
+     "label": "Size",
+     "kind": "choice",
+     "node": "26",
+     "field": "model.size",
+     "options": [
+      "auto",
+      "1024x1024",
+      "1024x1536",
+      "1536x1024",
+      "2048x2048",
+      "2048x1152",
+      "1152x2048",
+      "3840x2160",
+      "2160x3840",
+      "Custom"
+     ],
+     "default": "auto"
+    },
+    {
+     "name": "quality",
+     "label": "Quality",
+     "kind": "choice",
+     "node": "26",
+     "field": "model.quality",
+     "options": [
+      "low",
+      "medium",
+      "high"
+     ],
+     "default": "medium"
+    },
+    {
+     "name": "resolution",
+     "label": "Resolution",
+     "kind": "choice",
+     "node": "300",
+     "field": "model.resolution",
+     "options": [
+      "480p",
+      "720p",
+      "1080p",
+      "4k"
+     ],
+     "default": "720p"
+    },
+    {
+     "name": "ratio",
+     "label": "Ratio",
+     "kind": "choice",
+     "node": "300",
+     "field": "model.ratio",
+     "options": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "21:9",
+      "adaptive"
+     ],
+     "default": "16:9"
+    },
+    {
+     "name": "duration",
+     "label": "Duration",
+     "kind": "number",
+     "node": "300",
+     "field": "model.duration",
+     "default": 7,
+     "min": 4,
+     "max": 15,
+     "step": 1
+    },
+    {
+     "name": "max_output_tokens",
+     "label": "Max output tokens",
+     "kind": "number",
+     "node": "301",
+     "field": "model.max_output_tokens",
+     "default": 32768,
+     "min": 16,
+     "max": 65536,
+     "step": 1
+    },
+    {
+     "name": "seed",
+     "label": "Seed (0 = random)",
+     "kind": "seed",
+     "node": "26",
+     "field": "seed",
+     "default": 0
+    }
+   ],
+   "outputs": [
+    "282",
+    "295"
+   ],
+   "models": [
+    "template_seedance2_0_viral_videos_character_swap"
+   ]
+  }
+ },
+ "patch": {
+  "audio.sfx": {
+   "track": "partner",
+   "group": "Sound effects",
+   "partner": [
+    "api_elevenlabs_text_to_sound_effects"
+   ],
+   "note": "Runs ElevenLabs \u00b7 Text to Sound Effects through Comfy Cloud API nodes (uses Comfy credits)."
+  },
+  "audio.voice-change": {
+   "track": "partner",
+   "group": "Voice change",
+   "partner": [
+    "api_elevenlabs_speech_to_speech"
+   ],
+   "note": "Runs ElevenLabs \u00b7 Speech to Speech through Comfy Cloud API nodes (uses Comfy credits)."
+  },
+  "audio.dubbing": {
+   "track": "partner",
+   "group": "Dubbing",
+   "partner": [
+    "api_heygen_video_translate"
+   ],
+   "note": "Runs HeyGen \u00b7 Video Translate through Comfy Cloud API nodes (uses Comfy credits)."
+  },
+  "video.lipsync": {
+   "track": "partner",
+   "group": "Lip sync",
+   "partner": [
+    "api_sync_so_lip_sync_video"
+   ],
+   "note": "Runs Sync 3 \u00b7 Video Lip-Sync through Comfy Cloud API nodes (uses Comfy credits)."
+  },
+  "cinema.extend": {
+   "track": "partner",
+   "group": "Extend video",
+   "partner": [
+    "api_seedance2_5_video_extend"
+   ],
+   "note": "Runs Video Extend \u00b7 Seedance 2.5 through Comfy Cloud API nodes (uses Comfy credits)."
+  },
+  "cinema.director": {
+   "track": "partner",
+   "group": "AI Director",
+   "partner": [
+    "template_seedance_2_0_plus_llm_prompt_helper"
+   ],
+   "note": "Runs Seedance 2.0 + LLM Prompt Helper through Comfy Cloud API nodes (uses Comfy credits)."
+  },
+  "marketing.katana": {
+   "track": "partner",
+   "group": "Katana remix",
+   "partner": [
+    "template_seedance2_0_viral_videos_character_swap"
+   ],
+   "note": "Runs Seedance 2.0 \u00b7 Viral Videos Character Swap through Comfy Cloud API nodes (uses Comfy credits)."
   }
  }
 }

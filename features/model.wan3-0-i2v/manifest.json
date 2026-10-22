@@ -12,7 +12,6 @@
     "api_wan3_0_i2v"
   ],
   "status": "built",
-  "group": "Image to video",
   "workflow": {
     "template": "api_wan3_0_i2v",
     "api": "features/model.wan3-0-i2v/workflow_api.json",
@@ -120,5 +119,6 @@
     ],
     "output_kind": "video",
     "verified": false
-  }
+  },
+  "group": "Image to video"
 }

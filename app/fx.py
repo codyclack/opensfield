@@ -294,3 +294,48 @@ def process_video(src: Path, dst: Path, mode: str, max_seconds: float | None = N
     if p.wait() != 0 or n == 0:
         raise RuntimeError("video encode failed")
     return dst
+
+
+def clipify(src: Path, dst: Path, seconds: float = 10.0, progress: Callable[[float], None] | None = None) -> Path:
+    """Long video -> one vertical highlight: find the most active `seconds`-long stretch and center-crop it to 9:16."""
+    _need()
+    import imageio_ffmpeg
+    cap = cv2.VideoCapture(str(src))
+    if not cap.isOpened():
+        raise RuntimeError(f"cannot read video {src}")
+    fps = cap.get(cv2.CAP_PROP_FPS) or 24.0
+    energy, prev = [], None
+    while True:  # pass 1: motion energy per frame on a small grey thumbnail
+        ok, fr = cap.read()
+        if not ok:
+            break
+        g = cv2.cvtColor(cv2.resize(fr, (96, 54), interpolation=cv2.INTER_AREA), cv2.COLOR_BGR2GRAY).astype(np.float32)
+        energy.append(0.0 if prev is None else float(np.abs(g - prev).mean()))
+        prev = g
+    if not energy:
+        raise RuntimeError("empty video")
+    win = max(1, min(len(energy), int(seconds * fps)))
+    sums = np.convolve(np.asarray(energy), np.ones(win), "valid")
+    start = int(np.argmax(sums))
+    cap.set(cv2.CAP_PROP_POS_FRAMES, start)
+    w, h = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    cw = min(w, int(h * 9 / 16)) // 2 * 2
+    oh = min(h, 1280) // 2 * 2
+    ow = int(oh * cw / h) // 2 * 2
+    x0 = (w - cw) // 2
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    cmd = [imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{ow}x{oh}",
+           "-r", f"{fps:.3f}", "-i", "-", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "21", str(dst)]
+    p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
+    for n in range(win):  # pass 2: write the chosen window, cropped and scaled
+        ok, fr = cap.read()
+        if not ok:
+            break
+        p.stdin.write(np.ascontiguousarray(cv2.resize(fr[:, x0:x0 + cw], (ow, oh), interpolation=cv2.INTER_AREA)).tobytes())
+        if progress:
+            progress(min(0.99, (n + 1) / win))
+    cap.release()
+    p.stdin.close()
+    if p.wait() != 0:
+        raise RuntimeError("video encode failed")
+    return dst

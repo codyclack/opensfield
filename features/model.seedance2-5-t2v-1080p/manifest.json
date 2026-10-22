@@ -12,7 +12,6 @@
     "api_seedance2_5_t2v_1080p"
   ],
   "status": "tested",
-  "group": "Text to video",
   "workflow": {
     "template": "api_seedance2_5_t2v_1080p",
     "api": "features/model.seedance2-5-t2v-1080p/workflow_api.json",
@@ -57,17 +56,6 @@
         "default": "16:9"
       },
       {
-        "name": "output_format",
-        "label": "Output format",
-        "kind": "choice",
-        "node": "11",
-        "field": "model.output_format",
-        "options": [
-          "mp4"
-        ],
-        "default": "mp4"
-      },
-      {
         "name": "duration",
         "label": "Duration",
         "kind": "number",
@@ -100,6 +88,6 @@
       "examples/models/seedance2-5-t2v-1080p.mp4"
     ]
   },
-  "default": true,
-  "cost": 865
+  "group": "Text to video",
+  "default": true
 }

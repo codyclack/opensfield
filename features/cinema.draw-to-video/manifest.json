@@ -11,5 +11,83 @@
   "note": "",
   "count": 1,
   "partner": [],
-  "status": "planned"
+  "status": "built",
+  "workflow": {
+    "template": "api_kling_o3_i2v",
+    "api": "features/model.kling-o3-i2v/workflow_api.json",
+    "ui": "features/model.kling-o3-i2v/workflow_ui.json",
+    "inputs": [
+      {
+        "name": "image_1",
+        "label": "Sketch or annotated frame",
+        "kind": "image",
+        "node": "17",
+        "field": "image",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "label": "What should happen",
+        "kind": "text",
+        "node": "21",
+        "field": "prompt",
+        "required": true,
+        "prefix": "Treat the arrows, scribbles and notes in this image as directions: turn the sketch into a realistic live-action shot and animate it as drawn, removing the annotations. "
+      },
+      {
+        "name": "aspect_ratio",
+        "label": "Aspect ratio",
+        "kind": "choice",
+        "node": "21",
+        "field": "aspect_ratio",
+        "options": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "default": "16:9"
+      },
+      {
+        "name": "resolution",
+        "label": "Resolution",
+        "kind": "choice",
+        "node": "21",
+        "field": "resolution",
+        "options": [
+          "4k",
+          "1080p",
+          "720p"
+        ],
+        "default": "720p"
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "kind": "number",
+        "node": "21",
+        "field": "duration",
+        "default": 5,
+        "min": 3,
+        "max": 15,
+        "step": 1
+      },
+      {
+        "name": "seed",
+        "label": "Seed (0 = random)",
+        "kind": "seed",
+        "node": "21",
+        "field": "seed",
+        "default": 0
+      }
+    ],
+    "outputs": [
+      "20"
+    ],
+    "models": [
+      "api_kling_o3_i2v"
+    ],
+    "reuses": "model.kling-o3-i2v",
+    "output_kind": "video",
+    "verified": false
+  }
 }

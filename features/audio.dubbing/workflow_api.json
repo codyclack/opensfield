@@ -1,0 +1,43 @@
+{
+ "4": {
+  "inputs": {
+   "output_language": "Japanese",
+   "mode": "speed",
+   "translate_audio_only": false,
+   "speaker_count": 0,
+   "seed": 635709403,
+   "video": [
+    "5",
+    0
+   ]
+  },
+  "class_type": "HeyGenVideoTranslateNode",
+  "_meta": {
+   "title": "HeyGen Video Translate"
+  }
+ },
+ "5": {
+  "inputs": {
+   "file": "heygen_input.mp4"
+  },
+  "class_type": "LoadVideo",
+  "_meta": {
+   "title": "Load Video"
+  }
+ },
+ "6": {
+  "inputs": {
+   "filename_prefix": "video/HeyGen_translate",
+   "format": "auto",
+   "video": [
+    "4",
+    0
+   ],
+   "format.codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "Save Video"
+  }
+ }
+}
