@@ -173,7 +173,7 @@ steps = [("1  Feature map", ["72 Higgsfield modules", "tiers, open stand-ins"], 
 L2t = title("EVERY FEATURE = A MANIFEST + A WORKFLOW")
 L2boxes = [Layer(lambda d, i=i, s=s: box(d, 80 + i * 360, 330, 320, 190, s[0], s[1], s[2])) for i, s in enumerate(steps)]
 L2arrows = [Layer(lambda d, i=i: d.text((410 + i * 360 - 8, 395), "→", font=font(BOLD, 56), fill=MUTED)) for i in range(4)]
-L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it. 75 tools are verified end to end: open-weight workflows plus partner models.")
+L2c = caption("Higgsfield has about 100 models, 87 viral effects and 10+ studios.", "We mapped all of it. 76 tools are verified end to end: open-weight workflows plus partner models.")
 
 
 @scene(12)
@@ -188,21 +188,24 @@ def s2(t):
     return f
 
 
-# 3. app tour (new UI)
-IMG_HOME, IMG_T2I, IMG_ASSETS = still(SH / "new_home.png"), still(SH / "new_t2i.png"), still(SH / "new_assets.png")
-L3a = caption("A Higgsfield-style studio: rows of tools, hover to play", "Image, video, audio, 3D and marketing tools in one place")
-L3b = caption("Pick the model from a dropdown, tweak the options, Generate", "Open-weight and partner models side by side, with real example renders")
-L3c = caption("Assets: save characters, props and locations once, reuse everywhere", "“From assets” on every image input, “Save to assets” on every result")
+# 3. app tour (Higgsfield layout)
+TOUR = [("ui_explore", "The Higgsfield layout: Explore, Image, Video, Audio and every studio in the top menu", "Feature banners and tiles, then rows of tools that play on hover"),
+        ("ui_video", "Video: Seedance 2.5 by default, every video model in one picker", "Create Video, Text to Video, References, First & Last, Motion Control, Edit Video"),
+        ("ui_viral", "Viral effects, UGC, click-to-ad, AI influencer: presets on Seedance 2.5", "The open LTX-2.5 version is one click away in the same model list"),
+        ("ui_image", "Image: describe it in the bottom bar, pick GPT Image, Nano Banana, FLUX 3...", "Every result lands in History: download, save to Assets, reuse the settings"),
+        ("ui_assets", "Assets and @Elements: characters, props and locations you reuse", "“From assets” on every input, ★ on every result")]
+TOUR_IMG = [still(SH / f"{n}.png") for n, _, _ in TOUR]
+for _im in TOUR_IMG:  # screenshots come from the preview server: hide its "Mock mode" chip
+    _im[10:46, 1544:1642, :3] = (14, 12, 12)
+TOUR_CAP = [caption(a, b) for _, a, b in TOUR]
+SEG = 4.0
 
 
-@scene(16)
+@scene(20)
 def s3(t):
-    if t < 5:
-        f = kenburns(IMG_HOME, t, 5, 1.0, 1.05); L3a.on(f, min(1, t / 0.5))
-    elif t < 10.5:
-        f = kenburns(IMG_T2I, t - 5, 5.5, 1.0, 1.05); L3b.on(f, min(1, (t - 5) / 0.5))
-    else:
-        f = kenburns(IMG_ASSETS, t - 10.5, 5.5, 1.0, 1.05); L3c.on(f, min(1, (t - 10.5) / 0.5))
+    i = min(len(TOUR) - 1, int(t // SEG))
+    f = kenburns(TOUR_IMG[i][..., :3], t - i * SEG, SEG, 1.0, 1.04)
+    TOUR_CAP[i].on(f, min(1, (t - i * SEG) / 0.4))
     return f
 
 
@@ -255,7 +258,7 @@ L5r = label("DRIVING CLIP (AI-GENERATED)", 160 + 1150, 150, 26, LIME, "ma")
 L5c = caption("Wan Animate 2 · character image + driving video → same moves", "Rendered on Comfy Cloud with open weights · all people are fictional")
 
 
-@scene(12)
+@scene(10)
 def s5(t):
     f = BGIMG.copy(); L5t.on(f); L5l.on(f); L5r.on(f)
     paste(f, C5.at(t), 160, 190); L5c.on(f)
@@ -285,7 +288,7 @@ L7l, L7r = label("SOURCE VIDEO", 60 + 440, 170, 26, LIME, "ma"), label("SAME SHO
 L7c = caption("SCAIL-2 · swap who is in the footage, keep the motion", "Source: an AI-generated clip · replacement: a generated character image")
 
 
-@scene(10)
+@scene(9)
 def s7(t):
     f = BGIMG.copy(); L7t.on(f); L7l.on(f); L7r.on(f)
     paste(f, C7a.at(t), 60, 220); paste(f, C7b.at(t), 980, 220 + (C7a.h - C7b.h) // 2); L7c.on(f)
@@ -307,7 +310,7 @@ L8l = [label("IMAGE EDIT (QWEN)", 40 + 536 // 2 + 40, 600, 26, LIME, "ma"), labe
 L8c = caption("Edit · cut-out · text-to-video, plus inpaint, video edit, effects, music and 3D", "Prompt: \"change the black hoodie to yellow\" · every output is in examples/")
 
 
-@scene(10)
+@scene(9)
 def s8(t):
     f = BGIMG.copy(); L8t.on(f)
     paste(f, A, 80, 190); paste(f, B, 80 + A.shape[1] + 30, 190)
@@ -320,8 +323,8 @@ def s8(t):
 
 
 # 9. end
-L9 = Layer(lambda d: [marker(d, (120, 170), "75 TOOLS RUN FOR REAL", 78),
-                      d.text((124, 330), "62 more mapped in COVERAGE.md, with honest status", font=font(BOLD, 44), fill=WHITE),
+L9 = Layer(lambda d: [marker(d, (120, 170), "76 TOOLS RUN FOR REAL", 78),
+                      d.text((124, 330), "146 in the catalog: 59 more wired from Comfy templates, 11 not built", font=font(BOLD, 44), fill=WHITE),
                       d.text((124, 410), "Open weights + partner models  ·  MIT  ·  built on comfy-sdk", font=font(REG, 40), fill=MUTED),
                       d.text((124, 560), "github.com/codyclack/opensfield", font=font(BOLD, 72), fill=LIME),
                       d.text((124, 680), "#OpenSourceHiggsfield", font=font(BOLD, 56), fill=WHITE),

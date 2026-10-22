@@ -69,7 +69,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .ritem[aria-current="page"] .ico.studio { background: var(--c); color: var(--ink); }
 .ritem .nm { font-size: 10px; line-height: 1.15; text-align: center; max-width: 76px; overflow-wrap: anywhere; }
 .rlabel { margin: 14px 0 6px; text-align: center; font: 700 9px var(--display); letter-spacing: .14em; text-transform: uppercase; color: #6c6c74; }
-.canvas { position: relative; min-width: 0; padding: 22px 26px 60px; outline: 0; container-type: inline-size;
+.canvas { position: relative; min-width: 0; min-height: calc(100vh - var(--top)); padding: 22px 26px 60px; outline: 0; container-type: inline-size;
   background-color: var(--bg); background-image: radial-gradient(circle, rgba(255, 255, 255, .055) 1px, transparent 1.3px); background-size: 24px 24px; }
 
 /* ---------- headings, badges ---------- */
