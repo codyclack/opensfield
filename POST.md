@@ -1,8 +1,23 @@
 # Social post draft (#OpenSourceHiggsfield)
 
-Draft only: posting is Cody's call. Attach the demo video (`demo/OpenSfield_demo.mp4`, 118 s) or a clip from it.
+Draft only: posting is Cody's call. Attach the demo video (`demo/OpenSfield_demo.mp4`, 118 s).
 
----
+**Account setup (X):** handle `@opensfield` (or `@opensfield_app`), name `OpenSfield`, profile picture
+`demo/social/avatar_400.png`, header `demo/social/banner_1500x500.png` (both from `demo/make_social.py`).
+Bio: `Open-source Higgsfield, rebuilt on ComfyUI. 146 tools + 83 apps, open weights + partner models. MIT.`
+Website: `https://github.com/codyclack/opensfield`
+
+## X post (under 280 characters)
+
+I rebuilt Higgsfield as an open-source app on ComfyUI: OpenSfield.
+
+146 tools + all 83 Higgsfield apps, Cinema Studio, @Elements, open weights + partner models. Runs on your own GPU. MIT.
+
+github.com/codyclack/opensfield
+
+#OpenSourceHiggsfield @ComfyUI
+
+## Long version (reply to the X post, or Reddit r/comfyui)
 
 I rebuilt Higgsfield as an open-source app on ComfyUI. Meet OpenSfield.
 
