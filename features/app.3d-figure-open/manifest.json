@@ -5,7 +5,7 @@
   "base": [],
   "higgsfield": "higgsfield.ai/apps/3d-figure",
   "count": 1,
-  "status": "built",
+  "status": "tested",
   "app": {
     "cat": "Games & Characters",
     "desc": "Your photo as a detailed 3D figure",
@@ -74,7 +74,11 @@
     ],
     "reuses": "image.edit-open",
     "output_kind": "image",
-    "verified": false
+    "verified": true,
+    "verified_via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22",
+    "examples": [
+      "examples/apps/3d-figure.png"
+    ]
   },
   "group": "3D Figure"
 }
