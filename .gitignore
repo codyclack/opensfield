@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 node_modules/
 outputs/
-models/
+/models/
 .env
 demo/*.mp4
 demo/frames/
