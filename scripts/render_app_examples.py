@@ -12,6 +12,7 @@ import os
 import shutil
 import sys
 import time
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -96,6 +97,17 @@ def main():
             print(f"OK    {a['slug']:<26} {round(time.time() - t0):>4}s  {fid}", flush=True)
         except Exception as e:  # noqa: BLE001 - keep going, report at the end
             print(f"FAIL  {a['slug']:<26} {round(time.time() - t0):>4}s  {type(e).__name__}: {str(e)[:200]}", flush=True)
+            if "10061" in str(e) or "10054" in str(e):
+                break  # the server is gone: stop here and let the caller restart it instead of failing every app
+        if os.environ.get("OPENSFIELD_FREE_BETWEEN") and os.environ.get("COMFY_BASE_URL"):
+            # LTX-2.3 on a shared 24 GB card: unload everything between clips, or the next load runs out of memory
+            req = urllib.request.Request(os.environ["COMFY_BASE_URL"].rstrip("/") + "/free", data=b'{"unload_models": true, "free_memory": true}',
+                                         headers={"Content-Type": "application/json"})
+            try:
+                urllib.request.urlopen(req, timeout=30).read()
+                time.sleep(5)
+            except OSError:
+                pass
     print(f"done: {len(record)} apps have examples", flush=True)
 
 

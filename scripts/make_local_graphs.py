@@ -40,7 +40,7 @@ def ltx23_i2v(frames=73, size=768):
         "1": {"class_type": "DiffusionModelLoaderKJ", "inputs": {"model_name": "ltx-2.3-22b-dev_transformer_only_fp8_scaled.safetensors", "weight_dtype": "default",
                                                               "compute_dtype": "fp16", "patch_cublaslinear": False, "sage_attention": "disabled", "enable_fp16_accumulation": False}},
         "4": {"class_type": "LoraLoaderModelOnly", "inputs": {"lora_name": "ltx-2.3-22b-distilled-1.1_lora-dynamic_fro09_avg_rank_111_bf16.safetensors", "strength_model": 0.5, "model": ["1", 0]}},
-        "33": {"class_type": "DualCLIPLoader", "inputs": {"clip_name1": "gemma_3_12B_it_fp8_scaled.safetensors", "clip_name2": "ltx-2.3_text_projection_bf16.safetensors", "type": "ltxv", "device": "default"}},
+        "33": {"class_type": "DualCLIPLoader", "inputs": {"clip_name1": "gemma_3_12B_it_fp8_scaled.safetensors", "clip_name2": "ltx-2.3_text_projection_bf16.safetensors", "type": "ltxv", "device": "cpu"}},  # Gemma on the GPU crashes a shared 24 GB card; a short prompt encodes fine on CPU
         "5": {"class_type": "VAELoaderKJ", "inputs": {"vae_name": "LTX23_video_vae_bf16.safetensors", "device": "main_device", "weight_dtype": "fp32"}},
         "6": {"class_type": "VAELoaderKJ", "inputs": {"vae_name": "LTX23_audio_vae_bf16.safetensors", "device": "main_device", "weight_dtype": "fp16"}},
         "8": {"class_type": "CLIPTextEncode", "inputs": {"text": "The person slowly turns toward the camera and smiles.", "clip": ["33", 0]}},

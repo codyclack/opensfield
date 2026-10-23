@@ -20,7 +20,7 @@ open LTX-2.5 version one click away.
 
 ## Status (honest summary)
 - **Catalog: 146 tools** (Higgsfield modules plus one tool per partner model). **83 have real example outputs** (live runs on Comfy Cloud, or local CPU tools run on this machine), **63 are wired from official Comfy templates but not yet run**, **none are left unbuilt**.
-- **Apps: 83, all wired.** **56 show a real example**: all 45 photo and swap apps rendered through the app on a local ComfyUI (Qwen-Image-Edit 2511), 1 video app (LTX-2.3, 3 s) and 10 apps that open existing tools with examples. Not rendered yet: 26 video apps (local LTX-2.3 takes about 7 min a clip on this card and the batch was paused) and Transitions. Earlier summary: 48 of the original 72 modules were built in [`examples/`](examples/README.md), using open-weight models
+- **Apps: 83, all wired.** **57 show a real example**: all 45 photo and swap apps rendered through the app on a local ComfyUI (Qwen-Image-Edit 2511), 2 video apps (LTX-2.3, 3 s) and 10 apps that open existing tools with examples. Not rendered: the other 25 video apps (LTX-2.3 needs about 37 GB of weights loaded, and on this shared machine most attempts crashed from memory pressure; they run normally on Comfy Cloud or a dedicated GPU) and Transitions. Earlier summary: 48 of the original 72 modules were built in [`examples/`](examples/README.md), using open-weight models
   only: 23 are separate ComfyUI workflows (video outpainting, Chatterbox text-to-speech/voice clone, motion transfer, character replacement, text/image-to-video, first/last frame,
   video edit, image edit, inpaint, outpaint, background removal, layer decomposition, upscale, music, image-to-3D, several
   text-to-image models, style reference, two-reference compose), 20 are presets that reuse those workflows (UGC video, click-to-ad, shorts, AI influencer, ad variants, re-shoot angles, narration, image reframe, camera angles, viral effects,
@@ -29,7 +29,7 @@ open LTX-2.5 version one click away.
   own custom packs, or no usable open workflow found. COVERAGE.md lists each one. [COVERAGE.md](COVERAGE.md) lists every Higgsfield feature, its planned open-weight
   stand-in and its status (`planned` / `built` / `tested`).
 - **The app runs in mock mode out of the box** (placeholder outputs, no ComfyUI needed). Real runs go through `comfy-sdk` on Comfy Cloud or
-  through the classic HTTP API on your own ComfyUI (`COMFY_BASE_URL`); the self-hosted path made all 46 app examples. The `comfy-sdk` path is
+  through the classic HTTP API on your own ComfyUI (`COMFY_BASE_URL`); the self-hosted path made all 47 app examples. The `comfy-sdk` path is
   **verified end to end for 13 modules** (app -> `comfy-sdk` -> Cloud -> result): `image.bg-remove`, the camera-rig video module, video reframe, text-to-speech, voice clone, narration, image reframe, re-shoot angles, AI influencer, ad multiplier, UGC video, click-to-ad and shorts studio. The rest were rendered with Comfy Cloud's template runner using the same node ids and prompts.
 
 ## Try the app shell (mock mode, no ComfyUI)

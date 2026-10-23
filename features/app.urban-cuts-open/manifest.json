@@ -5,7 +5,7 @@
   "base": [],
   "higgsfield": "higgsfield.ai/apps/urban-cuts",
   "count": 1,
-  "status": "built",
+  "status": "tested",
   "app": {
     "cat": "Video Editing",
     "desc": "Beat-synced street outfit videos",
@@ -60,7 +60,11 @@
     ],
     "reuses": "_graphs/ltx23_i2v_local",
     "output_kind": "video",
-    "verified": false
+    "verified": true,
+    "verified_via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): LTX-2.3 image-to-video, 3 s, 2026-10-23",
+    "examples": [
+      "examples/apps/urban-cuts.mp4"
+    ]
   },
   "group": "Urban Cuts"
 }

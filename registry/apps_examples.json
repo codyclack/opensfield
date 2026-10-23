@@ -228,5 +228,10 @@
   "feature": "app.renaissance-open",
   "example": "examples/apps/renaissance.png",
   "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): Qwen-Image-Edit 2511, Fast (4-step Lightning), 2026-10-22"
+ },
+ "urban-cuts": {
+  "feature": "app.urban-cuts-open",
+  "example": "examples/apps/urban-cuts.mp4",
+  "via": "Rendered through the app's own runner on a local ComfyUI (Quadro RTX 6000): LTX-2.3 image-to-video, 3 s, 2026-10-23"
  }
 }
