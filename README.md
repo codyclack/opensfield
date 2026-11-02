@@ -38,8 +38,26 @@ uv run uvicorn app.main:app --port 8765
 ```
 Open http://127.0.0.1:8765. Every manifest becomes a studio card + generated form; Generate
 creates a job and returns a placeholder image. Tests: `uv run --extra dev pytest`.
-Env: `OPENSFIELD_MODE=mock|comfy`, `OPENSFIELD_PARTNER=1` (show partner-pack modules),
-`COMFY_BASE_URL`, `COMFY_API_KEY` (comfy mode only; `uv sync --extra comfy`).
+
+### Settings (environment variables)
+The app reads these from the environment; nothing loads a `.env` file. [`.env.example`](.env.example) lists them as a checklist.
+
+| Variable | Default | Effect |
+|---|---|---|
+| `OPENSFIELD_MODE` | `mock` | `mock` returns placeholder outputs and never calls ComfyUI; `comfy` runs real jobs (`uv sync --extra comfy`). |
+| `OPENSFIELD_PARTNER` | on | `0` hides the partner-model tools (Comfy Cloud API nodes). |
+| `OPENSFIELD_ACCESS_KEY` | unset (no gate) | Shared secret. When set, every request needs the cookie from `/?key=<value>` or `POST /api/login` `{"key": ...}`. Unset prints a warning at startup. One key = one shared workspace: see [LIVE_LINK.md](LIVE_LINK.md). |
+| `OPENSFIELD_MAX_JOBS` | `0` (unlimited) | Runs allowed per server start (protects credits on a shared link). |
+| `OPENSFIELD_MAX_PENDING` | `20` | Jobs queued or running before `POST /api/jobs` answers 429 "queue is full". `0` = unlimited. |
+| `OPENSFIELD_MAX_UPLOAD_MB` | `512` | Largest upload (tool inputs and library); bigger is a 413. |
+| `OPENSFIELD_JOB_TIMEOUT` | `900` | Seconds a job on a self-hosted ComfyUI (`COMFY_BASE_URL`) may take before it fails, so one hung render cannot block the queue. |
+| `OPENSFIELD_JOBS_FILE` | `outputs/jobs.json` | Where the generation history is kept; `projects.json` sits next to it. |
+| `OPENSFIELD_MOCK_DELAY` | `3` | Seconds a mock job takes. |
+| `COMFY_BASE_URL` | unset (Comfy Cloud) | A plain ComfyUI such as `http://127.0.0.1:8188` is driven over its HTTP API; unset or `*.comfy.org` goes through `comfy-sdk`. |
+| `COMFY_API_KEY` | unset | Comfy platform API key: needed for Comfy Cloud and partner nodes. |
+| `OPENSFIELD_EXAMPLE_VIA` | a credit line | `scripts/render_app_examples.py` only: the "rendered via" note stored with example renders. |
+| `OPENSFIELD_FREE_BETWEEN` | unset | `scripts/render_app_examples.py` only: with `COMFY_BASE_URL`, unload models (`/free`) between clips. |
+| `WINDIR` | set by Windows | Read only to find fonts for the CPU text effects. |
 
 ## Layout
 - `registry/features.py` — every Higgsfield feature, its tier, and the base graphs it is built from
