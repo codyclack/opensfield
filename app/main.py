@@ -9,6 +9,7 @@ import json
 import os
 import re
 import secrets
+import shutil
 import threading
 import time
 import uuid
@@ -286,22 +287,35 @@ PROJECTS_FILE = JOBS_FILE.with_name("projects.json")
 def _projects() -> list[dict]:
     try:
         return json.loads(PROJECTS_FILE.read_text(encoding="utf-8"))
-    except (OSError, ValueError):
+    except OSError:  # no projects yet
         return []
+    except ValueError:  # keep the damaged file, or the next write would bury the loss for good
+        shutil.copyfile(PROJECTS_FILE, PROJECTS_FILE.with_name("projects.json.corrupt"))
+        print("WARNING: projects.json is corrupt; starting with no projects (file kept at projects.json.corrupt)", flush=True)
+        return []
+
+
+def _save_projects(items: list[dict]) -> None:
+    PROJECTS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    tmp = PROJECTS_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(items), encoding="utf-8")
+    tmp.replace(PROJECTS_FILE)
+
+
+_projects()  # report a damaged file at startup, not on the first request
 
 
 @app.get("/api/projects")
 def list_projects():
-    return _projects()
+    with LOCK:
+        return _projects()
 
 
 @app.post("/api/projects", status_code=201)
 def create_project(req: ProjectRequest):
     p = {"id": uuid.uuid4().hex[:10], "name": req.name.strip()[:60] or "Untitled project", "created": time.time()}
     with LOCK:
-        items = [p, *_projects()]
-        PROJECTS_FILE.parent.mkdir(parents=True, exist_ok=True)
-        PROJECTS_FILE.write_text(json.dumps(items), encoding="utf-8")
+        _save_projects([p, *_projects()])
     return p
 
 
@@ -311,7 +325,7 @@ def delete_project(project_id: str):
         items = _projects()
         if not any(p["id"] == project_id for p in items):
             raise HTTPException(404, "unknown project")
-        PROJECTS_FILE.write_text(json.dumps([p for p in items if p["id"] != project_id]), encoding="utf-8")
+        _save_projects([p for p in items if p["id"] != project_id])
         for j in JOBS.values():  # its generations stay, just unfiled
             if j.get("project") == project_id:
                 j["project"] = None

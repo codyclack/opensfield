@@ -178,6 +178,52 @@ def test_favorites_and_projects():
     assert client.get(f"/api/jobs/{jid}").json()["project"] is None
 
 
+def test_projects_hold_up_under_concurrent_creates_and_lists(tmp_path, monkeypatch):
+    import threading
+    from app import main
+    monkeypatch.setattr(main, "PROJECTS_FILE", tmp_path / "projects.json")
+    c = TestClient(app, raise_server_exceptions=False)
+    stop, bad, made = time.time() + 2, [], []
+
+    def creator():
+        while time.time() < stop:
+            r = c.post("/api/projects", json={"name": "p"})
+            made.append(r.json()["id"]) if r.status_code == 201 else bad.append(("create", r.status_code))
+
+    def lister():
+        seen = 0
+        while time.time() < stop:
+            r = c.get("/api/projects")
+            if r.status_code != 200 or len(r.json()) < seen:  # only creates run, so a shorter list is a torn read
+                bad.append(("list", r.status_code))
+            seen = max(seen, len(r.json()) if r.status_code == 200 else 0)
+
+    threads = [threading.Thread(target=f) for f in (creator, creator, lister, lister)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert bad == [] and sorted(p["id"] for p in c.get("/api/projects").json()) == sorted(made)
+
+
+def test_corrupt_projects_file_is_kept_and_reported_at_startup(tmp_path):
+    (tmp_path / "projects.json").write_text("{not json", encoding="utf-8")
+    out = _startup_output(OPENSFIELD_JOBS_FILE=str(tmp_path / "jobs.json"))
+    assert "WARNING: projects.json is corrupt" in out
+    assert (tmp_path / "projects.json.corrupt").read_text(encoding="utf-8") == "{not json"
+
+
+def test_a_create_after_corruption_writes_a_valid_file(tmp_path, monkeypatch):
+    import json
+    from app import main
+    monkeypatch.setattr(main, "PROJECTS_FILE", tmp_path / "projects.json")
+    (tmp_path / "projects.json").write_text("{not json", encoding="utf-8")
+    assert client.get("/api/projects").json() == []
+    client.post("/api/projects", json={"name": "Fresh"})
+    assert [p["name"] for p in json.loads((tmp_path / "projects.json").read_text(encoding="utf-8"))] == ["Fresh"]
+    assert (tmp_path / "projects.json.corrupt").exists()
+
+
 def test_blog_lists_and_renders_posts():
     posts = client.get("/api/blog").json()
     assert len(posts) >= 5 and all(p["title"] and p["category"] and p["slug"] for p in posts)
