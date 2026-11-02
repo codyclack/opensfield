@@ -8,11 +8,13 @@ the runner sees an ordinary upload id and nothing else in the app needs to know 
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import threading
 import time
 import uuid
 from pathlib import Path
+from typing import BinaryIO
 
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
@@ -44,7 +46,23 @@ def _save(items: list[dict]) -> None:
     INDEX.write_text(json.dumps(items, indent=1), encoding="utf-8")
 
 
-def _add(src_bytes: bytes | None, src_path: Path | None, filename: str, name: str, type_: str) -> dict:
+def save_upload(src: BinaryIO, dest: Path) -> None:
+    """Copy an upload to dest 1 MiB at a time; past OPENSFIELD_MAX_UPLOAD_MB it is a 413 and no partial file is left."""
+    cap = int(os.environ.get("OPENSFIELD_MAX_UPLOAD_MB", "512")) << 20
+    size = 0
+    try:
+        with dest.open("wb") as out:
+            while chunk := src.read(1 << 20):
+                size += len(chunk)
+                if size > cap:
+                    raise HTTPException(413, f"file is larger than the {cap >> 20} MB upload limit")
+                out.write(chunk)
+    except BaseException:
+        dest.unlink(missing_ok=True)
+        raise
+
+
+def _add(src: Path | BinaryIO, filename: str, name: str, type_: str) -> dict:
     ext = Path(filename).suffix.lower()[:8]
     kind = _kind(ext)
     if not kind:
@@ -54,10 +72,10 @@ def _add(src_bytes: bytes | None, src_path: Path | None, filename: str, name: st
     LIB.mkdir(exist_ok=True)
     fid = uuid.uuid4().hex[:12]
     file = f"{fid}{ext}"
-    if src_path is not None:
-        shutil.copyfile(src_path, LIB / file)
+    if isinstance(src, Path):
+        shutil.copyfile(src, LIB / file)
     else:
-        (LIB / file).write_bytes(src_bytes or b"")
+        save_upload(src, LIB / file)
     item = {"id": fid, "name": (name or Path(filename).stem)[:60], "type": type_, "kind": kind, "file": file, "url": f"/library/{file}",
             "images": [{"file": file, "url": f"/library/{file}"}], "created": time.time()}
     with LOCK:
@@ -73,8 +91,8 @@ def list_assets():
 
 
 @router.post("", status_code=201)
-async def add_asset(file: UploadFile = File(...), name: str = Form(""), type: str = Form("Other")):
-    return _add(await file.read(), None, file.filename or "", name, type)
+def add_asset(file: UploadFile = File(...), name: str = Form(""), type: str = Form("Other")):  # sync: the chunked copy runs off the event loop
+    return _add(file.file, file.filename or "", name, type)
 
 
 class SaveRequest(BaseModel):
@@ -98,23 +116,22 @@ def save_output(req: SaveRequest):
         raise HTTPException(422, "only generated outputs and examples can be saved")
     if not src.is_file():
         raise HTTPException(404, "file not found")
-    return _add(None, src, src.name, req.name, req.type)
+    return _add(src, src.name, req.name, req.type)
 
 
 @router.post("/{asset_id}/images", status_code=201)
-async def add_image(asset_id: str, file: UploadFile = File(...)):
+def add_image(asset_id: str, file: UploadFile = File(...)):
     """Add another reference image to an element (another angle of a character, another view of a location)."""
     ext = Path(file.filename or "").suffix.lower()[:8]
     if _kind(ext) != "image":
         raise HTTPException(415, "elements take image references")
-    data = await file.read()
     with LOCK:
         items = _load()
         item = next((a for a in items if a["id"] == asset_id), None)
         if not item:
             raise HTTPException(404, "unknown asset")
         fname = f"{asset_id}_{uuid.uuid4().hex[:6]}{ext}"
-        (LIB / fname).write_bytes(data)
+        save_upload(file.file, LIB / fname)
         item["images"].append({"file": fname, "url": f"/library/{fname}"})
         _save(items)
     return item

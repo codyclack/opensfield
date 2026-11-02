@@ -73,6 +73,16 @@ def test_upload_rejects_control_characters_in_the_extension():
     assert r.status_code == 415
 
 
+def test_upload_size_cap_leaves_no_partial_file(monkeypatch):
+    from app import runner
+    monkeypatch.setenv("OPENSFIELD_MAX_UPLOAD_MB", "1")
+    before = set(runner.UPLOADS.iterdir())
+    r = client.post("/api/uploads", files={"file": ("big.png", b"\0" * ((1 << 20) + 1), "image/png")})
+    assert r.status_code == 413 and set(runner.UPLOADS.iterdir()) == before
+    ok = client.post("/api/uploads", files={"file": ("fits.png", b"\0" * (1 << 20), "image/png")})
+    assert ok.status_code == 200 and (runner.UPLOADS / ok.json()["id"]).stat().st_size == 1 << 20
+
+
 def test_upload_id_cannot_be_a_path():
     r = client.post("/api/jobs", json={"feature_id": "image.bg-remove", "inputs": {"image": "../../etc/passwd"}})
     assert r.status_code == 422

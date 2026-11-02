@@ -36,6 +36,16 @@ def test_rejects_unknown_type_and_bad_paths():
     assert client.post("/api/assets/save", json={"url": "https://evil.example/x.png"}).status_code == 422
 
 
+def test_library_uploads_are_capped(monkeypatch):
+    monkeypatch.setenv("OPENSFIELD_MAX_UPLOAD_MB", "1")
+    big = b"\0" * ((1 << 20) + 1)
+    assert client.post("/api/assets", files={"file": ("big.png", big, "image/png")}).status_code == 413
+    assert client.get("/api/assets").json()["items"] == [] and list(assets.LIB.iterdir()) == []
+    r = client.post("/api/assets", files={"file": ("maya.png", b"\x89PNG", "image/png")}).json()
+    assert client.post(f"/api/assets/{r['id']}/images", files={"file": ("side.png", big, "image/png")}).status_code == 413
+    assert len(client.get("/api/assets").json()["items"][0]["images"]) == 1 and len(list(assets.LIB.glob("*.png"))) == 1
+
+
 def test_save_example_into_library():
     r = client.post("/api/assets/save", json={"url": "/examples/char_a.png", "name": "Dancer", "type": "Prop"})
     assert r.status_code == 201 and r.json()["type"] == "Prop"

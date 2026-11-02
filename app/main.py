@@ -144,14 +144,14 @@ def feature(feature_id: str):
 
 
 @app.post("/api/uploads")
-async def upload(file: UploadFile = File(...)):
+def upload(file: UploadFile = File(...)):  # sync: the chunked copy runs off the event loop
     ext = Path(file.filename or "").suffix.lower()[:8]
     # media only (an .html or .svg would be served back from this origin), and never control characters: the name
     # later goes into a hand-built multipart header for ComfyUI (runner.run_comfyui)
     if not re.fullmatch(r"\.[a-z0-9]{1,7}", ext) or not any(ext in exts for exts in assets.KINDS.values()):
         raise HTTPException(415, f"unsupported file type {ext or '(none)'}")
     name = f"{uuid.uuid4().hex}{ext}"
-    (runner.UPLOADS / name).write_bytes(await file.read())
+    assets.save_upload(file.file, runner.UPLOADS / name)  # capped by OPENSFIELD_MAX_UPLOAD_MB
     return {"id": name, "name": file.filename, "url": f"/outputs/uploads/{name}"}
 
 
