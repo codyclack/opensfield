@@ -14,9 +14,10 @@ import time
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from urllib.parse import urlencode
 
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -66,18 +67,31 @@ else:
           "Do not share a public tunnel in this state.", flush=True)
 
 
+def _set_key_cookie(resp, request: Request, key: str) -> None:
+    # Secure whenever the browser is on https (a tunnel or host in front says so in X-Forwarded-Proto); plain
+    # http://127.0.0.1 keeps working without it
+    secure = request.url.scheme == "https" or request.headers.get("x-forwarded-proto") == "https"
+    resp.set_cookie("osf", key, httponly=True, samesite="lax", secure=secure)
+
+
 @app.middleware("http")
 async def access_gate(request: Request, call_next):
-    """Optional shared-secret gate for a public deployment: set OPENSFIELD_ACCESS_KEY, share /?key=<value> once (it sets a cookie)."""
+    """Optional shared-secret gate for a public deployment: set OPENSFIELD_ACCESS_KEY, share /?key=<value> once (it sets a cookie)
+    or POST /api/login {"key": ...}."""
     key = os.environ.get("OPENSFIELD_ACCESS_KEY")
-    if not key:
+    if not key or request.url.path == "/api/login":
         return await call_next(request)
     given = request.query_params.get("key", "")
     if not (secrets.compare_digest(request.cookies.get("osf", ""), key) or secrets.compare_digest(given, key)):
         return JSONResponse({"detail": "access key required: open the link you were given"}, status_code=401)
-    resp = await call_next(request)
+    if given and request.method == "GET" and "text/html" in request.headers.get("accept", ""):
+        # a page load: set the cookie and send the browser to the same page without the key, so it leaves the address bar
+        rest = urlencode([(k, v) for k, v in request.query_params.multi_items() if k != "key"])
+        resp = RedirectResponse(request.url.path + (f"?{rest}" if rest else ""), status_code=302)
+    else:
+        resp = await call_next(request)
     if given:
-        resp.set_cookie("osf", key, httponly=True, samesite="lax")
+        _set_key_cookie(resp, request, key)
     return resp
 
 
@@ -104,6 +118,23 @@ class JobPatch(BaseModel):
 
 class ProjectRequest(BaseModel):
     name: str
+
+
+class LoginRequest(BaseModel):
+    key: str
+
+
+@app.post("/api/login")
+def login(req: LoginRequest, request: Request):
+    """Trade the access key for the cookie without putting it in a URL (URLs land in server logs and browser history)."""
+    key = os.environ.get("OPENSFIELD_ACCESS_KEY")
+    if not key:
+        return {"ok": True}  # no gate: nothing to log in to
+    if not secrets.compare_digest(req.key.encode(), key.encode()):
+        return JSONResponse({"detail": "wrong access key"}, status_code=401)
+    resp = JSONResponse({"ok": True})
+    _set_key_cookie(resp, request, key)
+    return resp
 
 
 def _public(feature: dict) -> dict:

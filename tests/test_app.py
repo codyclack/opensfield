@@ -105,6 +105,28 @@ def test_access_key_gate(monkeypatch):
     assert c.get("/api/config").status_code == 200  # cookie now carries it
 
 
+def test_login_sets_the_cookie_without_a_url(monkeypatch):
+    monkeypatch.setenv("OPENSFIELD_ACCESS_KEY", "s3cret")
+    c = TestClient(app)
+    bad = c.post("/api/login", json={"key": "wrong"})
+    assert bad.status_code == 401 and "set-cookie" not in bad.headers
+    ok = c.post("/api/login", json={"key": "s3cret"})
+    assert ok.status_code == 200 and ok.json() == {"ok": True} and "osf=" in ok.headers["set-cookie"]
+    assert c.get("/api/config").status_code == 200
+
+
+def test_key_link_redirects_to_a_clean_url(monkeypatch):
+    monkeypatch.setenv("OPENSFIELD_ACCESS_KEY", "s3cret")
+    c = TestClient(app)
+    r = c.get("/?key=s3cret&tool=soul.t2i", headers={"accept": "text/html"}, follow_redirects=False)
+    assert r.status_code == 302 and r.headers["location"] == "/?tool=soul.t2i" and "osf=" in r.headers["set-cookie"]
+    assert "secure" not in r.headers["set-cookie"].lower()  # plain http on this machine
+    behind_tunnel = TestClient(app).get("/?key=s3cret", headers={"accept": "text/html", "x-forwarded-proto": "https"}, follow_redirects=False)
+    assert "secure" in behind_tunnel.headers["set-cookie"].lower()
+    page = c.get("/", headers={"accept": "text/html"})
+    assert page.status_code == 200 and '<meta name="referrer" content="no-referrer">' in page.text
+
+
 def _startup_output(**env) -> str:
     import subprocess
     import sys
