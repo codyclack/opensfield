@@ -37,6 +37,16 @@ It prints `https://<random>.trycloudflare.com`. Your live link is that address p
 - A quick tunnel gets a new address every time you restart it; if you restart, update the form entry.
 - Each run costs a few seconds to about a minute of Cloud GPU. The cap above stops runaway use.
 
+## Trust model: one link = one user
+The access key is one shared secret, not a login. Everyone who holds the link is the same user to the app:
+- they see every generation (prompts and outputs), every project and every element in the library;
+- they can change or delete any of them (favorite, re-file or delete generations, delete projects and elements) and
+  start runs that spend your credits.
+
+Share the link only with people you would hand your own session to. When a share ends, rotate the phrase: delete
+`.opensfield_access` and restart `start_opensfield.bat` (it writes a new one), or set a new `OPENSFIELD_ACCESS_KEY` if
+you start the app by hand. The old link stops working.
+
 ## Alternative: a stable URL on a host such as Render
 New Web Service from `github.com/codyclack/opensfield`. Build command: `pip install uv && uv sync --extra comfy`.
 Start command: `uv run uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Set the four environment variables from step 2 in the

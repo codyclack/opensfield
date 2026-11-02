@@ -118,6 +118,11 @@ def test_startup_warns_when_the_gate_is_off():
     assert "WARNING: OPENSFIELD_ACCESS_KEY is not set" in _startup_output()
 
 
+def test_startup_states_the_shared_workspace_when_the_gate_is_on():
+    out = _startup_output(OPENSFIELD_ACCESS_KEY="s3cret")
+    assert "Everyone with the key shares one workspace" in out and "WARNING" not in out
+
+
 def test_job_cap(monkeypatch):
     monkeypatch.setenv("OPENSFIELD_MAX_JOBS", "1")
     r = client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "x"}})

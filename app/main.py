@@ -58,7 +58,10 @@ def _save_jobs():
 JOBS: dict[str, dict] = _load_jobs()
 POOL = ThreadPoolExecutor(max_workers=1)  # one GPU: renders are serialized
 runner.UPLOADS.mkdir(parents=True, exist_ok=True)
-if not os.environ.get("OPENSFIELD_ACCESS_KEY"):
+if os.environ.get("OPENSFIELD_ACCESS_KEY"):  # one shared key, not per-user accounts (LIVE_LINK.md, "Trust model")
+    print("Access gate active. Everyone with the key shares one workspace: all generations, projects and elements "
+          "are visible and mutable to them.", flush=True)
+else:
     print("WARNING: OPENSFIELD_ACCESS_KEY is not set, so everyone who can reach this port can use the app. "
           "Do not share a public tunnel in this state.", flush=True)
 
