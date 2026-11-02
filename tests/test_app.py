@@ -105,6 +105,19 @@ def test_access_key_gate(monkeypatch):
     assert c.get("/api/config").status_code == 200  # cookie now carries it
 
 
+def _startup_output(**env) -> str:
+    import subprocess
+    import sys
+    from pathlib import Path
+    env = {k: v for k, v in os.environ.items() if k != "OPENSFIELD_ACCESS_KEY"} | env
+    return subprocess.run([sys.executable, "-c", "import app.main"], env=env, cwd=Path(__file__).parents[1],
+                          capture_output=True, text=True, timeout=60).stdout
+
+
+def test_startup_warns_when_the_gate_is_off():
+    assert "WARNING: OPENSFIELD_ACCESS_KEY is not set" in _startup_output()
+
+
 def test_job_cap(monkeypatch):
     monkeypatch.setenv("OPENSFIELD_MAX_JOBS", "1")
     r = client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "x"}})

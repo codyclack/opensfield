@@ -1,6 +1,12 @@
 @echo off
 rem Double-click AFTER start_opensfield.bat is running. Makes a public https address for judges.
 rem Needs cloudflared (installs it with winget if missing). Keep this window open.
+if not exist "%~dp0.opensfield_access" (
+  echo No access key configured - start the app with start_opensfield.bat / set OPENSFIELD_ACCESS_KEY first.
+  echo Refusing to open a public tunnel.
+  pause
+  exit /b 1
+)
 where cloudflared >nul 2>nul
 if errorlevel 1 (
   echo Installing cloudflared...
