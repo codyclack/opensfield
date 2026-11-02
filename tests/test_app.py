@@ -54,6 +54,18 @@ def test_upload_and_mock_job_end_to_end():
     assert client.get(j["outputs"][0]["url"]).status_code == 200
 
 
+def test_uploads_take_media_only_and_always_download():
+    for name, mime in (("x.html", "text/html"), ("x.svg", "image/svg+xml")):
+        assert client.post("/api/uploads", files={"file": (name, b"<script>alert(1)</script>", mime)}).status_code == 415
+    up = client.post("/api/uploads", files={"file": ("x.png", b"\x89PNG", "image/png")})
+    assert up.status_code == 200
+    r = client.get(up.json()["url"])
+    assert r.headers["x-content-type-options"] == "nosniff" and r.headers["content-disposition"] == "attachment"
+    j = wait(client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "x"}}).json()["id"])
+    out = client.get(j["outputs"][0]["url"])  # job outputs (mock .svg, website pages) still render in place
+    assert out.status_code == 200 and "content-disposition" not in out.headers
+
+
 def test_upload_id_cannot_be_a_path():
     r = client.post("/api/jobs", json={"feature_id": "image.bg-remove", "inputs": {"image": "../../etc/passwd"}})
     assert r.status_code == 422

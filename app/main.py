@@ -74,6 +74,16 @@ async def access_gate(request: Request, call_next):
     return resp
 
 
+@app.middleware("http")
+async def safe_headers(request: Request, call_next):
+    """No MIME sniffing anywhere, and uploads always download: an uploaded file must never open as a page on this origin."""
+    resp = await call_next(request)
+    resp.headers["X-Content-Type-Options"] = "nosniff"
+    if request.url.path.startswith("/outputs/uploads/"):
+        resp.headers["Content-Disposition"] = "attachment"
+    return resp
+
+
 class JobRequest(BaseModel):
     feature_id: str
     inputs: dict = {}
@@ -135,6 +145,8 @@ def feature(feature_id: str):
 @app.post("/api/uploads")
 async def upload(file: UploadFile = File(...)):
     ext = Path(file.filename or "").suffix.lower()[:8]
+    if not any(ext in exts for exts in assets.KINDS.values()):  # media only: an .html or .svg would be served back from this origin
+        raise HTTPException(415, f"unsupported file type {ext or '(none)'}")
     name = f"{uuid.uuid4().hex}{ext}"
     (runner.UPLOADS / name).write_bytes(await file.read())
     return {"id": name, "name": file.filename, "url": f"/outputs/uploads/{name}"}
