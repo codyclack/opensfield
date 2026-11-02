@@ -20,6 +20,7 @@ from .registry import ROOT
 OUTPUTS = ROOT / "outputs"
 UPLOADS = OUTPUTS / "uploads"
 MEDIA_KINDS = ("image", "video", "audio")
+LOST_AFTER = 120  # seconds before a ComfyUI job with no history entry is checked against the queue
 
 Update = Callable[..., None]
 
@@ -171,11 +172,24 @@ def run_comfyui(base: str, feature: dict, job: dict, update: Update) -> list[dic
             graph[t["node"]]["inputs"][t["field"]] = value
     pid = json.loads(call("/prompt", json.dumps({"prompt": graph, "client_id": "opensfield"}).encode(), {"Content-Type": "application/json"}))["prompt_id"]
     update(progress=0.1)
+
+    def queued() -> bool:
+        q = json.loads(call("/queue"))
+        return any(item[1] == pid for item in q.get("queue_running", []) + q.get("queue_pending", []))
+
+    timeout = float(os.environ.get("OPENSFIELD_JOB_TIMEOUT", "900"))  # one hung render must not wedge the single worker
     t0 = time.time()
     while True:
         hist = json.loads(call(f"/history/{pid}")).get(pid)
         if hist and hist.get("status", {}).get("completed") or hist and hist.get("status", {}).get("status_str") == "error":
             break
+        waited = time.time() - t0
+        if waited > timeout:
+            raise RunError(f"ComfyUI job timed out after {timeout:g}s (pid {pid})")
+        # ComfyUI writes /history only when a prompt finishes, so no entry is normal while it waits or runs; in neither
+        # the queue nor the history means ComfyUI lost it (e.g. it restarted)
+        if not hist and waited > LOST_AFTER and not queued() and not json.loads(call(f"/history/{pid}")).get(pid):
+            raise RunError(f"ComfyUI job timed out after {waited:.0f}s (pid {pid}): ComfyUI has no record of it, did it restart?")
         time.sleep(2)
         update(progress=min(0.95, 0.1 + (time.time() - t0) / 600))
     if hist["status"].get("status_str") == "error":

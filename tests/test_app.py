@@ -156,6 +156,50 @@ def test_text_only_feature_runs():
     assert wait(r.json()["id"])["status"] == "done"
 
 
+def test_a_hung_comfyui_job_times_out_and_frees_the_queue(monkeypatch):
+    import json
+    import threading
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+    from app import main
+    pids = iter(["p1", "p2"])
+
+    class Stub(BaseHTTPRequestHandler):  # a local stand-in ComfyUI: p1 never finishes, p2 finishes with no outputs
+        def _send(self, body):
+            data = json.dumps(body).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+
+        def do_POST(self):
+            self.rfile.read(int(self.headers["Content-Length"]))
+            self._send({"prompt_id": next(pids)})
+
+        def do_GET(self):
+            if self.path == "/history/p2":
+                self._send({"p2": {"status": {"status_str": "success", "completed": True, "messages": []}, "outputs": {}}})
+            else:
+                self._send({"queue_running": [[0, "p1"]], "queue_pending": []} if self.path == "/queue" else {})
+
+        def log_message(self, *args):
+            pass
+
+    srv = ThreadingHTTPServer(("127.0.0.1", 0), Stub)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    monkeypatch.setattr(main, "MODE", "comfy")
+    monkeypatch.setenv("COMFY_BASE_URL", f"http://127.0.0.1:{srv.server_port}")
+    monkeypatch.setenv("OPENSFIELD_JOB_TIMEOUT", "1")
+    try:
+        hung = client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "x"}}).json()["id"]
+        after = client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "y"}}).json()["id"]
+        j = wait(hung)
+        assert j["status"] == "error" and "timed out after 1s" in j["error"]
+        assert wait(after)["status"] == "done"
+    finally:
+        srv.shutdown()
+
+
 def test_jobs_persist_and_delete():
     from app import main
     r = client.post("/api/jobs", json={"feature_id": "model.bfl-flux3-t2i", "inputs": {"prompt": "a fox"}})
