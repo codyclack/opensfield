@@ -43,7 +43,9 @@ def _load() -> list[dict]:
 
 def _save(items: list[dict]) -> None:
     LIB.mkdir(exist_ok=True)
-    INDEX.write_text(json.dumps(items, indent=1), encoding="utf-8")
+    tmp = INDEX.with_suffix(".tmp")  # write then swap: a reader or a crash never sees half a file
+    tmp.write_text(json.dumps(items, indent=1), encoding="utf-8")
+    os.replace(tmp, INDEX)
 
 
 def save_upload(src: BinaryIO, dest: Path) -> None:
@@ -87,7 +89,9 @@ def _add(src: Path | BinaryIO, filename: str, name: str, type_: str) -> dict:
 
 @router.get("")
 def list_assets():
-    return {"types": TYPES, "items": _load()}
+    with LOCK:
+        items = _load()
+    return {"types": TYPES, "items": items}
 
 
 @router.post("", status_code=201)
@@ -140,7 +144,8 @@ def add_image(asset_id: str, file: UploadFile = File(...)):
 @router.post("/{asset_id}/use")
 def use_asset(asset_id: str, image: int = 0):
     """Copy an element's reference image into uploads and return the upload id a tool input expects."""
-    item = next((a for a in _load() if a["id"] == asset_id), None)
+    with LOCK:
+        item = next((a for a in _load() if a["id"] == asset_id), None)
     if not item:
         raise HTTPException(404, "unknown asset")
     ref = item["images"][min(max(image, 0), len(item["images"]) - 1)]

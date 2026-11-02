@@ -57,3 +57,32 @@ def test_elements_hold_several_reference_images():
     assert len(r2["images"]) == 2
     up = client.post(f"/api/assets/{r['id']}/use?image=1").json()
     assert (runner.UPLOADS / up["id"]).read_bytes() == b"\x89PNG2"
+
+
+def test_index_holds_up_under_concurrent_adds_lists_and_uses(tmp_path, monkeypatch):
+    import threading
+    import time
+    monkeypatch.setattr(runner, "UPLOADS", tmp_path / "uploads")
+    c = TestClient(app, raise_server_exceptions=False)
+    first = c.post("/api/assets", files={"file": ("a.png", b"\x89PNG", "image/png")}).json()["id"]
+    stop, bad = time.time() + 3, []
+
+    def adder():
+        while time.time() < stop:
+            if (s := c.post("/api/assets", files={"file": ("b.png", b"\x89PNG", "image/png")}).status_code) != 201:
+                bad.append(("add", s))
+
+    def reader():
+        while time.time() < stop:
+            r = c.get("/api/assets")
+            if r.status_code != 200 or not r.json()["items"]:  # never an error, never an emptied library
+                bad.append(("list", r.status_code))
+            if (s := c.post(f"/api/assets/{first}/use").status_code) != 200:
+                bad.append(("use", s))
+
+    threads = [threading.Thread(target=f) for f in (adder, adder, reader, reader)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert bad == []
