@@ -151,6 +151,15 @@ def test_job_cap(monkeypatch):
     assert r.status_code == 429
 
 
+def test_queue_is_capped(monkeypatch):
+    from app import main
+    monkeypatch.setenv("OPENSFIELD_MAX_PENDING", "2")
+    for i in range(2):  # two jobs already waiting behind the worker
+        monkeypatch.setitem(main.JOBS, f"waiting{i}", {"id": f"waiting{i}", "status": "queued", "created": 0})
+    r = client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "x"}})
+    assert r.status_code == 429 and r.json()["detail"] == "queue is full, try again shortly"
+
+
 def test_text_only_feature_runs():
     r = client.post("/api/jobs", json={"feature_id": "soul.t2i", "inputs": {"prompt": "a sneaker"}})
     assert wait(r.json()["id"])["status"] == "done"

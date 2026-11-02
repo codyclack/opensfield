@@ -226,9 +226,8 @@ def create_job(req: JobRequest):
     if f["track"] == "partner" and not PARTNER:
         raise HTTPException(403, "partner pack is disabled (set OPENSFIELD_PARTNER=1 (default on; 0 hides))")
     cap = int(os.environ.get("OPENSFIELD_MAX_JOBS", "0"))  # 0 = unlimited; protects credits on a public link
+    max_pending = int(os.environ.get("OPENSFIELD_MAX_PENDING", "20"))  # jobs waiting behind the one worker; 0 = unlimited
     global CREATED_THIS_RUN
-    if cap and CREATED_THIS_RUN >= cap:
-        raise HTTPException(429, f"this demo allows {cap} runs per server start; it has reached the limit")
     missing = [i["label"] for i in f["inputs"] if i.get("required") and not req.inputs.get(i["name"])]
     if missing:
         raise HTTPException(422, f"missing required input(s): {', '.join(missing)}")
@@ -239,7 +238,11 @@ def create_job(req: JobRequest):
     job = {"id": uuid.uuid4().hex[:12], "feature_id": f["id"], "feature_name": f["name"], "kind": f["output_kind"], "status": "queued",
            "progress": 0.0, "inputs": req.inputs, "outputs": [], "error": None, "mode": MODE, "created": time.time(),
            "fav": False, "project": req.project}
-    with LOCK:
+    with LOCK:  # both caps are checked where CREATED_THIS_RUN and JOBS change, so simultaneous requests cannot overshoot
+        if cap and CREATED_THIS_RUN >= cap:
+            raise HTTPException(429, f"this demo allows {cap} runs per server start; it has reached the limit")
+        if max_pending and sum(j["status"] in ("queued", "running") for j in JOBS.values()) >= max_pending:
+            raise HTTPException(429, "queue is full, try again shortly")
         JOBS[job["id"]] = job
         CREATED_THIS_RUN += 1
         _save_jobs()
