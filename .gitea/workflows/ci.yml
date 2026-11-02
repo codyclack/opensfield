@@ -1,0 +1,14 @@
+# Gitea Actions (GitHub-Actions compatible): run the test suite on every push and pull request.
+name: tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - run: uv sync --extra dev --extra fx
+      - run: uv run --extra dev --extra fx pytest -q
