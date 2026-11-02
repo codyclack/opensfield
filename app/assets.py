@@ -134,7 +134,7 @@ def add_image(asset_id: str, file: UploadFile = File(...)):
         item = next((a for a in items if a["id"] == asset_id), None)
         if not item:
             raise HTTPException(404, "unknown asset")
-        fname = f"{asset_id}_{uuid.uuid4().hex[:6]}{ext}"
+        fname = f"{asset_id}_{uuid.uuid4().hex}{ext}"
         save_upload(file.file, LIB / fname)
         item["images"].append({"file": fname, "url": f"/library/{fname}"})
         _save(items)

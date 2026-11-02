@@ -59,6 +59,19 @@ def test_elements_hold_several_reference_images():
     assert (runner.UPLOADS / up["id"]).read_bytes() == b"\x89PNG2"
 
 
+def test_concurrent_reference_images_get_distinct_files():
+    import threading
+    el = client.post("/api/assets", files={"file": ("maya.png", b"\x89PNG", "image/png")}).json()
+    threads = [threading.Thread(target=client.post, args=(f"/api/assets/{el['id']}/images",), kwargs={"files": {"file": (f"{i}.png", b"\x89PNG", "image/png")}})
+               for i in range(2)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    files = [im["file"] for im in client.get("/api/assets").json()["items"][0]["images"]]
+    assert len(files) == len(set(files)) == 3 and all((assets.LIB / f).exists() for f in files)
+
+
 def test_index_holds_up_under_concurrent_adds_lists_and_uses(tmp_path, monkeypatch):
     import threading
     import time
