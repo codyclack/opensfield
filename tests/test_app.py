@@ -66,6 +66,13 @@ def test_uploads_take_media_only_and_always_download():
     assert out.status_code == 200 and "content-disposition" not in out.headers
 
 
+def test_upload_rejects_control_characters_in_the_extension():
+    # a bare LF survives multipart parsing into the filename: "x.\nevil" -> extension ".\nevil"
+    body = b'--b\r\nContent-Disposition: form-data; name="file"; filename="x.\nevil"\r\nContent-Type: image/png\r\n\r\n\x89PNG\r\n--b--\r\n'
+    r = client.post("/api/uploads", content=body, headers={"Content-Type": "multipart/form-data; boundary=b"})
+    assert r.status_code == 415
+
+
 def test_upload_id_cannot_be_a_path():
     r = client.post("/api/jobs", json={"feature_id": "image.bg-remove", "inputs": {"image": "../../etc/passwd"}})
     assert r.status_code == 422
